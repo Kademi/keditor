@@ -20,5 +20,16 @@
   "bugs": {
     "url": "https://github.com/Kademi/keditor/issues"
   },
-  "homepage": "https://github.com/Kademi/keditor#readme"
+  "homepage": "https://github.com/Kademi/keditor#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-less": "^3.0.5",
+    "gulp-plumber": "^1.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-util": "^3.0.7",
+    "gulp-watch": "^4.3.5"
+  }
 }

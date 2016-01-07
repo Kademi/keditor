@@ -8,9 +8,14 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * CKEditor: http://ckeditor.com/
 
 # Configuration
-## Defaults
-```
-$.fn.ckeditor.DEFAULTS = {
+```javascript
+/**
+ * Configuration:
+ * @option {Object} ckeditor Configuration for CKEditor. See at http://docs.ckeditor.com/#!/api/CKEDITOR.config
+ * @option {String} snippetsUrl Url to snippets file
+ * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
+ */
+$.fn.keditor.DEFAULTS = {
     ckeditor: {
         allowedContent: true, // DISABLES Advanced Content Filter. This is so templates with classes are allowed through
         bodyId: 'editor',
@@ -34,11 +39,8 @@ $.fn.ckeditor.DEFAULTS = {
 };
 ```
 
-## CKEditor configuration
-All CKEditor configuration will be configured in `ckeditor`
-
 # License
 Please read at https://github.com/Kademi/keditor/blob/master/LICENSE.md
 
 # Lived example
-Check it out at https://rawgit.com/Kademi/keditor/master/index.html
+Check it out at https://rawgit.com/Kademi/keditor/master/examples/index.html

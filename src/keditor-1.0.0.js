@@ -4,7 +4,11 @@
  * @author: Kademi (http://kademi.co)
  * @version: 1.0.0
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, $.fn.ckeditor
- * @configuration:
+ *
+ * Configuration:
+ * @option {Object} ckeditor Configuration for CKEditor. See at http://docs.ckeditor.com/#!/api/CKEDITOR.config
+ * @option {String} snippetsUrl Url to snippets file
+ * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  */
 (function ($) {
     // Log function will print log message when "$.fn.keditor.debug" equals "true"

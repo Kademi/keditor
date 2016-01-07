@@ -74,6 +74,7 @@
                     'class': 'lessSpace'
                 }
             },
+            removePlugins: 'magicline',
             minimumChangeMilliseconds: 100
         },
         snippetsUrl: 'snippets.html',

@@ -1,6 +1,7 @@
 @keditor-border-color               : #ddd;
 @keditor-border-color-hover         : #ccc;
-@keditor-snippets-bg                : #f0f0f0;
+@keditor-snippets-container-bg      : #f0f0f0;
+@keditor-snippet-bg                 : #fff;
 @keditor-snippets-toggler-color     : #666;
 @keditor-snippet-placeholder-bg     : #eee;
 
@@ -55,7 +56,7 @@ body.opened-keditor-snippets{
     top: 0;
     right: -233px;
     bottom: 0;
-    background: @keditor-snippets-bg;
+    background: @keditor-snippets-container-bg;
     opacity: .9;
     border-left: 1px solid @keditor-border-color;
     width: 233px;
@@ -78,7 +79,7 @@ body.opened-keditor-snippets{
     width: 25px;
     height: 30px;
     left: -25px;
-    background: @keditor-snippets-bg;
+    background: @keditor-snippets-container-bg;
     text-align: center;
     line-height: 30px;
     border: 1px solid @keditor-border-color;
@@ -95,11 +96,12 @@ body.opened-keditor-snippets{
 
     .keditor-snippet {
         padding: 5px;
-        border: 1px solid @keditor-snippets-bg;
+        border: 1px solid @keditor-snippets-container-bg;
         cursor: move;
         transition: all 0.3s;
         margin: 0 5px;
         float: left;
+        background: @keditor-snippet-bg;
 
         + .keditor-snippet {
             margin-top: 10px;

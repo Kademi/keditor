@@ -82,6 +82,7 @@ body.opened-keditor-snippets #keditor-snippets-container {
   transition: all 0.3s;
   margin: 0 5px;
   float: left;
+  background: #fff;
 }
 #keditor-snippets-list .keditor-snippet + .keditor-snippet {
   margin-top: 10px;

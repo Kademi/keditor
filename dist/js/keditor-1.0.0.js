@@ -4,6 +4,7 @@
  * @author: Kademi (http://kademi.co)
  * @version: 1.0.0
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, $.fn.ckeditor
+ * @configuration:
  */
 (function ($) {
     // Log function will print log message when "$.fn.keditor.debug" equals "true"

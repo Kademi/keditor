@@ -6,6 +6,7 @@ var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
+var copy = require('gulp-copy');
 
 // Less to CSS: Run manually with: "gulp build-css"
 gulp.task('build-css', function () {
@@ -28,6 +29,9 @@ gulp.task('build-css', function () {
 // Minify JS: Run manually with: "gulp uglify-js"
 gulp.task('uglify-js', function () {
     return gulp.src(['./src/*.js'])
+        .pipe(gulp.dest('./dist/js/'), {
+            base: './src/'
+        })
         .pipe(sourcemaps.init())
         .pipe(plumber())
         .pipe(uglify({
@@ -36,7 +40,7 @@ gulp.task('uglify-js', function () {
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(sourcemaps.write('./'))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./dist/js/')).on('error', gutil.log);
 });
 

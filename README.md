@@ -44,4 +44,6 @@ $.fn.keditor.DEFAULTS = {
 Please read at https://github.com/Kademi/keditor/blob/master/LICENSE.md
 
 # Lived example
-Check it out at https://rawgit.com/Kademi/keditor/master/examples/index.html
+ * With basic CKEditor toolbar: https://rawgit.com/Kademi/keditor/master/examples/index.html
+ * With standard CKEditor toolbar: https://rawgit.com/Kademi/keditor/master/examples/standard_ckeditor.html
+ * With full CKEditor toolbar: https://rawgit.com/Kademi/keditor/master/examples/full_ckeditor.html

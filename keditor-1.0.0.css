@@ -76,13 +76,7 @@ body.opened-keditor-snippets #keditor-snippets-container {
   overflow-x: hidden;
 }
 #keditor-snippets-list .keditor-snippet {
-  padding: 5px;
-  border: 1px solid #f0f0f0;
-  cursor: move;
-  transition: all 0.3s;
   margin: 0 5px;
-  float: left;
-  background: #fff;
 }
 #keditor-snippets-list .keditor-snippet + .keditor-snippet {
   margin-top: 10px;
@@ -90,6 +84,14 @@ body.opened-keditor-snippets #keditor-snippets-container {
 #keditor-snippets-list .keditor-snippet:hover {
   opacity: .6;
   border-color: #ccc;
+}
+.keditor-snippet {
+  padding: 5px;
+  border: 1px solid #f0f0f0;
+  cursor: move;
+  transition: all 0.3s;
+  float: left;
+  background: #fff;
 }
 /* ==================================================================================
    KEditor

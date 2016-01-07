@@ -95,13 +95,7 @@ body.opened-keditor-snippets{
     overflow-x: hidden;
 
     .keditor-snippet {
-        padding: 5px;
-        border: 1px solid @keditor-snippets-container-bg;
-        cursor: move;
-        transition: all 0.3s;
         margin: 0 5px;
-        float: left;
-        background: @keditor-snippet-bg;
 
         + .keditor-snippet {
             margin-top: 10px;
@@ -112,6 +106,15 @@ body.opened-keditor-snippets{
             border-color: @keditor-border-color-hover;
         }
     }
+}
+
+.keditor-snippet {
+    padding: 5px;
+    border: 1px solid @keditor-snippets-container-bg;
+    cursor: move;
+    transition: all 0.3s;
+    float: left;
+    background: @keditor-snippet-bg;
 }
 
 /* ==================================================================================

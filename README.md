@@ -14,6 +14,7 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * @option {Object} ckeditor Configuration for CKEditor. See at http://docs.ckeditor.com/#!/api/CKEDITOR.config
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
+ * @option {Function} onContentChange Callback will be called when content is changed. Required "onchange" plugin on CKEditor
  */
 $.fn.keditor.DEFAULTS = {
     ckeditor: {

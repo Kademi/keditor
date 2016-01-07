@@ -96,12 +96,6 @@ body.opened-keditor-snippets{
     overflow-x: hidden;
 
     .keditor-snippet {
-        margin: 0 5px;
-
-        + .keditor-snippet {
-            margin-top: 10px;
-        }
-
         &:hover {
             opacity: .6;
             border-color: @keditor-border-color-hover;
@@ -116,6 +110,11 @@ body.opened-keditor-snippets{
     transition: all 0.3s;
     float: left;
     background: @keditor-snippet-bg;
+    margin: 0 5px;
+
+    + .keditor-snippet {
+        margin-top: 10px;
+    }
 }
 
 /* ==================================================================================

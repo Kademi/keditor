@@ -9,7 +9,7 @@
  * @option {Object} ckeditor Configuration for CKEditor. See at http://docs.ckeditor.com/#!/api/CKEDITOR.config
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
- * @option {Function} onContentChange Callback will be called when content is changed. Required "onchange" plugin on CKEditor
+ * @option {Function} onContentChange Callback will be called when content is changed
  */
 (function ($) {
     // Log function will print log message when "$.fn.keditor.debug" equals "true"
@@ -254,6 +254,10 @@
 
                     helper.replaceWith(section);
                     KEditor.initContentEditable(section, options);
+
+                    if (typeof options.onContentChange === 'function') {
+                        options.onContentChange.call(this, event);
+                    }
                 }
             });
 
@@ -287,6 +291,10 @@
                         selectedSection.remove();
 
                         flog('Section is deleted');
+
+                        if (typeof options.onContentChange === 'function') {
+                            options.onContentChange.call(this, e);
+                        }
                     }
                 }
             });
@@ -329,15 +337,11 @@
                 flog('Id for section content is: ' + id);
                 sectionContent.attr('id', id);
 
-                var editor = sectionContent.ckeditor(options.ckeditor).editor;
-                editor.on('instanceReady', function (evt) {
-                    flog('CKEditor is ready', editor, evt);
-
-                    editor.on('change', function (evt) {
-                        if (typeof options.onContentChange === 'function') {
-                            options.onContentChange.call(this, editor, evt);
-                        }
-                    });
+                sectionContent.ckeditor(options.ckeditor);
+                sectionContent.on('input', function (e) {
+                    if (typeof options.onContentChange === 'function') {
+                        options.onContentChange.call(this, e);
+                    }
                 });
 
                 section.addClass('keditor-editable');

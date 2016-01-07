@@ -1,7 +1,7 @@
 /**
  * KEditor - Kademi content editor
- * @copyright: Kademi.co
- * @author: ducdhm
+ * @copyright: Kademi (http://kademi.co)
+ * @author: Kademi (http://kademi.co)
  * @version: 1.0.0
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, $.fn.ckeditor
  */

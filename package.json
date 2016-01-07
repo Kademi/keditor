@@ -1,0 +1,24 @@
+{
+  "name": "keditor",
+  "version": "1.0.0",
+  "description": "KEditor is a JQuery plugin which provides a content editor with drag and drop snippets. Uses CK Editor for inline editing of blocks.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kademi/keditor.git"
+  },
+  "keywords": [
+    "editor",
+    "keditor",
+    "content editor"
+  ],
+  "author": "Kademi (http://kademi.co)",
+  "license": "For licensing, see LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/Kademi/keditor/issues"
+  },
+  "homepage": "https://github.com/Kademi/keditor#readme"
+}

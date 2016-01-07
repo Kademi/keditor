@@ -9,17 +9,11 @@ var sourcemaps = require('gulp-sourcemaps');
 
 // Less to CSS: Run manually with: "gulp build-css"
 gulp.task('build-css', function () {
-    return gulp.src('./*.less')
+    return gulp.src('./src/*.less')
         .pipe(plumber())
         .pipe(less())
-        .pipe(gulp.dest('./')).on('error', gutil.log);
-});
-
-// Minify CSS: Run manually with: "gulp minify-css"
-gulp.task('minify-css', function () {
-    return gulp.src(['./*.css', '!./*.min.css'])
+        .pipe(gulp.dest('./dist/css/')).on('error', gutil.log)
         .pipe(sourcemaps.init())
-        .pipe(plumber())
         .pipe(cssmin({
             keepSpecialComments: false,
             advanced: false
@@ -28,12 +22,12 @@ gulp.task('minify-css', function () {
             suffix: '.min'
         }))
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('./')).on('error', gutil.log);
+        .pipe(gulp.dest('./dist/css/')).on('error', gutil.log);
 });
 
 // Minify JS: Run manually with: "gulp uglify-js"
 gulp.task('uglify-js', function () {
-    return gulp.src(['./*.js', '!./*.min.js', '!gulpfile.js'])
+    return gulp.src(['./src/*.js'])
         .pipe(sourcemaps.init())
         .pipe(plumber())
         .pipe(uglify({
@@ -43,15 +37,14 @@ gulp.task('uglify-js', function () {
             suffix: '.min'
         }))
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('./')).on('error', gutil.log);
+        .pipe(gulp.dest('./dist/js/')).on('error', gutil.log);
 });
 
 // Watch LESS, CSS and JS: Run manually with: "gulp watch"
 gulp.task('watch', function () {
-    gulp.watch('./*.less', ['build-css']);
-    gulp.watch('./*.css', ['minify-css']);
-    gulp.watch(['./*.js', './!gulpfile.js'], ['uglify-js']);
+    gulp.watch('./src/*.less', ['build-css']);
+    gulp.watch('./src/*.js', ['uglify-js']);
 });
 
 // Default task
-gulp.task('default', ['build-css', 'minify-css', 'uglify-js', 'watch']);
+gulp.task('default', ['build-css', 'uglify-js', 'watch']);

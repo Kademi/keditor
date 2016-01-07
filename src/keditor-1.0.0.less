@@ -1,9 +1,10 @@
-@keditor-border-color               : #ddd;
-@keditor-border-color-hover         : #ccc;
-@keditor-snippets-container-bg      : #f0f0f0;
-@keditor-snippet-bg                 : #fff;
-@keditor-snippets-toggler-color     : #666;
-@keditor-snippet-placeholder-bg     : #eee;
+@keditor-border-color                       : #ddd;
+@keditor-border-color-hover                 : #ccc;
+@keditor-snippets-container-bg              : #f0f0f0;
+@keditor-snippet-bg                         : #fff;
+@keditor-snippets-toggler-border-radius     : 3px;
+@keditor-snippets-toggler-color             : #666;
+@keditor-snippet-placeholder-bg             : #eee;
 
 /* ==================================================================================
    Content area
@@ -85,7 +86,7 @@ body.opened-keditor-snippets{
     border: 1px solid @keditor-border-color;
     border-right: 0;
     cursor: pointer;
-    border-radius: 3px 0 0 3px;
+    border-radius: @keditor-snippets-toggler-border-radius 0 0 @keditor-snippets-toggler-border-radius;
     color: @keditor-snippets-toggler-color;
 }
 

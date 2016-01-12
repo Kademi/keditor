@@ -5,12 +5,36 @@
         <title>KEditor - Kademi Content Editor</title>
         <link rel="stylesheet" type="text/css" href="plugins/bootstrap-3.3.6/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="plugins/font-awesome-4.5.0/css/font-awesome.min.css" />
+        <script src="plugins/jquery-1.11.3/jquery-1.11.3.min.js"></script>
+        <script src="plugins/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     </head>
 
     <body>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-top">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="https://github.com/Kademi/keditor">KEditor</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbar-top">
+                    <ul class="nav navbar-nav">
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="http://kademi.co" target="_blank">Kademi.co</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
         <div class="container">
-            <h1>Examples</h1>
-            <ul>
+            <h2>Examples</h2>
+            <ul class="lead">
                 <li><a href="basic_ckeditor.html" target="_blank">Basic CKEditor toolbar</a></li>
                 <li><a href="standard_ckeditor.html" target="_blank">Standard CKEditor toolbar</a></li>
                 <li><a href="full_ckeditor.html" target="_blank">Full CKEditor toolbar</a></li>

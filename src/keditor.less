@@ -1,3 +1,11 @@
+/*!
+ * KEditor - Kademi content editor
+ * @copyright: Kademi (http://kademi.co)
+ * @author: Kademi (http://kademi.co)
+ * @version: @{version}
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, $.fn.ckeditor, FontAwesome
+ */
+
 @keditor-border-color                       : #ddd;
 @keditor-border-color-hover                 : #ccc;
 @keditor-snippets-container-bg              : #f0f0f0;
@@ -5,6 +13,21 @@
 @keditor-snippets-toggler-border-radius     : 3px;
 @keditor-snippets-toggler-color             : #666;
 @keditor-snippet-placeholder-bg             : #eee;
+
+/* ==================================================================================
+   Buttons and button groups
+   ================================================================================== */
+@import "less/variables";
+@import "less/mixins";
+@import "less/buttons";
+@import "less/button-groups";
+
+/* ==================================================================================
+   Body
+   ================================================================================== */
+body {
+    margin: 0;
+}
 
 /* ==================================================================================
    Content area
@@ -51,6 +74,17 @@ body.opened-keditor-snippets{
 /* ==================================================================================
    keditor-snippet
    ================================================================================== */
+.keditor-box-sizing() {
+    &,
+    * {
+        &,
+        &:before,
+        &:after {
+            box-sizing: border-box;
+        }
+    }
+}
+
 #keditor-snippets-container {
     position: fixed;
     z-index: 1000;
@@ -64,6 +98,8 @@ body.opened-keditor-snippets{
     box-shadow: -1px 0 5px rgba(0, 0, 0, .15);
     padding: 10px 5px;
     transition: all 0.3s;
+
+    .keditor-box-sizing();
 
     &:hover {
         opacity: 1;
@@ -110,11 +146,7 @@ body.opened-keditor-snippets{
     transition: all 0.3s;
     float: left;
     background: @keditor-snippet-bg;
-    margin: 0 5px;
-
-    + .keditor-snippet {
-        margin-top: 10px;
-    }
+    margin: 0 5px 10px;
 }
 
 /* ==================================================================================
@@ -129,6 +161,7 @@ body.opened-keditor-snippets{
         width: 20px;
         left: -27px;
         display: none;
+        .keditor-box-sizing();
 
         .btn {
             padding: 1px 3px;
@@ -158,6 +191,8 @@ body.opened-keditor-snippets{
    Drag n Drop helper
    ================================================================================== */
 .keditor-snippet {
+    .keditor-box-sizing();
+
     // When dragging
     &.ui-draggable-dragging {
         transition: none !important;

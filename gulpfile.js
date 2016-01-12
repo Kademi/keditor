@@ -7,16 +7,35 @@ var gutil = require('gulp-util');
 var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
 var copy = require('gulp-copy');
+var pjson = require('./package.json');
+var rimraf = require('gulp-rimraf');
+var replace = require('gulp-replace');
+
+// Clean folder './dist/css/': Run manually with: "gulp clean-css-dist"
+gulp.task('clean-css-dist', function () {
+    return gulp.src('./dist/css/*.*')
+        .pipe(rimraf());
+});
+
+// Clean folder './dist/js/': Run manually with: "gulp clean-js-dist"
+gulp.task('clean-js-dist', function () {
+    return gulp.src('./dist/js/*.*')
+        .pipe(rimraf());
+});
 
 // Less to CSS: Run manually with: "gulp build-css"
 gulp.task('build-css', function () {
     return gulp.src('./src/*.less')
         .pipe(plumber())
         .pipe(less())
+        .pipe(replace('@{version}', pjson.version))
+        .pipe(rename({
+            suffix: '-' + pjson.version
+        }))
         .pipe(gulp.dest('./dist/css/')).on('error', gutil.log)
         .pipe(sourcemaps.init())
         .pipe(cssmin({
-            keepSpecialComments: false,
+            keepSpecialComments: 1,
             advanced: false
         }))
         .pipe(rename({
@@ -29,6 +48,10 @@ gulp.task('build-css', function () {
 // Minify JS: Run manually with: "gulp uglify-js"
 gulp.task('uglify-js', function () {
     return gulp.src(['./src/*.js'])
+        .pipe(replace('@{version}', pjson.version))
+        .pipe(rename({
+            suffix: '-' + pjson.version
+        }))
         .pipe(gulp.dest('./dist/js/'), {
             base: './src/'
         })
@@ -46,9 +69,9 @@ gulp.task('uglify-js', function () {
 
 // Watch LESS, CSS and JS: Run manually with: "gulp watch"
 gulp.task('watch', function () {
-    gulp.watch('./src/*.less', ['build-css']);
-    gulp.watch('./src/*.js', ['uglify-js']);
+    gulp.watch('./src/*.less', ['clean-css-dist', 'build-css']);
+    gulp.watch('./src/*.js', ['clean-js-dist', 'uglify-js']);
 });
 
 // Default task
-gulp.task('default', ['build-css', 'uglify-js', 'watch']);
+gulp.task('default', ['clean-css-dist', 'build-css', 'clean-js-dist', 'uglify-js', 'watch']);

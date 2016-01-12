@@ -2,19 +2,24 @@
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.0.0
- * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, $.fn.ckeditor
+ * @version: @{version}
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, $.fn.ckeditor, FontAwesome
  *
  * Configuration:
- * @option {Object} ckeditor Configuration for CKEditor. See at http://docs.ckeditor.com/#!/api/CKEDITOR.config
+ * @option {Object} ckeditor Configuration for CKEditor. See at http://docs.ckeditor.com/#!/api/CKEDITOR.options
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
- * @option {Function} onContentChange Callback will be called when content is changed
+ * @option {Function} onContentChanged Callback will be called when content is changed. Arguments: event
+ * @option {Function} onSnippetDropped Callback will be called when snippet is dropped into content area. Arguments: event, newSection, droppedSnippet
+ * @option {Function} onBeforeSectionDeleted Callback will be called before selected section is deleted. Arguments: event, btnRemove, selectedSection
+ * @option {Function} onSectionChanged Callback will be called when content of section is changed. Arguments: event, changedSection
+ * @option {Function} onSectionDuplicated Callback will be called when section is duplicated. Arguments: event, originalSection, newSection
+ * @option {Function} onSectionSelected Callback will be called when section is selected. Arguments: event, selectedSection
  */
 (function ($) {
     // Log function will print log message when "$.fn.keditor.debug" equals "true"
     var flog = function () {
-        if (typeof (console) !== 'undefined' && $.fn.keditor.debug) {
+        if (typeof (console) !== 'undefined' && $.fn.keditor.debug === true) {
             if (navigator.appName == 'Microsoft Internet Explorer') {
                 // BM: Previous used JSON, but that crashed IE sometimes. So this is pretty crap, but at least safer
                 if (arguments.length == 1) {
@@ -62,10 +67,13 @@
         }
     };
 
+    // Debug mode
     $.fn.keditor.debug = true;
 
+    // Version of KEditor
     $.fn.keditor.version = '1.0.0';
 
+    // Default configuration of KEditor
     var DEFAULTS = $.fn.keditor.DEFAULTS = {
         ckeditor: {
             allowedContent: true, // DISABLES Advanced Content Filter. This is so templates with classes are allowed through
@@ -83,26 +91,36 @@
             removePlugins: 'magicline',
             minimumChangeMilliseconds: 100
         },
-        snippetsUrl: 'snippets.html',
+        snippetsUrl: 'snippets/default/snippets.html',
         snippetsListId: 'keditor-snippets-list',
-        onContentChange: function () {
+        onContentChanged: function (event) {
+        },
+        onSnippetDropped: function (event, newSection, droppedSnippet) {
+        },
+        onBeforeSectionDeleted: function (event, btnRemove, selectedSection) {
+        },
+        onSectionChanged: function (event, changedSection) {
+        },
+        onSectionDuplicated: function (event, originalSection, newSection) {
+        },
+        onSectionSelected: function (event, selectedSection) {
         }
     };
 
+    // Object KEditor
     var KEditor = {
         initSnippet: function (contentArea, options) {
             flog('initSnippetToggler', contentArea, options);
 
             var body = $(document.body);
             body.addClass('opened-keditor-snippets');
-            contentArea.addClass('keditor-content-area');
 
             if (options.snippetsListId === DEFAULTS.snippetsListId) {
                 flog('Render default KEditor snippet container');
 
                 body.append(
                     '<div id="keditor-snippets-container">' +
-                    '    <a id="keditor-snippets-toggler"><i class="glyphicon glyphicon-chevron-right"></i></a>' +
+                    '    <a id="keditor-snippets-toggler"><i class="fa fa-chevron-right"></i></a>' +
                     '    <div id="keditor-snippets-list" class="clearfix"></div>' +
                     '    <div id="keditor-snippets-content" style="display: none"></div>' +
                     '</div>'
@@ -125,7 +143,6 @@
 
                         KEditor.renderSnippets(resp, options);
                         KEditor.initSnippetsActions(contentArea, options);
-                        KEditor.initContentAreaActions(contentArea, options);
                     },
                     error: function (jqXHR) {
                         flog('Error when getting snippets', jqXHR);
@@ -147,10 +164,10 @@
                 var icon = $(this).find('i');
                 if (body.hasClass('opened-keditor-snippets')) {
                     body.removeClass('opened-keditor-snippets');
-                    icon.attr('class', 'glyphicon glyphicon-chevron-left')
+                    icon.attr('class', 'fa fa-chevron-left')
                 } else {
                     body.addClass('opened-keditor-snippets');
-                    icon.attr('class', 'glyphicon glyphicon-chevron-right')
+                    icon.attr('class', 'fa fa-chevron-right')
                 }
             });
         },
@@ -217,11 +234,12 @@
             });
         },
 
-        initContentAreaActions: function (contentArea, options) {
-            flog('initContentAreaActions', contentArea, options);
+        initContentArea: function (contentArea, options) {
+            flog('initContentArea', contentArea, options);
 
             var body = $(document.body);
             var contentAreaId = contentArea.attr('id');
+            contentArea.addClass('keditor-content-area');
 
             flog('Initialize $.fn.droppable for content area');
             contentArea.droppable({
@@ -246,22 +264,27 @@
                     var item = ui.item;
                     var snippetContent = $(item.attr('data-snippet')).html();
                     flog('Snippet content', snippetContent);
+
                     var section = $(
                         '<section class="keditor-section">' +
                         '   <section class="keditor-section-content">' + snippetContent + '</section>' +
                         '</section>'
                     );
-
                     helper.replaceWith(section);
+
+                    if (typeof options.onSnippetDropped === 'function') {
+                        options.onSnippetDropped.call(this, event, section, ui.item);
+                    }
+
                     KEditor.initContentEditable(section, options);
 
-                    if (typeof options.onContentChange === 'function') {
-                        options.onContentChange.call(this, event);
+                    if (typeof options.onContentChanged === 'function') {
+                        options.onContentChanged.call(this, event);
                     }
                 }
             });
 
-            flog('Initialize sections in content area');
+            flog('Initialize existing sections in content area');
             contentArea.find('> section').each(function () {
                 var section = $(this);
                 section.addClass('keditor-section-content');
@@ -273,10 +296,17 @@
 
             body.on('click', function (e) {
                 var section = KEditor.getClickElement(e, 'section.keditor-section');
-                contentArea.find('.keditor-section.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                 if (section) {
-                    flog('Click on .keditor-section');
-                    section.addClass('showed-keditor-toolbar');
+                    flog('Click on .keditor-section', section);
+
+                    if (!section.hasClass('showed-keditor-toolbar')) {
+                        contentArea.find('.keditor-section.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                        section.addClass('showed-keditor-toolbar');
+
+                        if (typeof options.onSectionSelected === 'function') {
+                            options.onSectionSelected.call(this, e, section);
+                        }
+                    }
                 }
 
                 var btnRemove = KEditor.getClickElement(e, '.btn-section-delete');
@@ -285,16 +315,45 @@
 
                     if (confirm('Are you sure that you want to delete this section? This action can not be undo!')) {
                         var selectedSection = btnRemove.closest('section.keditor-section');
-                        var id = selectedSection.find('.keditor-section-content').attr('id');
+                        if (typeof options.onBeforeSectionDeleted === 'function') {
+                            options.onBeforeSectionDeleted.call(this, e, btnRemove, selectedSection);
+                        }
 
+                        var id = selectedSection.find('.keditor-section-content').attr('id');
                         CKEDITOR.instances[id].destroy();
                         selectedSection.remove();
 
                         flog('Section is deleted');
 
-                        if (typeof options.onContentChange === 'function') {
-                            options.onContentChange.call(this, e);
+                        if (typeof options.onContentChanged === 'function') {
+                            options.onContentChanged.call(this, e);
                         }
+                    }
+                }
+
+                var btnDuplicate = KEditor.getClickElement(e, '.btn-section-duplicate');
+                if (btnDuplicate) {
+                    flog('Click on .btn-section-duplicate', btnDuplicate);
+
+                    var selectedSection = btnDuplicate.closest('section.keditor-section');
+                    var selectedSectionContent = KEditor.getSectionContent(selectedSection);
+                    var newSection = $(
+                        '<section class="keditor-section">' +
+                        '   <section class="keditor-section-content">' + selectedSectionContent + '</section>' +
+                        '</section>'
+                    );
+
+                    selectedSection.after(newSection);
+                    KEditor.initContentEditable(newSection, options);
+
+                    flog('Section is duplicated');
+
+                    if (typeof options.onSectionDuplicated === 'function') {
+                        options.onSectionDuplicated.call(this, e, selectedSection, newSection);
+                    }
+
+                    if (typeof options.onContentChanged === 'function') {
+                        options.onContentChanged.call(this, e);
                     }
                 }
             });
@@ -323,8 +382,9 @@
                 section.append(
                     '<div class="keditor-toolbar">' +
                     '   <div class="btn-group-vertical">' +
-                    '       <a href="#" class="btn btn-xs btn-info btn-section-reposition"><i class="glyphicon glyphicon-sort"></i></a>' +
-                    '       <a href="#" class="btn btn-xs btn-danger btn-section-delete"><i class="glyphicon glyphicon-remove"></i></a>' +
+                    '       <a href="#" class="btn btn-xs btn-info btn-section-reposition"><i class="fa fa-sort"></i></a>' +
+                    '       <a href="#" class="btn btn-xs btn-warning btn-section-duplicate"><i class="fa fa-files-o"></i></a>' +
+                    '       <a href="#" class="btn btn-xs btn-danger btn-section-delete"><i class="fa fa-remove"></i></a>' +
                     '   </div>' +
                     '</div>'
                 );
@@ -339,8 +399,12 @@
 
                 sectionContent.ckeditor(options.ckeditor);
                 sectionContent.on('input', function (e) {
-                    if (typeof options.onContentChange === 'function') {
-                        options.onContentChange.call(this, e);
+                    if (typeof options.onSectionChanged === 'function') {
+                        options.onSectionChanged.call(this, e);
+                    }
+
+                    if (typeof options.onContentChanged === 'function') {
+                        options.onContentChanged.call(this, e);
                     }
                 });
 
@@ -353,6 +417,12 @@
                     flog('Section is initializing...');
                 }
             }
+        },
+
+        getSectionContent: function (section) {
+            var id = section.find('.keditor-section-content').attr('id');
+
+            return CKEDITOR.instances[id].getData();
         }
     };
 
@@ -373,6 +443,7 @@
 
                     options = $.extend({}, DEFAULTS, options);
                     contentArea.data('keditorOptions', options);
+                    KEditor.initContentArea(contentArea, options);
                     KEditor.initSnippet(contentArea, options);
                 }
 
@@ -385,9 +456,8 @@
 
             contentArea.find('> section').each(function () {
                 var section = $(this);
-                var id = section.find('.keditor-section-content').attr('id');
 
-                html += '<section>' + CKEDITOR.instances[id].getData() + '</section>';
+                html += '<section>' + KEditor.getSectionContent(section) + '</section>';
             });
 
             return html;

@@ -6,7 +6,7 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * jQuery UI: https://jqueryui.com/
  * NiceScroll: http://areaaperta.com/nicescroll/ (Optional)
  * CKEditor: http://ckeditor.com/
- * FontAwesome: fontawesome.io
+ * FontAwesome: http://fontawesome.io/
 
 # Configuration
 ```javascript

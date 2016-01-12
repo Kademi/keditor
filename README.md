@@ -39,9 +39,19 @@ $.fn.keditor.DEFAULTS = {
         removePlugins: 'magicline',
         minimumChangeMilliseconds: 100
     },
-    snippetsUrl: 'snippets.html',
+    snippetsUrl: 'snippets/default/snippets.html',
     snippetsListId: 'keditor-snippets-list',
-    onContentChange: function () {
+    onContentChanged: function (event) {
+    },
+    onSnippetDropped: function (event, newSection, droppedSnippet) {
+    },
+    onBeforeSectionDeleted: function (event, btnRemove, selectedSection) {
+    },
+    onSectionChanged: function (event, changedSection) {
+    },
+    onSectionDuplicated: function (event, originalSection, newSection) {
+    },
+    onSectionSelected: function (event, selectedSection) {
     }
 };
 ```

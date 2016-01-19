@@ -747,6 +747,13 @@ body.opened-keditor-snippets #keditor-snippets-container {
   float: left;
   background: #fff;
   margin: 0 5px 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.keditor-snippet img {
+  display: block;
 }
 /* ==================================================================================
    KEditor

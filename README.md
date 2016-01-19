@@ -66,4 +66,4 @@ $.fn.keditor.DEFAULTS = {
 Please read at https://github.com/Kademi/keditor/blob/master/LICENSE.md
 
 # Lived examples
- * https://rawgit.com/Kademi/keditor/master/examples/index.html
+https://rawgit.com/Kademi/keditor/master/examples/index.html

@@ -43,6 +43,12 @@
         <script type="text/javascript">
             $(function() {
                 $('#content-area').keditor({
+                    onInitContent: function (contentArea) {
+                        console.log('onInitContent', contentArea);
+                    },
+                    onInitSection: function (section) {
+                        console.log('onInitSection', section);
+                    },
                     onContentChanged: function (event) {
                         console.log('onContentChanged', event);
                     },

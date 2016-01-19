@@ -33,10 +33,10 @@ body {
    Content area
    ================================================================================== */
 .keditor-content-area {
-    min-height: 100px !important;
+    min-height: 100px;
     width: auto;
     margin: 0;
-    padding: 80px 30px 30px !important;
+    padding: 80px 30px 30px;
     max-width: 1200px;
 }
 
@@ -98,6 +98,7 @@ body.opened-keditor-snippets{
     box-shadow: -1px 0 5px rgba(0, 0, 0, .15);
     padding: 10px 5px;
     transition: all 0.3s;
+    font: @font-size-base/@line-height-base @font-family-base;
 
     .keditor-box-sizing();
 
@@ -205,5 +206,12 @@ body.opened-keditor-snippets{
         height: 10px !important;
         margin: 5px 0 !important;
         float: none !important;
+    }
+}
+
+.keditor-section {
+    &.ui-sortable-helper {
+        background: #fff !important;
+        opacity: 0.5;
     }
 }

@@ -9,6 +9,8 @@
  * @option {Object} ckeditor Configuration for CKEditor. See at http://docs.ckeditor.com/#!/api/CKEDITOR.options
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
+ * @option {Function} onInitContent Method will be called when initializing content area. It can return array of jQuery objects which will be initialized as editable section in content area. By default, all first level sections under content area will be initialized.
+ * @option {Function} onInitSection Method will be called when initializing section after dropped snippet into content are. Arguments: section
  * @option {Function} onContentChanged Callback will be called when content is changed. Arguments: event
  * @option {Function} onSnippetDropped Callback will be called when snippet is dropped into content area. Arguments: event, newSection, droppedSnippet
  * @option {Function} onBeforeSectionDeleted Callback will be called before selected section is deleted. Arguments: event, btnRemove, selectedSection
@@ -93,6 +95,10 @@
         },
         snippetsUrl: 'snippets/default/snippets.html',
         snippetsListId: 'keditor-snippets-list',
+        onInitContent: function (contentArea) {
+        },
+        onInitSection: function (section) {
+        },
         onContentChanged: function (event) {
         },
         onSnippetDropped: function (event, newSection, droppedSnippet) {
@@ -294,6 +300,19 @@
                 KEditor.initContentEditable(keditorSection, options);
             });
 
+            if (typeof options.onInitContent === 'function') {
+                var contentData = options.onInitContent(contentArea);
+                if (contentData && contentData.length > 0) {
+                    $.each(contentData, function () {
+                        var content = $(this);
+                        content.wrap('<section class="keditor-section"><section class="keditor-section-content"></section></section>');
+
+                        var keditorSection = content.parent().parent();
+                        KEditor.initContentEditable(keditorSection, options);
+                    });
+                }
+            }
+
             body.on('click', function (e) {
                 var section = KEditor.getClickElement(e, 'section.keditor-section');
                 if (section) {
@@ -384,7 +403,7 @@
                     '   <div class="btn-group-vertical">' +
                     '       <a href="#" class="btn btn-xs btn-info btn-section-reposition"><i class="fa fa-sort"></i></a>' +
                     '       <a href="#" class="btn btn-xs btn-warning btn-section-duplicate"><i class="fa fa-files-o"></i></a>' +
-                    '       <a href="#" class="btn btn-xs btn-danger btn-section-delete"><i class="fa fa-remove"></i></a>' +
+                    '       <a href="#" class="btn btn-xs btn-danger btn-section-delete"><i class="fa fa-times"></i></a>' +
                     '   </div>' +
                     '</div>'
                 );
@@ -407,6 +426,10 @@
                         options.onContentChanged.call(this, e);
                     }
                 });
+
+                if (typeof options.onInitSection === 'function') {
+                    options.onInitSection.call(this, section);
+                }c
 
                 section.addClass('keditor-editable');
                 section.removeClass('keditor-initializing');
@@ -450,14 +473,22 @@
                 return contentArea;
             });
         },
-        getContent: function () {
+        getContent: function (isWrapped) {
             var contentArea = $(this);
             var html = '';
 
             contentArea.find('> section').each(function () {
                 var section = $(this);
 
-                html += '<section>' + KEditor.getSectionContent(section) + '</section>';
+                if (isWrapped) {
+                    html += '<section>';
+                }
+
+                html += KEditor.getSectionContent(section);
+
+                if (isWrapped) {
+                    html += '</section>';
+                }
             });
 
             return html;

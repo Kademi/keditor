@@ -429,7 +429,7 @@
 
                 if (typeof options.onInitSection === 'function') {
                     options.onInitSection.call(this, section);
-                }c
+                }
 
                 section.addClass('keditor-editable');
                 section.removeClass('keditor-initializing');

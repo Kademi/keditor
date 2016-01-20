@@ -177,14 +177,16 @@ body.opened-keditor-snippets{
     }
 
     &.showed-keditor-toolbar {
-        .keditor-section-content {
-            outline: 1px dashed @keditor-border-color !important;
-            outline-offset: 2px;
-            margin: 10px 0;
+        outline: 1px dashed @keditor-border-color !important;
+        outline-offset: 2px;
+        margin: 10px 0;
 
-            &:first-child {
-                margin-top: 0;
-            }
+        &:first-child {
+            margin-top: 0;
+        }
+
+        .keditor-section-content {
+            outline: none !important;
         }
 
         .keditor-toolbar {

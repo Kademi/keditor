@@ -781,13 +781,16 @@ body.opened-keditor-snippets #keditor-snippets-container {
   font-size: 10px;
   line-height: 1.5;
 }
-.keditor-section.showed-keditor-toolbar .keditor-section-content {
+.keditor-section.showed-keditor-toolbar {
   outline: 1px dashed #ddd !important;
   outline-offset: 2px;
   margin: 10px 0;
 }
-.keditor-section.showed-keditor-toolbar .keditor-section-content:first-child {
+.keditor-section.showed-keditor-toolbar:first-child {
   margin-top: 0;
+}
+.keditor-section.showed-keditor-toolbar .keditor-section-content {
+  outline: none !important;
 }
 .keditor-section.showed-keditor-toolbar .keditor-toolbar {
   display: block;

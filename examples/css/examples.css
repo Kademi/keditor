@@ -1,0 +1,9 @@
+#content-area1,
+#content-area2,
+#content-area3 {
+    padding: 30px;
+    margin: 20px;
+    background: #fafafa;
+    min-height: 150px;
+    border: 3px dashed #ccc;
+}

@@ -115,8 +115,8 @@
 
     // Object KEditor
     var KEditor = {
-        initSnippet: function (contentArea, options) {
-            flog('initSnippetToggler', contentArea, options);
+        initSnippet: function (contentAreaIds, options) {
+            flog('initSnippetToggler', contentAreaIds, options);
 
             var body = $(document.body);
             body.addClass('opened-keditor-snippets');
@@ -148,7 +148,7 @@
                         flog('Success in getting snippets', resp);
 
                         KEditor.renderSnippets(resp, options);
-                        KEditor.initSnippetsActions(contentArea, options);
+                        KEditor.initSnippetsActions(contentAreaIds, options);
                     },
                     error: function (jqXHR) {
                         flog('Error when getting snippets', jqXHR);
@@ -198,12 +198,12 @@
                 snippetsContentHtml += '<div id="keditor-snippet-' + i + '" style="display: none;">' + content + '</div>';
             });
 
-            $('#' + options.snippetsListId).html(snippetsHtml);
+            $('#' + options.snippetsListId).html(snippetsHtml).addClass('loaded-snippets');
             $('#keditor-snippets-content').html(snippetsContentHtml);
         },
 
-        initSnippetsActions: function (contentArea, options) {
-            flog('initSnippetsActions', contentArea, options);
+        initSnippetsActions: function (contentAreaIds, options) {
+            flog('initSnippetsActions', contentAreaIds, options);
 
             var snippetsList = $('#' + options.snippetsListId);
 
@@ -224,12 +224,11 @@
                 flog('$.fn.niceScroll does not exist. Use default sidebar.');
             }
 
-            var contentAreaId = contentArea.attr('id');
-            flog('Initialize $.fn.draggable for snippets list which connect to #' + contentAreaId);
+            flog('Initialize $.fn.draggable for snippets list which connect to ' + contentAreaIds);
             snippetsList.find('.keditor-snippet').draggable({
                 helper: 'clone',
                 revert: 'invalid',
-                connectToSortable: '#' + contentAreaId,
+                connectToSortable: contentAreaIds,
                 cursorAt: {
                     top: 0,
                     left: 0
@@ -240,11 +239,9 @@
             });
         },
 
-        initContentArea: function (contentArea, options) {
-            flog('initContentArea', contentArea, options);
+        initContentArea: function (contentArea, contentAreaIds, options) {
+            flog('initContentArea', contentArea, contentAreaIds, options);
 
-            var body = $(document.body);
-            var contentAreaId = contentArea.attr('id');
             contentArea.addClass('keditor-content-area');
 
             flog('Initialize $.fn.droppable for content area');
@@ -258,7 +255,7 @@
             contentArea.sortable({
                 handle: '.btn-section-reposition',
                 items: '> section',
-                connectWith: '#' + contentAreaId,
+                connectWith: contentAreaIds,
                 axis: 'y',
                 sort: function () {
                     $(this).removeClass('ui-state-default');
@@ -282,7 +279,7 @@
                         options.onSnippetDropped.call(this, event, section, ui.item);
                     }
 
-                    KEditor.initContentEditable(section, options);
+                    KEditor.initSection(section, options);
 
                     if (typeof options.onContentChanged === 'function') {
                         options.onContentChanged.call(this, event);
@@ -297,7 +294,7 @@
                 section.wrap('<section class="keditor-section"></section>');
 
                 var keditorSection = section.parent();
-                KEditor.initContentEditable(keditorSection, options);
+                KEditor.initSection(keditorSection, options);
             });
 
             if (typeof options.onInitContent === 'function') {
@@ -308,74 +305,10 @@
                         content.wrap('<section class="keditor-section"><section class="keditor-section-content"></section></section>');
 
                         var keditorSection = content.parent().parent();
-                        KEditor.initContentEditable(keditorSection, options);
+                        KEditor.initSection(keditorSection, options);
                     });
                 }
             }
-
-            body.on('click', function (e) {
-                var section = KEditor.getClickElement(e, 'section.keditor-section');
-                if (section) {
-                    flog('Click on .keditor-section', section);
-
-                    if (!section.hasClass('showed-keditor-toolbar')) {
-                        contentArea.find('.keditor-section.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-                        section.addClass('showed-keditor-toolbar');
-
-                        if (typeof options.onSectionSelected === 'function') {
-                            options.onSectionSelected.call(this, e, section);
-                        }
-                    }
-                }
-
-                var btnRemove = KEditor.getClickElement(e, '.btn-section-delete');
-                if (btnRemove) {
-                    flog('Click on .btn-section-delete', btnRemove);
-
-                    if (confirm('Are you sure that you want to delete this section? This action can not be undo!')) {
-                        var selectedSection = btnRemove.closest('section.keditor-section');
-                        if (typeof options.onBeforeSectionDeleted === 'function') {
-                            options.onBeforeSectionDeleted.call(this, e, btnRemove, selectedSection);
-                        }
-
-                        var id = selectedSection.find('.keditor-section-content').attr('id');
-                        CKEDITOR.instances[id].destroy();
-                        selectedSection.remove();
-
-                        flog('Section is deleted');
-
-                        if (typeof options.onContentChanged === 'function') {
-                            options.onContentChanged.call(this, e);
-                        }
-                    }
-                }
-
-                var btnDuplicate = KEditor.getClickElement(e, '.btn-section-duplicate');
-                if (btnDuplicate) {
-                    flog('Click on .btn-section-duplicate', btnDuplicate);
-
-                    var selectedSection = btnDuplicate.closest('section.keditor-section');
-                    var selectedSectionContent = KEditor.getSectionContent(selectedSection);
-                    var newSection = $(
-                        '<section class="keditor-section">' +
-                        '   <section class="keditor-section-content">' + selectedSectionContent + '</section>' +
-                        '</section>'
-                    );
-
-                    selectedSection.after(newSection);
-                    KEditor.initContentEditable(newSection, options);
-
-                    flog('Section is duplicated');
-
-                    if (typeof options.onSectionDuplicated === 'function') {
-                        options.onSectionDuplicated.call(this, e, selectedSection, newSection);
-                    }
-
-                    if (typeof options.onContentChanged === 'function') {
-                        options.onContentChanged.call(this, e);
-                    }
-                }
-            });
         },
 
         getClickElement: function (event, selector) {
@@ -391,8 +324,8 @@
             }
         },
 
-        initContentEditable: function (section, options) {
-            flog('initContentEditable', section, options);
+        initSection: function (section, options) {
+            flog('initSection', section, options);
 
             if (!section.hasClass('keditor-editable') || !section.hasClass('keditor-initializing')) {
                 section.addClass('keditor-initializing');
@@ -442,6 +375,76 @@
             }
         },
 
+        initSectionActions: function (options) {
+            flog('initSectionActions', options);
+            
+            var body = $(document.body);
+
+            body.on('click', function (e) {
+                var section = KEditor.getClickElement(e, 'section.keditor-section');
+                if (section) {
+                    flog('Click on .keditor-section', section);
+
+                    if (!section.hasClass('showed-keditor-toolbar')) {
+                        $('.keditor-section.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                        section.addClass('showed-keditor-toolbar');
+
+                        if (typeof options.onSectionSelected === 'function') {
+                            options.onSectionSelected.call(this, e, section);
+                        }
+                    }
+                }
+
+                var btnRemove = KEditor.getClickElement(e, '.btn-section-delete');
+                if (btnRemove) {
+                    flog('Click on .btn-section-delete', btnRemove);
+
+                    if (confirm('Are you sure that you want to delete this section? This action can not be undo!')) {
+                        var selectedSection = btnRemove.closest('section.keditor-section');
+                        if (typeof options.onBeforeSectionDeleted === 'function') {
+                            options.onBeforeSectionDeleted.call(this, e, btnRemove, selectedSection);
+                        }
+
+                        var id = selectedSection.find('.keditor-section-content').attr('id');
+                        CKEDITOR.instances[id].destroy();
+                        selectedSection.remove();
+
+                        flog('Section is deleted');
+
+                        if (typeof options.onContentChanged === 'function') {
+                            options.onContentChanged.call(this, e);
+                        }
+                    }
+                }
+
+                var btnDuplicate = KEditor.getClickElement(e, '.btn-section-duplicate');
+                if (btnDuplicate) {
+                    flog('Click on .btn-section-duplicate', btnDuplicate);
+
+                    var selectedSection = btnDuplicate.closest('section.keditor-section');
+                    var selectedSectionContent = KEditor.getSectionContent(selectedSection);
+                    var newSection = $(
+                        '<section class="keditor-section">' +
+                        '   <section class="keditor-section-content">' + selectedSectionContent + '</section>' +
+                        '</section>'
+                    );
+
+                    selectedSection.after(newSection);
+                    KEditor.initSection(newSection, options);
+
+                    flog('Section is duplicated');
+
+                    if (typeof options.onSectionDuplicated === 'function') {
+                        options.onSectionDuplicated.call(this, e, selectedSection, newSection);
+                    }
+
+                    if (typeof options.onContentChanged === 'function') {
+                        options.onContentChanged.call(this, e);
+                    }
+                }
+            });  
+        },
+
         getSectionContent: function (section) {
             var id = section.find('.keditor-section-content').attr('id');
 
@@ -451,27 +454,45 @@
 
     var methods = {
         init: function (options) {
-            return $(this).each(function () {
+            var contentAreas = $(this);
+            var contentAreaIds = [];
+            options = $.extend({}, DEFAULTS, options);
+
+            contentAreas.each(function () {
+                var contentArea = $(this);
+                if (contentArea.attr('id').length === 0) {
+                    flog('Content area does not contain Id. Generating id for content area...');
+
+                    var id = 'keditor-content-area-' + (new Date()).getTime();
+                    contentArea.attr('id', id);
+                    flog('Id for content are is: "' + id + '"');
+                }
+                contentAreaIds.push('#' + contentArea.attr('id'));
+            });
+
+            contentAreaIds = contentAreaIds.join(',');
+            flog('Content areas\' ids: ' + contentAreaIds);
+
+            var snippetsList = $('#' + options.snippetsListId);
+            if (!snippetsList.hasClass('loaded-snippets')) {
+                KEditor.initSnippet(contentAreaIds, options);
+            } else {
+                flog('Snippets list is already initialized!');
+            }
+
+            KEditor.initSectionActions(options);
+
+            contentAreas.each(function () {
                 var contentArea = $(this);
                 if (contentArea.data('keditorOptions')) {
                     flog('KEditor is already initialized!');
                 } else {
-                    if (contentArea.attr('id').length === 0) {
-                        flog('Content area does not contain Id. Generating id for content area...');
-
-                        var id = 'keditor-content-area-' + (new Date()).getTime();
-                        contentArea.attr('id', id);
-                        flog('Id for content are is: "' + id + '"');
-                    }
-
-                    options = $.extend({}, DEFAULTS, options);
                     contentArea.data('keditorOptions', options);
-                    KEditor.initContentArea(contentArea, options);
-                    KEditor.initSnippet(contentArea, options);
+                    KEditor.initContentArea(contentArea, contentAreaIds, options);
                 }
-
-                return contentArea;
             });
+
+            return contentAreas;
         },
         getContent: function (isWrapped) {
             var contentArea = $(this);

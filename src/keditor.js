@@ -406,7 +406,9 @@
                         }
 
                         var id = selectedSection.find('.keditor-section-content').attr('id');
-                        CKEDITOR.instances[id].destroy();
+                        if (CKEDITOR.instances[id]) {
+                            CKEDITOR.instances[id].destroy();
+                        }
                         selectedSection.remove();
 
                         flog('Section is deleted');

@@ -17,6 +17,7 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {Function} onInitContent Method will be called when initializing content area. It can return array of jQuery objects which will be initialized as editable section in content area. By default, all first level sections under content area will be initialized.
  * @option {Function} onInitSection Method will be called when initializing section after dropped snippet into content are. Arguments: section
+ * @option {Function} onSectionReady Method will be called after section is initialized. Arguments: section
  * @option {Function} onContentChanged Callback will be called when content is changed. Arguments: event
  * @option {Function} onSnippetDropped Callback will be called when snippet is dropped into content area. Arguments: event, newSection, droppedSnippet
  * @option {Function} onBeforeSectionDeleted Callback will be called before selected section is deleted. Arguments: event, btnRemove, selectedSection

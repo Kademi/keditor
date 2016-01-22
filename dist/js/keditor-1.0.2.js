@@ -11,6 +11,7 @@
  * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {Function} onInitContent Method will be called when initializing content area. It can return array of jQuery objects which will be initialized as editable section in content area. By default, all first level sections under content area will be initialized.
  * @option {Function} onInitSection Method will be called when initializing section after dropped snippet into content are. Arguments: section
+ * @option {Function} onSectionReady Method will be called after section is initialized. Arguments: section
  * @option {Function} onContentChanged Callback will be called when content is changed. Arguments: event
  * @option {Function} onSnippetDropped Callback will be called when snippet is dropped into content area. Arguments: event, newSection, droppedSnippet
  * @option {Function} onBeforeSectionDeleted Callback will be called before selected section is deleted. Arguments: event, btnRemove, selectedSection
@@ -98,6 +99,8 @@
         onInitContent: function (contentArea) {
         },
         onInitSection: function (section) {
+        },
+        onSectionReady: function (section) {
         },
         onContentChanged: function (event) {
         },
@@ -349,7 +352,7 @@
                 flog('Id for section content is: ' + id);
                 sectionContent.attr('id', id);
 
-                sectionContent.ckeditor(options.ckeditor);
+                var editor = sectionContent.ckeditor(options.ckeditor).editor;
                 sectionContent.on('input', function (e) {
                     if (typeof options.onSectionChanged === 'function') {
                         options.onSectionChanged.call(this, e);
@@ -357,6 +360,14 @@
 
                     if (typeof options.onContentChanged === 'function') {
                         options.onContentChanged.call(this, e);
+                    }
+                });
+
+                editor.on('instanceReady', function () {
+                    flog('CKEditor is ready', section);
+
+                    if (typeof options.onSectionReady === 'function') {
+                        options.onSectionReady.call(this, section);
                     }
                 });
 
@@ -406,7 +417,9 @@
                         }
 
                         var id = selectedSection.find('.keditor-section-content').attr('id');
-                        CKEDITOR.instances[id].destroy();
+                        if (CKEDITOR.instances[id]) {
+                            CKEDITOR.instances[id].destroy();
+                        }
                         selectedSection.remove();
 
                         flog('Section is deleted');

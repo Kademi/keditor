@@ -279,13 +279,13 @@
                     helper.replaceWith(section);
 
                     if (typeof options.onSnippetDropped === 'function') {
-                        options.onSnippetDropped.call(this, event, section, ui.item);
+                        options.onSnippetDropped.call(contentArea, event, section, ui.item);
                     }
 
                     KEditor.initSection(section, options);
 
                     if (typeof options.onContentChanged === 'function') {
-                        options.onContentChanged.call(this, event);
+                        options.onContentChanged.call(contentArea, event);
                     }
                 }
             });
@@ -301,7 +301,7 @@
             });
 
             if (typeof options.onInitContent === 'function') {
-                var contentData = options.onInitContent(contentArea);
+                var contentData = options.onInitContent.call(contentArea, contentArea);
                 if (contentData && contentData.length > 0) {
                     $.each(contentData, function () {
                         var content = $(this);
@@ -352,14 +352,16 @@
                 flog('Id for section content is: ' + id);
                 sectionContent.attr('id', id);
 
+                var contentArea = section.parent();
                 var editor = sectionContent.ckeditor(options.ckeditor).editor;
+
                 sectionContent.on('input', function (e) {
                     if (typeof options.onSectionChanged === 'function') {
-                        options.onSectionChanged.call(this, e);
+                        options.onSectionChanged.call(contentArea, e, section);
                     }
 
                     if (typeof options.onContentChanged === 'function') {
-                        options.onContentChanged.call(this, e);
+                        options.onContentChanged.call(contentArea, e);
                     }
                 });
 
@@ -367,12 +369,12 @@
                     flog('CKEditor is ready', section);
 
                     if (typeof options.onSectionReady === 'function') {
-                        options.onSectionReady.call(this, section);
+                        options.onSectionReady.call(contentArea, section);
                     }
                 });
 
                 if (typeof options.onInitSection === 'function') {
-                    options.onInitSection.call(this, section);
+                    options.onInitSection.call(contentArea, section);
                 }
 
                 section.addClass('keditor-editable');
@@ -400,8 +402,9 @@
                         $('.keditor-section.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                         section.addClass('showed-keditor-toolbar');
 
+                        var contentArea = section.parent();
                         if (typeof options.onSectionSelected === 'function') {
-                            options.onSectionSelected.call(this, e, section);
+                            options.onSectionSelected.call(contentArea, e, section);
                         }
                     }
                 }
@@ -412,8 +415,9 @@
 
                     if (confirm('Are you sure that you want to delete this section? This action can not be undo!')) {
                         var selectedSection = btnRemove.closest('section.keditor-section');
+                        var contentArea = section.parent();
                         if (typeof options.onBeforeSectionDeleted === 'function') {
-                            options.onBeforeSectionDeleted.call(this, e, btnRemove, selectedSection);
+                            options.onBeforeSectionDeleted.call(contentArea, e, btnRemove, selectedSection);
                         }
 
                         var id = selectedSection.find('.keditor-section-content').attr('id');
@@ -425,7 +429,7 @@
                         flog('Section is deleted');
 
                         if (typeof options.onContentChanged === 'function') {
-                            options.onContentChanged.call(this, e);
+                            options.onContentChanged.call(contentArea, e);
                         }
                     }
                 }
@@ -436,6 +440,7 @@
 
                     var selectedSection = btnDuplicate.closest('section.keditor-section');
                     var selectedSectionContent = KEditor.getSectionContent(selectedSection);
+                    var contentArea = section.parent();
                     var newSection = $(
                         '<section class="keditor-section">' +
                         '   <section class="keditor-section-content">' + selectedSectionContent + '</section>' +
@@ -448,11 +453,11 @@
                     flog('Section is duplicated');
 
                     if (typeof options.onSectionDuplicated === 'function') {
-                        options.onSectionDuplicated.call(this, e, selectedSection, newSection);
+                        options.onSectionDuplicated.call(contentArea, e, selectedSection, newSection);
                     }
 
                     if (typeof options.onContentChanged === 'function') {
-                        options.onContentChanged.call(this, e);
+                        options.onContentChanged.call(contentArea, e);
                     }
                 }
             });  

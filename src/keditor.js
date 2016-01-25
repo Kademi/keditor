@@ -411,6 +411,7 @@
 
                 var btnRemove = KEditor.getClickElement(e, '.btn-section-delete');
                 if (btnRemove) {
+                    e.preventDefault();
                     flog('Click on .btn-section-delete', btnRemove);
 
                     if (confirm('Are you sure that you want to delete this section? This action can not be undo!')) {
@@ -436,6 +437,7 @@
 
                 var btnDuplicate = KEditor.getClickElement(e, '.btn-section-duplicate');
                 if (btnDuplicate) {
+                    e.preventDefault();
                     flog('Click on .btn-section-duplicate', btnDuplicate);
 
                     var selectedSection = btnDuplicate.closest('section.keditor-section');

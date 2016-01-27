@@ -3,7 +3,7 @@
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
  * @version: @{version}
- * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, $.fn.ckeditor, FontAwesome
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, $.fn.ckeditor, Bootstrap, FontAwesome
  *
  * Configuration:
  * @option {Object} ckeditor Configuration for CKEditor. See at http://docs.ckeditor.com/#!/api/CKEDITOR.options
@@ -118,23 +118,23 @@
 
     // Object KEditor
     var KEditor = {
-        initSnippet: function (contentAreaIds, options) {
-            flog('initSnippetToggler', contentAreaIds, options);
+        initSidebar: function (contentAreaIds, options) {
+            flog('initSidebar', contentAreaIds, options);
 
             var body = $(document.body);
-            body.addClass('opened-keditor-snippets');
+            body.addClass('opened-keditor-sidebar');
 
             if (options.snippetsListId === DEFAULTS.snippetsListId) {
                 flog('Render default KEditor snippet container');
 
                 body.append(
-                    '<div id="keditor-snippets-container">' +
-                    '    <a id="keditor-snippets-toggler"><i class="fa fa-chevron-right"></i></a>' +
-                    '    <div id="keditor-snippets-list" class="clearfix"></div>' +
+                    '<div id="keditor-sidebar">' +
+                    '    <a id="keditor-sidebar-toggler"><i class="fa fa-chevron-right"></i></a>' +
+                    '    <div id="keditor-snippets-list"></div>' +
                     '    <div id="keditor-snippets-content" style="display: none"></div>' +
                     '</div>'
                 );
-                KEditor.initSnippetToggler();
+                KEditor.initSidebarToggler();
             } else {
                 flog('Render KEditor snippets content after custom snippets list with id="' + options.snippetsListId + '"');
                 $('#' + options.snippetsListId).after('<div id="keditor-snippets-content" style="display: none"></div>');
@@ -151,7 +151,8 @@
                         flog('Success in getting snippets', resp);
 
                         KEditor.renderSnippets(resp, options);
-                        KEditor.initSnippetsActions(contentAreaIds, options);
+                        KEditor.initSnippets(contentAreaIds, options);
+                        KEditor.initSnippetsSwitcher(options);
                     },
                     error: function (jqXHR) {
                         flog('Error when getting snippets', jqXHR);
@@ -162,20 +163,19 @@
             }
         },
 
-        initSnippetToggler: function () {
-            flog('initSnippetToggler');
+        initSidebarToggler: function () {
+            flog('initSidebarToggler');
 
             var body = $(document.body);
-
-            $('#keditor-snippets-toggler').on('click', function (e) {
+            $('#keditor-sidebar-toggler').on('click', function (e) {
                 e.preventDefault();
 
                 var icon = $(this).find('i');
-                if (body.hasClass('opened-keditor-snippets')) {
-                    body.removeClass('opened-keditor-snippets');
+                if (body.hasClass('opened-keditor-sidebar')) {
+                    body.removeClass('opened-keditor-sidebar');
                     icon.attr('class', 'fa fa-chevron-left')
                 } else {
-                    body.addClass('opened-keditor-snippets');
+                    body.addClass('opened-keditor-sidebar');
                     icon.attr('class', 'fa fa-chevron-right')
                 }
             });
@@ -184,35 +184,53 @@
         renderSnippets: function (resp, options) {
             flog('renderSnippets', resp, options);
 
-            var snippetsHtml = '';
+            var snippetsContainerHtml = '';
+            var snippetsComponentHtml = '';
             var snippetsContentHtml = '';
 
             $('<div />').html(resp).find('> div').each(function (i) {
-                var div = $(this);
-                var content = div.html().trim();
-                var previewUrl = div.attr('data-preview');
+                var snippet = $(this);
+                var content = snippet.html().trim();
+                var previewUrl = snippet.attr('data-preview');
+                var type = snippet.attr('data-type');
+                var snippetHtml = '';
 
-                flog('Snippet #' + i, previewUrl, content);
+                flog('Snippet #' + i + ' type=' + type, previewUrl, content);
 
-                snippetsHtml += '<section class="keditor-snippet" data-snippet="#keditor-snippet-' + i + '">';
-                snippetsHtml += '   <img class="keditor-snippet-preview" src="' + previewUrl + '" />';
-                snippetsHtml += '</section>';
+                snippetHtml += '<section class="keditor-snippet" data-snippet="#keditor-snippet-' + i + '" data-type="' + type + '">';
+                snippetHtml += '   <img class="keditor-snippet-preview" src="' + previewUrl + '" />';
+                snippetHtml += '</section>';
+
+                if (type === 'container') {
+                    snippetsContainerHtml += snippetHtml;
+                } else if (type === 'component') {
+                    snippetsComponentHtml += snippetHtml;
+                }
 
                 snippetsContentHtml += '<div id="keditor-snippet-' + i + '" style="display: none;">' + content + '</div>';
             });
 
-            $('#' + options.snippetsListId).html(snippetsHtml).addClass('loaded-snippets');
+            $('#' + options.snippetsListId).html(
+                '<ul class="keditor-snippets-type-switcher nav nav-tabs nav-justified">' +
+                '    <li class="active"><a href="#keditor-container-snippets">Containers</a></li>' +
+                '    <li><a href="#keditor-component-snippets">Components</a></li>' +
+                '</ul>' +
+                '<div class="keditor-snippets-container tab-content">' +
+                '   <div class="tab-pane keditor-snippets active" id="keditor-container-snippets">' + snippetsContainerHtml + '</div>' +
+                '   <div class="tab-pane keditor-snippets" id="keditor-component-snippets">' + snippetsComponentHtml + '</div>' +
+                '</div>'
+            ).addClass('loaded-snippets');
             $('#keditor-snippets-content').html(snippetsContentHtml);
         },
 
-        initSnippetsActions: function (contentAreaIds, options) {
-            flog('initSnippetsActions', contentAreaIds, options);
+        initSnippets: function (contentAreaIds, options) {
+            flog('initSnippets', contentAreaIds, options);
 
             var snippetsList = $('#' + options.snippetsListId);
 
             if ($.fn.niceScroll) {
                 flog('Initialize $.fn.niceScroll for snippets list');
-                snippetsList.niceScroll({
+                snippetsList.find('.keditor-snippets').niceScroll({
                     cursorcolor: '#999',
                     cursorwidth: 6,
                     railpadding: {
@@ -238,6 +256,40 @@
                 },
                 start: function () {
                     $('.keditor-section-content').blur();
+                }
+            });
+        },
+
+        initSnippetsSwitcher: function (options) {
+            flog('initSnippetsSwitcher', options);
+
+            var snippetsList = $('#' + options.snippetsListId);
+            var lis = snippetsList.find('.keditor-snippets-type-switcher li');
+            var snippetsDivs = snippetsList.find('.keditor-snippets-container .keditor-snippets');
+            lis.find('a').on('click', function (e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                e.stopPropagation();
+
+                var a = $(this);
+                var li = a.parent();
+                var href = a.attr('href');
+
+                if (!li.hasClass('active')) {
+                    var activatedLi = lis.filter('.active');
+                    var activatedSnippetsDiv = snippetsDivs.filter('.active');
+                    var targetDiv = $(href);
+
+                    activatedLi.removeClass('active');
+                    activatedSnippetsDiv.removeClass('active');
+
+                    li.addClass('active');
+                    targetDiv.addClass('active');
+
+                    if ($.fn.niceScroll) {
+                        activatedSnippetsDiv.getNiceScroll().hide();
+                        targetDiv.getNiceScroll().show();
+                    }
                 }
             });
         },
@@ -314,19 +366,6 @@
             }
         },
 
-        getClickElement: function (event, selector) {
-            var target = $(event.target);
-            var closest = target.closest(selector);
-
-            if (target.is(selector)) {
-                return target;
-            } else if (closest.length > 0) {
-                return closest;
-            } else {
-                return null;
-            }
-        },
-
         initSection: function (section, options) {
             flog('initSection', section, options);
 
@@ -385,6 +424,19 @@
                 } else {
                     flog('Section is initializing...');
                 }
+            }
+        },
+
+        getClickElement: function (event, selector) {
+            var target = $(event.target);
+            var closest = target.closest(selector);
+
+            if (target.is(selector)) {
+                return target;
+            } else if (closest.length > 0) {
+                return closest;
+            } else {
+                return null;
             }
         },
 
@@ -495,7 +547,7 @@
 
             var snippetsList = $('#' + options.snippetsListId);
             if (!snippetsList.hasClass('loaded-snippets')) {
-                KEditor.initSnippet(contentAreaIds, options);
+                KEditor.initSidebar(contentAreaIds, options);
             } else {
                 flog('Snippets list is already initialized!');
             }

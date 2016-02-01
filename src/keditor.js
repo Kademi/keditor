@@ -275,12 +275,10 @@
                 helper: 'clone',
                 revert: 'invalid',
                 connectToSortable: '.keditor-content-area',
-                cursorAt: {
-                    top: 0,
-                    left: 0
-                },
                 start: function () {
-                    $('.keditor-section-content').blur();
+                    $('[contenteditable]').blur();
+                    $('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                    $('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                 }
             });
 
@@ -288,12 +286,10 @@
                 helper: 'clone',
                 revert: 'invalid',
                 connectToSortable: '.keditor-container-content',
-                cursorAt: {
-                    top: 0,
-                    left: 0
-                },
                 start: function () {
-                    $('.keditor-section-content').blur();
+                    $('[contenteditable]').blur();
+                    $('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                    $('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                 }
             });
         },
@@ -477,24 +473,27 @@
 
                     var helper = ui.helper;
                     var item = ui.item;
-                    var snippetContent = $(item.attr('data-snippet')).html();
-                    flog('Snippet content', snippetContent);
 
-                    var component = $(
-                        '<section class="keditor-component">' +
-                        '   <section class="keditor-component-content">' + snippetContent + '</section>' +
-                        '</section>'
-                    );
-                    helper.replaceWith(component);
+                    if (helper && item.is('.keditor-snippet')) {
+                        var snippetContent = $(item.attr('data-snippet')).html();
+                        flog('Snippet content', snippetContent);
 
-                    if (typeof options.onComponentSnippetDropped === 'function') {
-                        options.onComponentSnippetDropped.call(contentArea, event, component, ui.item);
-                    }
+                        var component = $(
+                            '<section class="keditor-component">' +
+                            '   <section class="keditor-component-content">' + snippetContent + '</section>' +
+                            '</section>'
+                        );
+                        helper.replaceWith(component);
 
-                    KEditor.initComponent(contentArea, component, options);
+                        if (typeof options.onComponentSnippetDropped === 'function') {
+                            options.onComponentSnippetDropped.call(contentArea, event, component, ui.item);
+                        }
 
-                    if (typeof options.onContentChanged === 'function') {
-                        options.onContentChanged.call(contentArea, event);
+                        KEditor.initComponent(contentArea, component, options);
+
+                        if (typeof options.onContentChanged === 'function') {
+                            options.onContentChanged.call(contentArea, event);
+                        }
                     }
                 }
             });

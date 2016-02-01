@@ -1003,10 +1003,6 @@ body.opened-keditor-sidebar #keditor-sidebar {
 .keditor-container {
   position: relative;
 }
-.keditor-container:hover {
-  outline: 3px dashed #f0f0f0;
-  outline-offset: 15px;
-}
 .keditor-container > .keditor-toolbar {
   top: -18px;
   left: -39px;
@@ -1022,7 +1018,7 @@ body.opened-keditor-sidebar #keditor-sidebar {
 .keditor-container.showed-keditor-toolbar {
   outline: 3px dashed #f0f0f0;
   outline-offset: 15px;
-  margin: 30px 0;
+  margin: 40px 0;
 }
 .keditor-container.showed-keditor-toolbar:first-child {
   margin-top: 0;
@@ -1033,7 +1029,7 @@ body.opened-keditor-sidebar #keditor-sidebar {
 .keditor-container-content {
   min-height: 50px;
   outline: 1px dashed #f0f0f0;
-  outline-offset: 0;
+  outline-offset: -1px;
 }
 /* ==================================================================================
    Component
@@ -1097,7 +1093,7 @@ body.opened-keditor-sidebar #keditor-sidebar {
   -o-transition: none !important;
   transition: none !important;
 }
-.keditor-snippet.ui-sortable-placeholder {
+.ui-sortable-placeholder {
   background: #eee !important;
   visibility: visible !important;
   height: 10px !important;

@@ -11,9 +11,10 @@
  * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {Function} onInitContent Method will be called when initializing content area. It can return array of jQuery objects which will be initialized as editable section in content area. By default, all first level sections under content area will be initialized.
  * @option {Function} onInitSection Method will be called when initializing section after dropped snippet into content are. Arguments: section
- * @option {Function} onSectionReady Method will be called after section is initialized. Arguments: section
+ * @option {Function} onComponentReady Method will be called after section is initialized. Arguments: section
  * @option {Function} onContentChanged Callback will be called when content is changed. Arguments: event
- * @option {Function} onSnippetDropped Callback will be called when snippet is dropped into content area. Arguments: event, newSection, droppedSnippet
+ * @option {Function} onContainerSnippetDropped Callback will be called when container snippet is dropped into content area. Arguments: event, newContainer, droppedContainer
+ * @option {Function} onComponentSnippetDropped Callback will be called when component snippet is dropped into content area. Arguments: event, newComponent, droppedComponent
  * @option {Function} onBeforeSectionDeleted Callback will be called before selected section is deleted. Arguments: event, btnRemove, selectedSection
  * @option {Function} onSectionChanged Callback will be called when content of section is changed. Arguments: event, changedSection
  * @option {Function} onSectionDuplicated Callback will be called when section is duplicated. Arguments: event, originalSection, newSection
@@ -98,28 +99,52 @@
         snippetsListId: 'keditor-snippets-list',
         onInitContent: function (contentArea) {
         },
-        onInitSection: function (section) {
-        },
-        onSectionReady: function (section) {
-        },
         onContentChanged: function (event) {
         },
-        onSnippetDropped: function (event, newSection, droppedSnippet) {
+        onInitContainer: function (container) {
         },
-        onBeforeSectionDeleted: function (event, btnRemove, selectedSection) {
+        onContainerReady: function (container) {
         },
-        onSectionChanged: function (event, changedSection) {
+        onBeforeContainerDeleted: function (event, btnRemove, selectedContainer) {
         },
-        onSectionDuplicated: function (event, originalSection, newSection) {
+        onContainerDeleted: function (event, btnRemove, selectedContainer) {
         },
-        onSectionSelected: function (event, selectedSection) {
+        onContainerChanged: function (event, changedContainer) {
+        },
+        onContainerDuplicated: function (event, originalContainer, newContainer) {
+        },
+        onContainerSelected: function (event, selectedContainer) {
+        },
+        onContainerSnippetDropped: function (event, newContainer, droppedContainer) {
+        },
+        onInitComponent: function (component) {
+        },
+        onComponentReady: function (component) {
+        },
+        onBeforeComponentDeleted: function (event, btnRemove, selectedComponent) {
+        },
+        onComponentDeleted: function (event, btnRemove, selectedComponent) {
+        },
+        onComponentChanged: function (event, changedComponent) {
+        },
+        onComponentDuplicated: function (event, originalComponent, newComponent) {
+        },
+        onComponentSelected: function (event, selectedComponent) {
+        },
+        onComponentSnippetDropped: function (event, newComponent, droppedComponent) {
         }
     };
 
     // Object KEditor
     var KEditor = {
-        initSidebar: function (contentAreaIds, options) {
-            flog('initSidebar', contentAreaIds, options);
+
+        generateId: function (type) {
+            var timestamp = (new Date()).getTime();
+            return 'keditor-' + type + '-' + timestamp;
+        },
+
+        initSidebar: function (options) {
+            flog('initSidebar', options);
 
             var body = $(document.body);
             body.addClass('opened-keditor-sidebar');
@@ -151,7 +176,7 @@
                         flog('Success in getting snippets', resp);
 
                         KEditor.renderSnippets(resp, options);
-                        KEditor.initSnippets(contentAreaIds, options);
+                        KEditor.initSnippets(options);
                         KEditor.initSnippetsSwitcher(options);
                     },
                     error: function (jqXHR) {
@@ -211,11 +236,11 @@
             });
 
             $('#' + options.snippetsListId).html(
-                '<ul class="keditor-snippets-type-switcher nav nav-tabs nav-justified">' +
+                '<ul id="keditor-snippets-type-switcher" class="nav nav-tabs nav-justified">' +
                 '    <li class="active"><a href="#keditor-container-snippets">Containers</a></li>' +
                 '    <li><a href="#keditor-component-snippets">Components</a></li>' +
                 '</ul>' +
-                '<div class="keditor-snippets-container tab-content">' +
+                '<div id="keditor-snippets-container" class="tab-content">' +
                 '   <div class="tab-pane keditor-snippets active" id="keditor-container-snippets">' + snippetsContainerHtml + '</div>' +
                 '   <div class="tab-pane keditor-snippets" id="keditor-component-snippets">' + snippetsComponentHtml + '</div>' +
                 '</div>'
@@ -223,8 +248,8 @@
             $('#keditor-snippets-content').html(snippetsContentHtml);
         },
 
-        initSnippets: function (contentAreaIds, options) {
-            flog('initSnippets', contentAreaIds, options);
+        initSnippets: function (options) {
+            flog('initSnippets', options);
 
             var snippetsList = $('#' + options.snippetsListId);
 
@@ -245,11 +270,24 @@
                 flog('$.fn.niceScroll does not exist. Use default sidebar.');
             }
 
-            flog('Initialize $.fn.draggable for snippets list which connect to ' + contentAreaIds);
-            snippetsList.find('.keditor-snippet').draggable({
+            flog('Initialize $.fn.draggable for container snippets list');
+            snippetsList.find('.keditor-snippet[data-type=container]').draggable({
                 helper: 'clone',
                 revert: 'invalid',
-                connectToSortable: contentAreaIds,
+                connectToSortable: '.keditor-content-area',
+                cursorAt: {
+                    top: 0,
+                    left: 0
+                },
+                start: function () {
+                    $('.keditor-section-content').blur();
+                }
+            });
+
+            snippetsList.find('.keditor-snippet[data-type=component]').draggable({
+                helper: 'clone',
+                revert: 'invalid',
+                connectToSortable: '.keditor-container-content',
                 cursorAt: {
                     top: 0,
                     left: 0
@@ -263,10 +301,10 @@
         initSnippetsSwitcher: function (options) {
             flog('initSnippetsSwitcher', options);
 
-            var snippetsList = $('#' + options.snippetsListId);
-            var lis = snippetsList.find('.keditor-snippets-type-switcher li');
-            var snippetsDivs = snippetsList.find('.keditor-snippets-container .keditor-snippets');
-            lis.find('a').on('click', function (e) {
+            var switcherLis = $('#keditor-snippets-type-switcher li');
+            var snippetsDivs = $('#keditor-snippets-container .keditor-snippets');
+
+            switcherLis.find('a').on('click', function (e) {
                 e.preventDefault();
                 e.stopImmediatePropagation();
                 e.stopPropagation();
@@ -276,7 +314,7 @@
                 var href = a.attr('href');
 
                 if (!li.hasClass('active')) {
-                    var activatedLi = lis.filter('.active');
+                    var activatedLi = switcherLis.filter('.active');
                     var activatedSnippetsDiv = snippetsDivs.filter('.active');
                     var targetDiv = $(href);
 
@@ -294,23 +332,23 @@
             });
         },
 
-        initContentArea: function (contentArea, contentAreaIds, options) {
-            flog('initContentArea', contentArea, contentAreaIds, options);
+        initContentArea: function (contentArea, options) {
+            flog('initContentArea', contentArea, options);
 
             contentArea.addClass('keditor-content-area');
 
             flog('Initialize $.fn.droppable for content area');
             contentArea.droppable({
-                accept: '.keditor-snippet',
+                accept: '.keditor-snippet[data-type=container]',
                 tolerance: 'pointer',
                 greedy: true
             });
 
             flog('Initialize $.fn.sortable for content area');
             contentArea.sortable({
-                handle: '.btn-section-reposition',
+                handle: '.btn-container-reposition',
                 items: '> section',
-                connectWith: contentAreaIds,
+                connectWith: '.keditor-content-area',
                 axis: 'y',
                 sort: function () {
                     $(this).removeClass('ui-state-default');
@@ -323,18 +361,18 @@
                     var snippetContent = $(item.attr('data-snippet')).html();
                     flog('Snippet content', snippetContent);
 
-                    var section = $(
-                        '<section class="keditor-section">' +
-                        '   <section class="keditor-section-content">' + snippetContent + '</section>' +
+                    var container = $(
+                        '<section class="keditor-container">' +
+                        '   <section class="keditor-container-inner">' + snippetContent + '</section>' +
                         '</section>'
                     );
-                    helper.replaceWith(section);
+                    helper.replaceWith(container);
 
-                    if (typeof options.onSnippetDropped === 'function') {
-                        options.onSnippetDropped.call(contentArea, event, section, ui.item);
+                    if (typeof options.onContainerSnippetDropped === 'function') {
+                        options.onContainerSnippetDropped.call(contentArea, event, container, ui.item);
                     }
 
-                    KEditor.initSection(section, options);
+                    KEditor.initContainer(contentArea, container, options);
 
                     if (typeof options.onContentChanged === 'function') {
                         options.onContentChanged.call(contentArea, event);
@@ -349,7 +387,7 @@
                 section.wrap('<section class="keditor-section"></section>');
 
                 var keditorSection = section.parent();
-                KEditor.initSection(keditorSection, options);
+                KEditor.initContainer(contentArea, keditorSection, options);
             });
 
             if (typeof options.onInitContent === 'function') {
@@ -360,43 +398,134 @@
                         content.wrap('<section class="keditor-section"><section class="keditor-section-content"></section></section>');
 
                         var keditorSection = content.parent().parent();
-                        KEditor.initSection(keditorSection, options);
+                        KEditor.initContainer(contentArea, keditorSection, options);
                     });
                 }
             }
         },
 
-        initSection: function (section, options) {
-            flog('initSection', section, options);
+        initContainer: function (contentArea, container, options) {
+            flog('initContainer', contentArea, container, options);
 
-            if (!section.hasClass('keditor-editable') || !section.hasClass('keditor-initializing')) {
-                section.addClass('keditor-initializing');
+            if (!container.hasClass('keditor-initialized-container') || !container.hasClass('keditor-initializing-container')) {
+                container.addClass('keditor-initializing-container');
 
-                flog('Render KEditor toolbar for section', section);
-                section.append(
-                    '<div class="keditor-toolbar">' +
+                flog('Render KEditor toolbar for container', container);
+                container.append(
+                    '<div class="keditor-toolbar keditor-toolbar-container">' +
                     '   <div class="btn-group-vertical">' +
-                    '       <a href="#" class="btn btn-xs btn-info btn-section-reposition"><i class="fa fa-sort"></i></a>' +
-                    '       <a href="#" class="btn btn-xs btn-warning btn-section-duplicate"><i class="fa fa-files-o"></i></a>' +
-                    '       <a href="#" class="btn btn-xs btn-danger btn-section-delete"><i class="fa fa-times"></i></a>' +
+                    '       <a href="#" class="btn btn-xs btn-default btn-container-reposition"><i class="fa fa-sort"></i></a>' +
+                    '       <a href="#" class="btn btn-xs btn-default btn-container-duplicate"><i class="fa fa-files-o"></i></a>' +
+                    '       <a href="#" class="btn btn-xs btn-default btn-container-delete"><i class="fa fa-times"></i></a>' +
                     '   </div>' +
                     '</div>'
                 );
 
-                flog('Initialize CKEditor for section', section);
-                var sectionContent = section.find('.keditor-section-content');
-                sectionContent.prop('contenteditable', true);
+                var containerId = KEditor.generateId('container');
+                flog('Id for container is: ' + containerId);
+                container.attr('id', containerId);
 
-                var id = 'keditor-section-' + (new Date()).getTime();
-                flog('Id for section content is: ' + id);
-                sectionContent.attr('id', id);
+                var contents = container.find('[data-type="container-content"]');
+                flog('Initialize ' + contents.length + ' container content(s)');
+                contents.each(function () {
+                    var content = $(this);
 
-                var contentArea = section.parent();
-                var editor = sectionContent.ckeditor(options.ckeditor).editor;
+                    KEditor.initContainerContent(contentArea, container, content, options);
+                });
 
-                sectionContent.on('input', function (e) {
+                if (typeof options.onInitContainer === 'function') {
+                    options.onInitContainer.call(contentArea, container);
+                }
+
+                container.addClass('keditor-initialized-container');
+                container.removeClass('keditor-initializing-container');
+            } else {
+                if (container.hasClass('keditor-initialized-container')) {
+                    flog('Container is already initialized!');
+                } else {
+                    flog('Container is initializing...');
+                }
+            }
+        },
+
+        initContainerContent: function (contentArea, container, content, options) {
+            flog('initContainerContent', contentArea, container, content, options);
+
+            var contentId = KEditor.generateId('container-content');
+            content.addClass('keditor-container-content');
+
+            flog('Id for container content id: ' + contentId, content);
+            content.attr('id', contentId);
+
+            flog('Initialize $.fn.droppable for container content');
+            content.droppable({
+                accept: '.keditor-snippet[data-type=component]',
+                tolerance: 'pointer',
+                greedy: true
+            });
+
+            flog('Initialize $.fn.sortable for container content');
+            content.sortable({
+                handle: '.btn-component-reposition',
+                items: '> section',
+                connectWith: '.keditor-container-content',
+                sort: function () {
+                    $(this).removeClass('ui-state-default');
+                },
+                receive: function (event, ui) {
+                    flog('On received snippet', event, ui);
+
+                    var helper = ui.helper;
+                    var item = ui.item;
+                    var snippetContent = $(item.attr('data-snippet')).html();
+                    flog('Snippet content', snippetContent);
+
+                    var component = $(
+                        '<section class="keditor-component">' +
+                        '   <section class="keditor-component-content">' + snippetContent + '</section>' +
+                        '</section>'
+                    );
+                    helper.replaceWith(component);
+
+                    if (typeof options.onComponentSnippetDropped === 'function') {
+                        options.onComponentSnippetDropped.call(contentArea, event, component, ui.item);
+                    }
+
+                    KEditor.initComponent(contentArea, component, options);
+
+                    if (typeof options.onContentChanged === 'function') {
+                        options.onContentChanged.call(contentArea, event);
+                    }
+                }
+            });
+        },
+        
+        initComponent: function (contentArea, component, options) {
+            flog('initComponent', contentArea, component, options);
+
+            if (!component.hasClass('keditor-initialized-component') || !component.hasClass('keditor-initializing-component')) {
+                component.addClass('keditor-initializing-component');
+
+                flog('Render KEditor toolbar for component', component);
+                component.append(
+                    '<div class="keditor-toolbar keditor-toolbar-component">' +
+                    '   <a href="#" class="btn btn-xs btn-default btn-component-reposition"><i class="fa fa-arrows"></i></a>' +
+                    '   <a href="#" class="btn btn-xs btn-default btn-component-duplicate"><i class="fa fa-files-o"></i></a>' +
+                    '   <a href="#" class="btn btn-xs btn-default btn-component-delete"><i class="fa fa-times"></i></a>' +
+                    '</div>'
+                );
+
+                flog('Initialize CKEditor for component', component);
+                var componentContent = component.find('> .keditor-component-content');
+                componentContent.prop('contenteditable', true);
+                
+                var contentId = KEditor.generateId('component-content');
+                flog('Id for component content is: ' + contentId);
+                componentContent.attr('id', contentId);                
+
+                componentContent.on('input', function (e) {
                     if (typeof options.onSectionChanged === 'function') {
-                        options.onSectionChanged.call(contentArea, e, section);
+                        options.onSectionChanged.call(contentArea, e, component);
                     }
 
                     if (typeof options.onContentChanged === 'function') {
@@ -404,25 +533,26 @@
                     }
                 });
 
+                var editor = componentContent.ckeditor(options.ckeditor).editor;
                 editor.on('instanceReady', function () {
-                    flog('CKEditor is ready', section);
+                    flog('CKEditor is ready', component);
 
-                    if (typeof options.onSectionReady === 'function') {
-                        options.onSectionReady.call(contentArea, section);
+                    if (typeof options.onComponentReady === 'function') {
+                        options.onComponentReady.call(contentArea, component);
                     }
                 });
 
-                if (typeof options.onInitSection === 'function') {
-                    options.onInitSection.call(contentArea, section);
+                if (typeof options.onInitComponent === 'function') {
+                    options.onInitComponent.call(contentArea, component);
                 }
 
-                section.addClass('keditor-editable');
-                section.removeClass('keditor-initializing');
+                component.addClass('keditor-initialized-component');
+                component.removeClass('keditor-initializing-component');
             } else {
-                if (section.hasClass('keditor-editable')) {
-                    flog('Section is already initialized!');
+                if (component.hasClass('keditor-initialized-component')) {
+                    flog('Component is already initialized!');
                 } else {
-                    flog('Section is initializing...');
+                    flog('Component is initializing...');
                 }
             }
         },
@@ -440,23 +570,39 @@
             }
         },
 
-        initSectionActions: function (options) {
-            flog('initSectionActions', options);
-            
+        initKEditorClicks: function (options) {
+            flog('initKEditorClicks', options);
+
             var body = $(document.body);
 
             body.on('click', function (e) {
-                var section = KEditor.getClickElement(e, 'section.keditor-section');
-                if (section) {
-                    flog('Click on .keditor-section', section);
+                $('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                $('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
 
-                    if (!section.hasClass('showed-keditor-toolbar')) {
-                        $('.keditor-section.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-                        section.addClass('showed-keditor-toolbar');
+                var container = KEditor.getClickElement(e, 'section.keditor-container');
+                if (container) {
+                    flog('Click on .keditor-container', container);
 
-                        var contentArea = section.parent();
-                        if (typeof options.onSectionSelected === 'function') {
-                            options.onSectionSelected.call(contentArea, e, section);
+                    if (!container.hasClass('showed-keditor-toolbar')) {
+                        container.addClass('showed-keditor-toolbar');
+
+                        var contentArea = container.parent();
+                        if (typeof options.onContainerSelected === 'function') {
+                            options.onContainerSelected.call(contentArea, e, container);
+                        }
+                    }
+                }
+
+                var component = KEditor.getClickElement(e, 'section.keditor-component');
+                if (component) {
+                    flog('Click on .keditor-component', component);
+
+                    if (!component.hasClass('showed-keditor-toolbar')) {
+                        component.addClass('showed-keditor-toolbar');
+
+                        var contentArea = component.parent();
+                        if (typeof options.onComponentSelected === 'function') {
+                            options.onComponentSelected.call(contentArea, e, component);
                         }
                     }
                 }
@@ -502,7 +648,7 @@
                     );
 
                     selectedSection.after(newSection);
-                    KEditor.initSection(newSection, options);
+                    KEditor.initContainer(contentArea, newSection, options);
 
                     flog('Section is duplicated');
 
@@ -514,7 +660,7 @@
                         options.onContentChanged.call(contentArea, e);
                     }
                 }
-            });  
+            });
         },
 
         getSectionContent: function (section) {
@@ -527,7 +673,6 @@
     var methods = {
         init: function (options) {
             var contentAreas = $(this);
-            var contentAreaIds = [];
             options = $.extend({}, DEFAULTS, options);
 
             contentAreas.each(function () {
@@ -535,24 +680,20 @@
                 if (contentArea.attr('id').length === 0) {
                     flog('Content area does not contain Id. Generating id for content area...');
 
-                    var id = 'keditor-content-area-' + (new Date()).getTime();
+                    var id = KEditor.generateId('content-area');
                     contentArea.attr('id', id);
                     flog('Id for content are is: "' + id + '"');
                 }
-                contentAreaIds.push('#' + contentArea.attr('id'));
             });
-
-            contentAreaIds = contentAreaIds.join(',');
-            flog('Content areas\' ids: ' + contentAreaIds);
 
             var snippetsList = $('#' + options.snippetsListId);
             if (!snippetsList.hasClass('loaded-snippets')) {
-                KEditor.initSidebar(contentAreaIds, options);
+                KEditor.initSidebar(options);
             } else {
                 flog('Snippets list is already initialized!');
             }
 
-            KEditor.initSectionActions(options);
+            KEditor.initKEditorClicks(options);
 
             contentAreas.each(function () {
                 var contentArea = $(this);
@@ -560,7 +701,7 @@
                     flog('KEditor is already initialized!');
                 } else {
                     contentArea.data('keditorOptions', options);
-                    KEditor.initContentArea(contentArea, contentAreaIds, options);
+                    KEditor.initContentArea(contentArea, options);
                 }
             });
 

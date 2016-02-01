@@ -388,14 +388,13 @@
                 }
             });
 
-            flog('Initialize existing sections in content area');
-            contentArea.find('> section').each(function () {
-                var section = $(this);
-                section.addClass('keditor-section-content');
-                section.wrap('<section class="keditor-section"></section>');
+            flog('Initialize existing containers in content area');
+            contentArea.children().each(function () {
+                var content = $(this);
+                content.wrap('<section class="keditor-container"><section class="keditor-container-inner"></section></section>');
 
-                var keditorSection = section.parent();
-                KEditor.initContainer(contentArea, keditorSection, options);
+                var container = content.parent().parent();
+                KEditor.initContainer(contentArea, container, options);
             });
 
             if (typeof options.onInitContentArea === 'function') {

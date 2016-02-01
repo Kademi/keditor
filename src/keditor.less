@@ -30,6 +30,7 @@
    ================================================================================== */
 body {
     margin: 0;
+    overflow-y: scroll;
 }
 
 /* ==================================================================================
@@ -267,19 +268,19 @@ body.opened-keditor-sidebar {
         }
     }
 
+    &:hover,
     &.showed-keditor-toolbar {
         outline: 3px solid rgba(0, 0, 0, .5);
         outline-offset: -3px;
+    }
 
+    &.showed-keditor-toolbar {
         .keditor-component-content {
             outline: none !important;
         }
     }
 
     &:hover {
-        outline: 3px solid rgba(0, 0, 0, .5);
-        outline-offset: -3px;
-
         .keditor-toolbar {
             display: block;
         }
@@ -304,6 +305,7 @@ body.opened-keditor-sidebar {
     height: 10px !important;
     margin: 5px 0 !important;
     float: none !important;
+    outline: none !important;
 }
 
 .keditor-section {

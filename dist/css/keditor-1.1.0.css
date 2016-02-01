@@ -840,6 +840,7 @@ input[type="button"].btn-block {
    ================================================================================== */
 body {
   margin: 0;
+  overflow-y: scroll;
 }
 /* ==================================================================================
    opened-keditor-sidebar
@@ -1063,16 +1064,13 @@ body.opened-keditor-sidebar #keditor-sidebar {
 .keditor-component .keditor-toolbar .btn:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
+.keditor-component:hover,
 .keditor-component.showed-keditor-toolbar {
   outline: 3px solid rgba(0, 0, 0, 0.5);
   outline-offset: -3px;
 }
 .keditor-component.showed-keditor-toolbar .keditor-component-content {
   outline: none !important;
-}
-.keditor-component:hover {
-  outline: 3px solid rgba(0, 0, 0, 0.5);
-  outline-offset: -3px;
 }
 .keditor-component:hover .keditor-toolbar {
   display: block;
@@ -1099,6 +1097,7 @@ body.opened-keditor-sidebar #keditor-sidebar {
   height: 10px !important;
   margin: 5px 0 !important;
   float: none !important;
+  outline: none !important;
 }
 .keditor-section.ui-sortable-helper {
   background: #fff !important;

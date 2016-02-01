@@ -9,16 +9,23 @@
  * @option {Object} ckeditor Configuration for CKEditor. See at http://docs.ckeditor.com/#!/api/CKEDITOR.options
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
- * @option {Function} onInitContent Method will be called when initializing content area. It can return array of jQuery objects which will be initialized as editable section in content area. By default, all first level sections under content area will be initialized.
- * @option {Function} onInitSection Method will be called when initializing section after dropped snippet into content are. Arguments: section
- * @option {Function} onComponentReady Method will be called after section is initialized. Arguments: section
- * @option {Function} onContentChanged Callback will be called when content is changed. Arguments: event
- * @option {Function} onContainerSnippetDropped Callback will be called when container snippet is dropped into content area. Arguments: event, newContainer, droppedContainer
- * @option {Function} onComponentSnippetDropped Callback will be called when component snippet is dropped into content area. Arguments: event, newComponent, droppedComponent
- * @option {Function} onBeforeSectionDeleted Callback will be called before selected section is deleted. Arguments: event, btnRemove, selectedSection
- * @option {Function} onSectionChanged Callback will be called when content of section is changed. Arguments: event, changedSection
- * @option {Function} onSectionDuplicated Callback will be called when section is duplicated. Arguments: event, originalSection, newSection
- * @option {Function} onSectionSelected Callback will be called when section is selected. Arguments: event, selectedSection
+ * @option {Function} onInitContentArea Method will be called when initializing content area. It can return array of jQuery objects which will be initialized as editable section in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
+ * @option {Function} onContentChanged Callback will be called when content is changed. Includes add, delete, duplicate container or component. Or content of a component is changed. Arguments: event
+ * @option {Function} onInitContainer Callback will be called when initializing container. Arguments: container
+ * @option {Function} onBeforeContainerDeleted Callback will be called before container is deleted. Arguments: event, selectedContainer
+ * @option {Function} onContainerDeleted Callback will be called after container and its components are already deleted. Arguments: event, selectedContainer
+ * @option {Function} onContainerChanged Callback will be called when content of container is changed. It can be when container received new component from snippet or from other container. Or content of any components are changed or any components are deleted or duplicated. Arguments: event, changedContainer
+ * @option {Function} onContainerDuplicated Callback will be called when a container is duplicated. Arguments: event, originalContainer, newContainer
+ * @option {Function} onContainerSelected Callback will be called when a container is selected. Arguments: event, selectedContainer
+ * @option {Function} onContainerSnippetDropped Callback will be called when a container snippet is dropped into content area. Arguments: event, newContainer, droppedContainer
+ * @option {Function} onInitComponent Callback will be called when initializing component. Arguments: component
+ * @option {Function} onComponentReady Callback will be called after initializing component, when CKEditor of component content is ready. Arguments: component
+ * @option {Function} onBeforeComponentDeleted Callback will be called before a component is deleted. Arguments: event, selectedComponent
+ * @option {Function} onComponentDeleted Callback will be called after a component is deleted. Arguments: event, selectedComponent
+ * @option {Function} onComponentChanged Callback will be called when content of a component is changed. Arguments: event, changedComponent
+ * @option {Function} onComponentDuplicated Callback will be called when a component is duplicated. Arguments: event, originalComponent, newComponent
+ * @option {Function} onComponentSelected Callback will be called when a component is selected. Arguments: event, selectedComponent
+ * @option {Function} onComponentSnippetDropped Callback will be called after a component snippet is dropped into a container. Arguments: event, newComponent, droppedComponent
  */
 (function ($) {
     // Log function will print log message when "$.fn.keditor.debug" equals "true"
@@ -80,7 +87,7 @@
     // Default configuration of KEditor
     var DEFAULTS = $.fn.keditor.DEFAULTS = {
         ckeditor: {
-            allowedContent: true, // DISABLES Advanced Content Filter. This is so templates with classes are allowed through
+            allowedContent: true, // DISABLES Advanced Content Filter. This is so templates with classes: allowed through
             bodyId: 'editor',
             templates_replaceContent: false,
             enterMode: 'P',
@@ -97,17 +104,16 @@
         },
         snippetsUrl: 'snippets/default/snippets.html',
         snippetsListId: 'keditor-snippets-list',
-        onInitContent: function (contentArea) {
+        onInitContentArea: function (contentArea) {
         },
         onContentChanged: function (event) {
         },
+
         onInitContainer: function (container) {
         },
-        onContainerReady: function (container) {
+        onBeforeContainerDeleted: function (event, selectedContainer) {
         },
-        onBeforeContainerDeleted: function (event, btnRemove, selectedContainer) {
-        },
-        onContainerDeleted: function (event, btnRemove, selectedContainer) {
+        onContainerDeleted: function (event, selectedContainer) {
         },
         onContainerChanged: function (event, changedContainer) {
         },
@@ -117,13 +123,14 @@
         },
         onContainerSnippetDropped: function (event, newContainer, droppedContainer) {
         },
+
         onInitComponent: function (component) {
         },
         onComponentReady: function (component) {
         },
-        onBeforeComponentDeleted: function (event, btnRemove, selectedComponent) {
+        onBeforeComponentDeleted: function (event, selectedComponent) {
         },
-        onComponentDeleted: function (event, btnRemove, selectedComponent) {
+        onComponentDeleted: function (event, selectedComponent) {
         },
         onComponentChanged: function (event, changedComponent) {
         },
@@ -364,6 +371,11 @@
                     );
                     helper.replaceWith(container);
 
+                    if (!container.hasClass('showed-keditor-toolbar')) {
+                        $('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                        container.addClass('showed-keditor-toolbar');
+                    }
+
                     if (typeof options.onContainerSnippetDropped === 'function') {
                         options.onContainerSnippetDropped.call(contentArea, event, container, ui.item);
                     }
@@ -386,8 +398,8 @@
                 KEditor.initContainer(contentArea, keditorSection, options);
             });
 
-            if (typeof options.onInitContent === 'function') {
-                var contentData = options.onInitContent.call(contentArea, contentArea);
+            if (typeof options.onInitContentArea === 'function') {
+                var contentData = options.onInitContentArea.call(contentArea, contentArea);
                 if (contentData && contentData.length > 0) {
                     $.each(contentData, function () {
                         var content = $(this);
@@ -421,12 +433,12 @@
                 flog('Id for container is: ' + containerId);
                 container.attr('id', containerId);
 
-                var contents = container.find('[data-type="container-content"]');
-                flog('Initialize ' + contents.length + ' container content(s)');
-                contents.each(function () {
-                    var content = $(this);
+                var containerContents = container.find('[data-type="container-content"]');
+                flog('Initialize ' + containerContents.length + ' container content(s)');
+                containerContents.each(function () {
+                    var containerContent = $(this);
 
-                    KEditor.initContainerContent(contentArea, container, content, options);
+                    KEditor.initContainerContent(contentArea, container, containerContent, options);
                 });
 
                 if (typeof options.onInitContainer === 'function') {
@@ -444,24 +456,24 @@
             }
         },
 
-        initContainerContent: function (contentArea, container, content, options) {
-            flog('initContainerContent', contentArea, container, content, options);
+        initContainerContent: function (contentArea, container, containerContent, options) {
+            flog('initContainerContent', contentArea, container, containerContent, options);
 
             var contentId = KEditor.generateId('container-content');
-            content.addClass('keditor-container-content');
+            containerContent.addClass('keditor-container-content');
 
-            flog('Id for container content id: ' + contentId, content);
-            content.attr('id', contentId);
+            flog('Id for container content id: ' + contentId, containerContent);
+            containerContent.attr('id', contentId);
 
             flog('Initialize $.fn.droppable for container content');
-            content.droppable({
+            containerContent.droppable({
                 accept: '.keditor-snippet[data-type=component]',
                 tolerance: 'pointer',
                 greedy: true
             });
 
             flog('Initialize $.fn.sortable for container content');
-            content.sortable({
+            containerContent.sortable({
                 handle: '.btn-component-reposition',
                 items: '> section',
                 connectWith: '.keditor-container-content',
@@ -473,8 +485,9 @@
 
                     var helper = ui.helper;
                     var item = ui.item;
+                    var container;
 
-                    if (helper && item.is('.keditor-snippet')) {
+                    if (item.is('.keditor-snippet')) {
                         var snippetContent = $(item.attr('data-snippet')).html();
                         flog('Snippet content', snippetContent);
 
@@ -485,22 +498,44 @@
                         );
                         helper.replaceWith(component);
 
+                        container = component.closest('.keditor-container');
+
                         if (typeof options.onComponentSnippetDropped === 'function') {
                             options.onComponentSnippetDropped.call(contentArea, event, component, ui.item);
                         }
 
-                        KEditor.initComponent(contentArea, component, options);
+                        KEditor.initComponent(contentArea, container, component, options);
+                    } else {
+                        container = item.closest('.keditor-container');
+                    }
 
-                        if (typeof options.onContentChanged === 'function') {
-                            options.onContentChanged.call(contentArea, event);
-                        }
+                    if (!container.hasClass('showed-keditor-toolbar')) {
+                        $('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                        container.addClass('showed-keditor-toolbar');
+                    }
+
+                    if (typeof options.onContainerChanged === 'function') {
+                        options.onContainerChanged.call(contentArea, event, container);
+                    }
+
+                    if (typeof options.onContentChanged === 'function') {
+                        options.onContentChanged.call(contentArea, event);
                     }
                 }
             });
+
+            flog('Initialize existing component inside container content');
+            containerContent.children().each(function () {
+                var target = $(this);
+                target.wrap('<section class="keditor-component"><section class="keditor-component-content"></section></section>');
+
+                var component = target.parent().parent();
+                KEditor.initComponent(contentArea, container, component, options);
+            });
         },
-        
-        initComponent: function (contentArea, component, options) {
-            flog('initComponent', contentArea, component, options);
+
+        initComponent: function (contentArea, container, component, options) {
+            flog('initComponent', contentArea, container, component, options);
 
             if (!component.hasClass('keditor-initialized-component') || !component.hasClass('keditor-initializing-component')) {
                 component.addClass('keditor-initializing-component');
@@ -515,16 +550,20 @@
                 );
 
                 flog('Initialize CKEditor for component', component);
-                var componentContent = component.find('> .keditor-component-content');
+                var componentContent = component.children('.keditor-component-content');
                 componentContent.prop('contenteditable', true);
-                
+
                 var contentId = KEditor.generateId('component-content');
                 flog('Id for component content is: ' + contentId);
-                componentContent.attr('id', contentId);                
+                componentContent.attr('id', contentId);
 
                 componentContent.on('input', function (e) {
-                    if (typeof options.onSectionChanged === 'function') {
-                        options.onSectionChanged.call(contentArea, e, component);
+                    if (typeof options.onComponentChanged === 'function') {
+                        options.onComponentChanged.call(contentArea, e, component);
+                    }
+
+                    if (typeof options.onContainerChanged === 'function') {
+                        options.onContainerChanged.call(contentArea, e, container);
                     }
 
                     if (typeof options.onContentChanged === 'function') {
@@ -556,103 +595,160 @@
             }
         },
 
-        getClickElement: function (event, selector) {
-            var target = $(event.target);
-            var closest = target.closest(selector);
-
-            if (target.is(selector)) {
-                return target;
-            } else if (closest.length > 0) {
-                return closest;
-            } else {
-                return null;
-            }
-        },
-
         initKEditorClicks: function (options) {
             flog('initKEditorClicks', options);
 
             var body = $(document.body);
 
-            body.on('click', function (e) {
-                $('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-                $('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+            body.on('click', '.keditor-container', function (e) {
+                var container = $(this);
 
-                var container = KEditor.getClickElement(e, 'section.keditor-container');
-                if (container) {
-                    flog('Click on .keditor-container', container);
+                flog('Click on .keditor-container', container);
 
-                    if (!container.hasClass('showed-keditor-toolbar')) {
-                        container.addClass('showed-keditor-toolbar');
+                if (!container.hasClass('showed-keditor-toolbar')) {
+                    $('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                    $('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                    container.addClass('showed-keditor-toolbar');
 
-                        var contentArea = container.parent();
-                        if (typeof options.onContainerSelected === 'function') {
-                            options.onContainerSelected.call(contentArea, e, container);
-                        }
+                    var contentArea = container.parent();
+                    if (typeof options.onContainerSelected === 'function') {
+                        options.onContainerSelected.call(contentArea, e, container);
                     }
                 }
+            });
 
-                var component = KEditor.getClickElement(e, 'section.keditor-component');
-                if (component) {
-                    flog('Click on .keditor-component', component);
+            body.on('click', '.keditor-component', function (e) {
+                var component = $(this);
 
-                    if (!component.hasClass('showed-keditor-toolbar')) {
-                        component.addClass('showed-keditor-toolbar');
+                flog('Click on .keditor-component', component);
 
-                        var contentArea = component.parent();
-                        if (typeof options.onComponentSelected === 'function') {
-                            options.onComponentSelected.call(contentArea, e, component);
-                        }
+                if (!component.hasClass('showed-keditor-toolbar')) {
+                    $('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                    component.addClass('showed-keditor-toolbar');
+
+                    var contentArea = component.parent();
+                    if (typeof options.onComponentSelected === 'function') {
+                        options.onComponentSelected.call(contentArea, e, component);
                     }
                 }
+            });
 
-                var btnRemove = KEditor.getClickElement(e, '.btn-section-delete');
-                if (btnRemove) {
-                    e.preventDefault();
-                    flog('Click on .btn-section-delete', btnRemove);
+            body.on('click', '.btn-container-duplicate', function (e) {
+                e.preventDefault();
 
-                    if (confirm('Are you sure that you want to delete this section? This action can not be undo!')) {
-                        var selectedSection = btnRemove.closest('section.keditor-section');
-                        var contentArea = section.parent();
-                        if (typeof options.onBeforeSectionDeleted === 'function') {
-                            options.onBeforeSectionDeleted.call(contentArea, e, btnRemove, selectedSection);
-                        }
+                var btn = $(this);
+                flog('Click on .btn-container-duplicate', btn);
 
-                        var id = selectedSection.find('.keditor-section-content').attr('id');
-                        if (CKEDITOR.instances[id]) {
-                            CKEDITOR.instances[id].destroy();
-                        }
-                        selectedSection.remove();
+                var container = btn.closest('.keditor-container');
+                var contentArea = container.parent();
+                var newContainer = $(
+                    '<section class="keditor-container">' +
+                    '   <section class="keditor-container-inner">' + KEditor.getContainerContent(container) + '</section>' +
+                    '</section>'
+                );
 
-                        flog('Section is deleted');
+                container.after(newContainer);
+                KEditor.initContainer(contentArea, newContainer, options);
 
-                        if (typeof options.onContentChanged === 'function') {
-                            options.onContentChanged.call(contentArea, e);
-                        }
-                    }
+                flog('Container is duplicated');
+
+                if (typeof options.onContainerDuplicated === 'function') {
+                    options.onContainerDuplicated.call(contentArea, container, newContainer);
                 }
 
-                var btnDuplicate = KEditor.getClickElement(e, '.btn-section-duplicate');
-                if (btnDuplicate) {
-                    e.preventDefault();
-                    flog('Click on .btn-section-duplicate', btnDuplicate);
+                if (typeof options.onContentChanged === 'function') {
+                    options.onContentChanged.call(contentArea, e);
+                }
+            });
 
-                    var selectedSection = btnDuplicate.closest('section.keditor-section');
-                    var selectedSectionContent = KEditor.getSectionContent(selectedSection);
-                    var contentArea = section.parent();
-                    var newSection = $(
-                        '<section class="keditor-section">' +
-                        '   <section class="keditor-section-content">' + selectedSectionContent + '</section>' +
-                        '</section>'
-                    );
+            body.on('click', '.btn-container-delete', function (e) {
+                e.preventDefault();
 
-                    selectedSection.after(newSection);
-                    KEditor.initContainer(contentArea, newSection, options);
+                var btn = $(this);
+                flog('Click on .btn-container-delete', btn);
 
-                    flog('Section is duplicated');
+                if (confirm('Are you sure that you want to delete this container? This action can not be undo!')) {
+                    var container = btn.closest('.keditor-container');
+                    var components = container.find('.keditor-component');
+                    var contentArea = container.parent();
 
-                    if (typeof options.onSectionDuplicated === 'function') {
-                        options.onSectionDuplicated.call(contentArea, e, selectedSection, newSection);
+                    if (typeof options.onBeforeContainerDeleted === 'function') {
+                        options.onBeforeContainerDeleted.call(contentArea, e, container);
+                    }
+
+                    if (components.length > 0) {
+                        components.each(function () {
+                            KEditor.deleteComponent($(this));
+                        });
+                    }
+
+                    container.remove();
+
+                    if (typeof options.onContainerDeleted === 'function') {
+                        options.onContainerDeleted.call(contentArea, e, container);
+                    }
+
+                    if (typeof options.onContentChanged === 'function') {
+                        options.onContentChanged.call(contentArea, e);
+                    }
+                }
+            });
+
+            body.on('click', '.btn-component-duplicate', function (e) {
+                e.preventDefault();
+
+                var btn = $(this);
+                flog('Click on .btn-component-duplicate', btn);
+
+                var component = btn.closest('.keditor-component');
+                var container = component.closest('.keditor-container');
+                var contentArea = container.parent();
+                var newComponent = $(
+                    '<section class="keditor-component">' +
+                    '   <section class="keditor-component-content">' + KEditor.getComponentContent(component) + '</section>' +
+                    '</section>'
+                );
+
+                component.after(newComponent);
+                KEditor.initComponent(contentArea, container, newComponent, options);
+
+                flog('Component is duplicated');
+
+                if (typeof options.onComponentDuplicated=== 'function') {
+                    options.onComponentDuplicated.call(contentArea, component, newComponent);
+                }
+
+                if (typeof options.onContainerChanged === 'function') {
+                    options.onContainerChanged.call(contentArea, e, container);
+                }
+
+                if (typeof options.onContentChanged === 'function') {
+                    options.onContentChanged.call(contentArea, e);
+                }
+            });
+
+            body.on('click', '.btn-component-delete', function (e) {
+                e.preventDefault();
+
+                var btn = $(this);
+                flog('Click on .btn-component-delete', btn);
+
+                if (confirm('Are you sure that you want to delete this component? This action can not be undo!')) {
+                    var component = btn.closest('.keditor-component');
+                    var contentArea = component.closest('.keditor-content-area');
+
+                    if (typeof options.onBeforeComponentDeleted === 'function') {
+                        options.onBeforeComponentDeleted.call(contentArea, e, component);
+                    }
+
+                    KEditor.deleteComponent(component);
+
+                    if (typeof options.onComponentDeleted === 'function') {
+                        options.onComponentDeleted.call(contentArea, e, component);
+                    }
+
+                    if (typeof options.onContainerChanged === 'function') {
+                        options.onContainerChanged.call(contentArea, e, component);
                     }
 
                     if (typeof options.onContentChanged === 'function') {
@@ -662,14 +758,46 @@
             });
         },
 
-        getSectionContent: function (section) {
-            var id = section.find('.keditor-section-content').attr('id');
+        deleteComponent: function (component) {
+            flog('deleteComponent', component);
+
+            var componentContent = component.children('.keditor-component-content');
+            var id = componentContent.attr('id');
+            var editor = CKEDITOR.instances[id];
+
+            if (editor) {
+                editor.destroy();
+            }
+
+            component.remove();
+        },
+
+        getComponentContent: function (component) {
+            var id = component.find('.keditor-component-content').attr('id');
 
             return CKEDITOR.instances[id].getData();
+        },
+
+        getContainerContent: function (container) {
+            var containerInner = container.children('.keditor-container-inner').clone();
+
+            containerInner.find('[data-type=container-content]').each(function () {
+                var containerContent = $(this);
+                containerContent.removeAttr('class').removeAttr('id');
+
+                containerContent.children('.keditor-component').each(function () {
+                    var component = $(this);
+
+                    component.replaceWith(KEditor.getComponentContent(component));
+                });
+            });
+
+            return containerInner.html();
         }
     };
 
     var methods = {
+
         init: function (options) {
             var contentAreas = $(this);
             options = $.extend({}, DEFAULTS, options);
@@ -706,22 +834,15 @@
 
             return contentAreas;
         },
-        getContent: function (isWrapped) {
+
+        getContent: function () {
             var contentArea = $(this);
             var html = '';
 
-            contentArea.find('> section').each(function () {
-                var section = $(this);
+            contentArea.children('.keditor-container').each(function () {
+                var container = $(this);
 
-                if (isWrapped) {
-                    html += '<section>';
-                }
-
-                html += KEditor.getSectionContent(section);
-
-                if (isWrapped) {
-                    html += '</section>';
-                }
+                html += KEditor.getContainerContent(container);
             });
 
             return html;

@@ -47,32 +47,56 @@
         <script type="text/javascript">
             $(function() {
                 $('#content-area').keditor({
-                    onInitContent: function (contentArea) {
-                        console.log('onInitContent', contentArea);
-                    },
-                    onInitSection: function (section) {
-                        console.log('onInitSection', section);
-                    },
-                    onSectionReady: function (section) {
-                        console.log('onSectionReady', section);
+                    onInitContentArea: function (contentArea) {
+                        console.log('onInitContentArea', contentArea);
                     },
                     onContentChanged: function (event) {
                         console.log('onContentChanged', event);
                     },
-                    onSnippetDropped: function (event, newSection, droppedSnippet) {
-                        console.log('onSnippetDropped', event, newSection, droppedSnippet);
+                    onInitContainer: function (container) {
+                        console.log('onInitContainer', container);
                     },
-                    onSectionChanged: function (event, changedSection) {
-                        console.log('onSectionChanged', event, changedSection);
+                    onBeforeContainerDeleted: function (event, selectedContainer) {
+                        console.log('onBeforeContainerDeleted', event, selectedContainer);
                     },
-                    onBeforeSectionDeleted: function (event, btnRemove, selectedSection) {
-                        console.log('onBeforeSectionDeleted', event, btnRemove, selectedSection);
+                    onContainerDeleted: function (event, selectedContainer) {
+                        console.log('onContainerDeleted', event, selectedContainer);
                     },
-                    onSectionDuplicated: function (event, originalSection, newSection) {
-                        console.log('onSectionDuplicated', event, originalSection, newSection);
+                    onContainerChanged: function (event, changedContainer) {
+                        console.log('onContainerChanged', event, changedContainer);
                     },
-                    onSectionSelected: function (event, selectedSection) {
-                        console.log('onSectionSelected', event, selectedSection);
+                    onContainerDuplicated: function (event, originalContainer, newContainer) {
+                        console.log('onContainerDuplicated', event, originalContainer, newContainer);
+                    },
+                    onContainerSelected: function (event, selectedContainer) {
+                        console.log('onContainerSelected', event, selectedContainer);
+                    },
+                    onContainerSnippetDropped: function (event, newContainer, droppedContainer) {
+                        console.log('onContainerSnippetDropped', event, newContainer, droppedContainer);
+                    },
+                    onCKEditorReady: function (component, editor) {
+                        console.log('onCKEditorReady', component, editor);
+                    },
+                    onInitComponent: function (component) {
+                        console.log('onInitComponent', component);
+                    },
+                    onBeforeComponentDeleted: function (event, selectedComponent) {
+                        console.log('onBeforeComponentDeleted', event, selectedComponent);
+                    },
+                    onComponentDeleted: function (event, selectedComponent) {
+                        console.log('onComponentDeleted', event, selectedComponent);
+                    },
+                    onComponentChanged: function (event, changedComponent) {
+                        console.log('onComponentChanged', event, changedComponent);
+                    },
+                    onComponentDuplicated: function (event, originalComponent, newComponent) {
+                        console.log('onComponentDuplicated', event, originalComponent, newComponent);
+                    },
+                    onComponentSelected: function (event, selectedComponent) {
+                        console.log('onComponentSelected', event, selectedComponent);
+                    },
+                    onComponentSnippetDropped: function (event, newComponent, droppedComponent) {
+                        console.log('onComponentSnippetDropped', event, newComponent, droppedComponent);
                     }
                 });
             });

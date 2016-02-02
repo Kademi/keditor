@@ -95,7 +95,6 @@ $('#your-content-area').keditor('getContent');
 ```
 
 # Customize snippet
-## Container snippet
 ```html
 <!-- Example for container snippet -->
 <div data-type="container" data-preview="/path/to/preview/of/snippet">
@@ -107,10 +106,7 @@ $('#your-content-area').keditor('getContent');
         </div>
     </div>
 </div>
-```
 
-## Component snippet
-```html
 <!-- Example for component snippet -->
 <div data-type="component" data-preview="/path/to/preview/of/snippet">
     <div class="page-header">

@@ -90,7 +90,7 @@ $.fn.keditor.DEFAULTS = {
 ```
 
 # How to get content of KEditor
-```
+```javascript
 $('#your-content-area').keditor('getContent');
 ```
 

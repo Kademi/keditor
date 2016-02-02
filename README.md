@@ -89,10 +89,35 @@ $.fn.keditor.DEFAULTS = {
 };
 ```
 
-# Usage
-## Get content of KEditor
+# How to get content of KEditor
 ```
 $('#your-content-area').keditor('getContent');
+```
+
+# Customize snippet
+## Container snippet
+```html
+<!-- Example for container snippet -->
+<div data-type="container" data-preview="/path/to/preview/of/snippet">
+    <div class="row">
+        <div class="col-sm-12">
+            <div data-type="container-content">
+                <!-- Components will be dropped inside element which has attribute data-type="container-content" -->
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+## Component snippet
+```html
+<!-- Example for component snippet -->
+<div data-type="component" data-preview="/path/to/preview/of/snippet">
+    <div class="page-header">
+        <h1 style="margin-bottom: 30px; font-size: 50px;"><b class="text-uppercase">Cras justo odio</b> <small>Donec id elit non mi</small></h1>
+        <p class="lead"><em>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</em></p>
+    </div>
+</div>
 ```
 
 # License

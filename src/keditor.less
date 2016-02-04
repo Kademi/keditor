@@ -5,19 +5,56 @@
  * @version: @{version}
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, $.fn.ckeditor, FontAwesome
  */
-
-@kademi-pink                                : #ec135b;
-@keditor-border-color                       : #ddd;
-@keditor-border-color-hover                 : #ccc;
-@keditor-border-radius                      : 3px;
-@keditor-animation-duration                 : 0.3s;
-@keditor-sidebar-bg                         : #f0f0f0;
-@keditor-sidebar-toggler-color              : #666;
-@keditor-snippet-bg                         : #fff;
-@keditor-snippet-placeholder-bg             : #eee;
-
+/* ==================================================================================
+   Bootstrap variables and mixins
+   ================================================================================== */
 @import "less/variables";
 @import "less/mixins";
+
+/* ==================================================================================
+   Variables
+   ================================================================================== */
+// Base colors
+@blue                                       : #2eb2e4;
+@blueLight                                  : #b5e4f6;
+
+// Common colors
+@border-color                               : #ddd;
+@border-radius                              : 3px;
+
+// Animation option
+@animation-duration                         : 0.3s;
+
+// Sidebar
+@sidebar-bg                                 : #f0f0f0;
+@sidebar-color                              : #666;
+@sidebar-shadow-color                       : rgba(0, 0, 0, .15);
+
+// Snippet
+@snippet-bg                                 : #fff;
+@snippet-border-color                       : #f0f0f0;
+@snippet-border-color-hover                 : #ccc;
+@snippet-placeholder-bg                     : #eee;
+
+// Container
+@container-outline-color-hover              : @blueLight;
+@container-outline-color-selected           : @blue;
+
+// Container toolbar
+@container-toolbar-border-color              : #333;
+@container-toolbar-button-bg                 : #333;
+@container-toolbar-button-bg-hover           : @blue;
+@container-toolbar-button-color              : #fff;
+
+// Container content
+@container-content-outline-color            : #e0e0e0;
+@container-content-outline-highlighted      : @blue;
+
+// Container content toolbar
+@container-content-toolbar-bg               : rgba(0, 0, 0, .5);
+@container-content-toolbar-button-color     : #fff;
+@container-content-toolbar-button-bg-hover  : rgba(255, 255, 255, .2);
+@container-content-toolbar-outline-color    : rgba(0, 0, 0, .5);
 
 /* ==================================================================================
    Mixins
@@ -74,7 +111,7 @@ body.opened-keditor-sidebar {
    ================================================================================== */
 body.highlighted-container-content {
     .keditor-container-content {
-        outline-color: #2eb2e4;
+        outline-color: @container-content-outline-highlighted;
     }
 }
 
@@ -97,13 +134,13 @@ body.highlighted-container-content {
     top: 0;
     right: -255px;
     bottom: 0;
-    background: @keditor-sidebar-bg;
+    background: @sidebar-bg;
     opacity: .9;
-    border-left: 1px solid @keditor-border-color;
+    border-left: 1px solid @border-color;
     width: 255px;
-    box-shadow: -1px 0 5px rgba(0, 0, 0, .15);
+    box-shadow: -1px 0 5px @sidebar-shadow-color;
     padding: 10px;
-    .transition(all @keditor-animation-duration);
+    .transition(all @animation-duration);
     font: @font-size-base/@line-height-base @font-family-base;
 
     .keditor-box-sizing();
@@ -112,7 +149,196 @@ body.highlighted-container-content {
         opacity: 1;
     }
 
-    @import "less/navs";
+    //
+    // Navs
+    // --------------------------------------------------
+
+
+    // Base class
+    // --------------------------------------------------
+
+    .nav {
+        margin-bottom: 0;
+        padding-left: 0; // Override default ul/ol
+        list-style: none;
+        &:extend(.clearfix all);
+
+        > li {
+            position: relative;
+            display: block;
+
+            > a {
+                position: relative;
+                display: block;
+                padding: @nav-link-padding;
+                &:hover,
+                &:focus {
+                    text-decoration: none;
+                    background-color: @nav-link-hover-bg;
+                }
+            }
+
+            // Disabled state sets text to gray and nukes hover/tab effects
+            &.disabled > a {
+                color: @nav-disabled-link-color;
+
+                &:hover,
+                &:focus {
+                    color: @nav-disabled-link-hover-color;
+                    text-decoration: none;
+                    background-color: transparent;
+                    cursor: @cursor-disabled;
+                }
+            }
+        }
+
+        // Open dropdowns
+        .open > a {
+            &,
+            &:hover,
+            &:focus {
+                background-color: @nav-link-hover-bg;
+                border-color: @link-color;
+            }
+        }
+
+        // Nav dividers (deprecated with v3.0.1)
+        //
+        // This should have been removed in v3 with the dropping of `.nav-list`, but
+        // we missed it. We don't currently support this anywhere, but in the interest
+        // of maintaining backward compatibility in case you use it, it's deprecated.
+        .nav-divider {
+            .nav-divider();
+        }
+
+        // Prevent IE8 from misplacing imgs
+        //
+        // See https://github.com/h5bp/html5-boilerplate/issues/984#issuecomment-3985989
+        > li > a > img {
+            max-width: none;
+        }
+    }
+
+
+    // Tabs
+    // -------------------------
+
+    // Give the tabs something to sit on
+    .nav-tabs {
+        border-bottom: 1px solid @nav-tabs-border-color;
+        > li {
+            float: left;
+            // Make the list-items overlay the bottom border
+            margin-bottom: -1px;
+
+            // Actual tabs (as links)
+            > a {
+                margin-right: 2px;
+                line-height: @line-height-base;
+                border: 1px solid transparent;
+                border-radius: @border-radius-base @border-radius-base 0 0;
+                &:hover {
+                    border-color: @nav-tabs-link-hover-border-color @nav-tabs-link-hover-border-color @nav-tabs-border-color;
+                }
+            }
+
+            // Active state, and its :hover to override normal :hover
+            &.active > a {
+                &,
+                &:hover,
+                &:focus {
+                    color: @nav-tabs-active-link-hover-color;
+                    background-color: @nav-tabs-active-link-hover-bg;
+                    border: 1px solid @nav-tabs-active-link-hover-border-color;
+                    border-bottom-color: transparent;
+                    cursor: default;
+                }
+            }
+        }
+        // pulling this in mainly for less shorthand
+        &.nav-justified {
+            .nav-justified();
+            .nav-tabs-justified();
+        }
+    }
+
+    // Nav variations
+    // --------------------------------------------------
+
+    // Justified nav links
+    // -------------------------
+
+    .nav-justified {
+        width: 100%;
+
+        > li {
+            float: none;
+            > a {
+                text-align: center;
+                margin-bottom: 5px;
+            }
+        }
+
+        > .dropdown .dropdown-menu {
+            top: auto;
+            left: auto;
+        }
+
+        @media (min-width: @screen-sm-min) {
+            > li {
+                display: table-cell;
+                width: 1%;
+                > a {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    // Move borders to anchors instead of bottom of list
+    //
+    // Mixin for adding on top the shared `.nav-justified` styles for our tabs
+    .nav-tabs-justified {
+        border-bottom: 0;
+
+        > li > a {
+            // Override margin from .nav-tabs
+            margin-right: 0;
+            border-radius: @border-radius-base;
+        }
+
+        > .active > a,
+        > .active > a:hover,
+        > .active > a:focus {
+            border: 1px solid @nav-tabs-justified-link-border-color;
+        }
+
+        @media (min-width: @screen-sm-min) {
+            > li > a {
+                border-bottom: 1px solid @nav-tabs-justified-link-border-color;
+                border-radius: @border-radius-base @border-radius-base 0 0;
+            }
+            > .active > a,
+            > .active > a:hover,
+            > .active > a:focus {
+                border-bottom-color: @nav-tabs-justified-active-link-border-color;
+            }
+        }
+    }
+
+
+    // Tabbable tabs
+    // -------------------------
+
+    // Hide tabbable panes to start, show them when `.active`
+    .tab-content {
+        > .tab-pane {
+            display: none;
+        }
+        > .active {
+            display: block;
+        }
+    }
 }
 
 #keditor-sidebar-toggler {
@@ -121,14 +347,14 @@ body.highlighted-container-content {
     width: 25px;
     height: 30px;
     left: -25px;
-    background: @keditor-sidebar-bg;
+    background: @sidebar-bg;
     text-align: center;
     line-height: 30px;
-    border: 1px solid @keditor-border-color;
+    border: 1px solid @border-color;
     border-right: 0;
     cursor: pointer;
-    border-radius: @keditor-border-radius 0 0 @keditor-border-radius;
-    color: @keditor-sidebar-toggler-color;
+    border-radius: @border-radius 0 0 @border-radius;
+    color: @sidebar-color;
 }
 
 /* ==================================================================================
@@ -140,7 +366,7 @@ body.highlighted-container-content {
     .keditor-snippet {
         &:hover {
             opacity: .6;
-            border-color: @keditor-border-color-hover;
+            border-color: @snippet-border-color-hover;
         }
     }
 }
@@ -151,9 +377,9 @@ body.highlighted-container-content {
 
 #keditor-snippets-container {
     height: ~"calc(100% - 42px)";
-    background: @keditor-snippet-bg;
+    background: @snippet-bg;
     padding: 10px 5px;
-    border: solid @keditor-border-color;
+    border: solid @border-color;
     border-width: 0 1px 1px;
 
     > .keditor-snippets {
@@ -161,17 +387,17 @@ body.highlighted-container-content {
         .clearfix();
         overflow-y: auto;
         overflow-x: hidden;
-        .transition(opacity @keditor-animation-duration);
+        .transition(opacity @animation-duration);
     }
 }
 
 .keditor-snippet {
     padding: 5px;
-    border: 1px solid @keditor-sidebar-bg;
+    border: 1px solid @snippet-border-color;
     cursor: move;
-    .transition(all @keditor-animation-duration);
+    .transition(all @animation-duration);
     float: left;
-    background: @keditor-snippet-bg;
+    background: @snippet-bg;
     margin: 0 5px 10px;
     .user-select(none);
 
@@ -219,26 +445,26 @@ body.highlighted-container-content {
     > .keditor-toolbar {
         top: -3px;
         left: -39px;
-        border: 1px solid #333;
-        border-radius: @keditor-border-radius;
+        border: 1px solid @container-toolbar-border-color;
+        border-radius: @border-radius;
         overflow: hidden;
 
         > a {
-            background: #333;
-            color: #fff;
+            background: @container-toolbar-button-bg;
+            color: @container-toolbar-button-color;
 
             &:hover {
-                background: #34afe0;
+                background: @container-toolbar-button-bg-hover;
             }
         }
     }
 
     &:hover {
-        outline-color: #b5e4f6;
+        outline-color: @container-outline-color-hover;
     }
 
     &.showed-keditor-toolbar {
-        outline-color: #2eb2e4;
+        outline-color: @container-outline-color-selected;
 
         > .keditor-toolbar {
             display: block;
@@ -248,7 +474,7 @@ body.highlighted-container-content {
 
 .keditor-container-content {
     min-height: 50px;
-    outline: 1px dashed #e0e0e0;
+    outline: 1px dashed @container-content-outline-color;
     outline-offset: -1px;
 }
 
@@ -262,29 +488,29 @@ body.highlighted-container-content {
         top: 3px;
         right: 3px;
         left: 3px;
-        background-color: rgba(0, 0, 0, .5);
+        background-color: @container-content-toolbar-bg;
         padding-bottom: 3px;
         text-align: right;
 
         > a {
             border: 0;
             background: none;
-            color: #fafafa;
+            color: @container-content-toolbar-button-color;
             text-align: center;
             border-radius: 0;
             .box-shadow(none);
-            .transition(all @keditor-animation-duration);
+            .transition(all @animation-duration);
             display: inline-block;
 
             &:hover {
-                background-color: rgba(255, 255, 255, .2);
+                background-color: @container-content-toolbar-button-bg-hover;
             }
         }
     }
 
     &:hover,
     &.showed-keditor-toolbar {
-        outline: 3px solid rgba(0, 0, 0, .5);
+        outline: 3px solid @container-content-toolbar-outline-color;
         outline-offset: -3px;
     }
 
@@ -314,7 +540,7 @@ body.highlighted-container-content {
 }
 
 .ui-sortable-placeholder {
-    background: @keditor-snippet-placeholder-bg !important;
+    background: @snippet-placeholder-bg !important;
     visibility: visible !important;
     height: 10px !important;
     margin: 5px 0 !important;
@@ -324,7 +550,7 @@ body.highlighted-container-content {
 
 .keditor-section {
     &.ui-sortable-helper {
-        background: #fff !important;
+        background: @snippet-bg !important;
         opacity: 0.5;
     }
 }

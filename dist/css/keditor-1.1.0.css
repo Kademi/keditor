@@ -6,6 +6,12 @@
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, $.fn.ckeditor, FontAwesome
  */
 /* ==================================================================================
+   Bootstrap variables and mixins
+   ================================================================================== */
+/* ==================================================================================
+   Variables
+   ================================================================================== */
+/* ==================================================================================
    Mixins
    ================================================================================== */
 /* ==================================================================================
@@ -195,28 +201,6 @@ body.highlighted-container-content .keditor-container-content {
     border-bottom-color: #fff;
   }
 }
-#keditor-sidebar .nav-pills > li {
-  float: left;
-}
-#keditor-sidebar .nav-pills > li > a {
-  border-radius: 4px;
-}
-#keditor-sidebar .nav-pills > li + li {
-  margin-left: 2px;
-}
-#keditor-sidebar .nav-pills > li.active > a,
-#keditor-sidebar .nav-pills > li.active > a:hover,
-#keditor-sidebar .nav-pills > li.active > a:focus {
-  color: #fff;
-  background-color: #337ab7;
-}
-#keditor-sidebar .nav-stacked > li {
-  float: none;
-}
-#keditor-sidebar .nav-stacked > li + li {
-  margin-top: 2px;
-  margin-left: 0;
-}
 #keditor-sidebar .nav-justified {
   width: 100%;
 }
@@ -268,11 +252,6 @@ body.highlighted-container-content .keditor-container-content {
 }
 #keditor-sidebar .tab-content > .active {
   display: block;
-}
-#keditor-sidebar .nav-tabs .dropdown-menu {
-  margin-top: -1px;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
 }
 #keditor-sidebar-toggler {
   position: absolute;
@@ -394,7 +373,7 @@ body.highlighted-container-content .keditor-container-content {
   color: #fff;
 }
 .keditor-container > .keditor-toolbar > a:hover {
-  background: #34afe0;
+  background: #2eb2e4;
 }
 .keditor-container:hover {
   outline-color: #b5e4f6;
@@ -427,7 +406,7 @@ body.highlighted-container-content .keditor-container-content {
 .keditor-component .keditor-toolbar > a {
   border: 0;
   background: none;
-  color: #fafafa;
+  color: #fff;
   text-align: center;
   border-radius: 0;
   -webkit-box-shadow: none;

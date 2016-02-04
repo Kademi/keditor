@@ -16,35 +16,8 @@
 @keditor-snippet-bg                         : #fff;
 @keditor-snippet-placeholder-bg             : #eee;
 
-/* ==================================================================================
-   Buttons and button groups
-   ================================================================================== */
 @import "less/variables";
 @import "less/mixins";
-@import "less/buttons";
-@import "less/button-groups";
-@import "less/navs";
-
-/* ==================================================================================
-   Body
-   ================================================================================== */
-body {
-    margin: 0;
-    overflow-y: scroll;
-}
-
-/* ==================================================================================
-   opened-keditor-sidebar
-   ================================================================================== */
-body.opened-keditor-sidebar {
-    .keditor-content-area {
-        margin-right: 260px;
-    }
-
-    #keditor-sidebar {
-        right: 0;
-    }
-}
 
 /* ==================================================================================
    Mixins
@@ -61,6 +34,51 @@ body.opened-keditor-sidebar {
 }
 
 /* ==================================================================================
+   Body
+   ================================================================================== */
+body {
+    margin: 0;
+    overflow-y: scroll;
+}
+
+/* ==================================================================================
+   CKEditor
+   ================================================================================== */
+div.cke_float[id*="cke_keditor-component-content-"] {
+    padding: 0;
+}
+
+div.cke_float[id*="cke_keditor-component-content-"] .cke_top {
+    padding: 3px 3px 0;
+}
+
+/* ==================================================================================
+   opened-keditor-sidebar
+   ================================================================================== */
+body.opened-keditor-sidebar {
+    .keditor-content-area {
+        margin-right: 260px;
+    }
+
+    div.cke_float[id*="cke_keditor-component-content-"] {
+        margin-right: 287px;
+    }
+
+    #keditor-sidebar {
+        right: 0;
+    }
+}
+
+/* ==================================================================================
+   highlighted-container-content
+   ================================================================================== */
+body.highlighted-container-content {
+    .keditor-container-content {
+        outline-color: #2eb2e4;
+    }
+}
+
+/* ==================================================================================
    Content area
    ================================================================================== */
 .keditor-content-area {
@@ -68,7 +86,6 @@ body.opened-keditor-sidebar {
     width: auto;
     margin: 0;
     padding: 80px 50px 30px;
-    max-width: 1200px;
 }
 
 /* ==================================================================================
@@ -94,6 +111,8 @@ body.opened-keditor-sidebar {
     &:hover {
         opacity: 1;
     }
+
+    @import "less/navs";
 }
 
 #keditor-sidebar-toggler {
@@ -173,19 +192,14 @@ body.opened-keditor-sidebar {
     display: none;
     .keditor-box-sizing();
 
-    .btn {
+    > a {
         padding: 1px 3px;
-        font-size: 14px;
-        width: 24px;
-        height: 24px;
-
-        &:first-child {
-            border-top-right-radius: 0 !important;
-        }
-
-        &:last-child {
-            border-bottom-right-radius: 0 !important;
-        }
+        font-size: 12px;
+        width: 20px;
+        height: 20px;
+        display: block;
+        text-align: center;
+        line-height: 20px;
     }
 
     .btn-container-reposition,
@@ -199,30 +213,32 @@ body.opened-keditor-sidebar {
    ================================================================================== */
 .keditor-container {
     position: relative;
+    outline: 1px solid transparent;
+    outline-offset: 15px;
 
     > .keditor-toolbar {
-        top: -18px;
+        top: -16px;
         left: -39px;
+        border: 1px solid #333;
+        border-radius: @keditor-border-radius;
+        overflow: hidden;
 
-        .btn {
-            background: #f0f0f0;
-            border: 0;
-            color: #555;
+        > a {
+            background: #333;
+            color: #fff;
 
             &:hover {
-                background: #e0e0e0;
+                background: #34afe0;
             }
         }
     }
 
-    &.showed-keditor-toolbar {
-        outline: 3px dashed #f0f0f0;
-        outline-offset: 15px;
-        margin: 40px 0;
+    &:hover {
+        outline-color: #b5e4f6;
+    }
 
-        &:first-child {
-            margin-top: 0;
-        }
+    &.showed-keditor-toolbar {
+        outline-color: #2eb2e4;
 
         > .keditor-toolbar {
             display: block;
@@ -232,7 +248,7 @@ body.opened-keditor-sidebar {
 
 .keditor-container-content {
     min-height: 50px;
-    outline: 1px dashed #f0f0f0;
+    outline: 1px dashed #e0e0e0;
     outline-offset: -1px;
 }
 
@@ -250,17 +266,15 @@ body.opened-keditor-sidebar {
         padding-bottom: 3px;
         text-align: right;
 
-        .btn {
+        > a {
             border: 0;
             background: none;
             color: #fafafa;
-            width: 20px;
-            height: 20px;
-            line-height: 20px;
             text-align: center;
             border-radius: 0;
             .box-shadow(none);
             .transition(all @keditor-animation-duration);
+            display: inline-block;
 
             &:hover {
                 background-color: rgba(255, 255, 255, .2);

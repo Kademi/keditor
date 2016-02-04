@@ -1,4 +1,4 @@
-/**!
+ /**!
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
@@ -295,6 +295,10 @@
                     $('[contenteditable]').blur();
                     $('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                     $('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                    $(document.body).addClass('highlighted-container-content');
+                },
+                stop: function () {
+                    $(document.body).removeClass('highlighted-container-content');
                 }
             });
         },
@@ -307,8 +311,6 @@
 
             switcherLis.find('a').on('click', function (e) {
                 e.preventDefault();
-                e.stopImmediatePropagation();
-                e.stopPropagation();
 
                 var a = $(this);
                 var li = a.parent();
@@ -429,11 +431,9 @@
                 flog('Render KEditor toolbar for container', container);
                 container.append(
                     '<div class="keditor-toolbar keditor-toolbar-container">' +
-                    '   <div class="btn-group-vertical">' +
-                    '       <a href="#" class="btn btn-xs btn-default btn-container-reposition"><i class="fa fa-sort"></i></a>' +
-                    '       <a href="#" class="btn btn-xs btn-default btn-container-duplicate"><i class="fa fa-files-o"></i></a>' +
-                    '       <a href="#" class="btn btn-xs btn-default btn-container-delete"><i class="fa fa-times"></i></a>' +
-                    '   </div>' +
+                    '   <a href="#" class="btn-container-reposition"><i class="fa fa-sort"></i></a>' +
+                    '   <a href="#" class="btn-container-duplicate"><i class="fa fa-files-o"></i></a>' +
+                    '   <a href="#" class="btn-container-delete"><i class="fa fa-times"></i></a>' +
                     '</div>'
                 );
 
@@ -565,9 +565,9 @@
                 flog('Render KEditor toolbar for component', component);
                 component.append(
                     '<div class="keditor-toolbar keditor-toolbar-component">' +
-                    '   <a href="#" class="btn btn-xs btn-default btn-component-reposition"><i class="fa fa-arrows"></i></a>' +
-                    '   <a href="#" class="btn btn-xs btn-default btn-component-duplicate"><i class="fa fa-files-o"></i></a>' +
-                    '   <a href="#" class="btn btn-xs btn-default btn-component-delete"><i class="fa fa-times"></i></a>' +
+                    '   <a href="#" class="btn-component-reposition"><i class="fa fa-arrows"></i></a>' +
+                    '   <a href="#" class="btn-component-duplicate"><i class="fa fa-files-o"></i></a>' +
+                    '   <a href="#" class="btn-component-delete"><i class="fa fa-times"></i></a>' +
                     '</div>'
                 );
 
@@ -617,41 +617,59 @@
             }
         },
 
+        getClickedElement: function (event, selector) {
+            var target = $(event.target);
+            var closest = target.closest(selector);
+
+            if (target.is(selector)) {
+                return target;
+            } else if (closest.length > 0) {
+                return closest;
+            } else {
+                return null;
+            }
+        },
+
         initKEditorClicks: function (options) {
             flog('initKEditorClicks', options);
 
             var body = $(document.body);
 
-            body.on('click', '.keditor-container', function (e) {
-                var container = $(this);
+            body.on('click', function (e) {
+                var container = KEditor.getClickedElement(e, '.keditor-container');
+                if (container) {
+                    flog('Click on .keditor-container', container, container.hasClass('showed-keditor-toolbar'));
 
-                flog('Click on .keditor-container', container);
+                    if (!container.hasClass('showed-keditor-toolbar')) {
+                        $('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                        $('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                        container.addClass('showed-keditor-toolbar');
 
-                if (!container.hasClass('showed-keditor-toolbar')) {
+                        var contentArea = container.parent();
+                        if (typeof options.onContainerSelected === 'function') {
+                            options.onContainerSelected.call(contentArea, e, container);
+                        }
+                    }
+                } else {
                     $('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                     $('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-                    container.addClass('showed-keditor-toolbar');
-
-                    var contentArea = container.parent();
-                    if (typeof options.onContainerSelected === 'function') {
-                        options.onContainerSelected.call(contentArea, e, container);
-                    }
                 }
-            });
 
-            body.on('click', '.keditor-component', function (e) {
-                var component = $(this);
+                var component = KEditor.getClickedElement(e, '.keditor-component');
+                if (component) {
+                    flog('Click on .keditor-component', component);
 
-                flog('Click on .keditor-component', component);
+                    if (!component.hasClass('showed-keditor-toolbar')) {
+                        $('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                        component.addClass('showed-keditor-toolbar');
 
-                if (!component.hasClass('showed-keditor-toolbar')) {
-                    $('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-                    component.addClass('showed-keditor-toolbar');
-
-                    var contentArea = component.parent();
-                    if (typeof options.onComponentSelected === 'function') {
-                        options.onComponentSelected.call(contentArea, e, component);
+                        var contentArea = component.parent();
+                        if (typeof options.onComponentSelected === 'function') {
+                            options.onComponentSelected.call(contentArea, e, component);
+                        }
                     }
+                } else {
+                    $('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                 }
             });
 

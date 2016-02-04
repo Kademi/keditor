@@ -379,8 +379,8 @@ body.highlighted-container-content .keditor-container-content {
    ================================================================================== */
 .keditor-container {
   position: relative;
-  outline: 1px solid transparent;
-  outline-offset: 15px;
+  outline: 3px dashed transparent;
+  outline-offset: 0;
 }
 .keditor-container > .keditor-toolbar {
   top: -16px;

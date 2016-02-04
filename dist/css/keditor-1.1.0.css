@@ -383,7 +383,7 @@ body.highlighted-container-content .keditor-container-content {
   outline-offset: 0;
 }
 .keditor-container > .keditor-toolbar {
-  top: -16px;
+  top: -3px;
   left: -39px;
   border: 1px solid #333;
   border-radius: 3px;

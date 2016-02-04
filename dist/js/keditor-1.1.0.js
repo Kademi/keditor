@@ -815,7 +815,7 @@
 
             containerInner.find('[data-type=container-content]').each(function () {
                 var containerContent = $(this);
-                containerContent.removeAttr('class').removeAttr('id');
+                containerContent.removeClass('keditor-container-content ui-droppable ui-sortable').removeAttr('id');
 
                 containerContent.children('.keditor-component').each(function () {
                     var component = $(this);

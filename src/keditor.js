@@ -353,6 +353,7 @@
                 items: '> section',
                 connectWith: '.keditor-content-area',
                 axis: 'y',
+                tolerance: 'pointer',
                 sort: function () {
                     $(this).removeClass('ui-state-default');
                 },
@@ -485,6 +486,7 @@
                 handle: '.btn-component-reposition',
                 items: '> section',
                 connectWith: '.keditor-container-content',
+                tolerance: 'pointer',
                 sort: function () {
                     $(this).removeClass('ui-state-default');
                 },

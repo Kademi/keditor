@@ -268,6 +268,9 @@ body.highlighted-container-content .keditor-container-content {
   border-radius: 3px 0 0 3px;
   color: #666;
 }
+#keditor-sidebar-toggler > i.fa {
+  line-height: inherit;
+}
 /* ==================================================================================
    Snippets
    ================================================================================== */

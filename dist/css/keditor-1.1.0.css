@@ -399,11 +399,11 @@ body.highlighted-container-content .keditor-container-content {
   position: relative;
 }
 .keditor-component .keditor-toolbar {
-  top: 3px;
-  right: 3px;
-  left: 3px;
+  top: -23px;
+  right: 0;
+  left: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  padding-bottom: 3px;
+  padding: 3px 3px 0;
   text-align: right;
 }
 .keditor-component .keditor-toolbar > a {

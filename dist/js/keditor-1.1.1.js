@@ -2,7 +2,7 @@
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: @{version}
+ * @version: 1.1.1
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, FontAwesome
  *
  * Configuration:
@@ -67,7 +67,7 @@
         debug: true,
 
         // Version of KEditor
-        version: '@{version}',
+        version: '1.1.1',
 
         // Log function
         log: flog,

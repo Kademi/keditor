@@ -827,6 +827,7 @@
                 } else {
                     var component = btn.closest('.keditor-component');
                     KEditor.showSettingPanel(component, options);
+                    KEditor.settingComponent = component;
                 }
             });
 

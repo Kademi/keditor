@@ -25,7 +25,7 @@ gulp.task('clean-js-dist', function () {
 
 // Less to CSS: Run manually with: "gulp build-css"
 gulp.task('build-css', function () {
-    return gulp.src('./src/*.less')
+    return gulp.src(['./src/*.less', '!./src/_*.less'])
         .pipe(plumber())
         .pipe(less())
         .pipe(replace('@{version}', pjson.version))

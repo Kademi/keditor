@@ -5,14 +5,22 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * jQuery: http://jquery.com/
  * jQuery UI: https://jqueryui.com/
  * NiceScroll: http://areaaperta.com/nicescroll/ (Optional)
- * CKEditor: http://ckeditor.com/
+ * Bootstrap: http://getbootstrap.com/
  * FontAwesome: http://fontawesome.io/ (Optional for icons)
 
 # Configuration
 ```javascript
 /**
  * Configuration:
- * @option {Object} ckeditor Configuration for CKEditor. See at http://docs.ckeditor.com/#!/api/CKEDITOR.options
+ * @option {String} btnMoveContainerText Text content for move button of container
+ * @option {String} btnMoveComponentText Text content for move button of component
+ * @option {String} btnSettingContainerText Text content for setting button of container
+ * @option {String} btnSettingComponentText Text content for setting button of component
+ * @option {String} btnDuplicateContainerText Text content for duplicate button of container
+ * @option {String} btnDuplicateComponentText Text content for duplicate button of component
+ * @option {String} btnDeleteContainerText Text content for delete button of container
+ * @option {String} btnDeleteComponentText Text content for delete button of component
+ * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component - jQuery object of component
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {Function} onInitContentArea Method will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
@@ -24,7 +32,7 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * @option {Function} onContainerDuplicated Callback will be called when a container is duplicated. Arguments: event, originalContainer, newContainer
  * @option {Function} onContainerSelected Callback will be called when a container is selected. Arguments: event, selectedContainer
  * @option {Function} onContainerSnippetDropped Callback will be called when a container snippet is dropped into content area. Arguments: event, newContainer, droppedContainer
- * @option {Function} onCKEditorReady Callback will be called after initializing component, when CKEditor of component content is ready. Arguments: component, editor
+ * @option {Function} onComponentReady Callback will be called after component is initialized. Arguments: component
  * @option {Function} onInitComponent Callback will be called when initializing component. Arguments: component
  * @option {Function} onBeforeComponentDeleted Callback will be called before a component is deleted. Arguments: event, selectedComponent
  * @option {Function} onComponentDeleted Callback will be called after a component is deleted. Arguments: event, selectedComponent
@@ -33,23 +41,16 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * @option {Function} onComponentSelected Callback will be called when a component is selected. Arguments: event, selectedComponent
  * @option {Function} onComponentSnippetDropped Callback will be called after a component snippet is dropped into a container. Arguments: event, newComponent, droppedComponent
  */
-$.fn.keditor.DEFAULTS = {
-    ckeditor: {
-        allowedContent: true, // DISABLES Advanced Content Filter. This is so templates with classes: allowed through
-        bodyId: 'editor',
-        templates_replaceContent: false,
-        enterMode: 'P',
-        forceEnterMode: true,
-        format_tags: 'p;h1;h2;h3;h4;h5;h6', // removed p2
-        format_p2: {
-            element: 'p',
-            attributes: {
-                'class': 'lessSpace'
-            }
-        },
-        removePlugins: 'magicline',
-        minimumChangeMilliseconds: 100
-    },
+$.keditor.DEFAULTS = {
+    btnMoveContainerText: '<i class="fa fa-sort"></i>',
+    btnMoveComponentText: '<i class="fa fa-arrows"></i>',
+    btnSettingContainerText: '<i class="fa fa-cog"></i>',
+    btnSettingComponentText: '<i class="fa fa-cog"></i>',
+    btnDuplicateContainerText: '<i class="fa fa-files-o"></i>',
+    btnDuplicateComponentText: '<i class="fa fa-files-o"></i>',
+    btnDeleteContainerText: '<i class="fa fa-times"></i>',
+    btnDeleteComponentText: '<i class="fa fa-times"></i>',
+    defaultComponentType: 'text',
     snippetsUrl: 'snippets/default/snippets.html',
     snippetsListId: 'keditor-snippets-list',
     onInitContentArea: function (contentArea) {
@@ -70,7 +71,7 @@ $.fn.keditor.DEFAULTS = {
     },
     onContainerSnippetDropped: function (event, newContainer, droppedContainer) {
     },
-    onCKEditorReady: function (component, editor) {
+    onComponentReady: function (component) {
     },
     onInitComponent: function (component) {
     },
@@ -107,13 +108,80 @@ $('#your-content-area').keditor('getContent');
     </div>
 </div>
 
-<!-- Example for component snippet -->
-<div data-type="component" data-preview="/path/to/preview/of/snippet">
+<!-- Example for component snippet. x is name of component type. Example: "component-text" -->
+<div data-type="component-x" data-preview="/path/to/preview/of/snippet">
     <div class="page-header">
         <h1 style="margin-bottom: 30px; font-size: 50px;"><b class="text-uppercase">Cras justo odio</b> <small>Donec id elit non mi</small></h1>
         <p class="lead"><em>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</em></p>
     </div>
 </div>
+```
+
+# Customize component type
+```javascript
+$.keditor.components['typeName'] = {
+    /**
+     * Function will be called when initializing a component with this type
+     * @param {jQuery} contentArea
+     * @param {jQuery} container
+     * @param {jQuery} component
+     * @param {Object} options
+     */
+    init: function (contentArea, container, component, options) {
+
+    },
+
+    /**
+     * Function will be called for getting content of component from method of KEditor "target.keditor('getContent')"
+     * @param {jQuery} component
+     * @param {Object} options
+     */
+    getContent: function (component, options) {
+
+    },
+
+    /**
+     * Function will be called when deleting component
+     * @param {jQuery} component
+     * @param {Object} options
+     */
+    destroy: function (component, options) {
+
+    },
+
+    // Enable setting panel for this type or not
+    settingEnabled: true,
+
+    // Title of setting panel
+    settingTitle: 'Add image',
+
+    /**
+     * Initialize setting form of this type
+     * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
+     * @param {Object} options
+     */
+    initSettingForm: function (form, options) {
+
+    },
+
+    /**
+     * Show setting form for this type. This function will be called when user clicks on setting button of component when setting panel is hidden. You can fulfill form controls in this function.
+     * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
+     * @param {jQuery} component Component will be applied setting
+     * @param {Object} options
+     */
+    showSettingForm: function (form, component, options) {
+
+    },
+
+    /**
+     * Hide setting form for this type. This function will be called when user clicks again on setting button of component when setting panel is showed. You can clear setting form in this function
+     * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
+     */
+    hideSettingForm: function (form) {
+
+    }
+};
 ```
 
 # License

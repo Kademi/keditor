@@ -133,7 +133,7 @@ $.keditor.components['typeName'] = {
 
     /**
      * Function will be called for getting content of component from method of KEditor "target.keditor('getContent')"
-     * @param {jQuery} component
+     * @param {jQuery} component This component is cloned from original component. So you can do anything with it, event deleted
      * @param {Object} options
      */
     getContent: function (component, options) {

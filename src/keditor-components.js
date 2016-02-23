@@ -8,6 +8,21 @@
     // ---------------------------------------------------------------------
     components['text'] = {
         options: {
+            toolbarGroups: [
+                {name: 'document', groups: ['mode', 'document', 'doctools']},
+                {name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing']},
+                {name: 'forms', groups: ['forms']},
+                {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
+                {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
+                {name: 'links', groups: ['links']},
+                {name: 'insert', groups: ['insert']},
+                '/',
+                {name: 'clipboard', groups: ['clipboard', 'undo']},
+                {name: 'styles', groups: ['styles']},
+                {name: 'colors', groups: ['colors']},
+                {name: 'tools', groups: ['tools']},
+                {name: 'others', groups: ['others']},
+            ],
             title: false,
             allowedContent: true, // DISABLES Advanced Content Filter. This is so templates with classes: allowed through
             bodyId: 'editor',
@@ -15,7 +30,8 @@
             enterMode: 'P',
             forceEnterMode: true,
             format_tags: 'p;h1;h2;h3;h4;h5;h6',
-            removePlugins: 'magicline',
+            removePlugins: 'table,magicline,tabletools',
+            removeButtons: 'Save,NewPage,Preview,Print,Templates,PasteText,PasteFromWord,Find,Replace,SelectAll,Scayt,Form,HiddenField,ImageButton,Button,Select,Textarea,TextField,Radio,Checkbox,Outdent,Indent,Blockquote,CreateDiv,Language,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Styles,BGColor,Maximize,About,ShowBlocks,BidiLtr,BidiRtl,Flash,Image,Subscript,Superscript,Anchor',
             minimumChangeMilliseconds: 100
         },
 
@@ -73,6 +89,38 @@
             if (editor) {
                 editor.destroy();
             }
+        }
+    };
+
+    // Photo component
+    // ---------------------------------------------------------------------
+    components['photo'] = {
+        init: function (contentArea, container, component, options) {
+
+        },
+
+        getContent: function (component, options) {
+
+        },
+
+        destroy: function (component, options) {
+
+        },
+
+        settingEnabled: true,
+
+        settingTitle: 'Add image',
+
+        initSettingForm: function () {
+
+        },
+
+        showSettingForm: function () {
+
+        },
+
+        hideSettingForm: function () {
+
         }
     };
 

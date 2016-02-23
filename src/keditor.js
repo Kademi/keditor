@@ -1,11 +1,19 @@
- /**!
+/**!
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
  * @version: @{version}
- * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, FontAwesome
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  *
  * Configuration:
+ * @option {String} btnMoveContainerText Text content for move button of container
+ * @option {String} btnMoveComponentText Text content for move button of component
+ * @option {String} btnSettingContainerText Text content for setting button of container
+ * @option {String} btnSettingComponentText Text content for setting button of component
+ * @option {String} btnDuplicateContainerText Text content for duplicate button of container
+ * @option {String} btnDuplicateComponentText Text content for duplicate button of component
+ * @option {String} btnDeleteContainerText Text content for delete button of container
+ * @option {String} btnDeleteComponentText Text content for delete button of component
  * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component - jQuery object of component
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
@@ -77,26 +85,51 @@
 
         // Default configuration of KEditor
         DEFAULTS: {
+            btnMoveContainerText: '<i class="fa fa-sort"></i>',
+            btnMoveComponentText: '<i class="fa fa-arrows"></i>',
+            btnSettingContainerText: '<i class="fa fa-cog"></i>',
+            btnSettingComponentText: '<i class="fa fa-cog"></i>',
+            btnDuplicateContainerText: '<i class="fa fa-files-o"></i>',
+            btnDuplicateComponentText: '<i class="fa fa-files-o"></i>',
+            btnDeleteContainerText: '<i class="fa fa-times"></i>',
+            btnDeleteComponentText: '<i class="fa fa-times"></i>',
             defaultComponentType: 'text',
             snippetsUrl: 'snippets/default/snippets.html',
             snippetsListId: 'keditor-snippets-list',
-            onInitContentArea: function (contentArea) {},
-            onContentChanged: function (event) {},
-            onInitContainer: function (container) {},
-            onBeforeContainerDeleted: function (event, selectedContainer) {},
-            onContainerDeleted: function (event, selectedContainer) {},
-            onContainerChanged: function (event, changedContainer) {},
-            onContainerDuplicated: function (event, originalContainer, newContainer) {},
-            onContainerSelected: function (event, selectedContainer) {},
-            onContainerSnippetDropped: function (event, newContainer, droppedContainer) {},
-            onComponentReady: function (component) {},
-            onInitComponent: function (component) {},
-            onBeforeComponentDeleted: function (event, selectedComponent) {},
-            onComponentDeleted: function (event, selectedComponent) {},
-            onComponentChanged: function (event, changedComponent) {},
-            onComponentDuplicated: function (event, originalComponent, newComponent) {},
-            onComponentSelected: function (event, selectedComponent) {},
-            onComponentSnippetDropped: function (event, newComponent, droppedComponent) {}
+            onInitContentArea: function (contentArea) {
+            },
+            onContentChanged: function (event) {
+            },
+            onInitContainer: function (container) {
+            },
+            onBeforeContainerDeleted: function (event, selectedContainer) {
+            },
+            onContainerDeleted: function (event, selectedContainer) {
+            },
+            onContainerChanged: function (event, changedContainer) {
+            },
+            onContainerDuplicated: function (event, originalContainer, newContainer) {
+            },
+            onContainerSelected: function (event, selectedContainer) {
+            },
+            onContainerSnippetDropped: function (event, newContainer, droppedContainer) {
+            },
+            onComponentReady: function (component) {
+            },
+            onInitComponent: function (component) {
+            },
+            onBeforeComponentDeleted: function (event, selectedComponent) {
+            },
+            onComponentDeleted: function (event, selectedComponent) {
+            },
+            onComponentChanged: function (event, changedComponent) {
+            },
+            onComponentDuplicated: function (event, originalComponent, newComponent) {
+            },
+            onComponentSelected: function (event, selectedComponent) {
+            },
+            onComponentSnippetDropped: function (event, newComponent, droppedComponent) {
+            }
         },
 
         // Component types
@@ -105,6 +138,27 @@
         generateId: function (type) {
             var timestamp = (new Date()).getTime();
             return 'keditor-' + type + '-' + timestamp;
+        },
+
+        initNiceScroll: function (target) {
+            flog('initNiceScroll', target);
+
+            if ($.fn.niceScroll) {
+                flog('Initialize $.fn.niceScroll');
+                target.niceScroll({
+                    cursorcolor: '#999',
+                    cursorwidth: 6,
+                    railpadding: {
+                        top: 0,
+                        right: 0,
+                        left: 0,
+                        bottom: 0
+                    },
+                    cursorborder: ''
+                });
+            } else {
+                flog('$.fn.niceScroll does not exist. Use default sidebar.');
+            }
         },
 
         initSidebar: function (options) {
@@ -118,9 +172,13 @@
 
                 body.append(
                     '<div id="keditor-sidebar">' +
-                    '    <a id="keditor-sidebar-toggler"><i class="fa fa-chevron-right"></i></a>' +
-                    '    <div id="keditor-snippets-list"></div>' +
-                    '    <div id="keditor-snippets-content" style="display: none"></div>' +
+                    '   <a id="keditor-sidebar-toggler"><i class="fa fa-chevron-right"></i></a>' +
+                    '   <div id="keditor-snippets-list"></div>' +
+                    '   <div id="keditor-snippets-content" style="display: none"></div>' +
+                    '   <div id="keditor-setting-panel">' +
+                    '       <div id="keditor-setting-header"><span id="keditor-setting-title"></span><a href="#" id="keditor-setting-closer"><i class="fa fa-arrow-right"></i></a></div>' +
+                    '       <div id="keditor-setting-body"><div id="keditor-setting-forms"></div></div>' +
+                    '   </div>' +
                     '</div>'
                 );
                 KEditor.initSidebarToggler();
@@ -142,6 +200,7 @@
                         KEditor.renderSnippets(resp, options);
                         KEditor.initSnippets(options);
                         KEditor.initSnippetsSwitcher(options);
+                        KEditor.initSettingPanel(options);
                     },
                     error: function (jqXHR) {
                         flog('Error when getting snippets', jqXHR);
@@ -216,23 +275,7 @@
             flog('initSnippets', options);
 
             var snippetsList = $('#' + options.snippetsListId);
-
-            if ($.fn.niceScroll) {
-                flog('Initialize $.fn.niceScroll for snippets list');
-                snippetsList.find('.keditor-snippets').niceScroll({
-                    cursorcolor: '#999',
-                    cursorwidth: 6,
-                    railpadding: {
-                        top: 0,
-                        right: 0,
-                        left: 0,
-                        bottom: 0
-                    },
-                    cursorborder: ''
-                });
-            } else {
-                flog('$.fn.niceScroll does not exist. Use default sidebar.');
-            }
+            KEditor.initNiceScroll(snippetsList.find('.keditor-snippets'));
 
             flog('Initialize $.fn.draggable for container snippets list');
             snippetsList.find('.keditor-snippet[data-type=container]').draggable({
@@ -292,6 +335,76 @@
                     }
                 }
             });
+        },
+
+        initSettingPanel: function (options) {
+            flog('initSettingPanel', options);
+
+            $('#keditor-setting-closer').on('click', function (e) {
+                e.preventDefault();
+
+                KEditor.hideSettingPanel();
+            });
+
+            var settingForms = $('#keditor-setting-forms');
+            KEditor.initNiceScroll(settingForms);
+
+            flog('Call "initSettingForm" function of all component types if settingEnabled = true');
+            for (var type in KEditor.components) {
+                var componentData = KEditor.components[type];
+                var isSettingEnabled = componentData.settingEnabled === true;
+
+                flog('Type: ' + type + ', settingEnabled: ' + isSettingEnabled);
+
+                if (isSettingEnabled) {
+                    if (typeof componentData.initSettingForm === 'function') {
+                        var form = $('<div id="keditor-setting-' + type + '" data-type="' + type + '" class="keditor-setting-form clearfix"></div>');
+                        settingForms.append(form);
+
+                        flog('Initialize setting form for component type "' + type + '"');
+                        componentData.initSettingForm.call(null, form, options);
+                    } else {
+                        error('"initSettingForm" function of component type "' + type + '" does not exist!');
+                    }
+                }
+            }
+        },
+
+        showSettingPanel: function (component, options) {
+            flog('showSettingPanel', component, options);
+
+            var componentType = KEditor.getComponentType(component, options);
+            var componentData = KEditor.components[componentType];
+            $('#keditor-setting-title').html(componentData.settingTitle);
+
+            var settingForm = $('#keditor-setting-' + componentType);
+            if (typeof componentData.showSettingForm === 'function') {
+                flog('Show setting form of component type "' + componentType+ '"');
+                componentData.showSettingForm.call(null, settingForm, component, options);
+                settingForm.addClass('active');
+            } else {
+                error('"showSettingForm" function of component type "' + componentType + '" does not exist!');
+            }
+
+            $(document.body).addClass('opened-keditor-setting');
+        },
+
+        hideSettingPanel: function () {
+            flog('hideSettingPanel');
+
+            $(document.body).removeClass('opened-keditor-setting');
+
+            var activeForm = $('#keditor-setting-forms').children('.active');
+            var activeType = activeForm.attr('data-type');
+            var componentData = KEditor.components[activeType];
+
+            if (typeof componentData.hideSettingForm === 'function') {
+                flog('Hide setting form of component type "' + activeType + '"');
+                componentData.hideSettingForm.call(null, activeForm);
+            }
+
+            activeForm.removeClass('active');
+            $(document.body).removeClass('opened-keditor-setting');
         },
 
         initContentArea: function (contentArea, options) {
@@ -391,9 +504,9 @@
                 flog('Render KEditor toolbar for container', container);
                 container.append(
                     '<div class="keditor-toolbar keditor-toolbar-container">' +
-                    '   <a href="#" class="btn-container-reposition"><i class="fa fa-sort"></i></a>' +
-                    '   <a href="#" class="btn-container-duplicate"><i class="fa fa-files-o"></i></a>' +
-                    '   <a href="#" class="btn-container-delete"><i class="fa fa-times"></i></a>' +
+                    '   <a href="#" class="btn-container-reposition">' + options.btnMoveContainerText + '</a>' +
+                    '   <a href="#" class="btn-container-duplicate">' + options.btnDuplicateContainerText + '</a>' +
+                    '   <a href="#" class="btn-container-delete">' + options.btnDeleteContainerText + '</a>' +
                     '</div>'
                 );
 
@@ -551,17 +664,23 @@
             if (!component.hasClass('keditor-initialized-component') || !component.hasClass('keditor-initializing-component')) {
                 component.addClass('keditor-initializing-component');
 
+                var componentType = KEditor.getComponentType(component, options);
+                flog('Component type: ' + componentType);
+
+                var isSettingEnabled = KEditor.components[componentType].settingEnabled;
+                var settingBtn = '';
+                if (isSettingEnabled) {
+                    settingBtn = '<a href="#" class="btn-component-setting">' + options.btnSettingComponentText + '</a>';
+                }
+
                 flog('Render KEditor toolbar for component', component);
                 component.append(
                     '<div class="keditor-toolbar keditor-toolbar-component">' +
-                    '   <a href="#" class="btn-component-reposition"><i class="fa fa-arrows"></i></a>' +
-                    '   <a href="#" class="btn-component-duplicate"><i class="fa fa-files-o"></i></a>' +
-                    '   <a href="#" class="btn-component-delete"><i class="fa fa-times"></i></a>' +
+                    '   <a href="#" class="btn-component-reposition">' + options.btnMoveComponentText + '</a>' + settingBtn +
+                    '   <a href="#" class="btn-component-duplicate">' + options.btnDuplicateComponentText + '</a>' +
+                    '   <a href="#" class="btn-component-delete">' + options.btnDeleteComponentText + '</a>' +
                     '</div>'
                 );
-
-                var componentType = KEditor.getComponentType(component, options);
-                flog('Component type: ' + componentType);
 
                 if (typeof KEditor.components[componentType].init === 'function') {
                     KEditor.components[componentType].init(contentArea, container, component, options);
@@ -698,6 +817,19 @@
                 }
             });
 
+            body.on('click', '.btn-component-setting', function (e) {
+                e.preventDefault();
+
+                var btn = $(this);
+                flog('Click on .btn-component-setting', btn);
+                if (body.hasClass('opened-keditor-setting')) {
+                    KEditor.hideSettingPanel();
+                } else {
+                    var component = btn.closest('.keditor-component');
+                    KEditor.showSettingPanel(component, options);
+                }
+            });
+
             body.on('click', '.btn-component-duplicate', function (e) {
                 e.preventDefault();
 
@@ -714,7 +846,7 @@
 
                 flog('Component is duplicated');
 
-                if (typeof options.onComponentDuplicated=== 'function') {
+                if (typeof options.onComponentDuplicated === 'function') {
                     options.onComponentDuplicated.call(contentArea, component, newComponent);
                 }
 

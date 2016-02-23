@@ -117,13 +117,19 @@
                 e.preventDefault();
 
                 fileInput.trigger('click');
-                KEditor.showSettingPanel(component, options);
             });
 
             fileInput.on('change', function () {
                 var file = this.files[0];
                 if (/image/.test(file.type)) {
                     img.attr('src', URL.createObjectURL(file));
+                    img.css({
+                        width: '',
+                        height: ''
+                    });
+                    img.load(function () {
+                        KEditor.showSettingPanel(component, options);
+                    });
                 } else {
                     alert('Your selected file is not photo!');
                 }

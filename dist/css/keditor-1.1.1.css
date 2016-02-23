@@ -3,7 +3,7 @@
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
  * @version: 1.1.1
- * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, $.fn.ckeditor, FontAwesome
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 /* ==================================================================================
    Bootstrap variables and mixins
@@ -62,7 +62,7 @@ body.highlighted-container-content .keditor-container-content {
    ================================================================================== */
 #keditor-sidebar {
   position: fixed;
-  z-index: 1000;
+  z-index: 100;
   top: 0;
   right: -255px;
   bottom: 0;
@@ -87,171 +87,6 @@ body.highlighted-container-content .keditor-container-content {
 }
 #keditor-sidebar:hover {
   opacity: 1;
-}
-#keditor-sidebar .nav {
-  margin-bottom: 0;
-  padding-left: 0;
-  list-style: none;
-}
-#keditor-sidebar .nav > li {
-  position: relative;
-  display: block;
-}
-#keditor-sidebar .nav > li > a {
-  position: relative;
-  display: block;
-  padding: 10px 15px;
-}
-#keditor-sidebar .nav > li > a:hover,
-#keditor-sidebar .nav > li > a:focus {
-  text-decoration: none;
-  background-color: #eeeeee;
-}
-#keditor-sidebar .nav > li.disabled > a {
-  color: #777777;
-}
-#keditor-sidebar .nav > li.disabled > a:hover,
-#keditor-sidebar .nav > li.disabled > a:focus {
-  color: #777777;
-  text-decoration: none;
-  background-color: transparent;
-  cursor: not-allowed;
-}
-#keditor-sidebar .nav .open > a,
-#keditor-sidebar .nav .open > a:hover,
-#keditor-sidebar .nav .open > a:focus {
-  background-color: #eeeeee;
-  border-color: #337ab7;
-}
-#keditor-sidebar .nav .nav-divider {
-  height: 1px;
-  margin: 9px 0;
-  overflow: hidden;
-  background-color: #e5e5e5;
-}
-#keditor-sidebar .nav > li > a > img {
-  max-width: none;
-}
-#keditor-sidebar .nav-tabs {
-  border-bottom: 1px solid #ddd;
-}
-#keditor-sidebar .nav-tabs > li {
-  float: left;
-  margin-bottom: -1px;
-}
-#keditor-sidebar .nav-tabs > li > a {
-  margin-right: 2px;
-  line-height: 1.42857143;
-  border: 1px solid transparent;
-  border-radius: 4px 4px 0 0;
-}
-#keditor-sidebar .nav-tabs > li > a:hover {
-  border-color: #eeeeee #eeeeee #ddd;
-}
-#keditor-sidebar .nav-tabs > li.active > a,
-#keditor-sidebar .nav-tabs > li.active > a:hover,
-#keditor-sidebar .nav-tabs > li.active > a:focus {
-  color: #555555;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-bottom-color: transparent;
-  cursor: default;
-}
-#keditor-sidebar .nav-tabs.nav-justified {
-  width: 100%;
-  border-bottom: 0;
-}
-#keditor-sidebar .nav-tabs.nav-justified > li {
-  float: none;
-}
-#keditor-sidebar .nav-tabs.nav-justified > li > a {
-  text-align: center;
-  margin-bottom: 5px;
-}
-#keditor-sidebar .nav-tabs.nav-justified > .dropdown .dropdown-menu {
-  top: auto;
-  left: auto;
-}
-@media (min-width: 768px) {
-  #keditor-sidebar .nav-tabs.nav-justified > li {
-    display: table-cell;
-    width: 1%;
-  }
-  #keditor-sidebar .nav-tabs.nav-justified > li > a {
-    margin-bottom: 0;
-  }
-}
-#keditor-sidebar .nav-tabs.nav-justified > li > a {
-  margin-right: 0;
-  border-radius: 4px;
-}
-#keditor-sidebar .nav-tabs.nav-justified > .active > a,
-#keditor-sidebar .nav-tabs.nav-justified > .active > a:hover,
-#keditor-sidebar .nav-tabs.nav-justified > .active > a:focus {
-  border: 1px solid #ddd;
-}
-@media (min-width: 768px) {
-  #keditor-sidebar .nav-tabs.nav-justified > li > a {
-    border-bottom: 1px solid #ddd;
-    border-radius: 4px 4px 0 0;
-  }
-  #keditor-sidebar .nav-tabs.nav-justified > .active > a,
-  #keditor-sidebar .nav-tabs.nav-justified > .active > a:hover,
-  #keditor-sidebar .nav-tabs.nav-justified > .active > a:focus {
-    border-bottom-color: #fff;
-  }
-}
-#keditor-sidebar .nav-justified {
-  width: 100%;
-}
-#keditor-sidebar .nav-justified > li {
-  float: none;
-}
-#keditor-sidebar .nav-justified > li > a {
-  text-align: center;
-  margin-bottom: 5px;
-}
-#keditor-sidebar .nav-justified > .dropdown .dropdown-menu {
-  top: auto;
-  left: auto;
-}
-@media (min-width: 768px) {
-  #keditor-sidebar .nav-justified > li {
-    display: table-cell;
-    width: 1%;
-  }
-  #keditor-sidebar .nav-justified > li > a {
-    margin-bottom: 0;
-  }
-}
-#keditor-sidebar .nav-tabs-justified {
-  border-bottom: 0;
-}
-#keditor-sidebar .nav-tabs-justified > li > a {
-  margin-right: 0;
-  border-radius: 4px;
-}
-#keditor-sidebar .nav-tabs-justified > .active > a,
-#keditor-sidebar .nav-tabs-justified > .active > a:hover,
-#keditor-sidebar .nav-tabs-justified > .active > a:focus {
-  border: 1px solid #ddd;
-}
-@media (min-width: 768px) {
-  #keditor-sidebar .nav-tabs-justified > li > a {
-    border-bottom: 1px solid #ddd;
-    border-radius: 4px 4px 0 0;
-  }
-  #keditor-sidebar .nav-tabs-justified > .active > a,
-  #keditor-sidebar .nav-tabs-justified > .active > a:hover,
-  #keditor-sidebar .nav-tabs-justified > .active > a:focus {
-    border-bottom-color: #fff;
-  }
-}
-#keditor-sidebar .tab-content > .tab-pane {
-  display: none;
-}
-#keditor-sidebar .tab-content > .active {
-  display: block;
 }
 #keditor-sidebar-toggler {
   position: absolute;
@@ -283,6 +118,12 @@ body.highlighted-container-content .keditor-container-content {
 }
 #keditor-snippets-type-switcher {
   margin: 0;
+}
+#keditor-snippets-type-switcher > li > a {
+  border-radius: 3px 3px 0 0;
+}
+#keditor-snippets-type-switcher > li.active > a {
+  font-weight: bold;
 }
 #keditor-snippets-container {
   height: calc(100% - 42px);
@@ -327,6 +168,74 @@ body.highlighted-container-content .keditor-container-content {
 }
 .keditor-snippet:last-child {
   margin-bottom: 0;
+}
+/* ==================================================================================
+   Settings panel
+   ================================================================================== */
+#keditor-setting-panel {
+  background: #fff;
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  width: calc(100% - 20px);
+  right: -100%;
+  bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.opened-keditor-setting #keditor-setting-panel {
+  right: 10px;
+}
+#keditor-setting-header {
+  height: 42px;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 30px 10px 15px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+#keditor-setting-header:before,
+#keditor-setting-header:after {
+  content: " ";
+  display: table;
+}
+#keditor-setting-header:after {
+  clear: both;
+}
+#keditor-setting-title {
+  color: #666;
+  font-weight: bold;
+}
+#keditor-setting-closer {
+  text-decoration: none;
+  color: #999999;
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  right: 10px;
+  width: 21px;
+  text-align: center;
+  line-height: 21px;
+}
+#keditor-setting-closer:hover {
+  color: #666;
+}
+#keditor-setting-body {
+  position: absolute;
+  top: 42px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+}
+#keditor-setting-forms {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 /* ==================================================================================
    Toolbar

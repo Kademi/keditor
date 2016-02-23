@@ -405,6 +405,7 @@
 
             activeForm.removeClass('active');
             $(document.body).removeClass('opened-keditor-setting');
+            KEditor.settingComponent = null;
         },
 
         initContentArea: function (contentArea, options) {

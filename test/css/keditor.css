@@ -6,29 +6,11 @@
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 /* ==================================================================================
-   Import
-   ================================================================================== */
-/* ==================================================================================
-   Variables
-   ================================================================================== */
-/* ==================================================================================
-   Mixins
-   ================================================================================== */
-/* ==================================================================================
    Body
    ================================================================================== */
 body {
   margin: 0;
   overflow-y: scroll;
-}
-/* ==================================================================================
-   CKEditor
-   ================================================================================== */
-div.cke_float[id*="cke_keditor-component-content-"] {
-  padding: 0;
-}
-div.cke_float[id*="cke_keditor-component-content-"] .cke_top {
-  padding: 3px 3px 0;
 }
 /* ==================================================================================
    opened-keditor-sidebar
@@ -76,14 +58,6 @@ body.highlighted-container-content .keditor-container-content:before {
   -o-transition: all 0.3s;
   transition: all 0.3s;
   font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-#keditor-sidebar,
-#keditor-sidebar *,
-#keditor-sidebar:before,
-#keditor-sidebar *:before,
-#keditor-sidebar:after,
-#keditor-sidebar *:after {
-  box-sizing: border-box;
 }
 #keditor-sidebar:hover {
   opacity: 1;
@@ -251,14 +225,6 @@ body.highlighted-container-content .keditor-container-content:before {
   position: absolute;
   display: none;
 }
-.keditor-toolbar,
-.keditor-toolbar *,
-.keditor-toolbar:before,
-.keditor-toolbar *:before,
-.keditor-toolbar:after,
-.keditor-toolbar *:after {
-  box-sizing: border-box;
-}
 .keditor-toolbar > a {
   padding: 1px 3px;
   font-size: 12px;
@@ -381,14 +347,6 @@ body.highlighted-container-content .keditor-container-content:before {
 /* ==================================================================================
    Drag n Drop helper
    ================================================================================== */
-.keditor-snippet,
-.keditor-snippet *,
-.keditor-snippet:before,
-.keditor-snippet *:before,
-.keditor-snippet:after,
-.keditor-snippet *:after {
-  box-sizing: border-box;
-}
 .keditor-snippet.ui-draggable-dragging {
   -webkit-transition: none !important;
   -o-transition: none !important;

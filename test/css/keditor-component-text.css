@@ -1,0 +1,19 @@
+/**
+ * KEditor Text Component
+ * @copyright: Kademi (http://kademi.co)
+ * @author: Kademi (http://kademi.co)
+ * @version: @{version}
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
+ */
+/* ==================================================================================
+   CKEditor
+   ================================================================================== */
+div.cke_float[id*="cke_keditor-component-content-"] {
+  padding: 0;
+}
+div.cke_float[id*="cke_keditor-component-content-"] .cke_top {
+  padding: 3px 3px 0;
+}
+body.opened-keditor-sidebar div.cke_float[id*="cke_keditor-component-content-"] {
+  margin-right: 287px;
+}

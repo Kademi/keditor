@@ -13,15 +13,6 @@ body {
   overflow-y: scroll;
 }
 /* ==================================================================================
-   CKEditor
-   ================================================================================== */
-div.cke_float[id*="cke_keditor-component-content-"] {
-  padding: 0;
-}
-div.cke_float[id*="cke_keditor-component-content-"] .cke_top {
-  padding: 3px 3px 0;
-}
-/* ==================================================================================
    opened-keditor-sidebar
    ================================================================================== */
 body.opened-keditor-sidebar .keditor-content-area {

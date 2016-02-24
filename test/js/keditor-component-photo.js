@@ -1,4 +1,4 @@
-/**!
+/**
  * KEditor Photo Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)

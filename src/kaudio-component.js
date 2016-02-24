@@ -79,7 +79,29 @@
          * @param {Object} options
          */
         initSettingForm: function (form, options) {
-
+            var self = this;
+            form.append(
+                '<form class="form-horizontal">' +
+                '   <div class="form-group">' +
+                '       <label for="kaudio-autoplay" class="col-sm-12">Autoplay</label>' +
+                '       <div class="col-sm-12">' +
+                '           <input type="checkbox" id="kaudio-autoplay" />' +
+                '       </div>' +
+                '   </div>' +
+                '   <div class="form-group">' +
+                '       <label for="kaudio-width" class="col-sm-12">Width</label>' +
+                '       <div class="col-sm-12">' +
+                '           <input type="number" id="kaudio-width" class="form-control" />' +
+                '       </div>' +
+                '   </div>' +
+                '   <div class="form-group">' +
+                '       <label for="kaudio-height" class="col-sm-12">Height</label>' +
+                '       <div class="col-sm-12">' +
+                '           <input type="number" id="kaudio-height" class="form-control" />' +
+                '       </div>' +
+                '   </div>' +
+                '</form>'
+            );
         },
 
         /**

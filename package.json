@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Kademi/keditor#readme",
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-concat-util": "^0.5.5",
     "gulp-copy": "0.0.2",
     "gulp-cssmin": "^0.1.7",
     "gulp-less": "^3.0.5",
@@ -31,8 +32,10 @@
     "gulp-replace": "^0.5.4",
     "gulp-rimraf": "^0.2.0",
     "gulp-sourcemaps": "^1.6.0",
+    "gulp-sync": "^0.1.4",
     "gulp-uglify": "^1.5.1",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.5"
+
   }
 }

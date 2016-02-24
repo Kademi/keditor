@@ -5,26 +5,12 @@
  * @version: @{version}
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
-/* ==================================================================================
-   Import
-   ================================================================================== */
-@import "less/variables";
-@import "less/mixins";
+// ==================================================================================
+// Import
+// ==================================================================================
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
 @import "_variables";
-
-/* ==================================================================================
-   Mixins
-   ================================================================================== */
-.keditor-box-sizing() {
-    &,
-    * {
-        &,
-        &:before,
-        &:after {
-            box-sizing: border-box;
-        }
-    }
-}
 
 /* ==================================================================================
    Body
@@ -100,8 +86,6 @@ body.highlighted-container-content {
     padding: 10px;
     .transition(all @animation-duration);
     font: @font-size-base/@line-height-base @font-family-base;
-
-    .keditor-box-sizing();
 
     &:hover {
         opacity: 1;
@@ -275,7 +259,6 @@ body.highlighted-container-content {
 .keditor-toolbar {
     position: absolute;
     display: none;
-    .keditor-box-sizing();
 
     > a {
         padding: 1px 3px;
@@ -430,8 +413,6 @@ body.highlighted-container-content {
    Drag n Drop helper
    ================================================================================== */
 .keditor-snippet {
-    .keditor-box-sizing();
-
     // When dragging
     &.ui-draggable-dragging {
         .transition(none) !important;

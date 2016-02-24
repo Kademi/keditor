@@ -1,10 +1,13 @@
 /**
- * Created by Anh on 2/23/2016.
+ * KEditor Audio Component
+ * @copyright: Kademi (http://kademi.co)
+ * @author: Kademi (http://kademi.co)
+ * @version: @{version}
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
     var KEditor = $.keditor;
     var flog = KEditor.log;
-    var error = KEditor.error;
 
     $.keditor.components['kaudio'] = {
         /**

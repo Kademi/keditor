@@ -405,6 +405,7 @@
 
             activeForm.removeClass('active');
             $(document.body).removeClass('opened-keditor-setting');
+            KEditor.settingComponent = null;
         },
 
         initContentArea: function (contentArea, options) {
@@ -827,6 +828,7 @@
                 } else {
                     var component = btn.closest('.keditor-component');
                     KEditor.showSettingPanel(component, options);
+                    KEditor.settingComponent = component;
                 }
             });
 

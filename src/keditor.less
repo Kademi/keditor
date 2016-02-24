@@ -6,55 +6,11 @@
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 /* ==================================================================================
-   Bootstrap variables and mixins
+   Import
    ================================================================================== */
 @import "less/variables";
 @import "less/mixins";
-
-/* ==================================================================================
-   Variables
-   ================================================================================== */
-// Base colors
-@blue                                       : #2eb2e4;
-@blueLight                                  : #b5e4f6;
-
-// Common colors
-@border-color                               : #ddd;
-@border-radius                              : 3px;
-
-// Animation option
-@animation-duration                         : 0.3s;
-
-// Sidebar
-@sidebar-bg                                 : #f0f0f0;
-@sidebar-color                              : #666;
-@sidebar-shadow-color                       : rgba(0, 0, 0, .15);
-
-// Snippet
-@snippet-bg                                 : #fff;
-@snippet-border-color                       : #f0f0f0;
-@snippet-border-color-hover                 : #ccc;
-@snippet-placeholder-bg                     : #eee;
-
-// Container
-@container-outline-color-hover              : @blueLight;
-@container-outline-color-selected           : @blue;
-
-// Container toolbar
-@container-toolbar-border-color              : #333;
-@container-toolbar-button-bg                 : #333;
-@container-toolbar-button-bg-hover           : @blue;
-@container-toolbar-button-color              : #fff;
-
-// Container content
-@container-content-outline-color            : #e0e0e0;
-@container-content-outline-highlighted      : @blue;
-
-// Container content toolbar
-@container-content-toolbar-bg               : rgba(0, 0, 0, .5);
-@container-content-toolbar-button-color     : #fff;
-@container-content-toolbar-button-bg-hover  : rgba(255, 255, 255, .2);
-@container-content-toolbar-outline-color    : rgba(0, 0, 0, .5);
+@import "_variables";
 
 /* ==================================================================================
    Mixins
@@ -111,7 +67,9 @@ body.opened-keditor-sidebar {
    ================================================================================== */
 body.highlighted-container-content {
     .keditor-container-content {
-        outline-color: @container-content-outline-highlighted;
+        &:before {
+            border-color: @container-content-outline-highlighted;
+        }
     }
 }
 
@@ -300,6 +258,10 @@ body.highlighted-container-content {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+
+    .keditor-setting-form {
+        overflow: hidden;
+    }
 }
 
 /* ==================================================================================
@@ -331,8 +293,17 @@ body.highlighted-container-content {
    ================================================================================== */
 .keditor-container {
     position: relative;
-    outline: 3px dashed transparent;
-    outline-offset: 0;
+
+    &:before {
+        position: absolute;
+        top: -3px;
+        right: -3px;
+        left: -3px;
+        bottom: -3px;
+        border: 3px dashed transparent;
+        content: " ";
+        display: block;
+    }
 
     > .keditor-toolbar {
         top: -3px;
@@ -352,11 +323,15 @@ body.highlighted-container-content {
     }
 
     &:hover {
-        outline-color: @container-outline-color-hover;
+        &:before {
+            border-color: @container-outline-color-hover;
+        }
     }
 
     &.showed-keditor-toolbar {
-        outline-color: @container-outline-color-selected;
+        &:before {
+            border-color: @container-outline-color-selected;
+        }
 
         > .keditor-toolbar {
             display: block;
@@ -366,8 +341,19 @@ body.highlighted-container-content {
 
 .keditor-container-content {
     min-height: 50px;
-    outline: 1px dashed @container-content-outline-color;
-    outline-offset: -1px;
+    position: relative;
+
+    &:before {
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        right: -1px;
+        bottom: -1px;
+        content: " ";
+        display: block;
+        border: 1px dashed @container-content-outline-color;
+
+    }
 }
 
 /* ==================================================================================
@@ -376,12 +362,23 @@ body.highlighted-container-content {
 .keditor-component {
     position: relative;
 
+    &:before {
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        left: -2px;
+        bottom: -2px;
+        content: " ";
+        border: 2px solid @container-content-toolbar-outline-color;
+        display: none;
+    }
+
     .keditor-toolbar {
-        top: -23px;
-        right: 0;
-        left: 0;
+        top: -24px;
+        right: -2px;
+        left: -2px;
         background-color: @container-content-toolbar-bg;
-        padding: 3px 3px 0;
+        padding: 2px 2px;
         text-align: right;
 
         > a {
@@ -402,8 +399,9 @@ body.highlighted-container-content {
 
     &:hover,
     &.showed-keditor-toolbar {
-        outline: 3px solid @container-content-toolbar-outline-color;
-        outline-offset: -3px;
+        &:before {
+            display: block;
+        }
     }
 
     &.showed-keditor-toolbar {
@@ -413,6 +411,10 @@ body.highlighted-container-content {
     }
 
     &:hover {
+        &:before {
+            border-top: 0;
+        }
+
         .keditor-toolbar {
             display: block;
         }

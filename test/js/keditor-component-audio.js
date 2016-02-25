@@ -74,7 +74,7 @@
         settingEnabled: true,
 
         // Title of setting panel
-        settingTitle: 'audio settings',
+        settingTitle: 'Audio settings',
 
         /**
          * Initialize setting form of this type
@@ -85,24 +85,29 @@
             var self = this;
             form.append(
                 '<form class="form-horizontal">' +
-                '   <div class="form-group">' +
-                '       <label for="audio-autoplay" class="col-sm-12">Autoplay</label>' +
-                '       <div class="col-sm-12">' +
-                '           <input type="checkbox" id="audio-autoplay" />' +
-                '       </div>' +
-                '   </div>' +
-                '   <div class="form-group">' +
-                '       <label for="audio-width" class="col-sm-12">Width</label>' +
-                '       <div class="col-sm-12">' +
-                '           <input type="number" id="audio-width" class="form-control" />' +
-                '       </div>' +
-                '   </div>' +
-                '   <div class="form-group">' +
-                '       <label for="audio-height" class="col-sm-12">Height</label>' +
-                '       <div class="col-sm-12">' +
-                '           <input type="number" id="audio-height" class="form-control" />' +
-                '       </div>' +
-                '   </div>' +
+                    '<div class="form-group">' +
+                        '<label for="audioFileInput">Audio file</label>' +
+                            '<input type="file" id="audioFileInput">' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                        '<label for="audio-autoplay" class="col-sm-12">Autoplay</label>' +
+                        '<div class="col-sm-12">' +
+                            '<input type="checkbox" id="audio-autoplay" />' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                        '<label for="audio-width" class="col-sm-12">Width</label>' +
+                        '<div class="col-sm-12">' +
+                        '<input type="number" id="audio-width" class="form-control" />' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                        '<label for="audio-height" class="col-sm-12">Height</label>' +
+                        '<div class="col-sm-12">' +
+                        '<input type="number" id="audio-height" class="form-control" />' +
+                        '</div>' +
+                    '</div>' +
                 '</form>'
             );
         },

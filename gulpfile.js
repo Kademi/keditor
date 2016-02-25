@@ -117,6 +117,11 @@ gulp.task('build-js-components', function () {
 
 gulp.task('build-js-dist', gulpsync.sync(['clean-js-dist', 'build-js-keditor', 'build-js-components']));
 
+gulp.task('build-snippets-examples', function () {
+    return gulp.src('./src/snippets/**/*')
+        .pipe(gulp.dest('./examples/snippets'));
+});
+
 gulp.task('build-css-test', function () {
     return gulp.src(['./src/less/*.less', '!./src/less/_*.less', '!./src/less/*-components.less'])
         .pipe(plumber())
@@ -132,14 +137,19 @@ gulp.task('build-js-test', function () {
         });
 });
 
+gulp.task('build-snippets-test', function () {
+    return gulp.src('./src/snippets/**/*')
+        .pipe(gulp.dest('./test/snippets'));
+});
+
 gulp.task('watch', function () {
     gulp.watch(['./src/*.less', '!./src/*-components.less'], ['build-css-test']);
     gulp.watch(['./src/*.js', '!./src/*-components.js'], ['build-js-test']);
 });
 
 // Gulp Build
-gulp.task('build', ['build-css-dist', 'build-js-dist']);
+gulp.task('build', ['build-css-dist', 'build-js-dist', 'build-snippets-examples']);
 
 // Gulp Dev
-gulp.task('dev', ['build-css-test', 'build-js-test', 'watch']);
+gulp.task('dev', ['build-css-test', 'build-js-test', 'build-snippets-test', 'watch']);
 

@@ -9,7 +9,7 @@
     var KEditor = $.keditor;
     var flog = KEditor.log;
 
-    $.keditor.components['kaudio'] = {
+    $.keditor.components['audio'] = {
         /**
          * Function will be called when initializing a component with this type
          * @param {jQuery} contentArea
@@ -18,7 +18,7 @@
          * @param {Object} options
          */
         init: function (contentArea, container, component, options) {
-            flog('init "kaudio" component', component);
+            flog('init "audio" component', component);
             var componentContent = component.children('.keditor-component-content');
             var audio = componentContent.find('audio');
 
@@ -51,7 +51,7 @@
          * @param {Object} options
          */
         getContent: function (component, options) {
-            flog('getContent "kaudio" component, component');
+            flog('getContent "audio" component, component');
 
             var componentContent = component.children('.keditor-component-content');
             componentContent.find('.audio-toolbar').parent().remove();
@@ -74,7 +74,7 @@
         settingEnabled: true,
 
         // Title of setting panel
-        settingTitle: 'KAudio settings',
+        settingTitle: 'audio settings',
 
         /**
          * Initialize setting form of this type
@@ -86,21 +86,21 @@
             form.append(
                 '<form class="form-horizontal">' +
                 '   <div class="form-group">' +
-                '       <label for="kaudio-autoplay" class="col-sm-12">Autoplay</label>' +
+                '       <label for="audio-autoplay" class="col-sm-12">Autoplay</label>' +
                 '       <div class="col-sm-12">' +
-                '           <input type="checkbox" id="kaudio-autoplay" />' +
+                '           <input type="checkbox" id="audio-autoplay" />' +
                 '       </div>' +
                 '   </div>' +
                 '   <div class="form-group">' +
-                '       <label for="kaudio-width" class="col-sm-12">Width</label>' +
+                '       <label for="audio-width" class="col-sm-12">Width</label>' +
                 '       <div class="col-sm-12">' +
-                '           <input type="number" id="kaudio-width" class="form-control" />' +
+                '           <input type="number" id="audio-width" class="form-control" />' +
                 '       </div>' +
                 '   </div>' +
                 '   <div class="form-group">' +
-                '       <label for="kaudio-height" class="col-sm-12">Height</label>' +
+                '       <label for="audio-height" class="col-sm-12">Height</label>' +
                 '       <div class="col-sm-12">' +
-                '           <input type="number" id="kaudio-height" class="form-control" />' +
+                '           <input type="number" id="audio-height" class="form-control" />' +
                 '       </div>' +
                 '   </div>' +
                 '</form>'

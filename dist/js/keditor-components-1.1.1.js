@@ -64,7 +64,10 @@
                     '<div class="form-group">' +
                         '<label for="audioFileInput" class="col-sm-12">Audio file</label>' +
                         '<div class="col-sm-12">' +
-                            '<input type="file" id="audioFileInput">' +
+                            '<div class="audio-toolbar">'+
+                                '<a href="#" class="btn-audioFileInput btn btn-sm btn-primary"><i class="fa fa-upload"></i></a>'+
+                                '<input id="audioFileInput" type="file" style="display: none">' +
+                            '</div>' +
                         '</div>' +
                     '</div>' +
                     '<div class="form-group">' +
@@ -100,6 +103,12 @@
         showSettingForm: function (form, component, options) {
             var audio = component.find('audio');
             var fileInput = form.find('#audioFileInput');
+            var btnAudioFileInput = form.find('.btn-audioFileInput');
+            btnAudioFileInput.on('click', function(e){
+                e.preventDefault();
+
+                fileInput.trigger('click');
+            });
             fileInput.on('change', function () {
                 var file = this.files[0];
                 if (/audio/.test(file.type)) {

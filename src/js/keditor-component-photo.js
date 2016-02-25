@@ -11,44 +11,7 @@
 
     KEditor.components['photo'] = {
         init: function (contentArea, container, component, options) {
-            flog('init "photo" component', component);
-
-            var componentContent = component.children('.keditor-component-content');
-            var img = componentContent.find('img');
-            img.wrap('<div class="photo-wrapper"></div>');
-
-            var wrapper = img.parent();
-            wrapper.append(
-                '<div class="photo-toolbar">' +
-                '   <a href="#" class="photo-edit"><i class="fa fa-upload"></i></a>' +
-                '   <input type="file" style="display: none" />' +
-                '</div>'
-            );
-
-            var toolbar = wrapper.find('.photo-toolbar');
-            var photoEdit = toolbar.find('.photo-edit');
-            var fileInput = photoEdit.next();
-            photoEdit.on('click', function (e) {
-                e.preventDefault();
-
-                fileInput.trigger('click');
-            });
-
-            fileInput.on('change', function () {
-                var file = this.files[0];
-                if (/image/.test(file.type)) {
-                    img.attr('src', URL.createObjectURL(file));
-                    img.css({
-                        width: '',
-                        height: ''
-                    });
-                    img.load(function () {
-                        KEditor.showSettingPanel(component, options);
-                    });
-                } else {
-                    alert('Your selected file is not photo!');
-                }
-            });
+            // Do nothing
         },
 
         getContent: function (component, options) {
@@ -68,13 +31,19 @@
 
         settingEnabled: true,
 
-        settingTitle: 'Add image',
+        settingTitle: 'Photo',
 
         initSettingForm: function (form, options) {
             var self = this;
 
             form.append(
                 '<form class="form-horizontal">' +
+                '   <div class="form-group">' +
+                '       <div class="col-sm-12">' +
+                '           <button type="button" class="btn btn-block btn-primary" id="photo-edit">Change Photo</button>' +
+                '           <input type="file" style="display: none" />' +
+                '       </div>' +
+                '   </div>' +
                 '   <div class="form-group">' +
                 '       <label for="photo-align" class="col-sm-12">Align</label>' +
                 '       <div class="col-sm-12">' +
@@ -105,6 +74,30 @@
                 '   </div>' +
                 '</form>'
             );
+
+            var photoEdit = form.find('#photo-edit');
+            var fileInput = photoEdit.next();
+            photoEdit.on('click', function (e) {
+                e.preventDefault();
+
+                fileInput.trigger('click');
+            });
+            fileInput.on('change', function () {
+                var file = this.files[0];
+                if (/image/.test(file.type)) {
+                    var img = KEditor.settingComponent.find('img');
+                    img.attr('src', URL.createObjectURL(file));
+                    img.css({
+                        width: '',
+                        height: ''
+                    });
+                    img.load(function () {
+                        KEditor.showSettingPanel(KEditor.settingComponent, options);
+                    });
+                } else {
+                    alert('Your selected file is not photo!');
+                }
+            });
 
             var inputAlign = form.find('#photo-align');
             inputAlign.on('change', function () {

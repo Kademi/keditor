@@ -30,7 +30,6 @@
             flog('getContent "audio" component, component');
 
             var componentContent = component.children('.keditor-component-content');
-            componentContent.find('.audio-toolbar').parent().remove();
             var audio = componentContent.find('audio');
             audio.unwrap();
 

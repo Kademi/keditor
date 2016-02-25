@@ -373,6 +373,9 @@
         showSettingPanel: function (component, options) {
             flog('showSettingPanel', component, options);
 
+            var activeForm = $('#keditor-setting-forms').children('.active');
+            activeForm.removeClass('active');
+
             var componentType = KEditor.getComponentType(component, options);
             var componentData = KEditor.components[componentType];
             $('#keditor-setting-title').html(componentData.settingTitle);
@@ -823,10 +826,21 @@
 
                 var btn = $(this);
                 flog('Click on .btn-component-setting', btn);
+
+                var component = btn.closest('.keditor-component');
                 if (body.hasClass('opened-keditor-setting')) {
-                    KEditor.hideSettingPanel();
+                    var componentType = KEditor.getComponentType(component, options);
+                    var activeForm = $('#keditor-setting-forms').children('.active');
+                    var activeSettingType = activeForm.attr('data-type');
+
+                    flog('Active setting type: ' + activeSettingType, 'Component type: ' + componentType);
+                    if (activeSettingType && activeSettingType !== componentType) {
+                        KEditor.showSettingPanel(component, options);
+                        KEditor.settingComponent = component;
+                    } else {
+                        KEditor.hideSettingPanel();
+                    }
                 } else {
-                    var component = btn.closest('.keditor-component');
                     KEditor.showSettingPanel(component, options);
                     KEditor.settingComponent = component;
                 }

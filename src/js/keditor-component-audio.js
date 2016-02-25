@@ -19,30 +19,6 @@
          */
         init: function (contentArea, container, component, options) {
             flog('init "audio" component', component);
-            var componentContent = component.children('.keditor-component-content');
-            var audio = componentContent.find('audio');
-
-            var btnUpload = componentContent.find('.audio-edit');
-            var fileInput = btnUpload.next();
-            btnUpload.on('click', function (e) {
-                e.preventDefault();
-                fileInput.trigger('click');
-            });
-
-            fileInput.on('change', function () {
-                var file = this.files[0];
-                if (/audio/.test(file.type)) {
-                    // Todo: Upload to your server :)
-                    audio.attr('src', URL.createObjectURL(file));
-
-                    audio.load(function () {
-                        KEditor.showSettingPanel(component, options);
-                    });
-                } else {
-                    alert('Your selected file is not an audio file!');
-                }
-            });
-
         },
 
         /**
@@ -82,12 +58,15 @@
          * @param {Object} options
          */
         initSettingForm: function (form, options) {
+            flog('init "audio" settings', form);
             var self = this;
             form.append(
                 '<form class="form-horizontal">' +
                     '<div class="form-group">' +
-                        '<label for="audioFileInput">Audio file</label>' +
-                        '<input type="file" id="audioFileInput">' +
+                        '<label for="audioFileInput" class="col-sm-12">Audio file</label>' +
+                        '<div class="col-sm-12">' +
+                            '<input type="file" id="audioFileInput">' +
+                        '</div>' +
                     '</div>' +
                     '<div class="form-group">' +
                         '<label for="audio-autoplay" class="col-sm-12">Autoplay</label>' +
@@ -96,19 +75,21 @@
                         '</div>' +
                     '</div>' +
                     '<div class="form-group">' +
-                        '<label for="audio-width" class="col-sm-12">Width</label>' +
+                        '<label for="audio-showcontrols" class="col-sm-12">Show Controls</label>' +
                         '<div class="col-sm-12">' +
-                        '<input type="number" id="audio-width" class="form-control" />' +
+                        '<input type="checkbox" id="audio-showcontrols" checked />' +
                         '</div>' +
                     '</div>' +
                     '<div class="form-group">' +
-                        '<label for="audio-height" class="col-sm-12">Height</label>' +
+                        '<label for="audio-width" class="col-sm-12">Width (%)</label>' +
                         '<div class="col-sm-12">' +
-                        '<input type="number" id="audio-height" class="form-control" />' +
+                        '<input type="number" id="audio-width" min="20" max="100" class="form-control" value="100" />' +
                         '</div>' +
                     '</div>' +
                 '</form>'
             );
+
+
         },
 
         /**
@@ -118,7 +99,45 @@
          * @param {Object} options
          */
         showSettingForm: function (form, component, options) {
+            var audio = component.find('audio');
+            var fileInput = form.find('#audioFileInput');
+            fileInput.on('change', function () {
+                var file = this.files[0];
+                if (/audio/.test(file.type)) {
+                    // Todo: Upload to your server :)
 
+                    audio.attr('src', URL.createObjectURL(file));
+
+                    audio.load(function () {
+                        KEditor.showSettingPanel(component, options);
+                    });
+                } else {
+                    alert('Your selected file is not an audio file!');
+                }
+            });
+
+            var autoplayToggle = form.find('#audio-autoplay');
+            autoplayToggle.on('click', function(e){
+                if(this.checked){
+                    audio.attr('autoplay','autoplay');
+                }else{
+                    audio.removeAttr('autoplay');
+                }
+            });
+
+            var showcontrolsToggle = form.find('#audio-showcontrols');
+            showcontrolsToggle.on('click', function(e){
+                if(this.checked){
+                    audio.attr('controls','controls');
+                }else{
+                    audio.removeAttr('controls');
+                }
+            });
+
+            var audioWidth = form.find('#audio-width');
+            audioWidth.on('change', function(){
+                audio.css('width',this.value+'%');
+            });
         },
 
         /**

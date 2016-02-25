@@ -1,0 +1,22 @@
+/**
+ * KEditor Youtube Component
+ * @copyright: Kademi (http://kademi.co)
+ * @author: Kademi (http://kademi.co)
+ * @version: @{version}
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
+ */
+/* ==================================================================================
+   Youtube
+   ================================================================================== */
+.youtube-wrapper {
+  position: relative;
+}
+.youtube-wrapper .youtube-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.3);
+}

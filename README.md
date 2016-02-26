@@ -184,7 +184,7 @@ $.keditor.components['typeName'] = {
 };
 ```
 
-__**Note**__: `KEditor.settingComponent` is component which will be applied setting. You can access this component when setting panel is showed.
+__**Note**__: `KEditor.settingComponent` is component which will be applied setting. You can access this component after setting panel is showed.
 
 # License
 Please read at https://github.com/Kademi/keditor/blob/master/LICENSE.md

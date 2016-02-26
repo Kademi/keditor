@@ -9,7 +9,7 @@
     var KEditor = $.keditor;
     var flog = KEditor.log;
 
-    $.keditor.components['video'] = {
+    KEditor.components['video'] = {
         /**
          * Function will be called when initializing a component with this type
          * @param {jQuery} contentArea

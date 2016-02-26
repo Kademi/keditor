@@ -26,7 +26,7 @@
  * @option {Function} onContainerDuplicated Callback will be called when a container is duplicated. Arguments: event, originalContainer, newContainer
  * @option {Function} onContainerSelected Callback will be called when a container is selected. Arguments: event, selectedContainer
  * @option {Function} onContainerSnippetDropped Callback will be called when a container snippet is dropped into content area. Arguments: event, newContainer, droppedContainer
- * @option {Function} onComponentReady Callback will be called after component is initialized. Arguments: component
+ * @option {Function} onComponentReady Callback will be called after component is initialized. This callback is available or not is depend on component type handler.
  * @option {Function} onInitComponent Callback will be called when initializing component. Arguments: component
  * @option {Function} onBeforeComponentDeleted Callback will be called before a component is deleted. Arguments: event, selectedComponent
  * @option {Function} onComponentDeleted Callback will be called after a component is deleted. Arguments: event, selectedComponent

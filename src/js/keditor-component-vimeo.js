@@ -1,5 +1,5 @@
 /**
- * KEditor Youtube Component
+ * KEditor Vimeo Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
  * @version: @{version}
@@ -9,16 +9,16 @@
     var KEditor = $.keditor;
     var flog = KEditor.log;
 
-    KEditor.components['youtube'] = {
+    KEditor.components['vimeo'] = {
         init: function (contentArea, container, component, options) {
             // Do nothing
         },
 
         getContent: function (component, options) {
-            flog('getContent "youtube" component', component);
+            flog('getContent "vimeo" component', component);
 
             var componentContent = component.children('.keditor-component-content');
-            componentContent.find('.youtube-cover').remove();
+            componentContent.find('.vimeo-cover').remove();
 
             return componentContent.html();
         },
@@ -29,67 +29,67 @@
 
         settingEnabled: true,
 
-        settingTitle: 'Youtube Player',
+        settingTitle: 'Vimeo Player',
 
         initSettingForm: function (form, options) {
-            flog('initSettingForm "youtube" component');
+            flog('initSettingForm "vimeo" component');
 
             form.append(
                 '<form class="form-horizontal">' +
                 '   <div class="form-group">' +
                 '       <div class="col-sm-12">' +
-                '           <button type="button" class="btn btn-block btn-primary btn-youtube-edit">Change Video</button>' +
+                '           <button type="button" class="btn btn-block btn-primary btn-vimeo-edit">Change Video</button>' +
                 '       </div>' +
                 '   </div>' +
                 '   <div class="form-group">' +
                 '       <label class="col-sm-12">Autoplay</label>' +
                 '       <div class="col-sm-12">' +
-                '           <input type="checkbox" id="youtube-autoplay" />' +
+                '           <input type="checkbox" id="vimeo-autoplay" />' +
                 '       </div>' +
                 '   </div>' +
                 '   <div class="form-group">' +
                 '       <label class="col-sm-12">Aspect Ratio</label>' +
                 '       <div class="col-sm-12">' +
-                '           <button type="button" class="btn btn-sm btn-default btn-youtube-169">16:9</button>' +
-                '           <button type="button" class="btn btn-sm btn-default btn-youtube-43">4:3</button>' +
+                '           <button type="button" class="btn btn-sm btn-default btn-vimeo-169">16:9</button>' +
+                '           <button type="button" class="btn btn-sm btn-default btn-vimeo-43">4:3</button>' +
                 '       </div>' +
                 '   </div>' +
                 '</form>'
             );
 
-            var btnEdit = form.find('.btn-youtube-edit');
+            var btnEdit = form.find('.btn-vimeo-edit');
             btnEdit.on('click', function (e) {
                 e.preventDefault();
 
-                var inputData = prompt('Please enter Youtube URL in here:');
-                var youtubeRegex = /^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/;
-                var match = inputData.match(youtubeRegex);
+                var inputData = prompt('Please enter Vimeo URL in here:');
+                var vimeoRegex = /https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/;
+                var match = inputData.match(vimeoRegex);
                 if (match && match[1]) {
-                    KEditor.settingComponent.find('.embed-responsive-item').attr('src', 'https://www.youtube.com/embed/' + match[1]);
+                    KEditor.settingComponent.find('.embed-responsive-item').attr('src', 'https://player.vimeo.com/video/' + match[1] + '?byline=0&portrait=0&badge=0');
                 } else {
-                    alert('Your Youtube URL is invalid!');
+                    alert('Your Vimeo URL is invalid!');
                 }
             });
 
-            var btn169 = form.find('.btn-youtube-169');
+            var btn169 = form.find('.btn-vimeo-169');
             btn169.on('click', function (e) {
                 e.preventDefault();
 
                 KEditor.settingComponent.find('.embed-responsive').removeClass('embed-responsive-4by3').addClass('embed-responsive-16by9');
             });
 
-            var btn43 = form.find('.btn-youtube-43');
+            var btn43 = form.find('.btn-vimeo-43');
             btn43.on('click', function (e) {
                 e.preventDefault();
 
                 KEditor.settingComponent.find('.embed-responsive').removeClass('embed-responsive-16by9').addClass('embed-responsive-4by3');
             });
 
-            var chkAutoplay = form.find('#youtube-autoplay');
+            var chkAutoplay = form.find('#vimeo-autoplay');
             chkAutoplay.on('click', function () {
                 var embedItem = KEditor.settingComponent.find('.embed-responsive-item');
                 var currentUrl = embedItem.attr('src');
-                var newUrl = (currentUrl.replace(/(\?.+)+/, '')) + '?autoplay=' + (chkAutoplay.is(':checked') ? 1 : 0);
+                var newUrl = (currentUrl.replace(/(\?.+)+/, '')) + '?byline=0&portrait=0&badge=0&autoplay=' + (chkAutoplay.is(':checked') ? 1 : 0);
 
                 flog('Current url: ' + currentUrl, 'New url: ' + newUrl);
                 embedItem.attr('src', newUrl);
@@ -97,10 +97,10 @@
         },
 
         showSettingForm: function (form, component, options) {
-            flog('showSettingForm "youtube" component', component);
+            flog('showSettingForm "vimeo" component', component);
 
             var embedItem = component.find('.embed-responsive-item');
-            var chkAutoplay = form.find('#youtube-autoplay');
+            var chkAutoplay = form.find('#vimeo-autoplay');
             var src = embedItem.attr('src');
 
             chkAutoplay.prop('checked', src.indexOf('autoplay=1') !== -1);

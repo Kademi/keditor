@@ -11,28 +11,7 @@
 
     KEditor.components['youtube'] = {
         init: function (contentArea, container, component, options) {
-            flog('init "youtube" component', component);
-
-            var componentContent = component.children('.keditor-component-content');
-            var wrapper = componentContent.find('.youtube-wrapper');
-            var img = wrapper.find('img');
-
-            wrapper.append('<div class="youtube-cover" style="display: none"></div>');
-
-            var cover = wrapper.find('.youtube-cover');
-            wrapper.on({
-                mouseleave: function () {
-                    cover.css('display', 'none');
-                },
-                mouseenter: function () {
-                    cover.css('display', 'block');
-                }
-            });
-            cover.on('click', function (e) {
-                e.preventDefault();
-
-                cover.css('display', 'none');
-            });
+            // Do nothing
         },
 
         getContent: function (component, options) {

@@ -30,8 +30,8 @@
             flog('getContent "video" component, component');
 
             var componentContent = component.children('.keditor-component-content');
-            var audio = componentContent.find('audio');
-            audio.unwrap();
+            var video = componentContent.find('video');
+            video.unwrap();
 
             return componentContent.html();
         },

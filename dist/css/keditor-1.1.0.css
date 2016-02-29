@@ -278,7 +278,7 @@ body.highlighted-container-content .keditor-container-content:before {
   display: block;
 }
 .keditor-container-content {
-  min-height: 50px;
+  min-height: 50px !important;
   position: relative;
 }
 .keditor-container-content:before {
@@ -306,6 +306,7 @@ body.highlighted-container-content .keditor-container-content:before {
   content: " ";
   border: 2px solid rgba(0, 0, 0, 0.5);
   display: none;
+  z-index: 1;
 }
 .keditor-component .keditor-toolbar {
   top: -24px;
@@ -330,6 +331,10 @@ body.highlighted-container-content .keditor-container-content:before {
 }
 .keditor-component .keditor-toolbar > a:hover {
   background-color: rgba(255, 255, 255, 0.2);
+}
+.keditor-component .keditor-component-content {
+  position: relative;
+  z-index: 2;
 }
 .keditor-component:hover:before,
 .keditor-component.showed-keditor-toolbar:before {

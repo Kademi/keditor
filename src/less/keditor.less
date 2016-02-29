@@ -317,7 +317,7 @@ body.highlighted-container-content {
 }
 
 .keditor-container-content {
-    min-height: 50px;
+    min-height: 50px !important;
     position: relative;
 
     &:before {
@@ -348,6 +348,7 @@ body.highlighted-container-content {
         content: " ";
         border: 2px solid @container-content-toolbar-outline-color;
         display: none;
+        z-index: 1;
     }
 
     .keditor-toolbar {
@@ -373,6 +374,11 @@ body.highlighted-container-content {
             }
         }
     }
+    
+    .keditor-component-content {
+        position: relative;
+        z-index: 2;
+    }    
 
     &:hover,
     &.showed-keditor-toolbar {

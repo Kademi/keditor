@@ -362,7 +362,7 @@
                         settingForms.append(form);
 
                         flog('Initialize setting form for component type "' + type + '"');
-                        componentData.initSettingForm.call(null, form, options);
+                        componentData.initSettingForm.call(componentData, form, options);
                     } else {
                         error('"initSettingForm" function of component type "' + type + '" does not exist!');
                     }
@@ -383,7 +383,7 @@
             var settingForm = $('#keditor-setting-' + componentType);
             if (typeof componentData.showSettingForm === 'function') {
                 flog('Show setting form of component type "' + componentType+ '"');
-                componentData.showSettingForm.call(null, settingForm, component, options);
+                componentData.showSettingForm.call(componentData, settingForm, component, options);
                 settingForm.addClass('active');
             } else {
                 error('"showSettingForm" function of component type "' + componentType + '" does not exist!');
@@ -403,7 +403,7 @@
 
             if (typeof componentData.hideSettingForm === 'function') {
                 flog('Hide setting form of component type "' + activeType + '"');
-                componentData.hideSettingForm.call(null, activeForm);
+                componentData.hideSettingForm.call(componentData, activeForm);
             }
 
             activeForm.removeClass('active');
@@ -650,7 +650,7 @@
                 if (typeof options.defaultComponentType === 'string') {
                     componentType = options.defaultComponentType;
                 } else if (typeof options.defaultComponentType === 'function') {
-                    componentType = options.defaultComponentType.call(null, component);
+                    componentType = options.defaultComponentType.call(component, component);
                 }
 
                 if (!componentType) {
@@ -668,10 +668,16 @@
             if (!component.hasClass('keditor-initialized-component') || !component.hasClass('keditor-initializing-component')) {
                 component.addClass('keditor-initializing-component');
 
+                var componentContent = component.children('.keditor-component-content');
+                var contentId = KEditor.generateId('component-content');
+                flog('Id for component content is: ' + contentId);
+                componentContent.attr('id', contentId);
+
                 var componentType = KEditor.getComponentType(component, options);
                 flog('Component type: ' + componentType);
 
-                var isSettingEnabled = KEditor.components[componentType].settingEnabled;
+                var componentData = KEditor.components[componentType];
+                var isSettingEnabled = componentData.settingEnabled;
                 var settingBtn = '';
                 if (isSettingEnabled) {
                     settingBtn = '<a href="#" class="btn-component-setting">' + options.btnSettingComponentText + '</a>';
@@ -686,8 +692,8 @@
                     '</div>'
                 );
 
-                if (typeof KEditor.components[componentType].init === 'function') {
-                    KEditor.components[componentType].init(contentArea, container, component, options);
+                if (typeof componentData.init === 'function') {
+                    componentData.init.call(componentData, contentArea, container, component, options);
                 } else {
                     $(document.body).removeClass('highlighted-container-content');
                     error('"init" function of component type "' + componentType + '" does not exist!');

@@ -234,6 +234,9 @@ body.highlighted-container-content .keditor-container-content:before {
   text-align: center;
   line-height: 20px;
 }
+.keditor-toolbar > a .fa {
+  line-height: inherit;
+}
 .keditor-toolbar .btn-container-reposition,
 .keditor-toolbar .btn-component-reposition {
   cursor: move;

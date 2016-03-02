@@ -346,6 +346,9 @@ body.highlighted-container-content .keditor-container-content:before {
 .keditor-component.showed-keditor-toolbar .keditor-component-content {
   outline: none !important;
 }
+.keditor-component:hover {
+  z-index: 2;
+}
 .keditor-component:hover:before {
   border-top: 0;
 }

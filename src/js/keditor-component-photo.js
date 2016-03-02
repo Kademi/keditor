@@ -11,17 +11,18 @@
 
     KEditor.components['photo'] = {
         init: function (contentArea, container, component, options) {
-            // Do nothing
+            flog('init "photo" component', component);
+
+            var componentContent = component.children('.keditor-component-content');
+            var img = componentContent.find('img');
+
+            img.css('display', 'inline-block');
         },
 
         getContent: function (component, options) {
-            flog('getContent "photo" component, component');
+            flog('getContent "photo" component', component);
 
             var componentContent = component.children('.keditor-component-content');
-            componentContent.find('.photo-toolbar').remove();
-            var img = componentContent.find('img');
-            img.unwrap();
-
             return componentContent.html();
         },
 
@@ -31,9 +32,10 @@
 
         settingEnabled: true,
 
-        settingTitle: 'Photo',
+        settingTitle: 'Photo Settings',
 
         initSettingForm: function (form, options) {
+            flog('initSettingForm "photo" component');
             var self = this;
 
             form.append(
@@ -51,6 +53,17 @@
                 '               <option value="left">Left</option>' +
                 '               <option value="center">Center</option>' +
                 '               <option value="right">Right</option>' +
+                '           </select>' +
+                '       </div>' +
+                '   </div>' +
+                '   <div class="form-group">' +
+                '       <label for="photo-style" class="col-sm-12">Style</label>' +
+                '       <div class="col-sm-12">' +
+                '           <select id="photo-style" class="form-control">' +
+                '               <option value="">None</option>' +
+                '               <option value="img-rounded">Rounded</option>' +
+                '               <option value="img-circle">Circle</option>' +
+                '               <option value="img-thumbnail">Thumbnail</option>' +
                 '           </select>' +
                 '       </div>' +
                 '   </div>' +
@@ -110,6 +123,17 @@
                 KEditor.settingComponent.find('img')[this.checked ? 'addClass' : 'removeClass']('img-responsive');
             });
 
+            var cbbStyle = form.find('#photo-style');
+            cbbStyle.on('change', function () {
+                var img = KEditor.settingComponent.find('img');
+                var val = this.value;
+
+                img.removeClass('img-rounded img-circle img-thumbnail');
+                if (val) {
+                    img.addClass(val);
+                }
+            });
+
             var inputWidth = form.find('#photo-width');
             var inputHeight = form.find('#photo-height');
             inputWidth.on('change', function () {
@@ -149,11 +173,14 @@
         },
 
         showSettingForm: function (form, component, options) {
+            flog('showSettingForm "photo" component', component);
+
             var self = this;
             var inputAlign = form.find('#photo-align');
             var inputResponsive = form.find('#photo-responsive');
             var inputWidth = form.find('#photo-width');
             var inputHeight = form.find('#photo-height');
+            var cbbStyle = form.find('#photo-style');
 
             var panel = component.find('.photo-panel');
             var img = panel.find('img');
@@ -161,6 +188,16 @@
             var algin = panel.css('text-align');
             if (algin !== 'right' || algin !== 'center') {
                 algin = 'left';
+            }
+
+            if (img.hasClass('img-rounded')) {
+                cbbStyle.val('img-rounded');
+            } else if (img.hasClass('img-circle')) {
+                cbbStyle.val('img-circle');
+            } else if (img.hasClass('img-thumbnail')) {
+                cbbStyle.val('img-thumbnail');
+            } else {
+                cbbStyle.val('');
             }
 
             inputAlign.val(algin);

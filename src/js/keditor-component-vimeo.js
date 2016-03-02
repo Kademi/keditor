@@ -29,7 +29,7 @@
 
         settingEnabled: true,
 
-        settingTitle: 'Vimeo Player',
+        settingTitle: 'Vimeo Settings',
 
         initSettingForm: function (form, options) {
             flog('initSettingForm "vimeo" component');

@@ -29,7 +29,7 @@
 
         settingEnabled: true,
 
-        settingTitle: 'Youtube Player',
+        settingTitle: 'Youtube Settings',
 
         initSettingForm: function (form, options) {
             flog('initSettingForm "youtube" component');

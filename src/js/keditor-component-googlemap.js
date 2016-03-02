@@ -29,7 +29,7 @@
 
         settingEnabled: true,
 
-        settingTitle: 'Google Map Viewer',
+        settingTitle: 'Google Map Settings',
 
         initSettingForm: function (form, options) {
             flog('initSettingForm "googlemap" component');

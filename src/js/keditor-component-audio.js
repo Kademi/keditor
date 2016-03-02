@@ -49,7 +49,7 @@
         settingEnabled: true,
 
         // Title of setting panel
-        settingTitle: 'Audio settings',
+        settingTitle: 'Audio Settings',
 
         /**
          * Initialize setting form of this type

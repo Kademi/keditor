@@ -181,3 +181,6 @@ gulp.task('build', ['build-css-dist', 'build-js-dist', 'build-snippets-examples'
 // Gulp Dev
 gulp.task('dev', ['build-css-test', 'build-js-test', 'build-snippets-test', 'watch']);
 
+// Gulp Default
+gulp.task('default', ['build', 'dev']);
+

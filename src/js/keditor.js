@@ -835,12 +835,7 @@
 
                 var component = btn.closest('.keditor-component');
                 if (body.hasClass('opened-keditor-setting')) {
-                    var componentType = KEditor.getComponentType(component, options);
-                    var activeForm = $('#keditor-setting-forms').children('.active');
-                    var activeSettingType = activeForm.attr('data-type');
-
-                    flog('Active setting type: ' + activeSettingType, 'Component type: ' + componentType);
-                    if (activeSettingType && activeSettingType !== componentType) {
+                    if (!component.is(KEditor.settingComponent)) {
                         KEditor.showSettingPanel(component, options);
                         KEditor.settingComponent = component;
                     } else {

@@ -17,6 +17,7 @@
  * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component - jQuery object of component
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
+ * @option {Function} onSidebarToggled Method will be called after toggled sidebar. Arguments: isOpened
  * @option {Function} onInitContentArea Method will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
  * @option {Function} onContentChanged Callback will be called when content is changed. Includes add, delete, duplicate container or component. Or content of a component is changed. Arguments: event
  * @option {Function} onInitContainer Callback will be called when initializing container. It can return array of jQuery objects which will be initialized as editable components in container content (NOTE: these objects MUST be under elements which have attribute data-type="container-content"). By default, all first level sections under container content will be initialized. Arguments: container
@@ -96,6 +97,8 @@
             defaultComponentType: 'text',
             snippetsUrl: 'snippets/default/snippets.html',
             snippetsListId: 'keditor-snippets-list',
+            onSidebarToggled: function (isOpened) {
+            },
             onInitContentArea: function (contentArea) {
             },
             onContentChanged: function (event) {
@@ -181,7 +184,7 @@
                     '   </div>' +
                     '</div>'
                 );
-                KEditor.initSidebarToggler();
+                KEditor.initSidebarToggler(options);
             } else {
                 flog('Render KEditor snippets content after custom snippets list with id="' + options.snippetsListId + '"');
                 $('#' + options.snippetsListId).after('<div id="keditor-snippets-content" style="display: none"></div>');
@@ -211,20 +214,25 @@
             }
         },
 
-        initSidebarToggler: function () {
-            flog('initSidebarToggler');
+        initSidebarToggler: function (options) {
+            flog('initSidebarToggler', options);
 
             var body = $(document.body);
             $('#keditor-sidebar-toggler').on('click', function (e) {
                 e.preventDefault();
 
                 var icon = $(this).find('i');
-                if (body.hasClass('opened-keditor-sidebar')) {
+                var isOpened = body.hasClass('opened-keditor-sidebar');
+                if (isOpened) {
                     body.removeClass('opened-keditor-sidebar');
                     icon.attr('class', 'fa fa-chevron-left')
                 } else {
                     body.addClass('opened-keditor-sidebar');
                     icon.attr('class', 'fa fa-chevron-right')
+                }
+
+                if (typeof options.onSidebarToggled === 'function') {
+                    options.onSidebarToggled.call(null, !isOpened);
                 }
             });
         },
@@ -811,7 +819,7 @@
 
                     if (components.length > 0) {
                         components.each(function () {
-                            KEditor.deleteComponent($(this));
+                            KEditor.deleteComponent($(this), options);
                         });
                     }
 
@@ -836,14 +844,14 @@
                 var component = btn.closest('.keditor-component');
                 if (body.hasClass('opened-keditor-setting')) {
                     if (!component.is(KEditor.settingComponent)) {
-                        KEditor.showSettingPanel(component, options);
                         KEditor.settingComponent = component;
+                        KEditor.showSettingPanel(component, options);
                     } else {
                         KEditor.hideSettingPanel();
                     }
                 } else {
-                    KEditor.showSettingPanel(component, options);
                     KEditor.settingComponent = component;
+                    KEditor.showSettingPanel(component, options);
                 }
             });
 
@@ -890,7 +898,7 @@
                         options.onBeforeComponentDeleted.call(contentArea, e, component);
                     }
 
-                    KEditor.deleteComponent(component);
+                    KEditor.deleteComponent(component, options);
 
                     if (typeof options.onComponentDeleted === 'function') {
                         options.onComponentDeleted.call(contentArea, e, component);

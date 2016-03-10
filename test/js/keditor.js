@@ -35,6 +35,8 @@
  * @option {Function} onComponentDuplicated Callback will be called when a component is duplicated. Arguments: event, originalComponent, newComponent
  * @option {Function} onComponentSelected Callback will be called when a component is selected. Arguments: event, selectedComponent
  * @option {Function} onComponentSnippetDropped Callback will be called after a component snippet is dropped into a container. Arguments: event, newComponent, droppedComponent
+ * @option {Function} onDynamicContentLoaded Callback will be called after dynamic content is loaded. Arguments: dynamicElement, response, status, xhr
+ * @option {Function} onDynamicContentError Callback will be called if loading dynamic content is error, abort or timeout. Arguments: dynamicElement, response, status, xhr
  */
 (function ($) {
     // Log function will print log message when "KEditor.debug" equals "true"
@@ -132,6 +134,10 @@
             onComponentSelected: function (event, selectedComponent) {
             },
             onComponentSnippetDropped: function (event, newComponent, droppedComponent) {
+            },
+            onDynamicContentLoaded: function (dynamicElement, response, status, xhr) {
+            },
+            onDynamicContentError: function (dynamicElement, response, status, xhr) {
             }
         },
 
@@ -390,7 +396,7 @@
 
             var settingForm = $('#keditor-setting-' + componentType);
             if (typeof componentData.showSettingForm === 'function') {
-                flog('Show setting form of component type "' + componentType+ '"');
+                flog('Show setting form of component type "' + componentType + '"');
                 componentData.showSettingForm.call(componentData, settingForm, component, options);
                 settingForm.addClass('active');
             } else {
@@ -700,19 +706,28 @@
                     '</div>'
                 );
 
-                if (typeof componentData.init === 'function') {
-                    componentData.init.call(componentData, contentArea, container, component, options);
-                } else {
-                    $(document.body).removeClass('highlighted-container-content');
-                    error('"init" function of component type "' + componentType + '" does not exist!');
-                }
+                var dynamicContentRequests = [];
+                component.find('[data-dynamic-href]').each(function () {
+                    var dynamicElement = $(this);
 
-                if (typeof options.onInitComponent === 'function') {
-                    options.onInitComponent.call(contentArea, component);
-                }
+                    dynamicContentRequests.push(KEditor.initDynamicContent(contentArea, dynamicElement, options));
+                });
 
-                component.addClass('keditor-initialized-component');
-                component.removeClass('keditor-initializing-component');
+                $.when.apply(null, dynamicContentRequests).then(function () {
+                    if (typeof componentData.init === 'function') {
+                        componentData.init.call(componentData, contentArea, container, component, options);
+                    } else {
+                        $(document.body).removeClass('highlighted-container-content');
+                        error('"init" function of component type "' + componentType + '" does not exist!');
+                    }
+
+                    if (typeof options.onInitComponent === 'function') {
+                        options.onInitComponent.call(contentArea, component);
+                    }
+
+                    component.addClass('keditor-initialized-component');
+                    component.removeClass('keditor-initializing-component');
+                });
             } else {
                 if (component.hasClass('keditor-initialized-component')) {
                     flog('Component is already initialized!');
@@ -926,6 +941,47 @@
             }
 
             component.remove();
+        },
+
+        initDynamicContent: function (contentArea, dynamicElement, options) {
+            flog('initDynamicContent', contentArea, dynamicElement, options);
+
+            var dynamicHref = dynamicElement.attr('data-dynamic-href');
+            var data = {};
+
+            $.each(dynamicElement.get(0).attributes, function (i, attr) {
+                if (attr.name.indexOf('data-') === 0 && attr.name !== 'data-dynamic-href' && attr.name !== 'data-type') {
+                    var camelCaseName = attr.name.substr(5).replace(/-(.)/g, function ($0, $1) {
+                        return $1.toUpperCase();
+                    });
+                    data[camelCaseName] = attr.value;
+                }
+            });
+
+            data = $.param(data);
+            flog('Dynamic href: ' + dynamicHref, 'Data: ' + data);
+
+            return $.ajax({
+                url: dynamicHref,
+                data: data,
+                type: 'GET',
+                dataType: 'HTML',
+                success: function (response, status, xhr) {
+                    flog('Dynamic content is loaded', dynamicElement, response, status, xhr);
+                    dynamicElement.html(response);
+
+                    if (typeof options.onDynamicContentLoaded === 'function') {
+                        options.onDynamicContentLoaded.call(contentArea, dynamicElement, response, status, xhr);
+                    }
+                },
+                error: function (response, status, xhr) {
+                    flog('Error when loading dynamic content', dynamicElement, response, status, xhr);
+
+                    if (typeof options.onDynamicContentError === 'function') {
+                        options.onDynamicContentError.call(contentArea, dynamicElement, response, status, xhr);
+                    }
+                }
+            });
         },
 
         getComponentContent: function (component, options) {

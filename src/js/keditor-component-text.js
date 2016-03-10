@@ -9,6 +9,8 @@
     var KEditor = $.keditor;
     var flog = KEditor.log;
 
+    CKEDITOR.disableAutoInline = true;
+
     // Text component
     // ---------------------------------------------------------------------
     KEditor.components['text'] = {

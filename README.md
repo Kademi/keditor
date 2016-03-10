@@ -41,6 +41,8 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * @option {Function} onComponentDuplicated Callback will be called when a component is duplicated. Arguments: event, originalComponent, newComponent
  * @option {Function} onComponentSelected Callback will be called when a component is selected. Arguments: event, selectedComponent
  * @option {Function} onComponentSnippetDropped Callback will be called after a component snippet is dropped into a container. Arguments: event, newComponent, droppedComponent
+ * @option {Function} onDynamicContentLoaded Callback will be called after dynamic content is loaded. Arguments: dynamicElement, response, status, xhr
+ * @option {Function} onDynamicContentError Callback will be called if loading dynamic content is error, abort or timeout. Arguments: dynamicElement, response, status, xhr
  */
 $.keditor.DEFAULTS = {
     btnMoveContainerText: '<i class="fa fa-sort"></i>',
@@ -54,6 +56,8 @@ $.keditor.DEFAULTS = {
     defaultComponentType: 'text',
     snippetsUrl: 'snippets/default/snippets.html',
     snippetsListId: 'keditor-snippets-list',
+    onSidebarToggled: function (isOpened) {
+    },
     onInitContentArea: function (contentArea) {
     },
     onContentChanged: function (event) {
@@ -87,6 +91,10 @@ $.keditor.DEFAULTS = {
     onComponentSelected: function (event, selectedComponent) {
     },
     onComponentSnippetDropped: function (event, newComponent, droppedComponent) {
+    },
+    onDynamicContentLoaded: function (dynamicElement, response, status, xhr) {
+    },
+    onDynamicContentError: function (dynamicElement, response, status, xhr) {
     }
 };
 ```
@@ -186,6 +194,26 @@ $.keditor.components['typeName'] = {
 ```
 
 __**Note**__: `KEditor.settingComponent` is component which will be applied setting. You can access this component after setting panel is showed.
+
+# Dynamic content
+If you want a element which has dynamic content, you can do like the following
+```html
+<div data-dynamic-href="/path/to/dynamic/content" data-attribute-one="1" data-attribute-two="2" ...></div>
+```
+So the content of this `div` will be get from `/path/to/dynamic/content?attributeOne=1&attributeTwo=2`
+
+Example:
+```html
+<!-- 
+    Here is example of a component with type is "products" and have dynamic content inside.
+    Full url for getting dynamic content is "/_components/ecommerce/productList?numProducts=4&store=store1&category=c1"
+ -->
+<div data-type="component-products">
+    <div data-dynamic-href='/_components/ecommerce/productList' data-num-products='4' data-store="store1" data-category="c1"></div>
+</div>
+```
+
+__**Note**__: All `data-*` attribute will be converted to camel-case. Example: data-number-products will be `numberProducts`.
 
 # License
 Please read at https://github.com/Kademi/keditor/blob/master/LICENSE.md

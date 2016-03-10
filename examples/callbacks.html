@@ -51,6 +51,9 @@
         <script type="text/javascript">
             $(function() {
                 $('#content-area').keditor({
+                    onSidebarToggled: function (isOpened) {
+                        console.log('onSidebarToggled', isOpened);
+                    },
                     onInitContentArea: function (contentArea) {
                         console.log('onInitContentArea', contentArea);
                     },
@@ -78,8 +81,8 @@
                     onContainerSnippetDropped: function (event, newContainer, droppedContainer) {
                         console.log('onContainerSnippetDropped', event, newContainer, droppedContainer);
                     },
-                    onCKEditorReady: function (component, editor) {
-                        console.log('onCKEditorReady', component, editor);
+                    onComponentReady: function (component) {
+                        console.log('onComponentReady', component);
                     },
                     onInitComponent: function (component) {
                         console.log('onInitComponent', component);
@@ -101,6 +104,12 @@
                     },
                     onComponentSnippetDropped: function (event, newComponent, droppedComponent) {
                         console.log('onComponentSnippetDropped', event, newComponent, droppedComponent);
+                    },
+                    onDynamicContentLoaded: function (dynamicElement, response, status, xhr) {
+                        console.log('onDynamicContentLoaded', dynamicElement, response, status, xhr);
+                    },
+                    onDynamicContentError: function (dynamicElement, response, status, xhr) {
+                        console.log('onDynamicContentError', dynamicElement, response, status, xhr);
                     }
                 });
             });

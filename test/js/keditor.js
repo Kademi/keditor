@@ -995,6 +995,12 @@
                 error('"getContent" function of component type "' + componentType + '" does not exist!');
             }
 
+            var tempDiv = $('<div />').html(content);
+            tempDiv.find('[data-dynamic-href]').each(function () {
+                $(this).html('');
+            });
+            content = tempDiv.html();
+
             return '<section data-type="' + dataType + '">' + content + '</section>';
         },
 

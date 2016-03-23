@@ -79,10 +79,6 @@ body.highlighted-container-content {
     &:hover {
         opacity: 1;
     }
-
-    .keditor-controls-container & {
-        position: absolute;
-    }
 }
 
 #keditor-sidebar-toggler {
@@ -110,8 +106,6 @@ body.highlighted-container-content {
    ================================================================================== */
 #keditor-snippets-list {
     height: 100%;
-    z-index: 1;
-    position: relative;
 
     .keditor-snippet {
         &:hover {
@@ -175,33 +169,20 @@ body.highlighted-container-content {
 /* ==================================================================================
    Settings panel
    ================================================================================== */
-#keditor-setting-panel-wrapper {
-    position: absolute;
-    z-index: 0;
-    top: 10px;
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
-    overflow: hidden;
-
-    &.showed {
-        z-index: 2;
-    }
-}
-
 #keditor-setting-panel {
     background: #fff;
     position: absolute;
-    top: 0;
-    width: 100%;
+    z-index: 2;
+    top: 10px;
+    width: ~"calc(100% - 20px)";
     right: -100%;
-    bottom: 0;
+    bottom: 10px;
     border: 1px solid @border-color;
     border-radius: @border-radius;
     .transition(all @animation-duration);
 
     .opened-keditor-setting & {
-        right: 0;
+        right: 10px;
     }
 }
 
@@ -397,11 +378,11 @@ body.highlighted-container-content {
             }
         }
     }
-    
+
     .keditor-component-content {
         position: relative;
         z-index: 2;
-    }    
+    }
 
     &:hover,
     &.showed-keditor-toolbar {

@@ -6,7 +6,6 @@
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  *
  * Configuration:
- * @option {String|jQuery} container The element which will contain all keditor controls
  * @option {String} btnMoveContainerText Text content for move button of container
  * @option {String} btnMoveComponentText Text content for move button of component
  * @option {String} btnSettingContainerText Text content for setting button of container
@@ -16,6 +15,7 @@
  * @option {String} btnDeleteContainerText Text content for delete button of container
  * @option {String} btnDeleteComponentText Text content for delete button of component
  * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component - jQuery object of component
+ * @option {Boolean} iframeMode KEditor is created inside an iframe or not
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {Function} onSidebarToggled Method will be called after toggled sidebar. Arguments: isOpened
@@ -89,7 +89,6 @@
 
         // Default configuration of KEditor
         DEFAULTS: {
-            container: null,
             btnMoveContainerText: '<i class="fa fa-sort"></i>',
             btnMoveComponentText: '<i class="fa fa-arrows"></i>',
             btnSettingContainerText: '<i class="fa fa-cog"></i>',
@@ -99,6 +98,7 @@
             btnDeleteContainerText: '<i class="fa fa-times"></i>',
             btnDeleteComponentText: '<i class="fa fa-times"></i>',
             defaultComponentType: 'text',
+            iframeMode: false,
             snippetsUrl: 'snippets/default/snippets.html',
             snippetsListId: 'keditor-snippets-list',
             onSidebarToggled: function (isOpened) {
@@ -181,22 +181,14 @@
             if (options.snippetsListId === KEditor.DEFAULTS.snippetsListId) {
                 flog('Render default KEditor snippet container');
 
-                var keditorContainer = body;
-                if (options.container && options.container.length > 0) {
-                    keditorContainer = $(options.container);
-                    keditorContainer.addClass('keditor-controls-container');
-                }
-
-                keditorContainer.append(
+                body.append(
                     '<div id="keditor-sidebar">' +
                     '   <a id="keditor-sidebar-toggler"><i class="fa fa-chevron-right"></i></a>' +
                     '   <div id="keditor-snippets-list"></div>' +
                     '   <div id="keditor-snippets-content" style="display: none"></div>' +
-                    '   <div id="keditor-setting-panel-wrapper">' +
-                    '       <div id="keditor-setting-panel">' +
-                    '           <div id="keditor-setting-header"><span id="keditor-setting-title"></span><a href="#" id="keditor-setting-closer"><i class="fa fa-arrow-right"></i></a></div>' +
-                    '           <div id="keditor-setting-body"><div id="keditor-setting-forms"></div></div>' +
-                    '       </div>' +
+                    '   <div id="keditor-setting-panel">' +
+                    '       <div id="keditor-setting-header"><span id="keditor-setting-title"></span><a href="#" id="keditor-setting-closer"><i class="fa fa-arrow-right"></i></a></div>' +
+                    '       <div id="keditor-setting-body"><div id="keditor-setting-forms"></div></div>' +
                     '   </div>' +
                     '</div>'
                 );
@@ -413,7 +405,6 @@
                 error('"showSettingForm" function of component type "' + componentType + '" does not exist!');
             }
 
-            $('#keditor-setting-panel-wrapper').addClass('showed');
             $(document.body).addClass('opened-keditor-setting');
         },
 
@@ -434,10 +425,6 @@
             activeForm.removeClass('active');
             $(document.body).removeClass('opened-keditor-setting');
             KEditor.settingComponent = null;
-
-            setTimeout(function () {
-                $('#keditor-setting-panel-wrapper').removeClass('showed');
-            }, 300);
         },
 
         initContentArea: function (contentArea, options) {

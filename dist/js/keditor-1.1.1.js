@@ -2,7 +2,7 @@
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.0
+ * @version: 1.1.1
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  *
  * Configuration:
@@ -15,8 +15,9 @@
  * @option {String} btnDeleteContainerText Text content for delete button of container
  * @option {String} btnDeleteComponentText Text content for delete button of component
  * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component - jQuery object of component
+ * @option {Boolean} iframeMode KEditor is created inside an iframe or not
  * @option {String} snippetsUrl Url to snippets file
- * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
+ * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {Function} onSidebarToggled Method will be called after toggled sidebar. Arguments: isOpened
  * @option {Function} onInitContentArea Method will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
  * @option {Function} onContentChanged Callback will be called when content is changed. Includes add, delete, duplicate container or component. Or content of a component is changed. Arguments: event
@@ -78,7 +79,7 @@
         debug: true,
 
         // Version of KEditor
-        version: '1.1.0',
+        version: '1.1.1',
 
         // Log function
         log: flog,
@@ -97,6 +98,7 @@
             btnDeleteContainerText: '<i class="fa fa-times"></i>',
             btnDeleteComponentText: '<i class="fa fa-times"></i>',
             defaultComponentType: 'text',
+            iframeMode: false,
             snippetsUrl: 'snippets/default/snippets.html',
             snippetsListId: 'keditor-snippets-list',
             onSidebarToggled: function (isOpened) {
@@ -994,6 +996,12 @@
             } else {
                 error('"getContent" function of component type "' + componentType + '" does not exist!');
             }
+
+            var tempDiv = $('<div />').html(content);
+            tempDiv.find('[data-dynamic-href]').each(function () {
+                $(this).html('');
+            });
+            content = tempDiv.html();
 
             return '<section data-type="' + dataType + '">' + content + '</section>';
         },

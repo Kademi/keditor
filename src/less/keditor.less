@@ -49,6 +49,15 @@ body.highlighted-container-content {
 }
 
 /* ==================================================================================
+   Frame
+   ================================================================================== */
+.keditor-frame {
+    width: 100%;
+    height: 500px;
+    border: 1px solid @border-color;
+}
+
+/* ==================================================================================
    Content area
    ================================================================================== */
 .keditor-content-area {
@@ -121,6 +130,7 @@ body.highlighted-container-content {
     > li {
         > a {
             border-radius: @border-radius @border-radius 0 0;
+            height: 42px;
         }
 
         &.active {

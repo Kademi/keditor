@@ -31,6 +31,14 @@ body.highlighted-container-content .keditor-container-content:before {
   border-color: #2eb2e4;
 }
 /* ==================================================================================
+   Frame
+   ================================================================================== */
+.keditor-frame {
+  width: 100%;
+  height: 500px;
+  border: 1px solid #ddd;
+}
+/* ==================================================================================
    Content area
    ================================================================================== */
 .keditor-content-area {
@@ -95,6 +103,7 @@ body.highlighted-container-content .keditor-container-content:before {
 }
 #keditor-snippets-type-switcher > li > a {
   border-radius: 3px 3px 0 0;
+  height: 42px;
 }
 #keditor-snippets-type-switcher > li.active > a {
   font-weight: bold;

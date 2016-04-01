@@ -15,7 +15,7 @@
  * @option {String} btnDeleteContainerText Text content for delete button of container
  * @option {String} btnDeleteComponentText Text content for delete button of component
  * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component - jQuery object of component
- * @option {Boolean} iframeMode KEditor is created inside an iframe or not
+ * @option {Boolean} iframeMode KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
@@ -499,7 +499,7 @@
                             settingForms.append(form);
 
                             flog('Initialize setting form for component type "' + type + '"');
-                            componentData.initSettingForm.call(componentData, form, options);
+                            componentData.initSettingForm.call(componentData, form, self);
                         } else {
                             error('"initSettingForm" function of component type "' + type + '" does not exist!');
                         }
@@ -508,8 +508,28 @@
             }
         },
 
-        getSettingComponent: function () {
+        setSettingComponent: function (component) {
+            flog('setSettingComponent');
 
+            var self = this;
+            var body = self.body;
+
+            if (component) {
+                var idSettingComponent = component.attr('id');
+                body.attr('data-setting-component', idSettingComponent);
+            } else {
+                body.removeAttr('data-setting-component');
+            }
+        },
+
+        getSettingComponent: function () {
+            flog('getSettingComponent');
+
+            var self = this;
+            var body = self.body;
+            var idSettingComponent = body.attr('data-setting-component');
+
+            return body.find('#' + idSettingComponent);
         },
 
         showSettingPanel: function (component) {
@@ -518,6 +538,8 @@
             var self = this;
             var options = self.options;
             var body = self.body;
+
+            self.setSettingComponent(component);
 
             var activeForm = body.find('#keditor-setting-forms').children('.active');
             activeForm.removeClass('active');
@@ -529,7 +551,7 @@
             var settingForm = body.find('#keditor-setting-' + componentType);
             if (typeof componentData.showSettingForm === 'function') {
                 flog('Show setting form of component type "' + componentType + '"');
-                componentData.showSettingForm.call(componentData, settingForm, component, options);
+                componentData.showSettingForm.call(componentData, settingForm, component, self);
                 settingForm.addClass('active');
             } else {
                 error('"showSettingForm" function of component type "' + componentType + '" does not exist!');
@@ -552,12 +574,12 @@
 
             if (typeof componentData.hideSettingForm === 'function') {
                 flog('Hide setting form of component type "' + activeType + '"');
-                componentData.hideSettingForm.call(componentData, activeForm);
+                componentData.hideSettingForm.call(componentData, activeForm, self);
             }
 
             activeForm.removeClass('active');
             body.removeClass('opened-keditor-setting');
-            self.settingComponent = null;
+            self.setSettingComponent();
         },
 
         getContentAreas: function (target) {
@@ -917,7 +939,7 @@
 
                 $.when.apply(null, dynamicContentRequests).then(function () {
                     if (typeof componentData.init === 'function') {
-                        componentData.init.call(componentData, contentArea, container, component, options);
+                        componentData.init.call(componentData, contentArea, container, component, self);
                     } else {
                         body.removeClass('highlighted-container-content');
                         error('"init" function of component type "' + componentType + '" does not exist!');
@@ -1065,13 +1087,11 @@
                 var component = btn.closest('.keditor-component');
                 if (body.hasClass('opened-keditor-setting')) {
                     if (!component.is(self.settingComponent)) {
-                        self.settingComponent = component;
                         self.showSettingPanel(component);
                     } else {
                         self.hideSettingPanel();
                     }
                 } else {
-                    self.settingComponent = component;
                     self.showSettingPanel(component);
                 }
             });
@@ -1142,8 +1162,9 @@
             var self = this;
 
             var componentType = self.getComponentType(component);
-            if (typeof KEditor.components[componentType].destroy === 'function') {
-                KEditor.components[componentType].destroy(component, options);
+            var componentData = KEditor.components[componentType];
+            if (typeof componentData.destroy === 'function') {
+                componentData.destroy.call(componentData, component, self);
             } else {
                 error('"destroy" function of component type "' + componentType + '" does not exist!');
             }
@@ -1202,10 +1223,11 @@
 
             var dataType = component.attr('data-type');
             var componentType = self.getComponentType(component);
+            var componentData = KEditor.components[componentType];
             var content;
 
-            if (typeof KEditor.components[componentType].getContent === 'function') {
-                content = KEditor.components[componentType].getContent(component, options);
+            if (typeof componentData.getContent === 'function') {
+                content = componentData.getContent.call(componentData, component, self);
             } else {
                 error('"getContent" function of component type "' + componentType + '" does not exist!');
             }
@@ -1258,22 +1280,31 @@
             });
         },
 
-        getContent: function () {
-            var contentArea = $(this);
-            var options = methods['getOptions'].call(contentArea);
-            var html = '';
+        getContent: function (inArray) {
+            var target = $(this);
+            var keditor = target.data('keditor');
+            var options = keditor.options;
+            var result = [];
+            target = options.iframeMode ? keditor.body : target;
 
-            contentArea.children('.keditor-container').each(function () {
-                var container = $(this);
+            target.find('.keditor-content-area').each(function () {
+                var html = '';
+                $(this).children('.keditor-container').each(function () {
+                    var container = $(this);
 
-                html += KEditor.getContainerContent(container, options);
+                    html += keditor.getContainerContent(container, options);
+                });
+
+                result.push(html);
             });
 
-            return html;
+            return inArray ? result : result.join('\n');
         },
 
         getOptions: function () {
-            return $(this).data('keditorOptions') || KEditor.DEFAULTS;
+            var keditor = $(this).data('keditor');
+
+            return keditor.options;
         }
     };
 

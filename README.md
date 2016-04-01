@@ -21,10 +21,15 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * @option {String} btnDeleteContainerText Text content for delete button of container
  * @option {String} btnDeleteComponentText Text content for delete button of component
  * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component - jQuery object of component
+ * @option {Boolean} iframeMode KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
  * @option {String} snippetsUrl Url to snippets file
- * @option {String} [snippetsListId="keditor-snippets-list"] Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
- * @option {Function} onSidebarToggled Method will be called after toggled sidebar. Arguments: isOpened
- * @option {Function} onInitContentArea Method will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
+ * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
+ * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
+ * @option {Boolean} iframeMode Initialized KEditor inside an iframe for not
+ * @option {String} contentAreasWrapper The wrapper element for all contents inside iframe. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag
+ * @option {Function} onInitFrame Callback will be called after iframe and content areas wrapper inside it are created. Arguments: frame, frameHead, frameBody
+ * @option {Function} onSidebarToggled Callback will be called after toggled sidebar. Arguments: isOpened
+ * @option {Function} onInitContentArea Callback will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
  * @option {Function} onContentChanged Callback will be called when content is changed. Includes add, delete, duplicate container or component. Or content of a component is changed. Arguments: event
  * @option {Function} onInitContainer Callback will be called when initializing container. It can return array of jQuery objects which will be initialized as editable components in container content (NOTE: these objects MUST be under elements which have attribute data-type="container-content"). By default, all first level sections under container content will be initialized. Arguments: container
  * @option {Function} onBeforeContainerDeleted Callback will be called before container is deleted. Arguments: event, selectedContainer
@@ -56,6 +61,11 @@ $.keditor.DEFAULTS = {
     defaultComponentType: 'text',
     snippetsUrl: 'snippets/default/snippets.html',
     snippetsListId: 'keditor-snippets-list',
+    contentAreasSelector: null,
+    iframeMode: false,
+    contentAreasWrapper: '<div class="keditor-content-areas-wrapper container"></div>',
+    onInitFrame: function (frame, frameHead, frameBody) {
+    },
     onSidebarToggled: function (isOpened) {
     },
     onInitContentArea: function (contentArea) {
@@ -99,9 +109,55 @@ $.keditor.DEFAULTS = {
 };
 ```
 
+# Iframe mode
+```javascript
+$('#id').keditor({
+    iframeMode: true
+});
+```
+
+When `iframeMode` is ON, all elements which have `data-type=keditor-style` will be used for iframe stylesheets. Examples:
+```html
+<link rel="stylesheet" data-type="keditor-style" type="text/css" href="/path/to/css" />
+
+<!-- In iframe will be changed to -->
+<link rel="stylesheet" type="text/css" href="/path/to/css" />
+```
+
+```html
+<!-- This style will not impact to current document -->
+<div data-type="keditor-style" data-href="/path/to/css"></div>
+
+<!-- In iframe will be changed to -->
+<link rel="stylesheet" type="text/css" href="/path/to/css" />
+```
+
+```html
+<style data-type="keditor-style" type="text/css">
+    // CSS rules
+</style>
+
+<!-- In iframe will be changed to -->
+<style data-type="text/css">
+    // CSS rules
+</style>
+```
+
+```html
+<!-- This style will not impact to current document -->
+<script data-type="keditor-style" type="text/css">
+    // CSS rules
+</script>
+
+<!-- In iframe will be changed to -->
+<style data-type="text/css">
+    // CSS rules
+</style>
+```
+
 # How to get content of KEditor
 ```javascript
-$('#your-content-area').keditor('getContent');
+$('#id').keditor('getContent');
 ```
 
 # Customize snippet
@@ -134,27 +190,27 @@ $.keditor.components['typeName'] = {
      * @param {jQuery} contentArea
      * @param {jQuery} container
      * @param {jQuery} component
-     * @param {Object} options
+     * @param {KEditor} keditor KEditor instance which is calling this function
      */
-    init: function (contentArea, container, component, options) {
+    init: function (contentArea, container, component, keditor) {
 
     },
 
     /**
      * Function will be called for getting content of component from method of KEditor "target.keditor('getContent')"
      * @param {jQuery} component This component is cloned from original component. So you can do anything with it, event deleted
-     * @param {Object} options
+     * @param {KEditor} keditor KEditor instance which is calling this function
      */
-    getContent: function (component, options) {
+    getContent: function (component, keditor) {
 
     },
 
     /**
      * Function will be called when deleting component
      * @param {jQuery} component
-     * @param {Object} options
+     * @param {KEditor} keditor KEditor instance which is calling this function
      */
-    destroy: function (component, options) {
+    destroy: function (component, keditor) {
 
     },
 
@@ -167,9 +223,9 @@ $.keditor.components['typeName'] = {
     /**
      * Initialize setting form of this type
      * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
-     * @param {Object} options
+     * @param {KEditor} keditor KEditor instance which is calling this function
      */
-    initSettingForm: function (form, options) {
+    initSettingForm: function (form, keditor) {
 
     },
 
@@ -177,17 +233,18 @@ $.keditor.components['typeName'] = {
      * Show setting form for this type. This function will be called when user clicks on setting button of component when setting panel is hidden. You can fulfill form controls in this function.
      * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
      * @param {jQuery} component Component will be applied setting
-     * @param {Object} options
+     * @param {KEditor} keditor KEditor instance which is calling this function
      */
-    showSettingForm: function (form, component, options) {
+    showSettingForm: function (form, component, keditor) {
 
     },
 
     /**
      * Hide setting form for this type. This function will be called when user clicks again on setting button of component when setting panel is showed. You can clear setting form in this function
      * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
+     * @param {KEditor} keditor KEditor instance which is calling this function
      */
-    hideSettingForm: function (form) {
+    hideSettingForm: function (form, keditor) {
 
     }
 };

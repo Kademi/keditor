@@ -10,11 +10,11 @@
     var flog = KEditor.log;
 
     KEditor.components['youtube'] = {
-        init: function (contentArea, container, component, options) {
+        init: function (contentArea, container, component, keditor) {
             // Do nothing
         },
 
-        getContent: function (component, options) {
+        getContent: function (component, keditor) {
             flog('getContent "youtube" component', component);
 
             var componentContent = component.children('.keditor-component-content');
@@ -23,7 +23,7 @@
             return componentContent.html();
         },
 
-        destroy: function (component, options) {
+        destroy: function (component, keditor) {
             // Do nothing
         },
 
@@ -31,7 +31,7 @@
 
         settingTitle: 'Youtube Settings',
 
-        initSettingForm: function (form, options) {
+        initSettingForm: function (form, keditor) {
             flog('initSettingForm "youtube" component');
 
             form.append(
@@ -65,7 +65,7 @@
                 var youtubeRegex = /^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/;
                 var match = inputData.match(youtubeRegex);
                 if (match && match[1]) {
-                    KEditor.settingComponent.find('.embed-responsive-item').attr('src', 'https://www.youtube.com/embed/' + match[1]);
+                    keditor.getSettingComponent().find('.embed-responsive-item').attr('src', 'https://www.youtube.com/embed/' + match[1]);
                 } else {
                     alert('Your Youtube URL is invalid!');
                 }
@@ -75,19 +75,19 @@
             btn169.on('click', function (e) {
                 e.preventDefault();
 
-                KEditor.settingComponent.find('.embed-responsive').removeClass('embed-responsive-4by3').addClass('embed-responsive-16by9');
+                keditor.getSettingComponent().find('.embed-responsive').removeClass('embed-responsive-4by3').addClass('embed-responsive-16by9');
             });
 
             var btn43 = form.find('.btn-youtube-43');
             btn43.on('click', function (e) {
                 e.preventDefault();
 
-                KEditor.settingComponent.find('.embed-responsive').removeClass('embed-responsive-16by9').addClass('embed-responsive-4by3');
+                keditor.getSettingComponent().find('.embed-responsive').removeClass('embed-responsive-16by9').addClass('embed-responsive-4by3');
             });
 
             var chkAutoplay = form.find('#youtube-autoplay');
             chkAutoplay.on('click', function () {
-                var embedItem = KEditor.settingComponent.find('.embed-responsive-item');
+                var embedItem = keditor.getSettingComponent().find('.embed-responsive-item');
                 var currentUrl = embedItem.attr('src');
                 var newUrl = (currentUrl.replace(/(\?.+)+/, '')) + '?autoplay=' + (chkAutoplay.is(':checked') ? 1 : 0);
 
@@ -96,7 +96,7 @@
             });
         },
 
-        showSettingForm: function (form, component, options) {
+        showSettingForm: function (form, component, keditor) {
             flog('showSettingForm "youtube" component', component);
 
             var embedItem = component.find('.embed-responsive-item');
@@ -106,7 +106,7 @@
             chkAutoplay.prop('checked', src.indexOf('autoplay=1') !== -1);
         },
 
-        hideSettingForm: function (form) {
+        hideSettingForm: function (form, keditor) {
             // Do nothing
         }
     };

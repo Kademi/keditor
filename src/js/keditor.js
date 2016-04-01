@@ -509,7 +509,7 @@
         },
 
         setSettingComponent: function (component) {
-            flog('setSettingComponent');
+            flog('setSettingComponent', component);
 
             var self = this;
             var body = self.body;
@@ -906,6 +906,10 @@
             if (!component.hasClass('keditor-initialized-component') || !component.hasClass('keditor-initializing-component')) {
                 component.addClass('keditor-initializing-component');
 
+                var componentId = self.generateId('component');
+                flog('Id for component is: ' + componentId);
+                component.attr('id', componentId);
+
                 var componentContent = component.children('.keditor-component-content');
                 var contentId = self.generateId('component-content');
                 flog('Id for component content is: ' + contentId);
@@ -1086,7 +1090,7 @@
 
                 var component = btn.closest('.keditor-component');
                 if (body.hasClass('opened-keditor-setting')) {
-                    if (!component.is(self.settingComponent)) {
+                    if (!component.is(self.getSettingComponent())) {
                         self.showSettingPanel(component);
                     } else {
                         self.hideSettingPanel();

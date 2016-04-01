@@ -42,9 +42,11 @@
             minimumChangeMilliseconds: 100
         },
 
-        init: function (contentArea, container, component, options) {
+        init: function (contentArea, container, component, keditor) {
             flog('init "text" component', component);
+
             var self = this;
+            var options = keditor.options;
 
             var componentContent = component.children('.keditor-component-content');
             componentContent.prop('contenteditable', true);
@@ -73,7 +75,7 @@
             });
         },
 
-        getContent: function (component, options) {
+        getContent: function (component, keditor) {
             flog('getContent "text" component', component);
 
             var componentContent = component.find('.keditor-component-content');
@@ -86,7 +88,7 @@
             }
         },
 
-        destroy: function (component, options) {
+        destroy: function (component, keditor) {
             flog('destroy "text" component', component);
 
             var id = component.find('.keditor-component-content').attr('id');

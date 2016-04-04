@@ -410,18 +410,21 @@
             snippetsList.find('.keditor-snippet[data-type=container]').draggable({
                 helper: 'clone',
                 revert: 'invalid',
-                connectToSortable: '.keditor-content-area',
+                connectToSortable: body.find('.keditor-content-area'),
                 start: function () {
                     $('[contenteditable]').blur();
                     $('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                     $('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                },
+                stop: function () {
+                    snippetsList.find('.keditor-snippet[data-type^=component]').draggable('option', 'connectToSortable', body.find('.keditor-container-content'));
                 }
             });
 
             snippetsList.find('.keditor-snippet[data-type^=component]').draggable({
                 helper: 'clone',
                 revert: 'invalid',
-                connectToSortable: '.keditor-container-content',
+                connectToSortable: body.find('.keditor-container-content'),
                 start: function () {
                     body.find('[contenteditable]').blur();
                     body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');

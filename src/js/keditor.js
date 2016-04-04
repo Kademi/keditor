@@ -633,6 +633,7 @@
 
             var self = this;
             var options = self.options;
+            var body = self.body;
 
             contentArea.addClass('keditor-content-area');
 
@@ -660,7 +661,7 @@
                     var item = ui.item;
 
                     if (item.is('.keditor-snippet')) {
-                        var snippetContent = $(item.attr('data-snippet')).html();
+                        var snippetContent = body.find(item.attr('data-snippet')).html();
                         flog('Snippet content', snippetContent);
 
                         var container = $(

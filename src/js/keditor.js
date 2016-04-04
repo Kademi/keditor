@@ -773,6 +773,7 @@
 
             var self = this;
             var options = self.options;
+            var body = self.body;
             var contentId = self.generateId('container-content');
             containerContent.addClass('keditor-container-content');
 
@@ -803,7 +804,7 @@
                     var container;
 
                     if (item.is('.keditor-snippet')) {
-                        var snippetContent = $(item.attr('data-snippet')).html();
+                        var snippetContent = body.find(item.attr('data-snippet')).html();
                         var componentType = item.attr('data-type');
                         flog('Snippet content', snippetContent);
 

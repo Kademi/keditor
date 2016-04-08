@@ -538,7 +538,6 @@
             flog('showSettingPanel', component);
 
             var self = this;
-            var options = self.options;
             var body = self.body;
 
             self.setSettingComponent(component);
@@ -557,6 +556,10 @@
                 settingForm.addClass('active');
             } else {
                 error('"showSettingForm" function of component type "' + componentType + '" does not exist!');
+            }
+
+            if (!body.hasClass('opened-keditor-sidebar')) {
+                body.addClass('opened-keditor-sidebar');
             }
 
             body.addClass('opened-keditor-setting');

@@ -2,7 +2,7 @@
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.1
+ * @version: 1.1.2
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 /* ==================================================================================
@@ -29,6 +29,14 @@ body.opened-keditor-sidebar #keditor-sidebar {
    ================================================================================== */
 body.highlighted-container-content .keditor-container-content:before {
   border-color: #2eb2e4;
+}
+/* ==================================================================================
+   Frame
+   ================================================================================== */
+.keditor-frame {
+  width: 100%;
+  height: 500px;
+  border: 1px solid #ddd;
 }
 /* ==================================================================================
    Content area
@@ -95,6 +103,8 @@ body.highlighted-container-content .keditor-container-content:before {
 }
 #keditor-snippets-type-switcher > li > a {
   border-radius: 3px 3px 0 0;
+  height: 42px;
+  padding: 10px 5px;
 }
 #keditor-snippets-type-switcher > li.active > a {
   font-weight: bold;
@@ -149,7 +159,7 @@ body.highlighted-container-content .keditor-container-content:before {
 #keditor-setting-panel {
   background: #fff;
   position: absolute;
-  z-index: 2;
+  z-index: 1001;
   top: 10px;
   width: calc(100% - 20px);
   right: -100%;

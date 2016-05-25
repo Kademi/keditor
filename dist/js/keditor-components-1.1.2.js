@@ -2,7 +2,7 @@
  * KEditor Audio Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.1
+ * @version: 1.1.2
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -10,23 +10,11 @@
     var flog = KEditor.log;
 
     KEditor.components['audio'] = {
-        /**
-         * Function will be called when initializing a component with this type
-         * @param {jQuery} contentArea
-         * @param {jQuery} container
-         * @param {jQuery} component
-         * @param {Object} options
-         */
-        init: function (contentArea, container, component, options) {
-            flog('init "audio" component', component);
+        init: function (contentArea, container, component, keditor) {
+            // Do nothing
         },
 
-        /**
-         * Function will be called for getting content of component from method of KEditor "target.keditor('getContent')"
-         * @param {jQuery} component
-         * @param {Object} options
-         */
-        getContent: function (component, options) {
+        getContent: function (component, keditor) {
             flog('getContent "audio" component, component');
 
             var componentContent = component.children('.keditor-component-content');
@@ -36,80 +24,64 @@
             return componentContent.html();
         },
 
-        /**
-         * Function will be called when deleting component
-         * @param {jQuery} component
-         * @param {Object} options
-         */
-        destroy: function (component, options) {
-
+        destroy: function (component, keditor) {
+            // Do nothing
         },
 
-        // Enable setting panel for this type or not
         settingEnabled: true,
 
-        // Title of setting panel
         settingTitle: 'Audio Settings',
 
-        /**
-         * Initialize setting form of this type
-         * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
-         * @param {Object} options
-         */
-        initSettingForm: function (form, options) {
+        initSettingForm: function (form, keditor) {
             flog('init "audio" settings', form);
-            var self = this;
+
             form.append(
                 '<form class="form-horizontal">' +
-                    '<div class="form-group">' +
-                        '<label for="audioFileInput" class="col-sm-12">Audio file</label>' +
-                        '<div class="col-sm-12">' +
-                            '<div class="audio-toolbar">'+
-                                '<a href="#" class="btn-audioFileInput btn btn-sm btn-primary"><i class="fa fa-upload"></i></a>'+
-                                '<input id="audioFileInput" type="file" style="display: none">' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="form-group">' +
-                        '<label for="audio-autoplay" class="col-sm-12">Autoplay</label>' +
-                        '<div class="col-sm-12">' +
-                            '<input type="checkbox" id="audio-autoplay" />' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="form-group">' +
-                        '<label for="audio-showcontrols" class="col-sm-12">Show Controls</label>' +
-                        '<div class="col-sm-12">' +
-                        '<input type="checkbox" id="audio-showcontrols" checked />' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="form-group">' +
-                        '<label for="audio-width" class="col-sm-12">Width (%)</label>' +
-                        '<div class="col-sm-12">' +
-                        '<input type="number" id="audio-width" min="20" max="100" class="form-control" value="100" />' +
-                        '</div>' +
-                    '</div>' +
+                '<div class="form-group">' +
+                '<label for="audioFileInput" class="col-sm-12">Audio file</label>' +
+                '<div class="col-sm-12">' +
+                '<div class="audio-toolbar">' +
+                '<a href="#" class="btn-audioFileInput btn btn-sm btn-primary"><i class="fa fa-upload"></i></a>' +
+                '<input id="audioFileInput" type="file" style="display: none">' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="audio-autoplay" class="col-sm-12">Autoplay</label>' +
+                '<div class="col-sm-12">' +
+                '<input type="checkbox" id="audio-autoplay" />' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="audio-showcontrols" class="col-sm-12">Show Controls</label>' +
+                '<div class="col-sm-12">' +
+                '<input type="checkbox" id="audio-showcontrols" checked />' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="audio-width" class="col-sm-12">Width (%)</label>' +
+                '<div class="col-sm-12">' +
+                '<input type="number" id="audio-width" min="20" max="100" class="form-control" value="100" />' +
+                '</div>' +
+                '</div>' +
                 '</form>'
             );
-
-
         },
 
-        /**
-         * Show setting form for this type. This function will be called when user clicks on setting button of component when setting panel is hidden. You can fulfill form controls in this function.
-         * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
-         * @param {jQuery} component Component will be applied setting
-         * @param {Object} options
-         */
-        showSettingForm: function (form, component, options) {
+        showSettingForm: function (form, component, keditor) {
+            flog('showSettingForm "audio" component', form, component);
+
+            var options = keditor.options;
+
             var audio = component.find('audio');
             var fileInput = form.find('#audioFileInput');
             var btnAudioFileInput = form.find('.btn-audioFileInput');
-            btnAudioFileInput.on('click', function(e){
+            btnAudioFileInput.off('click').on('click', function (e) {
                 e.preventDefault();
 
                 fileInput.trigger('click');
             });
-            fileInput.on('change', function () {
+            fileInput.off('change').on('change', function () {
                 var file = this.files[0];
                 if (/audio/.test(file.type)) {
                     // Todo: Upload to your server :)
@@ -117,7 +89,7 @@
                     audio.attr('src', URL.createObjectURL(file));
 
                     audio.load(function () {
-                        KEditor.showSettingPanel(component, options);
+                        keditor.showSettingPanel(component, options);
                     });
                 } else {
                     alert('Your selected file is not an audio file!');
@@ -125,34 +97,30 @@
             });
 
             var autoplayToggle = form.find('#audio-autoplay');
-            autoplayToggle.on('click', function(e){
-                if(this.checked){
-                    audio.attr('autoplay','autoplay');
-                }else{
+            autoplayToggle.off('click').on('click', function (e) {
+                if (this.checked) {
+                    audio.attr('autoplay', 'autoplay');
+                } else {
                     audio.removeAttr('autoplay');
                 }
             });
 
             var showcontrolsToggle = form.find('#audio-showcontrols');
-            showcontrolsToggle.on('click', function(e){
-                if(this.checked){
-                    audio.attr('controls','controls');
-                }else{
+            showcontrolsToggle.off('click').on('click', function (e) {
+                if (this.checked) {
+                    audio.attr('controls', 'controls');
+                } else {
                     audio.removeAttr('controls');
                 }
             });
 
             var audioWidth = form.find('#audio-width');
-            audioWidth.on('change', function(){
-                audio.css('width',this.value+'%');
+            audioWidth.off('change').on('change', function () {
+                audio.css('width', this.value + '%');
             });
         },
 
-        /**
-         * Hide setting form for this type. This function will be called when user clicks again on setting button of component when setting panel is showed. You can clear setting form in this function
-         * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
-         */
-        hideSettingForm: function (form) {
+        hideSettingForm: function (form, keditor) {
 
         }
     };
@@ -162,7 +130,7 @@
  * KEditor Google Map Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.1
+ * @version: 1.1.2
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -170,11 +138,11 @@
     var flog = KEditor.log;
 
     KEditor.components['googlemap'] = {
-        init: function (contentArea, container, component, options) {
+        init: function (contentArea, container, component, keditor) {
             // Do nothing
         },
 
-        getContent: function (component, options) {
+        getContent: function (component, keditor) {
             flog('getContent "googlemap" component', component);
 
             var componentContent = component.children('.keditor-component-content');
@@ -183,7 +151,7 @@
             return componentContent.html();
         },
 
-        destroy: function (component, options) {
+        destroy: function (component, keditor) {
             // Do nothing
         },
 
@@ -191,7 +159,7 @@
 
         settingTitle: 'Google Map Settings',
 
-        initSettingForm: function (form, options) {
+        initSettingForm: function (form, keditor) {
             flog('initSettingForm "googlemap" component');
 
             form.append(
@@ -219,7 +187,7 @@
                 var iframe = $(inputData);
                 var src = iframe.attr('src');
                 if (iframe.length > 0 && src && src.length > 0) {
-                    KEditor.settingComponent.find('.embed-responsive-item').attr('src', src);
+                    keditor.getSettingComponent().find('.embed-responsive-item').attr('src', src);
                 } else {
                     alert('Your Google Map embed code is invalid!');
                 }
@@ -229,28 +197,22 @@
             btn169.on('click', function (e) {
                 e.preventDefault();
 
-                KEditor.settingComponent.find('.embed-responsive').removeClass('embed-responsive-4by3').addClass('embed-responsive-16by9');
+                keditor.getSettingComponent().find('.embed-responsive').removeClass('embed-responsive-4by3').addClass('embed-responsive-16by9');
             });
 
             var btn43 = form.find('.btn-googlemap-43');
             btn43.on('click', function (e) {
                 e.preventDefault();
 
-                KEditor.settingComponent.find('.embed-responsive').removeClass('embed-responsive-16by9').addClass('embed-responsive-4by3');
+                keditor.getSettingComponent().find('.embed-responsive').removeClass('embed-responsive-16by9').addClass('embed-responsive-4by3');
             });
         },
 
-        showSettingForm: function (form, component, options) {
-            flog('showSettingForm "googlemap" component', component);
-
-            var embedItem = component.find('.embed-responsive-item');
-            var chkAutoplay = form.find('#googlemap-autoplay');
-            var src = embedItem.attr('src');
-
-            chkAutoplay.prop('checked', src.indexOf('autoplay=1') !== -1);
+        showSettingForm: function (form, component, keditor) {
+            // Do nothing
         },
 
-        hideSettingForm: function (form) {
+        hideSettingForm: function (form, keditor) {
             // Do nothing
         }
     };
@@ -261,7 +223,7 @@
  * KEditor Photo Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.1
+ * @version: 1.1.2
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -269,7 +231,7 @@
     var flog = KEditor.log;
 
     KEditor.components['photo'] = {
-        init: function (contentArea, container, component, options) {
+        init: function (contentArea, container, component, keditor) {
             flog('init "photo" component', component);
 
             var componentContent = component.children('.keditor-component-content');
@@ -278,14 +240,14 @@
             img.css('display', 'inline-block');
         },
 
-        getContent: function (component, options) {
+        getContent: function (component, keditor) {
             flog('getContent "photo" component', component);
 
             var componentContent = component.children('.keditor-component-content');
             return componentContent.html();
         },
 
-        destroy: function (component, options) {
+        destroy: function (component, keditor) {
             // Do nothing
         },
 
@@ -293,9 +255,11 @@
 
         settingTitle: 'Photo Settings',
 
-        initSettingForm: function (form, options) {
+        initSettingForm: function (form, keditor) {
             flog('initSettingForm "photo" component');
+
             var self = this;
+            var options = keditor.options;
 
             form.append(
                 '<form class="form-horizontal">' +
@@ -357,14 +321,14 @@
             fileInput.on('change', function () {
                 var file = this.files[0];
                 if (/image/.test(file.type)) {
-                    var img = KEditor.settingComponent.find('img');
+                    var img = keditor.getSettingComponent().find('img');
                     img.attr('src', URL.createObjectURL(file));
                     img.css({
                         width: '',
                         height: ''
                     });
                     img.load(function () {
-                        KEditor.showSettingPanel(KEditor.settingComponent, options);
+                        keditor.showSettingPanel(keditor.getSettingComponent(), options);
                     });
                 } else {
                     alert('Your selected file is not photo!');
@@ -373,18 +337,18 @@
 
             var inputAlign = form.find('#photo-align');
             inputAlign.on('change', function () {
-                var panel = KEditor.settingComponent.find('.photo-panel');
+                var panel = keditor.getSettingComponent().find('.photo-panel');
                 panel.css('text-align', this.value);
             });
 
             var inputResponsive = form.find('#photo-responsive');
             inputResponsive.on('click', function () {
-                KEditor.settingComponent.find('img')[this.checked ? 'addClass' : 'removeClass']('img-responsive');
+                keditor.getSettingComponent().find('img')[this.checked ? 'addClass' : 'removeClass']('img-responsive');
             });
 
             var cbbStyle = form.find('#photo-style');
             cbbStyle.on('change', function () {
-                var img = KEditor.settingComponent.find('img');
+                var img = keditor.getSettingComponent().find('img');
                 var val = this.value;
 
                 img.removeClass('img-rounded img-circle img-thumbnail');
@@ -396,7 +360,7 @@
             var inputWidth = form.find('#photo-width');
             var inputHeight = form.find('#photo-height');
             inputWidth.on('change', function () {
-                var img = KEditor.settingComponent.find('img');
+                var img = keditor.getSettingComponent().find('img');
                 var newWidth = +this.value;
                 var newHeight = Math.round(newWidth / self.ratio);
 
@@ -413,7 +377,7 @@
                 inputHeight.val(newHeight);
             });
             inputHeight.on('change', function () {
-                var img = KEditor.settingComponent.find('img');
+                var img = keditor.getSettingComponent().find('img');
                 var newHeight = +this.value;
                 var newWidth = Math.round(newHeight * self.ratio);
 
@@ -431,7 +395,7 @@
             });
         },
 
-        showSettingForm: function (form, component, options) {
+        showSettingForm: function (form, component, keditor) {
             flog('showSettingForm "photo" component', component);
 
             var self = this;
@@ -471,7 +435,7 @@
             });
         },
 
-        hideSettingForm: function (form) {
+        hideSettingForm: function (form, keditor) {
             // Do nothing
         }
     };
@@ -482,7 +446,7 @@
  * KEditor Text Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.1
+ * @version: 1.1.2
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -522,9 +486,11 @@
             minimumChangeMilliseconds: 100
         },
 
-        init: function (contentArea, container, component, options) {
+        init: function (contentArea, container, component, keditor) {
             flog('init "text" component', component);
+
             var self = this;
+            var options = keditor.options;
 
             var componentContent = component.children('.keditor-component-content');
             componentContent.prop('contenteditable', true);
@@ -553,7 +519,7 @@
             });
         },
 
-        getContent: function (component, options) {
+        getContent: function (component, keditor) {
             flog('getContent "text" component', component);
 
             var componentContent = component.find('.keditor-component-content');
@@ -566,7 +532,7 @@
             }
         },
 
-        destroy: function (component, options) {
+        destroy: function (component, keditor) {
             flog('destroy "text" component', component);
 
             var id = component.find('.keditor-component-content').attr('id');
@@ -583,7 +549,7 @@
  * KEditor Video Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.1
+ * @version: 1.1.2
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -591,24 +557,12 @@
     var flog = KEditor.log;
 
     KEditor.components['video'] = {
-        /**
-         * Function will be called when initializing a component with this type
-         * @param {jQuery} contentArea
-         * @param {jQuery} container
-         * @param {jQuery} component
-         * @param {Object} options
-         */
-        init: function (contentArea, container, component, options) {
-            flog('init "video" component', component);
+        init: function (contentArea, container, component, keditor) {
+            // Do nothing
         },
 
-        /**
-         * Function will be called for getting content of component from method of KEditor "target.keditor('getContent')"
-         * @param {jQuery} component
-         * @param {Object} options
-         */
-        getContent: function (component, options) {
-            flog('getContent "video" component, component');
+        getContent: function (component, keditor) {
+            flog('getContent "video" component', component);
 
             var componentContent = component.children('.keditor-component-content');
             var video = componentContent.find('video');
@@ -617,95 +571,78 @@
             return componentContent.html();
         },
 
-        /**
-         * Function will be called when deleting component
-         * @param {jQuery} component
-         * @param {Object} options
-         */
-        destroy: function (component, options) {
-
+        destroy: function (component, keditor) {
+            // Do nothing
         },
 
-        // Enable setting panel for this type or not
         settingEnabled: true,
 
-        // Title of setting panel
         settingTitle: 'Video Settings',
 
-        /**
-         * Initialize setting form of this type
-         * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
-         * @param {Object} options
-         */
-        initSettingForm: function (form, options) {
+        initSettingForm: function (form, keditor) {
             flog('init "video" settings', form);
-            var self = this;
+
             form.append(
                 '<form class="form-horizontal">' +
-                    '<div class="form-group">' +
-                        '<label for="videoFileInput" class="col-sm-12">Video file</label>' +
-                        '<div class="col-sm-12">' +
-                            '<div class="video-toolbar">'+
-                                '<a href="#" class="btn-videoFileInput btn btn-sm btn-primary"><i class="fa fa-upload"></i></a>'+
-                                '<input id="videoFileInput" type="file" style="display: none">' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="form-group">' +
-                        '<label for="video-autoplay" class="col-sm-12">Autoplay</label>' +
-                        '<div class="col-sm-12">' +
-                            '<input type="checkbox" id="video-autoplay" />' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="form-group">' +
-                        '<label for="video-loop" class="col-sm-12">Loop</label>' +
-                        '<div class="col-sm-12">' +
-                        '<input type="checkbox" id="video-loop" />' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="form-group">' +
-                        '<label for="video-showcontrols" class="col-sm-12">Show Controls</label>' +
-                        '<div class="col-sm-12">' +
-                        '<input type="checkbox" id="video-showcontrols" checked />' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="form-group">' +
-                        '<label for="" class="col-sm-12">Ratio</label>' +
-                        '<div class="col-sm-12">' +
-                        '<input type="radio" name="video-radio" class="video-ratio" value="4/3" checked /> 4:3' +
-                        '</div>' +
-                        '<div class="col-sm-12">' +
-                        '<input type="radio" name="video-radio" class="video-ratio" value="16/9" /> 16:9' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="form-group">' +
-                        '<label for="video-width" class="col-sm-12">Width (px)</label>' +
-                        '<div class="col-sm-12">' +
-                        '<input type="number" id="video-width" min="320" max="1920" class="form-control" value="320" />' +
-                        '</div>' +
-                    '</div>' +
+                '<div class="form-group">' +
+                '<label for="videoFileInput" class="col-sm-12">Video file</label>' +
+                '<div class="col-sm-12">' +
+                '<div class="video-toolbar">' +
+                '<a href="#" class="btn-videoFileInput btn btn-sm btn-primary"><i class="fa fa-upload"></i></a>' +
+                '<input id="videoFileInput" type="file" style="display: none">' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="video-autoplay" class="col-sm-12">Autoplay</label>' +
+                '<div class="col-sm-12">' +
+                '<input type="checkbox" id="video-autoplay" />' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="video-loop" class="col-sm-12">Loop</label>' +
+                '<div class="col-sm-12">' +
+                '<input type="checkbox" id="video-loop" />' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="video-showcontrols" class="col-sm-12">Show Controls</label>' +
+                '<div class="col-sm-12">' +
+                '<input type="checkbox" id="video-showcontrols" checked />' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="" class="col-sm-12">Ratio</label>' +
+                '<div class="col-sm-12">' +
+                '<input type="radio" name="video-radio" class="video-ratio" value="4/3" checked /> 4:3' +
+                '</div>' +
+                '<div class="col-sm-12">' +
+                '<input type="radio" name="video-radio" class="video-ratio" value="16/9" /> 16:9' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="video-width" class="col-sm-12">Width (px)</label>' +
+                '<div class="col-sm-12">' +
+                '<input type="number" id="video-width" min="320" max="1920" class="form-control" value="320" />' +
+                '</div>' +
+                '</div>' +
                 '</form>'
             );
-
-
         },
 
-        /**
-         * Show setting form for this type. This function will be called when user clicks on setting button of component when setting panel is hidden. You can fulfill form controls in this function.
-         * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
-         * @param {jQuery} component Component will be applied setting
-         * @param {Object} options
-         */
-        showSettingForm: function (form, component, options) {
+        showSettingForm: function (form, component, keditor) {
+            flog('showSettingForm "video" settings', form, component);
+
+            var options = keditor.options;
             var video = component.find('video');
             var fileInput = form.find('#videoFileInput');
             var btnVideoFileInput = form.find('.btn-videoFileInput');
-            btnVideoFileInput.on('click', function(e){
+            btnVideoFileInput.on('click', function (e) {
                 e.preventDefault();
 
                 fileInput.trigger('click');
             });
-            fileInput.on('change', function () {
+            fileInput.off('change').on('change', function () {
                 var file = this.files[0];
                 if (/video/.test(file.type)) {
                     // Todo: Upload to your server :)
@@ -713,7 +650,7 @@
                     video.attr('src', URL.createObjectURL(file));
 
                     video.load(function () {
-                        KEditor.showSettingPanel(component, options);
+                        keditor.showSettingPanel(component, options);
                     });
                 } else {
                     alert('Your selected file is not an video file!');
@@ -721,63 +658,59 @@
             });
 
             var autoplayToggle = form.find('#video-autoplay');
-            autoplayToggle.on('click', function(e){
-                if(this.checked){
+            autoplayToggle.off('click').on('click', function (e) {
+                if (this.checked) {
                     video.prop('autoplay', true);
-                }else{
+                } else {
                     video.removeProp('autoplay');
                 }
             });
 
             var loopToggle = form.find('#video-loop');
-            loopToggle.on('click', function(e){
-                if(this.checked){
+            loopToggle.off('click').on('click', function (e) {
+                if (this.checked) {
                     video.prop('loop', true);
-                }else{
+                } else {
                     video.removeProp('loop');
                 }
             });
 
             var ratio = form.find('.video-ratio');
-            ratio.on('click', function(e){
-                if(this.checked){
+            ratio.off('click').on('click', function (e) {
+                if (this.checked) {
                     var currentWidth = video.css('width') || video.prop('width');
-                    currentWidth = currentWidth.replace('px','');
+                    currentWidth = currentWidth.replace('px', '');
 
-                    var currentRatio = this.value==='16/9'? 16/9 : 4/3;
-                    var height = currentWidth/currentRatio;
-                    video.css('width',currentWidth+'px');
-                    video.css('height',height+'px');
+                    var currentRatio = this.value === '16/9' ? 16 / 9 : 4 / 3;
+                    var height = currentWidth / currentRatio;
+                    video.css('width', currentWidth + 'px');
+                    video.css('height', height + 'px');
                     video.removeProp('width');
                     video.removeProp('height');
                 }
             });
 
             var showcontrolsToggle = form.find('#video-showcontrols');
-            showcontrolsToggle.on('click', function(e){
-                if(this.checked){
-                    video.attr('controls','controls');
-                }else{
+            showcontrolsToggle.off('click').on('click', function (e) {
+                if (this.checked) {
+                    video.attr('controls', 'controls');
+                } else {
                     video.removeAttr('controls');
                 }
             });
 
             var videoWidth = form.find('#video-width');
-            videoWidth.on('change', function(){
-                video.css('width',this.value+'px');
-                var currentRatio = form.find('.video-ratio:checked').val() === '16/9'? 16/9 : 4/3;
+            videoWidth.off('change').on('change', function () {
+                video.css('width', this.value + 'px');
+                var currentRatio = form.find('.video-ratio:checked').val() === '16/9' ? 16 / 9 : 4 / 3;
                 var height = this.value / currentRatio;
-                video.css('height',height+'px');
+                video.css('height', height + 'px');
                 video.removeProp('width');
                 video.removeProp('height');
             });
         },
 
-        /**
-         * Hide setting form for this type. This function will be called when user clicks again on setting button of component when setting panel is showed. You can clear setting form in this function
-         * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
-         */
-        hideSettingForm: function (form) {
+        hideSettingForm: function (form, keditor) {
 
         }
     };
@@ -787,7 +720,7 @@
  * KEditor Vimeo Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.1
+ * @version: 1.1.2
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -795,11 +728,11 @@
     var flog = KEditor.log;
 
     KEditor.components['vimeo'] = {
-        init: function (contentArea, container, component, options) {
+        init: function (contentArea, container, component, keditor) {
             // Do nothing
         },
 
-        getContent: function (component, options) {
+        getContent: function (component, keditor) {
             flog('getContent "vimeo" component', component);
 
             var componentContent = component.children('.keditor-component-content');
@@ -808,7 +741,7 @@
             return componentContent.html();
         },
 
-        destroy: function (component, options) {
+        destroy: function (component, keditor) {
             // Do nothing
         },
 
@@ -816,7 +749,7 @@
 
         settingTitle: 'Vimeo Settings',
 
-        initSettingForm: function (form, options) {
+        initSettingForm: function (form, keditor) {
             flog('initSettingForm "vimeo" component');
 
             form.append(
@@ -850,7 +783,7 @@
                 var vimeoRegex = /https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/;
                 var match = inputData.match(vimeoRegex);
                 if (match && match[1]) {
-                    KEditor.settingComponent.find('.embed-responsive-item').attr('src', 'https://player.vimeo.com/video/' + match[1] + '?byline=0&portrait=0&badge=0');
+                    keditor.getSettingComponent().find('.embed-responsive-item').attr('src', 'https://player.vimeo.com/video/' + match[1] + '?byline=0&portrait=0&badge=0');
                 } else {
                     alert('Your Vimeo URL is invalid!');
                 }
@@ -860,19 +793,19 @@
             btn169.on('click', function (e) {
                 e.preventDefault();
 
-                KEditor.settingComponent.find('.embed-responsive').removeClass('embed-responsive-4by3').addClass('embed-responsive-16by9');
+                keditor.getSettingComponent().find('.embed-responsive').removeClass('embed-responsive-4by3').addClass('embed-responsive-16by9');
             });
 
             var btn43 = form.find('.btn-vimeo-43');
             btn43.on('click', function (e) {
                 e.preventDefault();
 
-                KEditor.settingComponent.find('.embed-responsive').removeClass('embed-responsive-16by9').addClass('embed-responsive-4by3');
+                keditor.getSettingComponent().find('.embed-responsive').removeClass('embed-responsive-16by9').addClass('embed-responsive-4by3');
             });
 
             var chkAutoplay = form.find('#vimeo-autoplay');
             chkAutoplay.on('click', function () {
-                var embedItem = KEditor.settingComponent.find('.embed-responsive-item');
+                var embedItem = keditor.getSettingComponent().find('.embed-responsive-item');
                 var currentUrl = embedItem.attr('src');
                 var newUrl = (currentUrl.replace(/(\?.+)+/, '')) + '?byline=0&portrait=0&badge=0&autoplay=' + (chkAutoplay.is(':checked') ? 1 : 0);
 
@@ -881,7 +814,7 @@
             });
         },
 
-        showSettingForm: function (form, component, options) {
+        showSettingForm: function (form, component, keditor) {
             flog('showSettingForm "vimeo" component', component);
 
             var embedItem = component.find('.embed-responsive-item');
@@ -891,7 +824,7 @@
             chkAutoplay.prop('checked', src.indexOf('autoplay=1') !== -1);
         },
 
-        hideSettingForm: function (form) {
+        hideSettingForm: function (form, keditor) {
             // Do nothing
         }
     };
@@ -902,7 +835,7 @@
  * KEditor Youtube Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.1
+ * @version: 1.1.2
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -910,11 +843,11 @@
     var flog = KEditor.log;
 
     KEditor.components['youtube'] = {
-        init: function (contentArea, container, component, options) {
+        init: function (contentArea, container, component, keditor) {
             // Do nothing
         },
 
-        getContent: function (component, options) {
+        getContent: function (component, keditor) {
             flog('getContent "youtube" component', component);
 
             var componentContent = component.children('.keditor-component-content');
@@ -923,7 +856,7 @@
             return componentContent.html();
         },
 
-        destroy: function (component, options) {
+        destroy: function (component, keditor) {
             // Do nothing
         },
 
@@ -931,7 +864,7 @@
 
         settingTitle: 'Youtube Settings',
 
-        initSettingForm: function (form, options) {
+        initSettingForm: function (form, keditor) {
             flog('initSettingForm "youtube" component');
 
             form.append(
@@ -965,7 +898,7 @@
                 var youtubeRegex = /^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/;
                 var match = inputData.match(youtubeRegex);
                 if (match && match[1]) {
-                    KEditor.settingComponent.find('.embed-responsive-item').attr('src', 'https://www.youtube.com/embed/' + match[1]);
+                    keditor.getSettingComponent().find('.embed-responsive-item').attr('src', 'https://www.youtube.com/embed/' + match[1]);
                 } else {
                     alert('Your Youtube URL is invalid!');
                 }
@@ -975,19 +908,19 @@
             btn169.on('click', function (e) {
                 e.preventDefault();
 
-                KEditor.settingComponent.find('.embed-responsive').removeClass('embed-responsive-4by3').addClass('embed-responsive-16by9');
+                keditor.getSettingComponent().find('.embed-responsive').removeClass('embed-responsive-4by3').addClass('embed-responsive-16by9');
             });
 
             var btn43 = form.find('.btn-youtube-43');
             btn43.on('click', function (e) {
                 e.preventDefault();
 
-                KEditor.settingComponent.find('.embed-responsive').removeClass('embed-responsive-16by9').addClass('embed-responsive-4by3');
+                keditor.getSettingComponent().find('.embed-responsive').removeClass('embed-responsive-16by9').addClass('embed-responsive-4by3');
             });
 
             var chkAutoplay = form.find('#youtube-autoplay');
             chkAutoplay.on('click', function () {
-                var embedItem = KEditor.settingComponent.find('.embed-responsive-item');
+                var embedItem = keditor.getSettingComponent().find('.embed-responsive-item');
                 var currentUrl = embedItem.attr('src');
                 var newUrl = (currentUrl.replace(/(\?.+)+/, '')) + '?autoplay=' + (chkAutoplay.is(':checked') ? 1 : 0);
 
@@ -996,7 +929,7 @@
             });
         },
 
-        showSettingForm: function (form, component, options) {
+        showSettingForm: function (form, component, keditor) {
             flog('showSettingForm "youtube" component', component);
 
             var embedItem = component.find('.embed-responsive-item');
@@ -1006,7 +939,7 @@
             chkAutoplay.prop('checked', src.indexOf('autoplay=1') !== -1);
         },
 
-        hideSettingForm: function (form) {
+        hideSettingForm: function (form, keditor) {
             // Do nothing
         }
     };

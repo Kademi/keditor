@@ -324,29 +324,37 @@
             }
         },
 
+        toggleSidebar: function (showSidebar) {
+            flog('toggleSidebar', showSidebar);
+
+            var self = this;
+            var options = self.options;
+            var body = self.body;
+            var icon = body.find('#keditor-sidebar-toggler i');
+
+            if (showSidebar) {
+                body.addClass('opened-keditor-sidebar');
+                icon.attr('class', 'fa fa-chevron-right')
+            } else {
+                body.removeClass('opened-keditor-sidebar');
+                icon.attr('class', 'fa fa-chevron-left')
+            }
+
+            if (typeof options.onSidebarToggled === 'function') {
+                options.onSidebarToggled.call(null, showSidebar);
+            }
+        },
+
         initSidebarToggler: function () {
             flog('initSidebarToggler');
 
             var self = this;
-            var options = self.options;
             var body = self.body;
 
             body.find('#keditor-sidebar-toggler').on('click', function (e) {
                 e.preventDefault();
 
-                var icon = $(this).find('i');
-                var isOpened = body.hasClass('opened-keditor-sidebar');
-                if (isOpened) {
-                    body.removeClass('opened-keditor-sidebar');
-                    icon.attr('class', 'fa fa-chevron-left')
-                } else {
-                    body.addClass('opened-keditor-sidebar');
-                    icon.attr('class', 'fa fa-chevron-right')
-                }
-
-                if (typeof options.onSidebarToggled === 'function') {
-                    options.onSidebarToggled.call(null, !isOpened);
-                }
+                self.toggleSidebar(!body.hasClass('opened-keditor-sidebar'));
             });
         },
 
@@ -558,10 +566,7 @@
                 error('"showSettingForm" function of component type "' + componentType + '" does not exist!');
             }
 
-            if (!body.hasClass('opened-keditor-sidebar')) {
-                body.addClass('opened-keditor-sidebar');
-            }
-
+            self.toggleSidebar(true);
             body.addClass('opened-keditor-setting');
         },
 
@@ -1096,7 +1101,7 @@
                 flog('Click on .btn-component-setting', btn);
 
                 var component = btn.closest('.keditor-component');
-                if (body.hasClass('opened-keditor-setting')) {
+                if (body.hasClass('opened-keditor-setting') && body.hasClass('opened-keditor-sidebar')) {
                     if (!component.is(self.getSettingComponent())) {
                         self.showSettingPanel(component);
                     } else {
@@ -1188,10 +1193,11 @@
 
             var self = this;
             var options = self.options;
+            var component = dynamicElement.closest('.keditor-component');
             var dynamicHref = dynamicElement.attr('data-dynamic-href');
             var data = {};
 
-            $.each(dynamicElement.get(0).attributes, function (i, attr) {
+            $.each(component.get(0).attributes, function (i, attr) {
                 if (attr.name.indexOf('data-') === 0 && attr.name !== 'data-dynamic-href' && attr.name !== 'data-type') {
                     var camelCaseName = attr.name.substr(5).replace(/-(.)/g, function ($0, $1) {
                         return $1.toUpperCase();

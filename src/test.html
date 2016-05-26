@@ -36,6 +36,7 @@
         </div>
     </section>
 </div>
+
 <div id="keditor2">
     <section>
         <div class="row">
@@ -54,10 +55,42 @@
     </section>
 </div>
 
+<textarea id="keditor3">
+    <section>
+        <div class="row">
+            <div class="col-md-12" data-type="container-content">
+                <section data-type="component-photo">
+                    <div class="photo-panel">
+                        <img src="../examples/snippets/default/img/yenbai_vietnam.jpg" />
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+</textarea>
+
+<textarea id="keditor4">
+    <section>
+        <div class="row">
+            <div class="col-md-12" data-type="container-content">
+                <section data-type="component-photo">
+                    <div class="photo-panel">
+                        <img src="../examples/snippets/default/img/yenbai_vietnam.jpg" />
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+</textarea>
+
 <script type="text/javascript">
     $(function() {
         $('#keditor1').keditor();
         $('#keditor2').keditor({
+            iframeMode: true
+        });
+        $('#keditor3').keditor();
+        $('#keditor4').keditor({
             iframeMode: true
         });
     });

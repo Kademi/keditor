@@ -165,6 +165,27 @@
                 target = self.initFrame(target);
             } else {
                 self.body = $(document.body);
+
+                if (target.is('textarea')) {
+                    flog('Target is textarea', target);
+
+                    var htmlContent = target.val();
+                    var keditorWrapper = $('<div />');
+                    var keditorWrapperId = self.generateId('wrapper');
+
+                    target.after(keditorWrapper);
+                    keditorWrapper.attr({
+                        id: keditorWrapperId,
+                        class: 'keditor-wrapper'
+                    });
+                    flog('Id for keditor wrapper is: "' + keditorWrapperId + '"');
+
+                    keditorWrapper.html(htmlContent);
+                    target.css('display', 'none');
+                    target.attr('data-keditor-wrapper', '#' + keditorWrapperId);
+
+                    target = keditorWrapper;
+                }
             }
 
             self.initContentAreas(target);
@@ -227,7 +248,7 @@
             flog('Id for keditor frame is: "' + iframeId + '"');
 
             target.css('display', 'none');
-            target.attr('data-iframe', '#' + iframeId);
+            target.attr('data-keditor-frame', '#' + iframeId);
 
             var iframeDoc = iframe.contents();
             var iframeHead = iframeDoc.find('head');
@@ -1304,9 +1325,9 @@
                 if (target.data('keditor')) {
                     flog('KEditor is already initialized!');
                 } else {
+                    flog('Initialze KEditor', target, options);
                     var keditor = new KEditor(target, options);
                     target.data('keditor', keditor);
-
                 }
             });
         },

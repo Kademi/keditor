@@ -388,7 +388,8 @@
                     snippetsComponentHtml += snippetHtml;
                 }
 
-                snippetsContentHtml += '<script id="keditor-snippet-' + i + '" type="text/html">' + content + '</script>';
+                var dataAttributes = self.getDataAttributes(snippet, ['data-preview', 'data-type'], true);
+                snippetsContentHtml += '<script id="keditor-snippet-' + i + '" type="text/html" ' + dataAttributes.join(' ') + '>' + content + '</script>';
             });
 
             body.find('#' + options.snippetsListId).html(
@@ -812,12 +813,14 @@
                     var container;
 
                     if (item.is('.keditor-snippet')) {
-                        var snippetContent = body.find(item.attr('data-snippet')).html();
+                        var snippetContentElement = body.find(item.attr('data-snippet'));
+                        var snippetContent = snippetContentElement.html();
                         var componentType = item.attr('data-type');
                         flog('Snippet content', snippetContent);
 
+                        var dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
                         var component = $(
-                            '<section class="keditor-component" data-type="' + componentType + '">' +
+                            '<section class="keditor-component" data-type="' + componentType + '" ' + dataAttributes.join(' ') + '>' +
                             '   <section class="keditor-component-content">' + snippetContent + '</section>' +
                             '</section>'
                         );
@@ -874,6 +877,27 @@
             }
 
             self.initComponent(contentArea, container, component);
+        },
+
+        getDataAttributes: function (target, ignoreAttributes, isArray) {
+            flog('getDataAttributes', target, ignoreAttributes, isArray);
+
+            var dataAttributes = isArray ? [] : {};
+            if (!ignoreAttributes) {
+                ignoreAttributes = [];
+            }
+
+            $.each(target.get(0).attributes, function (i, attr) {
+                if (attr.name.indexOf('data-') === 0 && $.inArray(attr.name, ignoreAttributes) === -1) {
+                    if (isArray) {
+                        dataAttributes.push(attr.name + '="' + attr.value + '"');
+                    } else {
+                        dataAttributes[attr.name] = attr.value;
+                    }
+                }
+            });
+
+            return dataAttributes;
         },
 
         getComponentType: function (component) {
@@ -1195,17 +1219,7 @@
             var options = self.options;
             var component = dynamicElement.closest('.keditor-component');
             var dynamicHref = dynamicElement.attr('data-dynamic-href');
-            var data = {};
-
-            $.each(component.get(0).attributes, function (i, attr) {
-                if (attr.name.indexOf('data-') === 0 && attr.name !== 'data-dynamic-href' && attr.name !== 'data-type') {
-                    var camelCaseName = attr.name.substr(5).replace(/-(.)/g, function ($0, $1) {
-                        return $1.toUpperCase();
-                    });
-                    data[camelCaseName] = attr.value;
-                }
-            });
-
+            var data = self.getDataAttributes(component, ['data-type', 'data-dynamic-href'], false);
             data = $.param(data);
             flog('Dynamic href: ' + dynamicHref, 'Data: ' + data);
 

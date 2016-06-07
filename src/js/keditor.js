@@ -17,9 +17,13 @@
  * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component - jQuery object of component
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
- * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
  * @option {Boolean} iframeMode KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
+ * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
  * @option {String} contentAreasWrapper The wrapper element for all contents inside iframe. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag
+ * @option {Boolean} containerSettingEnabled Enable setting panel for container
+ * @option {Function} containerSettingInitFunction Method will be called when initializing setting panel for container
+ * @option {Function} containerSettingShowFunction Method will be called when setting panel for container is showed
+ * @option {Function} containerSettingHideFunction Method will be called when setting panel for container is hidden
  * @option {Function} onInitFrame Callback will be called after iframe and content areas wrapper inside it are created. Arguments: frame, frameHead, frameBody
  * @option {Function} onSidebarToggled Callback will be called after toggled sidebar. Arguments: isOpened
  * @option {Function} onInitContentArea Callback will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
@@ -102,9 +106,13 @@
         defaultComponentType: 'text',
         snippetsUrl: 'snippets/default/snippets.html',
         snippetsListId: 'keditor-snippets-list',
-        contentAreasSelector: null,
         iframeMode: false,
+        contentAreasSelector: null,
         contentAreasWrapper: '<div class="keditor-content-areas-wrapper container"></div>',
+        containerSettingEnabled: false,
+        containerSettingInitFunction: null,
+        containerSettingShowFunction: null,
+        containerSettingHideFunction: null,
         onInitFrame: function (frame, frameHead, frameBody) {
         },
         onSidebarToggled: function (isOpened) {
@@ -517,6 +525,19 @@
             var settingForms = body.find('#keditor-setting-forms');
             self.initNiceScroll(settingForms);
 
+            if (options.containerSettingEnabled === true) {
+                if (typeof options.containerSettingInitFunction === 'function') {
+
+                    var form = $('<div id="keditor-container-setting" class="keditor-setting-form clearfix"></div>');
+                    settingForms.append(form);
+
+                    flog('Initialize container setting panel');
+                    options.containerSettingInitFunction.call(self, form, self);
+                } else {
+                    error('"containerSettingInitFunction" is not function!');
+                }
+            }
+
             flog('Call "initSettingForm" function of all component types if settingEnabled = true');
             for (var type in KEditor.components) {
                 if (KEditor.components.hasOwnProperty(type)) {
@@ -538,6 +559,30 @@
                     }
                 }
             }
+        },
+
+        setSettingContainer: function (container) {
+            flog('setSettingContainer', container);
+
+            var self = this;
+            var body = self.body;
+
+            if (container) {
+                var idSettingContainer = container.attr('id');
+                body.attr('data-setting-container', idSettingContainer);
+            } else {
+                body.removeAttr('data-setting-container');
+            }
+        },
+
+        getSettingContainer: function () {
+            flog('getSettingContainer');
+
+            var self = this;
+            var body = self.body;
+            var idSettingContainer = body.attr('data-setting-container');
+
+            return body.find('#' + idSettingContainer);
         },
 
         setSettingComponent: function (component) {
@@ -564,28 +609,47 @@
             return body.find('#' + idSettingComponent);
         },
 
-        showSettingPanel: function (component) {
-            flog('showSettingPanel', component);
+        showSettingPanel: function (target) {
+            flog('showSettingPanel', target);
 
             var self = this;
+            var options = self.options;
             var body = self.body;
-
-            self.setSettingComponent(component);
+            var isComponent = target.is('.keditor-component');
 
             var activeForm = body.find('#keditor-setting-forms').children('.active');
             activeForm.removeClass('active');
 
-            var componentType = self.getComponentType(component);
-            var componentData = KEditor.components[componentType];
-            body.find('#keditor-setting-title').html(componentData.settingTitle);
+            if (isComponent) {
+                self.setSettingComponent(target);
+                self.setSettingContainer(null);
 
-            var settingForm = body.find('#keditor-setting-' + componentType);
-            if (typeof componentData.showSettingForm === 'function') {
-                flog('Show setting form of component type "' + componentType + '"');
-                componentData.showSettingForm.call(componentData, settingForm, component, self);
-                settingForm.addClass('active');
+                var componentType = self.getComponentType(target);
+                var componentData = KEditor.components[componentType];
+                body.find('#keditor-setting-title').html(componentData.settingTitle);
+
+                var settingForm = body.find('#keditor-setting-' + componentType);
+                if (typeof componentData.showSettingForm === 'function') {
+                    flog('Show setting form of component type "' + componentType + '"');
+                    componentData.showSettingForm.call(componentData, settingForm, target, self);
+                    settingForm.addClass('active');
+                } else {
+                    error('"showSettingForm" function of component type "' + componentType + '" does not exist!');
+                }
             } else {
-                error('"showSettingForm" function of component type "' + componentType + '" does not exist!');
+                self.setSettingContainer(target);
+                self.setSettingComponent(null);
+
+                body.find('#keditor-setting-title').html("Container Settings");
+
+                var settingForm = body.find('#keditor-container-setting');
+                if (typeof options.containerSettingShowFunction === 'function') {
+                    flog('Show setting form of container');
+                    options.containerSettingShowFunction.call(self, settingForm, target, self);
+                    settingForm.addClass('active');
+                } else {
+                    error('"containerSettingShowFunction" is not function!');
+                }
             }
 
             self.toggleSidebar(true);
@@ -596,22 +660,32 @@
             flog('hideSettingPanel');
 
             var self = this;
+            var options = self.options;
             var body = self.body;
 
             body.removeClass('opened-keditor-setting');
 
             var activeForm = body.find('#keditor-setting-forms').children('.active');
-            var activeType = activeForm.attr('data-type');
-            var componentData = KEditor.components[activeType];
 
-            if (typeof componentData.hideSettingForm === 'function') {
-                flog('Hide setting form of component type "' + activeType + '"');
-                componentData.hideSettingForm.call(componentData, activeForm, self);
+            if (activeForm.is('#keditor-container-setting')) {
+                if (typeof options.containerSettingHideFunction === 'function') {
+                    flog('Hide setting form of container');
+                    options.containerSettingHideFunction.call(self, activeForm, self);
+                }
+            } else {
+                var activeType = activeForm.attr('data-type');
+                var componentData = KEditor.components[activeType];
+
+                if (typeof componentData.hideSettingForm === 'function') {
+                    flog('Hide setting form of component type "' + activeType + '"');
+                    componentData.hideSettingForm.call(componentData, activeForm, self);
+                }
             }
 
             activeForm.removeClass('active');
             body.removeClass('opened-keditor-setting');
-            self.setSettingComponent();
+            self.setSettingComponent(null);
+            self.setSettingContainer(null);
         },
 
         getContentAreas: function (target) {
@@ -762,10 +836,15 @@
             if (!container.hasClass('keditor-initialized-container') || !container.hasClass('keditor-initializing-container')) {
                 container.addClass('keditor-initializing-container');
 
+                var settingBtn = '';
+                if (options.containerSettingEnabled === true) {
+                    settingBtn = '<a href="#" class="btn-container-setting">' + options.btnSettingContainerText + '</a>';
+                }
+
                 flog('Render KEditor toolbar for container', container);
                 container.append(
                     '<div class="keditor-toolbar keditor-toolbar-container">' +
-                    '   <a href="#" class="btn-container-reposition">' + options.btnMoveContainerText + '</a>' +
+                    '   <a href="#" class="btn-container-reposition">' + options.btnMoveContainerText + '</a>' + settingBtn +
                     '   <a href="#" class="btn-container-duplicate">' + options.btnDuplicateContainerText + '</a>' +
                     '   <a href="#" class="btn-container-delete">' + options.btnDeleteContainerText + '</a>' +
                     '</div>'
@@ -1079,6 +1158,25 @@
                     }
                 } else {
                     body.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                }
+            });
+
+
+            body.on('click', '.btn-container-setting', function (e) {
+                e.preventDefault();
+
+                var btn = $(this);
+                flog('Click on .btn-container-setting', btn);
+
+                var container = btn.closest('.keditor-container');
+                if (body.hasClass('opened-keditor-setting') && body.hasClass('opened-keditor-sidebar')) {
+                    if (!container.is(self.getSettingContainer())) {
+                        self.showSettingPanel(container);
+                    } else {
+                        self.hideSettingPanel();
+                    }
+                } else {
+                    self.showSettingPanel(container);
                 }
             });
 

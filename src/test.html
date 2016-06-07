@@ -37,61 +37,22 @@
     </section>
 </div>
 
-<div id="keditor2">
-    <section>
-        <div class="row">
-            <div class="col-md-12" data-type="container-content">
-                <section data-type="component-text" data-product-id="pro01" data-category-id="cate02" data-storeId="store02">
-                    <div class="jumbotron">
-                        <h1>Hello, world!</h1>
-                        <p>This is a simple hero unit</p>
-                        <p><a role="button" href="#" class="btn btn-primary btn-lg">Learn more</a></p>
-                    </div>
-
-                    <div data-dynamic-href="snippets/default/_dynamic_content.html"></div>
-                </section>
-            </div>
-        </div>
-    </section>
-</div>
-
-<textarea id="keditor3">
-    <section>
-        <div class="row">
-            <div class="col-md-12" data-type="container-content">
-                <section data-type="component-photo">
-                    <div class="photo-panel">
-                        <img src="../examples/snippets/default/img/yenbai_vietnam.jpg" />
-                    </div>
-                </section>
-            </div>
-        </div>
-    </section>
-</textarea>
-
-<textarea id="keditor4">
-    <section>
-        <div class="row">
-            <div class="col-md-12" data-type="container-content">
-                <section data-type="component-photo">
-                    <div class="photo-panel">
-                        <img src="../examples/snippets/default/img/yenbai_vietnam.jpg" />
-                    </div>
-                </section>
-            </div>
-        </div>
-    </section>
-</textarea>
-
 <script type="text/javascript">
     $(function() {
-        $('#keditor1').keditor();
-        $('#keditor2').keditor({
-            iframeMode: true
-        });
-        $('#keditor3').keditor();
-        $('#keditor4').keditor({
-            iframeMode: true
+        $('#keditor1').keditor({
+            containerSettingEnabled: true,
+            containerSettingInitFunction: function (form, keditor) {
+                console.log(form, keditor);
+                form.append(
+                    '<h1>Here is Setting Container Panel!</h1>'
+                );
+            },
+            containerSettingShowFunction: function (form, container, keditor) {
+                console.log(form, container, keditor);
+            },
+            containerSettingHideFunction: function (form, keditor) {
+                console.log(form, keditor);
+            }
         });
     });
 </script>

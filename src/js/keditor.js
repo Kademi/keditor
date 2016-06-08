@@ -14,6 +14,9 @@
  * @option {String} btnDuplicateComponentText Text content for duplicate button of component
  * @option {String} btnDeleteContainerText Text content for delete button of container
  * @option {String} btnDeleteComponentText Text content for delete button of component
+ * @option {String} tabContainersTitle Text content for Containers tab
+ * @option {String} tabComponentsTitle Text content for Components tab
+ * @option {Object} extraTabs Extra tabs besides Containers and Components tabs in sidebar. Format: { tabName: { title: 'My Extra Tab #1', content: 'Here is content of My Extra Tab #1' } }
  * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component - jQuery object of component
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
@@ -103,6 +106,9 @@
         btnDuplicateComponentText: '<i class="fa fa-files-o"></i>',
         btnDeleteContainerText: '<i class="fa fa-times"></i>',
         btnDeleteComponentText: '<i class="fa fa-times"></i>',
+        tabContainersTitle: 'Containers',
+        tabComponentsTitle: 'Components',
+        extraTabs: null,
         defaultComponentType: 'text',
         snippetsUrl: 'snippets/default/snippets.html',
         snippetsListId: 'keditor-snippets-list',
@@ -341,7 +347,8 @@
 
                         self.renderSnippets(resp);
                         self.initSnippets();
-                        self.initSnippetsSwitcher();
+                        self.initTabs();
+                        self.initTabsSwitcher();
                         self.initSettingPanel();
                     },
                     error: function (jqXHR) {
@@ -423,8 +430,8 @@
 
             body.find('#' + options.snippetsListId).html(
                 '<ul id="keditor-snippets-type-switcher" class="nav nav-tabs nav-justified">' +
-                '    <li class="active"><a href="#keditor-container-snippets">Containers</a></li>' +
-                '    <li><a href="#keditor-component-snippets">Components</a></li>' +
+                '    <li class="active"><a href="#keditor-container-snippets">' + options.tabContainersTitle + '</a></li>' +
+                '    <li><a href="#keditor-component-snippets">' + options.tabComponentsTitle + '</a></li>' +
                 '</ul>' +
                 '<div id="keditor-snippets-container" class="tab-content">' +
                 '   <div class="tab-pane keditor-snippets active" id="keditor-container-snippets">' + snippetsContainerHtml + '</div>' +
@@ -440,9 +447,7 @@
             var self = this;
             var options = self.options;
             var body = self.body;
-
             var snippetsList = body.find('#' + options.snippetsListId);
-            self.initNiceScroll(snippetsList.find('.keditor-snippets'));
 
             flog('Initialize $.fn.draggable for container snippets list');
             snippetsList.find('.keditor-snippet[data-type=container]').draggable({
@@ -475,13 +480,36 @@
             });
         },
 
-        initSnippetsSwitcher: function () {
-            flog('initSnippetsSwitcher');
+        initTabs: function () {
+            flog('initTabs');
+
+            var self = this;
+            var body = self.body;
+            var options = self.options;
+            var switcherWrapper = body.find('#keditor-snippets-type-switcher');
+            var tabPaneWrapper = body.find('#keditor-snippets-container');
+            
+            if (options.extraTabs && $.isPlainObject(options.extraTabs)) {
+                flog('Add extra tabs', options.extraTabs);
+                
+                for (var tabName in options.extraTabs) {
+                    var tabData = options.extraTabs[tabName];
+
+                    switcherWrapper.append('<li><a href="#keditor-extra-tab-' + tabName + '">' + tabData.title + '</a></li>');
+                    tabPaneWrapper.append('<div class="tab-pane keditor-snippets" id="keditor-extra-tab-' + tabName + '">' + tabData.content + '</div>');
+                }
+            }
+
+            self.initNiceScroll(tabPaneWrapper.find('.tab-pane'));
+        },
+
+        initTabsSwitcher: function () {
+            flog('initTabsSwitcher');
 
             var self = this;
             var body = self.body;
             var switcherLis = body.find('#keditor-snippets-type-switcher li');
-            var snippetsDivs = body.find('#keditor-snippets-container .keditor-snippets');
+            var tabPane = body.find('#keditor-snippets-container .tab-pane');
 
             switcherLis.find('a').on('click', function (e) {
                 e.preventDefault();
@@ -492,17 +520,17 @@
 
                 if (!li.hasClass('active')) {
                     var activatedLi = switcherLis.filter('.active');
-                    var activatedSnippetsDiv = snippetsDivs.filter('.active');
+                    var activatedPane = tabPane.filter('.active');
                     var targetDiv = body.find(href);
 
                     activatedLi.removeClass('active');
-                    activatedSnippetsDiv.removeClass('active');
+                    activatedPane.removeClass('active');
 
                     li.addClass('active');
                     targetDiv.addClass('active');
 
                     if ($.fn.niceScroll) {
-                        activatedSnippetsDiv.getNiceScroll().hide();
+                        activatedPane.getNiceScroll().hide();
                         targetDiv.getNiceScroll().show();
                     }
                 }

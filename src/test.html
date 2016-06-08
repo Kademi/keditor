@@ -40,6 +40,14 @@
 <script type="text/javascript">
     $(function() {
         $('#keditor1').keditor({
+            tabContainersTitle: '<i class="fa fa-th-list"></i>',
+            tabComponentsTitle: '<i class="fa fa-file"></i>',
+            extraTabs: {
+                setting: {
+                    title: '<i class="fa fa-cogs"></i>',
+                    content: 'My content'
+                }
+            },
             containerSettingEnabled: true,
             containerSettingInitFunction: function (form, keditor) {
                 console.log(form, keditor);

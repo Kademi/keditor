@@ -20,12 +20,19 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * @option {String} btnDuplicateComponentText Text content for duplicate button of component
  * @option {String} btnDeleteContainerText Text content for delete button of container
  * @option {String} btnDeleteComponentText Text content for delete button of component
+ * @option {String} tabContainersTitle Text content for Containers tab
+ * @option {String} tabComponentsTitle Text content for Components tab
+ * @option {Object} extraTabs Extra tabs besides Containers and Components tabs in sidebar. Format: { tabName: { title: 'My Extra Tab #1', content: 'Here is content of My Extra Tab #1' } }
  * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component - jQuery object of component
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
- * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
  * @option {Boolean} iframeMode KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
+ * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
  * @option {String} contentAreasWrapper The wrapper element for all contents inside iframe. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag
+ * @option {Boolean} containerSettingEnabled Enable setting panel for container
+ * @option {Function} containerSettingInitFunction Method will be called when initializing setting panel for container
+ * @option {Function} containerSettingShowFunction Method will be called when setting panel for container is showed
+ * @option {Function} containerSettingHideFunction Method will be called when setting panel for container is hidden
  * @option {Function} onInitFrame Callback will be called after iframe and content areas wrapper inside it are created. Arguments: frame, frameHead, frameBody
  * @option {Function} onSidebarToggled Callback will be called after toggled sidebar. Arguments: isOpened
  * @option {Function} onInitContentArea Callback will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
@@ -57,12 +64,19 @@ $.keditor.DEFAULTS = {
     btnDuplicateComponentText: '<i class="fa fa-files-o"></i>',
     btnDeleteContainerText: '<i class="fa fa-times"></i>',
     btnDeleteComponentText: '<i class="fa fa-times"></i>',
+    tabContainersTitle: 'Containers',
+    tabComponentsTitle: 'Components',
+    extraTabs: null,
     defaultComponentType: 'text',
     snippetsUrl: 'snippets/default/snippets.html',
     snippetsListId: 'keditor-snippets-list',
-    contentAreasSelector: null,
     iframeMode: false,
+    contentAreasSelector: null,
     contentAreasWrapper: '<div class="keditor-content-areas-wrapper container"></div>',
+    containerSettingEnabled: false,
+    containerSettingInitFunction: null,
+    containerSettingShowFunction: null,
+    containerSettingHideFunction: null,
     onInitFrame: function (frame, frameHead, frameBody) {
     },
     onSidebarToggled: function (isOpened) {
@@ -249,12 +263,14 @@ $.keditor.components['typeName'] = {
 };
 ```
 
-__**Note**__: `KEditor.settingComponent` is component which will be applied setting. You can access this component after setting panel is showed.
+__**Note**__: `KEditor.getSettingComponent` is method for getting which component is setting
 
 # Dynamic content
 If you want a element which has dynamic content, you can do like the following
 ```html
-<div data-dynamic-href="/path/to/dynamic/content" data-attribute-one="1" data-attribute-two="2" ...></div>
+<div data-type="component-x" data-attribute-one="1" data-attribute-two="2" ...>
+    <div data-dynamic-href="/path/to/dynamic/content"></div>
+</div>
 ```
 So the content of this `div` will be get from `/path/to/dynamic/content?attributeOne=1&attributeTwo=2`
 
@@ -264,12 +280,14 @@ Example:
     Here is example of a component with type is "products" and have dynamic content inside.
     Full url for getting dynamic content is "/_components/ecommerce/productList?numProducts=4&store=store1&category=c1"
  -->
-<div data-type="component-products">
-    <div data-dynamic-href='/_components/ecommerce/productList' data-num-products='4' data-store="store1" data-category="c1"></div>
+<div data-type="component-products" data-num-products='4' data-store="store1" data-category="c1">
+    <div data-dynamic-href='/_components/ecommerce/productList'></div>
 </div>
 ```
 
-__**Note**__: All `data-*` attribute will be converted to camel-case. Example: data-number-products will be `numberProducts`.
+__**Note**__: 
+ * All `data-*` attribute will be converted to camel-case. Example: `data-number-products` will be `numberProducts`, `data-numberProducts` will be `numberproducts`
+ * All `data-*` attribute will be placed in div which contains `data-type="component-..."` attribute, not placed in div which contains `data-dynamic-href` attribute
 
 # License
 Please read at https://github.com/Kademi/keditor/blob/master/LICENSE.md

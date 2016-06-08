@@ -1017,14 +1017,10 @@
 
             $.each(target.get(0).attributes, function (i, attr) {
                 if (attr.name.indexOf('data-') === 0 && $.inArray(attr.name, ignoreAttributes) === -1) {
-                    var camelCaseName = attr.name.substr(5).replace(/-(.)/g, function ($0, $1) {
-                        return $1.toUpperCase();
-                    });
-
                     if (isArray) {
-                        dataAttributes.push(camelCaseName + '="' + attr.value + '"');
+                        dataAttributes.push(attr.name + '="' + attr.value + '"');
                     } else {
-                        dataAttributes[camelCaseName] = attr.value;
+                        dataAttributes[attr.name] = attr.value;
                     }
                 }
             });

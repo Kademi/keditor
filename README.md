@@ -20,12 +20,17 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * @option {String} btnDuplicateComponentText Text content for duplicate button of component
  * @option {String} btnDeleteContainerText Text content for delete button of container
  * @option {String} btnDeleteComponentText Text content for delete button of component
- * @option {String} tabContainersTitle Text content for Containers tab
- * @option {String} tabComponentsTitle Text content for Components tab
- * @option {Object} extraTabs Extra tabs besides Containers and Components tabs in sidebar. Format: { tabName: { title: 'My Extra Tab #1', content: 'Here is content of My Extra Tab #1' } }
+ * @option {String} tabContainersText Text for Containers tab
+ * @option {String} tabContainersTitle Title for Containers tab
+ * @option {String} tabComponentsText Text for Components tab
+ * @option {String} tabComponentsTitle Title for Components tab
+ * @option {Boolean} tabTooltipEnabled Bootstrap Tooltip is enabled for Component and Container tab or not
+ * @option {Object} extraTabs Extra tabs besides Containers and Components tabs in sidebar. Format: { tabName: { text: 'My Extra Tab #1', title: 'My Extra Tab #1', content: 'Here is content of My Extra Tab #1' } }
  * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component - jQuery object of component
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
+ * @option {Boolean} snippetsTooltipEnabled Bootstrap tooltip is enable for snippet or not
+ * @option {String} snippetsTooltipPosition Position of Bootstrap tooltip for snippet. Can be 'left', 'right', 'top' and 'bottom
  * @option {Boolean} iframeMode KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
  * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
  * @option {String} contentAreasWrapper The wrapper element for all contents inside iframe. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag
@@ -64,12 +69,17 @@ $.keditor.DEFAULTS = {
     btnDuplicateComponentText: '<i class="fa fa-files-o"></i>',
     btnDeleteContainerText: '<i class="fa fa-times"></i>',
     btnDeleteComponentText: '<i class="fa fa-times"></i>',
+    tabContainersText: 'Containers',
     tabContainersTitle: 'Containers',
+    tabComponentsText: 'Components',
     tabComponentsTitle: 'Components',
+    tabTooltipEnabled: true,
     extraTabs: null,
     defaultComponentType: 'text',
     snippetsUrl: 'snippets/default/snippets.html',
     snippetsListId: 'keditor-snippets-list',
+    snippetsTooltipEnabled: true,
+    snippetsTooltipPosition: 'left',
     iframeMode: false,
     contentAreasSelector: null,
     contentAreasWrapper: '<div class="keditor-content-areas-wrapper container"></div>',
@@ -176,7 +186,7 @@ $('#id').keditor('getContent');
 # Customize snippet
 ```html
 <!-- Example for container snippet -->
-<div data-type="container" data-preview="/path/to/preview/of/snippet">
+<div data-type="container" data-preview="/path/to/preview/of/snippet" data-title="1 col">
     <div class="row">
         <div class="col-sm-12">
             <div data-type="container-content">
@@ -187,7 +197,7 @@ $('#id').keditor('getContent');
 </div>
 
 <!-- Example for component snippet. x is name of component type. Example: "component-text" -->
-<div data-type="component-x" data-preview="/path/to/preview/of/snippet">
+<div data-type="component-x" data-preview="/path/to/preview/of/snippet" data-title="Text block">
     <div class="page-header">
         <h1 style="margin-bottom: 30px; font-size: 50px;"><b class="text-uppercase">Cras justo odio</b> <small>Donec id elit non mi</small></h1>
         <p class="lead"><em>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</em></p>
@@ -263,7 +273,7 @@ $.keditor.components['typeName'] = {
 };
 ```
 
-__**Note**__: `KEditor.getSettingComponent` is method for getting which component is setting
+__**Note**__: `KEditor.getSettingComponent()` is method for getting which component is setting
 
 # Dynamic content
 If you want a element which has dynamic content, you can do like the following

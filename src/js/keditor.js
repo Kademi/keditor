@@ -24,7 +24,7 @@
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {Boolean} snippetsTooltipEnabled Bootstrap tooltip is enable for snippet or not
- * @option {String} snippetsTooltipPosition Position of Bootstrap tooltip for snippet. Can be 'left', 'right', 'top' and 'bottom
+ * @option {String} snippetsTooltipPosition Position of Bootstrap tooltip for snippet. Can be 'left', 'right', 'top' and 'bottom'
  * @option {Boolean} iframeMode KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
  * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
  * @option {String} contentAreasWrapper The wrapper element for all contents inside iframe. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag
@@ -1271,6 +1271,18 @@
                         options.onBeforeContainerDeleted.call(contentArea, e, container);
                     }
 
+                    var settingComponent = self.getSettingComponent();
+                    if (settingComponent) {
+                        var settingComponentParent = settingComponent.closest('.keditor-container');
+                        if (settingComponentParent.is(container)) {
+                            flog('Deleting container is container of setting container. Close setting panel for this setting component', settingComponent);
+                            self.hideSettingPanel();
+                        }
+                    } else if (self.getSettingContainer().is(container)) {
+                        flog('Deleting container is setting container. Close setting panel for this container', container);
+                        self.hideSettingPanel();
+                    }
+
                     if (components.length > 0) {
                         components.each(function () {
                             self.deleteComponent($(this));
@@ -1348,6 +1360,10 @@
 
                     if (typeof options.onBeforeComponentDeleted === 'function') {
                         options.onBeforeComponentDeleted.call(contentArea, e, component);
+                    }
+
+                    if (self.getSettingComponent().is(component)) {
+                        self.hideSettingPanel();
                     }
 
                     self.deleteComponent(component);

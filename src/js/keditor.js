@@ -32,6 +32,7 @@
  * @option {Function} containerSettingInitFunction Method will be called when initializing setting panel for container
  * @option {Function} containerSettingShowFunction Method will be called when setting panel for container is showed
  * @option {Function} containerSettingHideFunction Method will be called when setting panel for container is hidden
+ * @option {Function} onReady Callback will be called after keditor instance is ready
  * @option {Function} onInitFrame Callback will be called after iframe and content areas wrapper inside it are created. Arguments: frame, frameHead, frameBody
  * @option {Function} onSidebarToggled Callback will be called after toggled sidebar. Arguments: isOpened
  * @option {Function} onInitContentArea Callback will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
@@ -51,6 +52,7 @@
  * @option {Function} onComponentDuplicated Callback will be called when a component is duplicated. Arguments: event, originalComponent, newComponent
  * @option {Function} onComponentSelected Callback will be called when a component is selected. Arguments: event, selectedComponent
  * @option {Function} onComponentSnippetDropped Callback will be called after a component snippet is dropped into a container. Arguments: event, newComponent, droppedComponent
+ * @option {Function} onBeforeDynamicContentLoad Callback will be called before loading dynamic content. Arguments: dynamicElement
  * @option {Function} onDynamicContentLoaded Callback will be called after dynamic content is loaded. Arguments: dynamicElement, response, status, xhr
  * @option {Function} onDynamicContentError Callback will be called if loading dynamic content is error, abort or timeout. Arguments: dynamicElement, response, status, xhr
  */
@@ -129,6 +131,8 @@
         containerSettingInitFunction: null,
         containerSettingShowFunction: null,
         containerSettingHideFunction: null,
+        onReady: function () {
+        },
         onInitFrame: function (frame, frameHead, frameBody) {
         },
         onSidebarToggled: function (isOpened) {
@@ -166,6 +170,8 @@
         onComponentSelected: function (event, selectedComponent) {
         },
         onComponentSnippetDropped: function (event, newComponent, droppedComponent) {
+        },
+        onBeforeDynamicContentLoad: function (dynamicElement) {
         },
         onDynamicContentLoaded: function (dynamicElement, response, status, xhr) {
         },
@@ -215,10 +221,11 @@
             self.initContentAreas(target);
 
             var body = self.body;
+            var ajaxRequest;
             if (body.hasClass('initialized-snippets-list')) {
                 flog('Snippets list is already initialized!');
             } else {
-                self.initSidebar();
+                ajaxRequest = self.initSidebar();
                 body.addClass('initialized-snippets-list');
             }
             if (body.hasClass('initialized-click-event-handlers')) {
@@ -226,6 +233,10 @@
             } else {
                 self.initKEditorClicks();
                 body.addClass('initialized-click-event-handlers');
+            }
+
+            if (!ajaxRequest && typeof options.onReady === 'function') {
+                options.onReady.call(self);
             }
         },
 
@@ -348,7 +359,7 @@
             if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
                 flog('Getting snippets form "' + options.snippetsUrl + '"...');
 
-                $.ajax({
+                return $.ajax({
                     type: 'get',
                     dataType: 'html',
                     url: options.snippetsUrl,
@@ -364,6 +375,10 @@
                         if (options.snippetsTooltipEnabled || options.tabTooltipEnabled) {
                             flog('Initialize Bootstrap tooltip plugin');
                             body.find('#' + options.snippetsListId).find('[data-toggle="tooltip"]').tooltip();
+                        }
+
+                        if (typeof options.onReady === 'function') {
+                            options.onReady.call(self);
                         }
                     },
                     error: function (jqXHR) {
@@ -430,7 +445,7 @@
 
                 flog('Snippet #' + i + ' type=' + type, previewUrl, content);
 
-                snippetHtml += '<section class="keditor-snippet" data-snippet="#keditor-snippet-' + i + '" data-type="' + type + '" ' + (options.snippetsTooltipEnabled ? 'data-toggle="tooltip" data-placement="' + options.snippetsTooltipPosition + '" title="' + title + '"' : '') + '>';
+                snippetHtml += '<section class="keditor-snippet" data-snippet="#keditor-snippet-' + i + '" data-type="' + type + '" ' + (options.snippetsTooltipEnabled ? 'data-toggle="tooltip" data-placement="' + options.snippetsTooltipPosition + '"' : '') + ' title="' + title + '">';
                 snippetHtml += '   <img class="keditor-snippet-preview" src="' + previewUrl + '" />';
                 snippetHtml += '</section>';
 
@@ -446,8 +461,8 @@
 
             body.find('#' + options.snippetsListId).html(
                 '<ul id="keditor-snippets-type-switcher" class="nav nav-tabs nav-justified">' +
-                '    <li class="active"><a href="#keditor-container-snippets"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom" title="' + options.tabContainersTitle + '"' : '') + '>' + options.tabContainersText + '</a></li>' +
-                '    <li><a href="#keditor-component-snippets"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom" title="' + options.tabComponentsTitle + '"' : '') + '>' + options.tabComponentsText + '</a></li>' +
+                '    <li class="active"><a href="#keditor-container-snippets"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabContainersTitle + '">' + options.tabContainersText + '</a></li>' +
+                '    <li><a href="#keditor-component-snippets"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabComponentsTitle + '">' + options.tabComponentsText + '</a></li>' +
                 '</ul>' +
                 '<div id="keditor-snippets-container" class="tab-content">' +
                 '   <div class="tab-pane keditor-snippets active" id="keditor-container-snippets">' + snippetsContainerHtml + '</div>' +
@@ -710,23 +725,25 @@
             body.removeClass('opened-keditor-setting');
 
             var activeForm = body.find('#keditor-setting-forms').children('.active');
+            if (activeForm.length > 0) {
+                if (activeForm.is('#keditor-container-setting')) {
+                    if (typeof options.containerSettingHideFunction === 'function') {
+                        flog('Hide setting form of container');
+                        options.containerSettingHideFunction.call(self, activeForm, self);
+                    }
+                } else {
+                    var activeType = activeForm.attr('data-type');
+                    var componentData = KEditor.components[activeType];
 
-            if (activeForm.is('#keditor-container-setting')) {
-                if (typeof options.containerSettingHideFunction === 'function') {
-                    flog('Hide setting form of container');
-                    options.containerSettingHideFunction.call(self, activeForm, self);
+                    if (typeof componentData.hideSettingForm === 'function') {
+                        flog('Hide setting form of component type "' + activeType + '"');
+                        componentData.hideSettingForm.call(componentData, activeForm, self);
+                    }
                 }
-            } else {
-                var activeType = activeForm.attr('data-type');
-                var componentData = KEditor.components[activeType];
 
-                if (typeof componentData.hideSettingForm === 'function') {
-                    flog('Hide setting form of component type "' + activeType + '"');
-                    componentData.hideSettingForm.call(componentData, activeForm, self);
-                }
+                activeForm.removeClass('active');
             }
 
-            activeForm.removeClass('active');
             body.removeClass('opened-keditor-setting');
             self.setSettingComponent(null);
             self.setSettingContainer(null);
@@ -831,11 +848,11 @@
                         self.initContainer(contentArea, container);
                     }
 
+                    self.hideSettingPanel();
+
                     if (typeof options.onContentChanged === 'function') {
                         options.onContentChanged.call(contentArea, event);
                     }
-
-                    self.hideSettingPanel();
                 }
             });
 
@@ -1405,6 +1422,11 @@
             var self = this;
             var options = self.options;
             var component = dynamicElement.closest('.keditor-component');
+
+            if (typeof options.onBeforeDynamicContentLoad === 'function') {
+                options.onBeforeDynamicContentLoad.call(contentArea, dynamicElement);
+            }
+
             var dynamicHref = dynamicElement.attr('data-dynamic-href');
             var data = self.getDataAttributes(component, ['data-type', 'data-dynamic-href'], false);
             data = $.param(data);

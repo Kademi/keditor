@@ -11,7 +11,6 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
 # Configuration
 ```javascript
 /**
- * Configuration:
  * @option {String} btnMoveContainerText Text content for move button of container
  * @option {String} btnMoveComponentText Text content for move button of component
  * @option {String} btnSettingContainerText Text content for setting button of container
@@ -30,7 +29,7 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {Boolean} snippetsTooltipEnabled Bootstrap tooltip is enable for snippet or not
- * @option {String} snippetsTooltipPosition Position of Bootstrap tooltip for snippet. Can be 'left', 'right', 'top' and 'bottom
+ * @option {String} snippetsTooltipPosition Position of Bootstrap tooltip for snippet. Can be 'left', 'right', 'top' and 'bottom'
  * @option {Boolean} iframeMode KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
  * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
  * @option {String} contentAreasWrapper The wrapper element for all contents inside iframe. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag
@@ -38,6 +37,7 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * @option {Function} containerSettingInitFunction Method will be called when initializing setting panel for container
  * @option {Function} containerSettingShowFunction Method will be called when setting panel for container is showed
  * @option {Function} containerSettingHideFunction Method will be called when setting panel for container is hidden
+ * @option {Function} onReady Callback will be called after keditor instance is ready
  * @option {Function} onInitFrame Callback will be called after iframe and content areas wrapper inside it are created. Arguments: frame, frameHead, frameBody
  * @option {Function} onSidebarToggled Callback will be called after toggled sidebar. Arguments: isOpened
  * @option {Function} onInitContentArea Callback will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
@@ -57,6 +57,7 @@ KEditor is a JQuery plugin which provides a content editor with drag and drop sn
  * @option {Function} onComponentDuplicated Callback will be called when a component is duplicated. Arguments: event, originalComponent, newComponent
  * @option {Function} onComponentSelected Callback will be called when a component is selected. Arguments: event, selectedComponent
  * @option {Function} onComponentSnippetDropped Callback will be called after a component snippet is dropped into a container. Arguments: event, newComponent, droppedComponent
+ * @option {Function} onBeforeDynamicContentLoad Callback will be called before loading dynamic content. Arguments: dynamicElement, component
  * @option {Function} onDynamicContentLoaded Callback will be called after dynamic content is loaded. Arguments: dynamicElement, response, status, xhr
  * @option {Function} onDynamicContentError Callback will be called if loading dynamic content is error, abort or timeout. Arguments: dynamicElement, response, status, xhr
  */
@@ -87,6 +88,8 @@ $.keditor.DEFAULTS = {
     containerSettingInitFunction: null,
     containerSettingShowFunction: null,
     containerSettingHideFunction: null,
+    onReady: function () {
+    },
     onInitFrame: function (frame, frameHead, frameBody) {
     },
     onSidebarToggled: function (isOpened) {
@@ -124,6 +127,8 @@ $.keditor.DEFAULTS = {
     onComponentSelected: function (event, selectedComponent) {
     },
     onComponentSnippetDropped: function (event, newComponent, droppedComponent) {
+    },
+    onBeforeDynamicContentLoad: function (dynamicElement, component) {
     },
     onDynamicContentLoaded: function (dynamicElement, response, status, xhr) {
     },

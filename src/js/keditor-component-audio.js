@@ -10,10 +10,6 @@
     var flog = KEditor.log;
 
     KEditor.components['audio'] = {
-        init: function (contentArea, container, component, keditor) {
-            // Do nothing
-        },
-
         getContent: function (component, keditor) {
             flog('getContent "audio" component, component');
 
@@ -22,10 +18,6 @@
             audio.unwrap();
 
             return componentContent.html();
-        },
-
-        destroy: function (component, keditor) {
-            // Do nothing
         },
 
         settingEnabled: true,
@@ -118,10 +110,6 @@
             audioWidth.off('change').on('change', function () {
                 audio.css('width', this.value + '%');
             });
-        },
-
-        hideSettingForm: function (form, keditor) {
-
         }
     };
 })(jQuery);

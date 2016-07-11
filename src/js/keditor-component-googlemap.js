@@ -10,10 +10,6 @@
     var flog = KEditor.log;
 
     KEditor.components['googlemap'] = {
-        init: function (contentArea, container, component, keditor) {
-            // Do nothing
-        },
-
         getContent: function (component, keditor) {
             flog('getContent "googlemap" component', component);
 
@@ -21,10 +17,6 @@
             componentContent.find('.googlemap-cover').remove();
 
             return componentContent.html();
-        },
-
-        destroy: function (component, keditor) {
-            // Do nothing
         },
 
         settingEnabled: true,
@@ -78,14 +70,6 @@
 
                 keditor.getSettingComponent().find('.embed-responsive').removeClass('embed-responsive-16by9').addClass('embed-responsive-4by3');
             });
-        },
-
-        showSettingForm: function (form, component, keditor) {
-            // Do nothing
-        },
-
-        hideSettingForm: function (form, keditor) {
-            // Do nothing
         }
     };
 

@@ -19,17 +19,6 @@
             img.css('display', 'inline-block');
         },
 
-        getContent: function (component, keditor) {
-            flog('getContent "photo" component', component);
-
-            var componentContent = component.children('.keditor-component-content');
-            return componentContent.html();
-        },
-
-        destroy: function (component, keditor) {
-            // Do nothing
-        },
-
         settingEnabled: true,
 
         settingTitle: 'Photo Settings',
@@ -212,10 +201,6 @@
                 self.width = this.width;
                 self.height = this.height;
             });
-        },
-
-        hideSettingForm: function (form, keditor) {
-            // Do nothing
         }
     };
 

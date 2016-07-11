@@ -10,10 +10,6 @@
     var flog = KEditor.log;
 
     KEditor.components['youtube'] = {
-        init: function (contentArea, container, component, keditor) {
-            // Do nothing
-        },
-
         getContent: function (component, keditor) {
             flog('getContent "youtube" component', component);
 
@@ -21,10 +17,6 @@
             componentContent.find('.youtube-cover').remove();
 
             return componentContent.html();
-        },
-
-        destroy: function (component, keditor) {
-            // Do nothing
         },
 
         settingEnabled: true,
@@ -104,10 +96,6 @@
             var src = embedItem.attr('src');
 
             chkAutoplay.prop('checked', src.indexOf('autoplay=1') !== -1);
-        },
-
-        hideSettingForm: function (form, keditor) {
-            // Do nothing
         }
     };
 

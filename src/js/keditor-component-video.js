@@ -10,10 +10,6 @@
     var flog = KEditor.log;
 
     KEditor.components['video'] = {
-        init: function (contentArea, container, component, keditor) {
-            // Do nothing
-        },
-
         getContent: function (component, keditor) {
             flog('getContent "video" component', component);
 
@@ -22,10 +18,6 @@
             video.unwrap();
 
             return componentContent.html();
-        },
-
-        destroy: function (component, keditor) {
-            // Do nothing
         },
 
         settingEnabled: true,
@@ -161,10 +153,6 @@
                 video.removeProp('width');
                 video.removeProp('height');
             });
-        },
-
-        hideSettingForm: function (form, keditor) {
-
         }
     };
 })(jQuery);

@@ -614,7 +614,7 @@
                             flog('Initialize setting form for component type "' + type + '"');
                             componentData.initSettingForm.call(componentData, form, self);
                         } else {
-                            error('"initSettingForm" function of component type "' + type + '" does not exist!');
+                            flog('"initSettingForm" function of component type "' + type + '" does not exist');
                         }
                     }
                 }
@@ -692,10 +692,10 @@
                 if (typeof componentData.showSettingForm === 'function') {
                     flog('Show setting form of component type "' + componentType + '"');
                     componentData.showSettingForm.call(componentData, settingForm, target, self);
-                    settingForm.addClass('active');
                 } else {
-                    error('"showSettingForm" function of component type "' + componentType + '" does not exist!');
+                    flog('"showSettingForm" function of component type "' + componentType + '" does not exist');
                 }
+                settingForm.addClass('active');
             } else {
                 self.setSettingContainer(target);
                 self.setSettingComponent(null);
@@ -706,10 +706,10 @@
                 if (typeof options.containerSettingShowFunction === 'function') {
                     flog('Show setting form of container');
                     options.containerSettingShowFunction.call(self, settingForm, target, self);
-                    settingForm.addClass('active');
                 } else {
-                    error('"containerSettingShowFunction" is not function!');
+                    flog('"containerSettingShowFunction" does not exist');
                 }
+                settingForm.addClass('active');
             }
 
             self.toggleSidebar(true);
@@ -731,6 +731,8 @@
                     if (typeof options.containerSettingHideFunction === 'function') {
                         flog('Hide setting form of container');
                         options.containerSettingHideFunction.call(self, activeForm, self);
+                    } else {
+                        flog('"containerSettingHideFunction" does not exist');
                     }
                 } else {
                     var activeType = activeForm.attr('data-type');
@@ -739,6 +741,8 @@
                     if (typeof componentData.hideSettingForm === 'function') {
                         flog('Hide setting form of component type "' + activeType + '"');
                         componentData.hideSettingForm.call(componentData, activeForm, self);
+                    } else {
+                        flog('"hideSettingForm" function of component type "' + activeType + '" does not exist');
                     }
                 }
 
@@ -1146,7 +1150,7 @@
                         componentData.init.call(componentData, contentArea, container, component, self);
                     } else {
                         body.removeClass('highlighted-container-content');
-                        error('"init" function of component type "' + componentType + '" does not exist!');
+                        flog('"init" function of component type "' + componentType + '" does not exist');
                     }
 
                     if (typeof options.onInitComponent === 'function') {
@@ -1414,7 +1418,7 @@
             if (typeof componentData.destroy === 'function') {
                 componentData.destroy.call(componentData, component, self);
             } else {
-                error('"destroy" function of component type "' + componentType + '" does not exist!');
+                flog('"destroy" function of component type "' + componentType + '" does not exist');
             }
 
             component.remove();
@@ -1472,7 +1476,9 @@
             if (typeof componentData.getContent === 'function') {
                 content = componentData.getContent.call(componentData, component, self);
             } else {
-                error('"getContent" function of component type "' + componentType + '" does not exist!');
+                flog('"getContent" function of component type "' + componentType + '" does not exist. Using default getContent method');
+                var componentContent = component.children('.keditor-component-content');
+                content = componentContent.html();
             }
 
             var tempDiv = $('<div />').html(content);

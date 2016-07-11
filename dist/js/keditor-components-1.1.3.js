@@ -2,7 +2,7 @@
  * KEditor Audio Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.2
+ * @version: 1.1.3
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -10,10 +10,6 @@
     var flog = KEditor.log;
 
     KEditor.components['audio'] = {
-        init: function (contentArea, container, component, keditor) {
-            // Do nothing
-        },
-
         getContent: function (component, keditor) {
             flog('getContent "audio" component, component');
 
@@ -22,10 +18,6 @@
             audio.unwrap();
 
             return componentContent.html();
-        },
-
-        destroy: function (component, keditor) {
-            // Do nothing
         },
 
         settingEnabled: true,
@@ -118,10 +110,6 @@
             audioWidth.off('change').on('change', function () {
                 audio.css('width', this.value + '%');
             });
-        },
-
-        hideSettingForm: function (form, keditor) {
-
         }
     };
 })(jQuery);
@@ -130,7 +118,7 @@
  * KEditor Google Map Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.2
+ * @version: 1.1.3
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -138,10 +126,6 @@
     var flog = KEditor.log;
 
     KEditor.components['googlemap'] = {
-        init: function (contentArea, container, component, keditor) {
-            // Do nothing
-        },
-
         getContent: function (component, keditor) {
             flog('getContent "googlemap" component', component);
 
@@ -149,10 +133,6 @@
             componentContent.find('.googlemap-cover').remove();
 
             return componentContent.html();
-        },
-
-        destroy: function (component, keditor) {
-            // Do nothing
         },
 
         settingEnabled: true,
@@ -206,14 +186,6 @@
 
                 keditor.getSettingComponent().find('.embed-responsive').removeClass('embed-responsive-16by9').addClass('embed-responsive-4by3');
             });
-        },
-
-        showSettingForm: function (form, component, keditor) {
-            // Do nothing
-        },
-
-        hideSettingForm: function (form, keditor) {
-            // Do nothing
         }
     };
 
@@ -223,7 +195,7 @@
  * KEditor Photo Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.2
+ * @version: 1.1.3
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -238,17 +210,6 @@
             var img = componentContent.find('img');
 
             img.css('display', 'inline-block');
-        },
-
-        getContent: function (component, keditor) {
-            flog('getContent "photo" component', component);
-
-            var componentContent = component.children('.keditor-component-content');
-            return componentContent.html();
-        },
-
-        destroy: function (component, keditor) {
-            // Do nothing
         },
 
         settingEnabled: true,
@@ -433,10 +394,6 @@
                 self.width = this.width;
                 self.height = this.height;
             });
-        },
-
-        hideSettingForm: function (form, keditor) {
-            // Do nothing
         }
     };
 
@@ -446,7 +403,7 @@
  * KEditor Text Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.2
+ * @version: 1.1.3
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -549,7 +506,7 @@
  * KEditor Video Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.2
+ * @version: 1.1.3
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -557,10 +514,6 @@
     var flog = KEditor.log;
 
     KEditor.components['video'] = {
-        init: function (contentArea, container, component, keditor) {
-            // Do nothing
-        },
-
         getContent: function (component, keditor) {
             flog('getContent "video" component', component);
 
@@ -569,10 +522,6 @@
             video.unwrap();
 
             return componentContent.html();
-        },
-
-        destroy: function (component, keditor) {
-            // Do nothing
         },
 
         settingEnabled: true,
@@ -708,10 +657,6 @@
                 video.removeProp('width');
                 video.removeProp('height');
             });
-        },
-
-        hideSettingForm: function (form, keditor) {
-
         }
     };
 })(jQuery);
@@ -720,7 +665,7 @@
  * KEditor Vimeo Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.2
+ * @version: 1.1.3
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -728,10 +673,6 @@
     var flog = KEditor.log;
 
     KEditor.components['vimeo'] = {
-        init: function (contentArea, container, component, keditor) {
-            // Do nothing
-        },
-
         getContent: function (component, keditor) {
             flog('getContent "vimeo" component', component);
 
@@ -739,10 +680,6 @@
             componentContent.find('.vimeo-cover').remove();
 
             return componentContent.html();
-        },
-
-        destroy: function (component, keditor) {
-            // Do nothing
         },
 
         settingEnabled: true,
@@ -822,10 +759,6 @@
             var src = embedItem.attr('src');
 
             chkAutoplay.prop('checked', src.indexOf('autoplay=1') !== -1);
-        },
-
-        hideSettingForm: function (form, keditor) {
-            // Do nothing
         }
     };
 
@@ -835,7 +768,7 @@
  * KEditor Youtube Component
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.2
+ * @version: 1.1.3
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 (function ($) {
@@ -843,10 +776,6 @@
     var flog = KEditor.log;
 
     KEditor.components['youtube'] = {
-        init: function (contentArea, container, component, keditor) {
-            // Do nothing
-        },
-
         getContent: function (component, keditor) {
             flog('getContent "youtube" component', component);
 
@@ -854,10 +783,6 @@
             componentContent.find('.youtube-cover').remove();
 
             return componentContent.html();
-        },
-
-        destroy: function (component, keditor) {
-            // Do nothing
         },
 
         settingEnabled: true,
@@ -937,10 +862,6 @@
             var src = embedItem.attr('src');
 
             chkAutoplay.prop('checked', src.indexOf('autoplay=1') !== -1);
-        },
-
-        hideSettingForm: function (form, keditor) {
-            // Do nothing
         }
     };
 

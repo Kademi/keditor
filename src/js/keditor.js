@@ -52,7 +52,7 @@
  * @option {Function} onComponentDuplicated Callback will be called when a component is duplicated. Arguments: event, originalComponent, newComponent
  * @option {Function} onComponentSelected Callback will be called when a component is selected. Arguments: event, selectedComponent
  * @option {Function} onComponentSnippetDropped Callback will be called after a component snippet is dropped into a container. Arguments: event, newComponent, droppedComponent
- * @option {Function} onBeforeDynamicContentLoad Callback will be called before loading dynamic content. Arguments: dynamicElement
+ * @option {Function} onBeforeDynamicContentLoad Callback will be called before loading dynamic content. Arguments: dynamicElement, component
  * @option {Function} onDynamicContentLoaded Callback will be called after dynamic content is loaded. Arguments: dynamicElement, response, status, xhr
  * @option {Function} onDynamicContentError Callback will be called if loading dynamic content is error, abort or timeout. Arguments: dynamicElement, response, status, xhr
  */
@@ -171,7 +171,7 @@
         },
         onComponentSnippetDropped: function (event, newComponent, droppedComponent) {
         },
-        onBeforeDynamicContentLoad: function (dynamicElement) {
+        onBeforeDynamicContentLoad: function (dynamicElement, component) {
         },
         onDynamicContentLoaded: function (dynamicElement, response, status, xhr) {
         },
@@ -259,7 +259,8 @@
                         left: 0,
                         bottom: 0
                     },
-                    cursorborder: ''
+                    cursorborder: '',
+                    disablemutationobserver: true
                 });
             } else {
                 flog('$.fn.niceScroll does not exist. Use default sidebar.');
@@ -1137,7 +1138,7 @@
                 component.find('[data-dynamic-href]').each(function () {
                     var dynamicElement = $(this);
 
-                    dynamicContentRequests.push(self.initDynamicContent(contentArea, dynamicElement));
+                    dynamicContentRequests.push(self.initDynamicContent(dynamicElement));
                 });
 
                 $.when.apply(null, dynamicContentRequests).then(function () {
@@ -1165,8 +1166,6 @@
         },
 
         getClickedElement: function (event, selector) {
-            flog('getClickedElement', event, selector);
-
             var target = $(event.target);
             var closest = target.closest(selector);
 
@@ -1261,6 +1260,11 @@
 
                 container.after(newContainer);
                 self.convertToContainer(contentArea, newContainer);
+
+                var snippetsList = body.find('#' + options.snippetsListId);
+                var componentSnippets = snippetsList.find('.keditor-snippet[data-type^=component]');
+                var currentLinkedContainerContents = componentSnippets.draggable('option', 'connectToSortable');
+                componentSnippets.draggable('option', 'connectToSortable', currentLinkedContainerContents.add(newContainer.find('.keditor-container-content')));
 
                 flog('Container is duplicated');
 
@@ -1416,15 +1420,16 @@
             component.remove();
         },
 
-        initDynamicContent: function (contentArea, dynamicElement) {
-            flog('initDynamicContent', contentArea, dynamicElement);
+        initDynamicContent: function (dynamicElement) {
+            flog('initDynamicContent', dynamicElement);
 
             var self = this;
             var options = self.options;
             var component = dynamicElement.closest('.keditor-component');
+            var contentArea = dynamicElement.closest('.keditor-content-area');
 
             if (typeof options.onBeforeDynamicContentLoad === 'function') {
-                options.onBeforeDynamicContentLoad.call(contentArea, dynamicElement);
+                options.onBeforeDynamicContentLoad.call(contentArea, dynamicElement, component);
             }
 
             var dynamicHref = dynamicElement.attr('data-dynamic-href');

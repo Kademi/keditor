@@ -5,15 +5,15 @@
         <title>KEditor - Kademi Content Editor</title>
         <link rel="stylesheet" type="text/css" href="plugins/bootstrap-3.3.6/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="plugins/font-awesome-4.5.0/css/font-awesome.min.css" />
-        <link rel="stylesheet" type="text/css" href="../dist/css/keditor-1.1.1.css" />
-        <link rel="stylesheet" type="text/css" href="../dist/css/keditor-components-1.1.1.min.css" />
+        <link rel="stylesheet" type="text/css" href="../dist/css/keditor-1.1.3.css" />
+        <link rel="stylesheet" type="text/css" href="../dist/css/keditor-components-1.1.3.min.css" />
         <script src="plugins/jquery-1.11.3/jquery-1.11.3.min.js"></script>
         <script src="plugins/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script src="plugins/jquery.nicescroll-3.6.6/jquery.nicescroll.min.js"></script>
         <script src="plugins/ckeditor-4.5.6/ckeditor.js"></script>
         <script src="plugins/ckeditor-4.5.6/adapters/jquery.js"></script>
-        <script src="../dist/js/keditor-1.1.1.min.js"></script>
-        <script src="../dist/js/keditor-components-1.1.1.min.js"></script>
+        <script src="../dist/js/keditor-1.1.3.min.js"></script>
+        <script src="../dist/js/keditor-components-1.1.3.min.js"></script>
     </head>
 
     <body>
@@ -51,65 +51,74 @@
         <script type="text/javascript">
             $(function() {
                 $('#content-area').keditor({
+                    onReady: function () {
+                        console.log('Callback "onReady"');
+                    },
+                    onInitFrame: function (frame, frameHead, frameBody) {
+                        console.log('Callback "onInitFrame"', frame, frameHead, frameBody);
+                    },
                     onSidebarToggled: function (isOpened) {
-                        console.log('onSidebarToggled', isOpened);
+                        console.log('Callback "onSidebarToggled"', isOpened);
                     },
                     onInitContentArea: function (contentArea) {
-                        console.log('onInitContentArea', contentArea);
+                        console.log('Callback "onInitContentArea"', contentArea);
                     },
                     onContentChanged: function (event) {
-                        console.log('onContentChanged', event);
+                        console.log('Callback "onContentChanged"', event);
                     },
                     onInitContainer: function (container) {
-                        console.log('onInitContainer', container);
+                        console.log('Callback "onInitContainer"', container);
                     },
                     onBeforeContainerDeleted: function (event, selectedContainer) {
-                        console.log('onBeforeContainerDeleted', event, selectedContainer);
+                        console.log('Callback "onBeforeContainerDeleted"', event, selectedContainer);
                     },
                     onContainerDeleted: function (event, selectedContainer) {
-                        console.log('onContainerDeleted', event, selectedContainer);
+                        console.log('Callback "onContainerDeleted"', event, selectedContainer);
                     },
                     onContainerChanged: function (event, changedContainer) {
-                        console.log('onContainerChanged', event, changedContainer);
+                        console.log('Callback "onContainerChanged"', event, changedContainer);
                     },
                     onContainerDuplicated: function (event, originalContainer, newContainer) {
-                        console.log('onContainerDuplicated', event, originalContainer, newContainer);
+                        console.log('Callback "onContainerDuplicated"', event, originalContainer, newContainer);
                     },
                     onContainerSelected: function (event, selectedContainer) {
-                        console.log('onContainerSelected', event, selectedContainer);
+                        console.log('Callback "onContainerSelected"', event, selectedContainer);
                     },
                     onContainerSnippetDropped: function (event, newContainer, droppedContainer) {
-                        console.log('onContainerSnippetDropped', event, newContainer, droppedContainer);
+                        console.log('Callback "onContainerSnippetDropped"', event, newContainer, droppedContainer);
                     },
                     onComponentReady: function (component) {
-                        console.log('onComponentReady', component);
+                        console.log('Callback "onComponentReady"', component);
                     },
                     onInitComponent: function (component) {
-                        console.log('onInitComponent', component);
+                        console.log('Callback "onInitComponent"', component);
                     },
                     onBeforeComponentDeleted: function (event, selectedComponent) {
-                        console.log('onBeforeComponentDeleted', event, selectedComponent);
+                        console.log('Callback "onBeforeComponentDeleted"', event, selectedComponent);
                     },
                     onComponentDeleted: function (event, selectedComponent) {
-                        console.log('onComponentDeleted', event, selectedComponent);
+                        console.log('Callback "onComponentDeleted"', event, selectedComponent);
                     },
                     onComponentChanged: function (event, changedComponent) {
-                        console.log('onComponentChanged', event, changedComponent);
+                        console.log('Callback "onComponentChanged"', event, changedComponent);
                     },
                     onComponentDuplicated: function (event, originalComponent, newComponent) {
-                        console.log('onComponentDuplicated', event, originalComponent, newComponent);
+                        console.log('Callback "onComponentDuplicated"', event, originalComponent, newComponent);
                     },
                     onComponentSelected: function (event, selectedComponent) {
-                        console.log('onComponentSelected', event, selectedComponent);
+                        console.log('Callback "onComponentSelected"', event, selectedComponent);
                     },
                     onComponentSnippetDropped: function (event, newComponent, droppedComponent) {
-                        console.log('onComponentSnippetDropped', event, newComponent, droppedComponent);
+                        console.log('Callback "onComponentSnippetDropped"', event, newComponent, droppedComponent);
+                    },
+                    onBeforeDynamicContentLoad: function (dynamicElement, component) {
+                        console.log('Callback "onBeforeDynamicContentLoad"', dynamicElement, component);
                     },
                     onDynamicContentLoaded: function (dynamicElement, response, status, xhr) {
-                        console.log('onDynamicContentLoaded', dynamicElement, response, status, xhr);
+                        console.log('Callback "onDynamicContentLoaded"', dynamicElement, response, status, xhr);
                     },
                     onDynamicContentError: function (dynamicElement, response, status, xhr) {
-                        console.log('onDynamicContentError', dynamicElement, response, status, xhr);
+                        console.log('Callback "onDynamicContentError"', dynamicElement, response, status, xhr);
                     }
                 });
             });

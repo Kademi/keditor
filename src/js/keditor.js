@@ -119,7 +119,7 @@
         tabComponentsTitle: 'Components',
         tabTooltipEnabled: true,
         extraTabs: null,
-        defaultComponentType: 'text',
+        defaultComponentType: 'blank',
         snippetsUrl: 'snippets/default/snippets.html',
         snippetsListId: 'keditor-snippets-list',
         snippetsTooltipEnabled: true,
@@ -180,7 +180,11 @@
     };
 
     // Component types
-    KEditor.components = {};
+    KEditor.components = {
+        blank: {
+            settingEnabled: false
+        }
+    };
 
     // Export log methods;
     KEditor.log = flog;

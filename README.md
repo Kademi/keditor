@@ -76,7 +76,7 @@ $.keditor.DEFAULTS = {
     tabComponentsTitle: 'Components',
     tabTooltipEnabled: true,
     extraTabs: null,
-    defaultComponentType: 'text',
+    defaultComponentType: 'blank',
     snippetsUrl: 'snippets/default/snippets.html',
     snippetsListId: 'keditor-snippets-list',
     snippetsTooltipEnabled: true,

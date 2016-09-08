@@ -21,6 +21,19 @@ body {
 }
 
 /* ==================================================================================
+   KEditor base
+   ================================================================================== */
+#keditor-sidebar,
+.keditor-toolbar {
+    font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+
+    small,
+    .small {
+        font-size: 88% !important;
+    }
+}
+
+/* ==================================================================================
    opened-keditor-sidebar
    ================================================================================== */
 body.opened-keditor-sidebar {
@@ -83,7 +96,6 @@ body.highlighted-container-content {
     box-shadow: -1px 0 5px @sidebar-shadow-color;
     padding: 10px;
     .transition(all @animation-duration);
-    font: @font-size-base/@line-height-base @font-family-base;
 
     &:hover {
         opacity: 1;

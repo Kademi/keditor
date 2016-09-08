@@ -567,7 +567,10 @@
 
                     if ($.fn.niceScroll) {
                         activatedPane.getNiceScroll().hide();
-                        targetDiv.getNiceScroll().show();
+
+                        var targetNiceScroll = targetDiv.getNiceScroll();
+                        targetNiceScroll.show();
+                        targetNiceScroll.resize();
                     }
                 }
             });

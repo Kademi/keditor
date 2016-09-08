@@ -13,6 +13,19 @@ body {
   overflow-y: scroll;
 }
 /* ==================================================================================
+   KEditor base
+   ================================================================================== */
+#keditor-sidebar,
+.keditor-toolbar {
+  font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+#keditor-sidebar small,
+.keditor-toolbar small,
+#keditor-sidebar .small,
+.keditor-toolbar .small {
+  font-size: 88% !important;
+}
+/* ==================================================================================
    opened-keditor-sidebar
    ================================================================================== */
 body.opened-keditor-sidebar .keditor-content-area {
@@ -65,7 +78,6 @@ body.highlighted-container-content .keditor-container-content:before {
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
-  font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #keditor-sidebar:hover {
   opacity: 1;
@@ -133,7 +145,7 @@ body.highlighted-container-content .keditor-container-content:before {
   clear: both;
 }
 .keditor-snippet {
-  padding: 5px;
+  padding: 15px;
   border: 1px solid #f0f0f0;
   cursor: move;
   -webkit-transition: all 0.3s;

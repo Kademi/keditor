@@ -604,28 +604,6 @@
                     error('"containerSettingInitFunction" is not function!');
                 }
             }
-
-            flog('Call "initSettingForm" function of all component types if settingEnabled = true');
-            for (var type in KEditor.components) {
-                if (KEditor.components.hasOwnProperty(type)) {
-                    var componentData = KEditor.components[type];
-                    var isSettingEnabled = componentData.settingEnabled === true;
-
-                    flog('Type: ' + type + ', settingEnabled: ' + isSettingEnabled);
-
-                    if (isSettingEnabled) {
-                        if (typeof componentData.initSettingForm === 'function') {
-                            var form = $('<div id="keditor-setting-' + type + '" data-type="' + type + '" class="keditor-setting-form clearfix"></div>');
-                            settingForms.append(form);
-
-                            flog('Initialize setting form for component type "' + type + '"');
-                            componentData.initSettingForm.call(componentData, form, self);
-                        } else {
-                            flog('"initSettingForm" function of component type "' + type + '" does not exist');
-                        }
-                    }
-                }
-            }
         },
 
         setSettingContainer: function (container) {
@@ -695,14 +673,44 @@
                 var componentData = KEditor.components[componentType];
                 body.find('#keditor-setting-title').html(componentData.settingTitle);
 
+                var settingForms = body.find('#keditor-setting-forms');
                 var settingForm = body.find('#keditor-setting-' + componentType);
-                if (typeof componentData.showSettingForm === 'function') {
-                    flog('Show setting form of component type "' + componentType + '"');
-                    componentData.showSettingForm.call(componentData, settingForm, target, self);
+
+                if (settingForm.length === 0) {
+                    var componentData = KEditor.components[componentType];
+                    if (typeof componentData.initSettingForm === 'function') {
+                        settingForm = $('<div id="keditor-setting-' + componentType + '" data-type="' + componentType + '" class="keditor-setting-form clearfix"></div>');
+                        var loadingText = $('<span />').html('Loading...');
+                        settingForms.append(settingForm);
+                        settingForm.append(loadingText);
+
+                        flog('Initializing setting form for component type "' + componentType + '"');
+                        $.when(componentData.initSettingForm.call(componentData, settingForm, self)).done(function () {
+                            flog('Initialized setting form for component type "' + componentType + '"');
+
+                            loadingText.remove();
+                            setTimeout(function () {
+                                if (typeof componentData.showSettingForm === 'function') {
+                                    flog('Show setting form of component type "' + componentType + '"');
+                                    componentData.showSettingForm.call(componentData, settingForm, target, self);
+                                } else {
+                                    flog('"showSettingForm" function of component type "' + componentType + '" does not exist');
+                                }
+                                settingForm.addClass('active');
+                            }, 100);
+                        });
+                    } else {
+                        flog('"initSettingForm" function of component type "' + componentType + '" does not exist');
+                    }
                 } else {
-                    flog('"showSettingForm" function of component type "' + componentType + '" does not exist');
+                    if (typeof componentData.showSettingForm === 'function') {
+                        flog('Show setting form of component type "' + componentType + '"');
+                        componentData.showSettingForm.call(componentData, settingForm, target, self);
+                    } else {
+                        flog('"showSettingForm" function of component type "' + componentType + '" does not exist');
+                    }
+                    settingForm.addClass('active');
                 }
-                settingForm.addClass('active');
             } else {
                 self.setSettingContainer(target);
                 self.setSettingComponent(null);
@@ -1201,7 +1209,7 @@
 
                 var container = self.getClickedElement(e, '.keditor-container');
                 if (container) {
-                    flog('Click on .keditor-container', container, container.hasClass('showed-keditor-toolbar'));
+                    flog('Click on .keditor-container', container);
 
                     if (!container.hasClass('showed-keditor-toolbar')) {
                         body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');

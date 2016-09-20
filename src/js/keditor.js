@@ -679,13 +679,13 @@
                 if (settingForm.length === 0) {
                     var componentData = KEditor.components[componentType];
                     if (typeof componentData.initSettingForm === 'function') {
-                        settingForm = $('<div id="keditor-setting-' + componentType + '" data-type="' + componentType + '" class="keditor-setting-form clearfix"></div>');
+                        settingForm = $('<div id="keditor-setting-' + componentType + '" data-type="' + componentType + '" class="keditor-setting-form clearfix active"></div>');
                         var loadingText = $('<span />').html('Loading...');
                         settingForms.append(settingForm);
                         settingForm.append(loadingText);
 
                         flog('Initializing setting form for component type "' + componentType + '"');
-                        $.when(componentData.initSettingForm.call(componentData, settingForm, self)).done(function () {
+                        componentData.initSettingForm.call(componentData, settingForm, self).done(function () {
                             flog('Initialized setting form for component type "' + componentType + '"');
 
                             loadingText.remove();
@@ -696,7 +696,6 @@
                                 } else {
                                     flog('"showSettingForm" function of component type "' + componentType + '" does not exist');
                                 }
-                                settingForm.addClass('active');
                             }, 100);
                         });
                     } else {

@@ -222,8 +222,6 @@
                 }
             }
 
-            self.initContentAreas(target);
-
             var body = self.body;
             var ajaxRequest;
             if (body.hasClass('initialized-snippets-list')) {
@@ -238,6 +236,8 @@
                 self.initKEditorClicks();
                 body.addClass('initialized-click-event-handlers');
             }
+
+            self.initContentAreas(target);
 
             if (!ajaxRequest && typeof options.onReady === 'function') {
                 options.onReady.call(self);
@@ -685,11 +685,14 @@
                         settingForm.append(loadingText);
 
                         flog('Initializing setting form for component type "' + componentType + '"');
-                        componentData.initSettingForm.call(componentData, settingForm, self).done(function () {
+
+                        var initFunction = componentData.initSettingForm.call(componentData, settingForm, self);
+                        $.when(initFunction).done(function () {
                             flog('Initialized setting form for component type "' + componentType + '"');
 
-                            loadingText.remove();
                             setTimeout(function () {
+                                loadingText.remove();
+
                                 if (typeof componentData.showSettingForm === 'function') {
                                     flog('Show setting form of component type "' + componentType + '"');
                                     componentData.showSettingForm.call(componentData, settingForm, target, self);
@@ -1038,12 +1041,12 @@
             containerContent.children().each(function () {
                 var content = $(this);
 
-                self.convertToComponent(contentArea, container, content);
+                self.convertToComponent(contentArea, container, content, true);
             });
         },
 
-        convertToComponent: function (contentArea, container, target) {
-            flog('convertToComponent', contentArea, container, target);
+        convertToComponent: function (contentArea, container, target, isExisting) {
+            flog('convertToComponent', contentArea, container, target, isExisting);
 
             var self = this;
             var isSection = target.is('section');
@@ -1056,6 +1059,10 @@
             } else {
                 target.wrap('<section class="keditor-component"><section class="keditor-component-content"></section></section>');
                 component = target.parent().parent();
+            }
+
+            if (isExisting) {
+                component.addClass('existing-component');
             }
 
             self.initComponent(contentArea, container, component);

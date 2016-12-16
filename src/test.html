@@ -33,7 +33,7 @@
                         <img src="../examples/snippets/default/img/yenbai_vietnam.jpg" />
                     </div>
                 </section>
-                <section data-type="component-text" data-category-id="cate01" data-product-id="prod01" data-store-id="store01">
+                <section data-type="component-nonExisting" data-category-id="cate01" data-product-id="prod01" data-store-id="store01">
                     <div data-dynamic-href="snippets/default/_dynamic_content.html"></div>
                 </section>
             </div>
@@ -50,15 +50,22 @@
                 setting: {
                     text: '<i class="fa fa-cogs"></i>',
                     title: 'Settings',
-                    content: 'My content'
+                    content: (
+                        '<div class="form-horizontal">' +
+                        '   <h3>Here is Custom Tab Content!</h3>' +
+                        '</div>'
+                    )
                 }
             },
-            snippetsTooltipEnabled: true,
+            tabTooltipEnabled: false,
+            snippetsTooltipEnabled: false,
             containerSettingEnabled: true,
             containerSettingInitFunction: function (form, keditor) {
                 console.log(form, keditor);
                 form.append(
-                    '<h1>Here is Setting Container Panel!</h1>'
+                    '<div class="form-horizontal">' +
+                    '   <h3>Here is Setting Container Panel!</h3>' +
+                    '</div>'
                 );
             },
             containerSettingShowFunction: function (form, container, keditor) {

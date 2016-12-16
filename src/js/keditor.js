@@ -19,13 +19,23 @@
  * @option {String} tabComponentsText Text for Components tab
  * @option {String} tabComponentsTitle Title for Components tab
  * @option {Boolean} tabTooltipEnabled Bootstrap Tooltip is enabled for Component and Container tab or not
- * @option {Object} extraTabs Extra tabs besides Containers and Components tabs in sidebar. Format: { tabName: { text: 'My Extra Tab #1', title: 'My Extra Tab #1', content: 'Here is content of My Extra Tab #1' } }
+ * @option {Object} extraTabs Extra tabs besides Containers and Components tabs in sidebar
+ * Example: {
+ *     tabName: {
+ *         text: 'My Extra Tab #1',
+ *         title: 'My Extra Tab #1',
+ *         content: 'Here is content of My Extra Tab #1'
+ *     }
+ * }
  * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component - jQuery object of component
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {Boolean} snippetsTooltipEnabled Bootstrap tooltip is enable for snippet or not
  * @option {String} snippetsTooltipPosition Position of Bootstrap tooltip for snippet. Can be 'left', 'right', 'top' and 'bottom'
+ * @option {Boolean} snippetsFilterEnabled Enable filtering snippets by categories or not
+ * @option {String} snippetsCategoriesSeparator The separator character between each categories
  * @option {Boolean} iframeMode KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
+ * @option {Boolean}
  * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
  * @option {String} contentAreasWrapper The wrapper element for all contents inside iframe. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag
  * @option {Boolean} containerSettingEnabled Enable setting panel for container
@@ -124,6 +134,8 @@
         snippetsListId: 'keditor-snippets-list',
         snippetsTooltipEnabled: true,
         snippetsTooltipPosition: 'left',
+        snippetsFilterEnabled: true,
+        snippetsCategoriesSeparator: ';',
         iframeMode: false,
         contentAreasSelector: null,
         contentAreasWrapper: '<div class="keditor-content-areas-wrapper container"></div>',
@@ -376,6 +388,11 @@
                         self.initTabs();
                         self.initTabsSwitcher();
                         self.initSettingPanel();
+                        
+                        if (options.snippetsFilterEnabled) {
+                            self.initSnippetsFilter('Container');
+                            self.initSnippetsFilter('Component');
+                        }
 
                         if (options.snippetsTooltipEnabled || options.tabTooltipEnabled) {
                             flog('Initialize Bootstrap tooltip plugin');
@@ -393,6 +410,62 @@
             } else {
                 error('"snippetsUrl" must be not null!');
             }
+        },
+
+        initSnippetsFilter: function (type) {
+            flog('initSnippetsFilter');
+
+            var self = this;
+            var options = self.options;
+            var body = self.body;
+            var lowerCaseType = type.toLowerCase();
+            var categories = self['snippets' + type + 'Categories'];
+
+            var filterHtml = '';
+            filterHtml += '<div id="keditor-' + lowerCaseType + '-snippets-filter-wrapper" class="keditor-snippets-filter-wrapper">';
+            filterHtml += '     <select id="keditor-' + lowerCaseType + '-snippets-filter" class="keditor-snippets-filter">';
+            filterHtml += '         <option value="" selected="selected">All</option>';
+
+            for (var i = 0; i < categories.length; i++) {
+                filterHtml += '     <option value="' + categories[i] + '">' + categories[i] + '</option>';
+            }
+
+            filterHtml += '     </select>';
+            filterHtml += '</div>';
+
+            var tab = body.find('#keditor-' + lowerCaseType + '-snippets-tab');
+            var snippets = tab.find('.keditor-snippet');
+            tab.prepend(filterHtml);
+
+            snippets.each(function () {
+                var snippet = $(this);
+                var categories = snippet.attr('data-categories') || '';
+                categories = categories.split(options.snippetsCategoriesSeparator);
+
+                snippet.data('categories', categories);
+            });
+
+            tab.find('.keditor-snippets-filter').on('change', function () {
+                var selectedCategory = this.value;
+
+                if (selectedCategory) {
+                    snippets.filter(function () {
+                        var snippet = $(this);
+                        var matched = false;
+                        var dataCategories = snippet.data('categories');
+
+                        if ($.inArray(selectedCategory, dataCategories) !== -1) {
+                            matched = true;
+                        }
+
+                        snippet[matched ? 'removeClass': 'addClass']('not-matched');
+
+                        return matched;
+                    });
+                } else {
+                    snippets.removeClass('not-matched');
+                }
+            });
         },
 
         toggleSidebar: function (showSidebar) {
@@ -440,6 +513,9 @@
             var snippetsComponentHtml = '';
             var snippetsContentHtml = '';
 
+            self.snippetsContainerCategories = [];
+            self.snippetsComponentCategories = [];
+
             $('<div />').html(resp).find('> div').each(function (i) {
                 var snippet = $(this);
                 var content = snippet.html().trim();
@@ -447,34 +523,57 @@
                 var type = snippet.attr('data-type');
                 var title = snippet.attr('data-title');
                 var snippetHtml = '';
+                var categories = snippet.attr('data-categories') || '';
 
-                flog('Snippet #' + i + ' type=' + type, previewUrl, content);
+                flog('Snippet #' + i + ' type=' + type + ' categories=' + categories, previewUrl, content);
 
-                snippetHtml += '<section class="keditor-snippet" data-snippet="#keditor-snippet-' + i + '" data-type="' + type + '" ' + (options.snippetsTooltipEnabled ? 'data-toggle="tooltip" data-placement="' + options.snippetsTooltipPosition + '"' : '') + ' title="' + title + '">';
+                snippetHtml += '<section class="keditor-snippet" data-snippet="#keditor-snippet-' + i + '" data-type="' + type + '" ' + (options.snippetsTooltipEnabled ? 'data-toggle="tooltip" data-placement="' + options.snippetsTooltipPosition + '"' : '') + ' title="' + title + '" data-categories="' + categories + '">';
                 snippetHtml += '   <img class="keditor-snippet-preview" src="' + previewUrl + '" />';
                 snippetHtml += '</section>';
 
+                categories = categories.split(options.snippetsCategoriesSeparator);
+
                 if (type === 'container') {
                     snippetsContainerHtml += snippetHtml;
+                    self.snippetsContainerCategories = self.snippetsContainerCategories.concat(categories);
                 } else if (type.indexOf('component') !== -1) {
                     snippetsComponentHtml += snippetHtml;
+                    self.snippetsComponentCategories = self.snippetsComponentCategories.concat(categories);
                 }
 
                 var dataAttributes = self.getDataAttributes(snippet, ['data-preview', 'data-type', 'data-title'], true);
                 snippetsContentHtml += '<script id="keditor-snippet-' + i + '" type="text/html" ' + dataAttributes.join(' ') + '>' + content + '</script>';
             });
 
+            self.snippetsContainerCategories = self.beautifyCategories(self.snippetsContainerCategories);
+            self.snippetsComponentCategories = self.beautifyCategories(self.snippetsComponentCategories);
+
             body.find('#' + options.snippetsListId).html(
                 '<ul id="keditor-snippets-type-switcher" class="nav nav-tabs nav-justified">' +
-                '    <li class="active"><a href="#keditor-container-snippets"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabContainersTitle + '">' + options.tabContainersText + '</a></li>' +
-                '    <li><a href="#keditor-component-snippets"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabComponentsTitle + '">' + options.tabComponentsText + '</a></li>' +
+                '    <li class="active"><a href="#keditor-container-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabContainersTitle + '">' + options.tabContainersText + '</a></li>' +
+                '    <li><a href="#keditor-component-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabComponentsTitle + '">' + options.tabComponentsText + '</a></li>' +
                 '</ul>' +
                 '<div id="keditor-snippets-container" class="tab-content">' +
-                '   <div class="tab-pane keditor-snippets active" id="keditor-container-snippets">' + snippetsContainerHtml + '</div>' +
-                '   <div class="tab-pane keditor-snippets" id="keditor-component-snippets">' + snippetsComponentHtml + '</div>' +
+                '   <div class="tab-pane keditor-snippets active" id="keditor-container-snippets-tab"><div class="keditor-snippets-inner">' + snippetsContainerHtml + '</div></div>' +
+                '   <div class="tab-pane keditor-snippets" id="keditor-component-snippets-tab"><div class="keditor-snippets-inner">' + snippetsComponentHtml + '</div></div>' +
                 '</div>'
             ).addClass('loaded-snippets');
             body.find('#keditor-snippets-content').html(snippetsContentHtml);
+        },
+
+        beautifyCategories: function (categories) {
+            flog('beautifyCategories', categories);
+
+            var newArray = [];
+            for (var i = 0; i < categories.length; i++) {
+                var category = categories[i] || '';
+
+                if (category !== '' && $.inArray(category, newArray) === -1) {
+                    newArray.push(category);
+                }
+            }
+
+            return newArray.sort();
         },
 
         initSnippets: function () {
@@ -532,11 +631,11 @@
                     var tabData = options.extraTabs[tabName];
 
                     switcherWrapper.append('<li><a href="#keditor-extra-tab-' + tabName + '"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom" title="' + tabData.title + '"' : '') + '>' + tabData.text + '</a></li>');
-                    tabPaneWrapper.append('<div class="tab-pane keditor-snippets" id="keditor-extra-tab-' + tabName + '">' + tabData.content + '</div>');
+                    tabPaneWrapper.append('<div class="tab-pane keditor-snippets" id="keditor-extra-tab-' + tabName + '"><div class="keditor-snippets-inner">' + tabData.content + '</div></div>');
                 }
             }
 
-            self.initNiceScroll(tabPaneWrapper.find('.tab-pane'));
+            self.initNiceScroll(tabPaneWrapper.find('.keditor-snippets-inner'));
         },
 
         initTabsSwitcher: function () {

@@ -129,6 +129,17 @@ body.highlighted-container-content {
             opacity: .6;
             border-color: @snippet-border-color-hover;
         }
+
+        &.not-matched {
+            height: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            overflow: hidden;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            border: 0 !important;
+            opacity: 0 !important;
+        }
     }
 }
 
@@ -159,10 +170,31 @@ body.highlighted-container-content {
 
     > .keditor-snippets {
         height: 100%;
-        .clearfix();
-        overflow-y: auto;
-        overflow-x: hidden;
-        .transition(opacity @animation-duration);
+
+        > .keditor-snippets-inner {
+            height: 100%;
+            .clearfix();
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        > .keditor-snippets-filter-wrapper {
+            margin: 0 5px 10px;
+
+            .keditor-snippets-filter {
+                border: 1px solid @border-color;
+                height: 34px;
+                padding: 5px 10px;
+                font-size: 14px;
+                line-height: 1.42857143;
+                width: 100%;
+                display: block;
+            }
+
+            +  .keditor-snippets-inner {
+                height: ~"calc(100% - 44px)";
+            }
+        }
     }
 }
 

@@ -1,6 +1,21 @@
 # KEditor
 KEditor is a jQuery plugin which provides a content editor with drag and drop snippets
 
+## Shortcuts
+ * (Lived examples)[#lived-examples]
+ * (Dependencies)[#dependencies]
+ * (Configuration)[#configuration]
+ * (Iframe mode)[#iframe-mode]
+ * (How to get content of KEditor)[#how-to-get-content-of-keditor]
+ * (Customize snippet)[#customize-snippet]
+ * (Customize component type)[#customize-component-type]
+ * (Dynamic content)[#dynamic-content]
+ * (Support Touch Devices)[#support-touch-devices]
+ * (License)[#license]
+
+# Lived examples
+https://rawgit.com/Kademi/keditor/master/examples/index.html
+
 # Dependencies
  * jQuery: http://jquery.com/
  * jQuery UI: https://jqueryui.com/
@@ -316,10 +331,7 @@ __**Note**__:
  * All `data-*` attribute will be placed in div which contains `data-type="component-..."` attribute, not placed in div which contains `data-dynamic-href` attribute
  
 # Support Touch Devices
-Please use this plugin for enable Drag & Drop on Touch Devices: [http://touchpunch.furf.com/](jQuery UI Touch Punch)
+Please use this plugin for enable Drag & Drop on Touch Devices: [jQuery UI Touch Punch](http://touchpunch.furf.com/)
 
 # License
 Please read at https://github.com/Kademi/keditor/blob/master/LICENSE.md
-
-# Lived examples
-https://rawgit.com/Kademi/keditor/master/examples/index.html

@@ -2,16 +2,16 @@
 KEditor is a jQuery plugin which provides a content editor with drag and drop snippets
 
 ## Shortcuts
- * (Lived examples)[#lived-examples]
- * (Dependencies)[#dependencies]
- * (Configuration)[#configuration]
- * (Iframe mode)[#iframe-mode]
- * (How to get content of KEditor)[#how-to-get-content-of-keditor]
- * (Customize snippet)[#customize-snippet]
- * (Customize component type)[#customize-component-type]
- * (Dynamic content)[#dynamic-content]
- * (Support Touch Devices)[#support-touch-devices]
- * (License)[#license]
+ * [Lived examples](#lived-examples)
+ * [Dependencies](#dependencies)
+ * [Configuration](#configuration)
+ * [Iframe mode](#iframe-mode)
+ * [How to get content of KEditor](#how-to-get-content-of-keditor)
+ * [Customize snippet](#customize-snippet)
+ * [Customize component type](#customize-component-type)
+ * [Dynamic content](#dynamic-content)
+ * [Support Touch Devices](#support-touch-devices)
+ * [License](#license)
 
 # Lived examples
 https://rawgit.com/Kademi/keditor/master/examples/index.html

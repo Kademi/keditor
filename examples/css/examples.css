@@ -1,3 +1,16 @@
+html,
+body {
+    height: 100%;
+}
+
+#content-area {
+    min-height: 100%;
+}
+
+#content-area .keditor-content-area {
+    min-height: 100%;
+}
+
 #content-area1,
 #content-area2,
 #content-area3 {

@@ -35,7 +35,6 @@
  * @option {Boolean} snippetsFilterEnabled Enable filtering snippets by categories or not
  * @option {String} snippetsCategoriesSeparator The separator character between each categories
  * @option {Boolean} iframeMode KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
- * @option {Boolean}
  * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
  * @option {String} contentAreasWrapper The wrapper element for all contents inside iframe. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag
  * @option {Boolean} containerSettingEnabled Enable setting panel for container

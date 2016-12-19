@@ -32,7 +32,7 @@
  * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {Boolean} snippetsTooltipEnabled Bootstrap tooltip is enable for snippet or not
  * @option {String} snippetsTooltipPosition Position of Bootstrap tooltip for snippet. Can be 'left', 'right', 'top' and 'bottom'
- * @option {Boolean} snippetsFilterEnabled Enable filtering snippets by categories or not
+ * @option {Boolean} snippetsFilterEnabled Enable filtering snippets by categories and text searching or not
  * @option {String} snippetsCategoriesSeparator The separator character between each categories
  * @option {Boolean} iframeMode KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
  * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
@@ -412,7 +412,7 @@
         },
 
         initSnippetsFilter: function (type) {
-            flog('initSnippetsFilter');
+            flog('initSnippetsFilter', type);
 
             var self = this;
             var options = self.options;
@@ -422,6 +422,7 @@
 
             var filterHtml = '';
             filterHtml += '<div id="keditor-' + lowerCaseType + '-snippets-filter-wrapper" class="keditor-snippets-filter-wrapper">';
+            filterHtml += '     <input type="text" id="keditor-' + lowerCaseType + '-snippets-search" class="keditor-snippets-search" value="" placeholder="Type to search..." />';
             filterHtml += '     <select id="keditor-' + lowerCaseType + '-snippets-filter" class="keditor-snippets-filter">';
             filterHtml += '         <option value="" selected="selected">All</option>';
 
@@ -444,11 +445,56 @@
                 snippet.data('categories', categories);
             });
 
+            var txtSearch = tab.find('.keditor-snippets-search');
+            var cbbFilter = tab.find('.keditor-snippets-filter');
+
+            var doFilter = function () {
+                var selectedCategory = cbbFilter.val();
+                var searchText = txtSearch.val();
+
+                if (selectedCategory || searchText) {
+                    snippets.each(function () {
+                        var snippet = $(this);
+                        var error = 0;
+
+                        if (selectedCategory) {
+                            var dataCategories = snippet.data('categories');
+                            if ($.inArray(selectedCategory, dataCategories) === -1) {
+                                error++;
+                            }
+                        }
+
+                        if (searchText) {
+                            var title = snippet.attr('title');
+                            if (title.indexOf(searchText) === -1) {
+                                error++;
+                            }
+                        }
+
+                        snippet[error === 0 ? 'removeClass': 'addClass']('not-matched');
+                    });
+                } else {
+                    snippets.removeClass('not-matched');
+                }
+            };
+
+            cbbFilter.on('change', function () {
+                doFilter();
+            });
+
+            var timer;
+            txtSearch.on('keydown', function () {
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    doFilter();
+                }, 200);
+            });
+
             tab.find('.keditor-snippets-filter').on('change', function () {
                 var selectedCategory = this.value;
 
                 if (selectedCategory) {
-                    snippets.filter(function () {
+                    snippets.each(function () {
                         var snippet = $(this);
                         var matched = false;
                         var dataCategories = snippet.data('categories');
@@ -458,8 +504,6 @@
                         }
 
                         snippet[matched ? 'removeClass': 'addClass']('not-matched');
-
-                        return matched;
                     });
                 } else {
                     snippets.removeClass('not-matched');

@@ -179,9 +179,10 @@ body.highlighted-container-content {
         }
 
         > .keditor-snippets-filter-wrapper {
-            margin: 0 5px 10px;
+            margin: 0 5px;
 
-            .keditor-snippets-filter {
+            .keditor-snippets-filter,
+            .keditor-snippets-search {
                 border: 1px solid @border-color;
                 height: 34px;
                 padding: 5px 10px;
@@ -189,10 +190,11 @@ body.highlighted-container-content {
                 line-height: 1.42857143;
                 width: 100%;
                 display: block;
+                margin-bottom: 10px;
             }
 
-            +  .keditor-snippets-inner {
-                height: ~"calc(100% - 44px)";
+            + .keditor-snippets-inner {
+                height: ~"calc(100% - 88px)";
             }
         }
     }

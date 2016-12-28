@@ -586,7 +586,7 @@
                     self.snippetsComponentCategories = self.snippetsComponentCategories.concat(categories);
                 }
 
-                var dataAttributes = self.getDataAttributes(snippet, ['data-preview', 'data-type', 'data-title'], true);
+                var dataAttributes = self.getDataAttributes(snippet, ['data-preview', 'data-type', 'data-title', 'data-categories'], true);
                 snippetsContentHtml += '<script id="keditor-snippet-' + i + '" type="text/html" ' + dataAttributes.join(' ') + '>' + content + '</script>';
             });
 

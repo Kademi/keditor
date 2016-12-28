@@ -6,6 +6,7 @@
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  *
  * Configuration:
+ * @option {Boolean} niceScrollEnabled Enable niceScroll or not
  * @option {String} btnMoveContainerText Text content for move button of container
  * @option {String} btnMoveComponentText Text content for move button of component
  * @option {String} btnSettingContainerText Text content for setting button of container
@@ -114,6 +115,7 @@
 
     // Default configuration of KEditor
     KEditor.DEFAULTS = {
+        niceScrollEnabled: true,
         btnMoveContainerText: '<i class="fa fa-sort"></i>',
         btnMoveComponentText: '<i class="fa fa-arrows"></i>',
         btnSettingContainerText: '<i class="fa fa-cog"></i>',
@@ -263,7 +265,7 @@
         initNiceScroll: function (target) {
             flog('initNiceScroll', target);
 
-            if ($.fn.niceScroll) {
+            if ($.fn.niceScroll && this.options.niceScrollEnabled) {
                 flog('Initialize $.fn.niceScroll');
                 target.niceScroll({
                     cursorcolor: '#999',
@@ -387,7 +389,7 @@
                         self.initTabs();
                         self.initTabsSwitcher();
                         self.initSettingPanel();
-                        
+
                         if (options.snippetsFilterEnabled) {
                             self.initSnippetsFilter('Container');
                             self.initSnippetsFilter('Component');
@@ -471,7 +473,7 @@
                             }
                         }
 
-                        snippet[error === 0 ? 'removeClass': 'addClass']('not-matched');
+                        snippet[error === 0 ? 'removeClass' : 'addClass']('not-matched');
                     });
                 } else {
                     snippets.removeClass('not-matched');
@@ -503,7 +505,7 @@
                             matched = true;
                         }
 
-                        snippet[matched ? 'removeClass': 'addClass']('not-matched');
+                        snippet[matched ? 'removeClass' : 'addClass']('not-matched');
                     });
                 } else {
                     snippets.removeClass('not-matched');
@@ -707,7 +709,7 @@
                     li.addClass('active');
                     targetDiv.addClass('active');
 
-                    if ($.fn.niceScroll) {
+                    if ($.fn.niceScroll && self.options.niceScrollEnabled) {
                         activatedPane.getNiceScroll().hide();
 
                         var targetNiceScroll = targetDiv.getNiceScroll();

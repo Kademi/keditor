@@ -225,7 +225,6 @@
                         id: keditorWrapperId,
                         class: 'keditor-wrapper'
                     });
-                    flog('Id for keditor wrapper is: "' + keditorWrapperId + '"');
 
                     keditorWrapper.html(htmlContent);
                     target.css('display', 'none');
@@ -298,7 +297,6 @@
                 'id': iframeId,
                 'class': 'keditor-frame'
             });
-            flog('Id for keditor frame is: "' + iframeId + '"');
 
             target.css('display', 'none');
             target.attr('data-keditor-frame', '#' + iframeId);
@@ -441,34 +439,37 @@
 
             snippets.each(function () {
                 var snippet = $(this);
-                var categories = snippet.attr('data-categories') || '';
+                var categories = (snippet.attr('data-categories') || '').toLowerCase();
                 categories = categories.split(options.snippetsCategoriesSeparator);
 
-                snippet.data('categories', categories);
+                snippet.data('filter-categories', categories);
             });
 
             var txtSearch = tab.find('.keditor-snippets-search');
             var cbbFilter = tab.find('.keditor-snippets-filter');
 
             var doFilter = function () {
-                var selectedCategory = cbbFilter.val();
-                var searchText = txtSearch.val();
+                var selectedCategory = (cbbFilter.val() || '').toLowerCase();
+                var searchText = (txtSearch.val() || '').toLowerCase();
+
+                flog('Do filter with selected category is "' + selectedCategory + '" and search text is "' + searchText + '"');
 
                 if (selectedCategory || searchText) {
                     snippets.each(function () {
                         var snippet = $(this);
+                        var dataCategories = snippet.data('filter-categories');
+                        var dataCategoriesString = dataCategories.join(';');
                         var error = 0;
 
                         if (selectedCategory) {
-                            var dataCategories = snippet.data('categories');
                             if ($.inArray(selectedCategory, dataCategories) === -1) {
                                 error++;
                             }
                         }
 
                         if (searchText) {
-                            var title = snippet.attr('title');
-                            if (title.indexOf(searchText) === -1) {
+                            var title = snippet.attr('title').toLowerCase();
+                            if (title.indexOf(searchText) === -1 && dataCategoriesString.indexOf(searchText) === -1) {
                                 error++;
                             }
                         }
@@ -945,13 +946,8 @@
 
             contentAreas.each(function () {
                 var contentArea = $(this);
-                var id = contentArea.attr('id') || '';
-                if (id.length === 0) {
-                    flog('Content area does not contain Id. Generating id for content area...');
-
-                    id = self.generateId('content-area');
-                    contentArea.attr('id', id);
-                    flog('Id for content are is: "' + id + '"');
+                if (!contentArea.attr('id')) {
+                    contentArea.attr('id', self.generateId('content-area'));
                 }
 
                 self.initContentArea(contentArea);
@@ -1079,9 +1075,7 @@
                     '</div>'
                 );
 
-                var containerId = self.generateId('container');
-                flog('Id for container is: ' + containerId);
-                container.attr('id', containerId);
+                container.attr('id', self.generateId('container'));
 
                 var containerContents = container.find('[data-type="container-content"]');
                 flog('Initialize ' + containerContents.length + ' container content(s)');
@@ -1112,11 +1106,8 @@
             var self = this;
             var options = self.options;
             var body = self.body;
-            var contentId = self.generateId('container-content');
             containerContent.addClass('keditor-container-content');
-
-            flog('Id for container content id: ' + contentId, containerContent);
-            containerContent.attr('id', contentId);
+            containerContent.attr('id', self.generateId('container-content'));
 
             flog('Initialize $.fn.droppable for container content');
             containerContent.droppable({
@@ -1274,15 +1265,10 @@
 
             if (!component.hasClass('keditor-initialized-component') || !component.hasClass('keditor-initializing-component')) {
                 component.addClass('keditor-initializing-component');
-
-                var componentId = self.generateId('component');
-                flog('Id for component is: ' + componentId);
-                component.attr('id', componentId);
+                component.attr('id', self.generateId('component'));
 
                 var componentContent = component.children('.keditor-component-content');
-                var contentId = self.generateId('component-content');
-                flog('Id for component content is: ' + contentId);
-                componentContent.attr('id', contentId);
+                componentContent.attr('id', self.generateId('component-content'));
 
                 var componentType = self.getComponentType(component);
                 flog('Component type: ' + componentType);
@@ -1596,6 +1582,10 @@
             var options = self.options;
             var component = dynamicElement.closest('.keditor-component');
             var contentArea = dynamicElement.closest('.keditor-content-area');
+
+            if (!dynamicElement.attr('id')) {
+                dynamicElement.attr('id', self.generateId('dynamic-element'));
+            }
 
             if (typeof options.onBeforeDynamicContentLoad === 'function') {
                 options.onBeforeDynamicContentLoad.call(contentArea, dynamicElement, component);

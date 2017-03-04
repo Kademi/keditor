@@ -440,9 +440,12 @@
             snippets.each(function () {
                 var snippet = $(this);
                 var categories = snippet.attr('data-categories') || '';
+                var filterCategories = categories.toLowerCase();
                 categories = categories.split(options.snippetsCategoriesSeparator);
+                filterCategories = filterCategories.split(options.snippetsCategoriesSeparator);
                 
                 snippet.data('categories', categories);
+                snippet.data('categoriesFilter', filterCategories);
             });
             
             var txtSearch = tab.find('.keditor-snippets-search');
@@ -455,14 +458,15 @@
                 flog('Do filter with selected category is "' + selectedCategory + '" and search text is "' + searchText + '"');
                 
                 if (selectedCategory || searchText) {
+                    flog('Filtering snippets');
+                    
                     snippets.each(function () {
                         var snippet = $(this);
-                        var dataCategories = snippet.data('filter-categories');
+                        var dataCategories = snippet.data('categoriesFilter');
                         var dataCategoriesString = dataCategories.join(';');
                         var error = 0;
                         
                         if (selectedCategory) {
-                            var dataCategories = snippet.data('categories');
                             if ($.inArray(selectedCategory, dataCategories) === -1) {
                                 error++;
                             }
@@ -478,6 +482,7 @@
                         snippet[error === 0 ? 'removeClass' : 'addClass']('not-matched');
                     });
                 } else {
+                    flog('Show all snippets');
                     snippets.removeClass('not-matched');
                 }
             };
@@ -492,26 +497,6 @@
                 timer = setTimeout(function () {
                     doFilter();
                 }, 200);
-            });
-            
-            tab.find('.keditor-snippets-filter').on('change', function () {
-                var selectedCategory = this.value;
-                
-                if (selectedCategory) {
-                    snippets.each(function () {
-                        var snippet = $(this);
-                        var matched = false;
-                        var dataCategories = snippet.data('categories');
-                        
-                        if ($.inArray(selectedCategory, dataCategories) !== -1) {
-                            matched = true;
-                        }
-                        
-                        snippet[matched ? 'removeClass' : 'addClass']('not-matched');
-                    });
-                } else {
-                    snippets.removeClass('not-matched');
-                }
             });
         },
         

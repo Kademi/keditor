@@ -2,7 +2,7 @@
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.3
+ * @version: 1.1.4
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
  */
 /* ==================================================================================
@@ -152,9 +152,10 @@ body.highlighted-container-content .keditor-container-content:before {
   clear: both;
 }
 #keditor-snippets-container > .keditor-snippets > .keditor-snippets-filter-wrapper {
-  margin: 0 5px 10px;
+  margin: 0 5px;
 }
-#keditor-snippets-container > .keditor-snippets > .keditor-snippets-filter-wrapper .keditor-snippets-filter {
+#keditor-snippets-container > .keditor-snippets > .keditor-snippets-filter-wrapper .keditor-snippets-filter,
+#keditor-snippets-container > .keditor-snippets > .keditor-snippets-filter-wrapper .keditor-snippets-search {
   border: 1px solid #ddd;
   height: 34px;
   padding: 5px 10px;
@@ -162,9 +163,10 @@ body.highlighted-container-content .keditor-container-content:before {
   line-height: 1.42857143;
   width: 100%;
   display: block;
+  margin-bottom: 10px;
 }
 #keditor-snippets-container > .keditor-snippets > .keditor-snippets-filter-wrapper + .keditor-snippets-inner {
-  height: calc(100% - 44px);
+  height: calc(100% - 88px);
 }
 .keditor-snippet {
   padding: 15px;

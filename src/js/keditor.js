@@ -35,7 +35,15 @@
  * @option {String} snippetsTooltipPosition Position of Bootstrap tooltip for snippet. Can be 'left', 'right', 'top' and 'bottom'
  * @option {Boolean} snippetsFilterEnabled Enable filtering snippets by categories and text searching or not
  * @option {String} snippetsCategoriesSeparator The separator character between each categories
- * @option {Boolean} iframeMode KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
+ * @option {Boolean} iframeMode KEditor is created inside an iframe or not. KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
+ * @option {Array<Object>} contentStyles Content styles for iframe mode
+ * Example: [
+ *     {
+ *         href: '/path/to/style/file'
+ *     }, {
+ *         content: 'a { color: red; }'
+ *     }
+ * ]
  * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
  * @option {String} contentAreasWrapper The wrapper element for all contents inside iframe. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag
  * @option {Boolean} containerSettingEnabled Enable setting panel for container
@@ -138,6 +146,7 @@
         snippetsFilterEnabled: true,
         snippetsCategoriesSeparator: ';',
         iframeMode: false,
+        contentStyles: [],
         contentAreasSelector: null,
         contentAreasWrapper: '<div class="keditor-content-areas-wrapper container"></div>',
         containerSettingEnabled: false,
@@ -317,6 +326,17 @@
                     styles += '<style type="text/css">' + style.html() + '</style>\n';
                 }
             });
+            
+            if (options.contentStyles && $.isArray(options.contentStyles)) {
+                $.each(options.contentStyles, function (i, style) {
+                    if (style.href) {
+                        styles += '<link rel="stylesheet" type="text/css" href="' + style.href + '" />\n';
+                    } else {
+                        styles += '<style type="text/css">' + style.content + '</style>\n';
+                    }
+                });
+            }
+            
             flog('Styles: \n' + styles);
             
             iframeHead.append(styles);
@@ -1049,15 +1069,15 @@
                 
                 var settingBtn = '';
                 if (options.containerSettingEnabled === true) {
-                    settingBtn = '<a href="#" class="btn-container-setting">' + options.btnSettingContainerText + '</a>';
+                    settingBtn = '<a href="javascript:void(0);" class="btn-container-setting">' + options.btnSettingContainerText + '</a>';
                 }
                 
                 flog('Render KEditor toolbar for container', container);
                 container.append(
                     '<div class="keditor-toolbar keditor-toolbar-container">' +
-                    '   <a href="#" class="btn-container-reposition">' + options.btnMoveContainerText + '</a>' + settingBtn +
-                    '   <a href="#" class="btn-container-duplicate">' + options.btnDuplicateContainerText + '</a>' +
-                    '   <a href="#" class="btn-container-delete">' + options.btnDeleteContainerText + '</a>' +
+                    '   <a href="javascript:void(0);" class="btn-container-reposition">' + options.btnMoveContainerText + '</a>' + settingBtn +
+                    '   <a href="javascript:void(0);" class="btn-container-duplicate">' + options.btnDuplicateContainerText + '</a>' +
+                    '   <a href="javascript:void(0);" class="btn-container-delete">' + options.btnDeleteContainerText + '</a>' +
                     '</div>'
                 );
                 
@@ -1263,15 +1283,15 @@
                 var isSettingEnabled = componentData.settingEnabled;
                 var settingBtn = '';
                 if (isSettingEnabled) {
-                    settingBtn = '<a href="#" class="btn-component-setting">' + options.btnSettingComponentText + '</a>';
+                    settingBtn = '<a href="javascript:void(0);" class="btn-component-setting">' + options.btnSettingComponentText + '</a>';
                 }
                 
                 flog('Render KEditor toolbar for component', component);
                 component.append(
                     '<div class="keditor-toolbar keditor-toolbar-component">' +
-                    '   <a href="#" class="btn-component-reposition">' + options.btnMoveComponentText + '</a>' + settingBtn +
-                    '   <a href="#" class="btn-component-duplicate">' + options.btnDuplicateComponentText + '</a>' +
-                    '   <a href="#" class="btn-component-delete">' + options.btnDeleteComponentText + '</a>' +
+                    '   <a href="javascript:void(0);" class="btn-component-reposition">' + options.btnMoveComponentText + '</a>' + settingBtn +
+                    '   <a href="javascript:void(0);" class="btn-component-duplicate">' + options.btnDuplicateComponentText + '</a>' +
+                    '   <a href="javascript:void(0);" class="btn-component-delete">' + options.btnDeleteComponentText + '</a>' +
                     '</div>'
                 );
                 

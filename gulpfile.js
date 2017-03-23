@@ -23,7 +23,7 @@ gulp.task('clean-css-dist', function () {
 });
 
 gulp.task('build-css-keditor', function () {
-    return gulp.src('./src/less/keditor.less')
+    return gulp.src(['!./src/less/keditor-component-*.less', '!./src/less/_*.less'])
         .pipe(plumber())
         .pipe(less())
         .pipe(replace('@{version}', pjson.version))
@@ -46,7 +46,7 @@ gulp.task('build-css-keditor', function () {
 });
 
 gulp.task('build-css-components', function () {
-    return gulp.src(['./src/less/keditor-component-*.less', '!./src/less/keditor.less', '!./src/less/_*.less'])
+    return gulp.src(['./src/less/keditor-component-*.less'])
         .pipe(plumber())
         .pipe(less())
         .pipe(concat('keditor-components.css'))
@@ -76,7 +76,7 @@ gulp.task('clean-js-dist', function () {
 });
 
 gulp.task('build-js-keditor', function () {
-    return gulp.src(['./src/js/keditor.js'])
+    return gulp.src(['!./src/js/keditor-component-*.js'])
         .pipe(plumber())
         .pipe(replace('@{version}', pjson.version))
         .pipe(rename({
@@ -97,7 +97,7 @@ gulp.task('build-js-keditor', function () {
 });
 
 gulp.task('build-js-components', function () {
-    return gulp.src(['./src/js/keditor-component-*.js', '!./src/js/keditor.js'])
+    return gulp.src(['./src/js/keditor-component-*.js'])
         .pipe(plumber())
         .pipe(concat('keditor-components.js'))
         .pipe(replace('@{version}', pjson.version))

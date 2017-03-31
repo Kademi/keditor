@@ -148,7 +148,7 @@
         iframeMode: false,
         contentStyles: [],
         contentAreasSelector: null,
-        contentAreasWrapper: '<div class="keditor-content-areas-wrapper container"></div>',
+        contentAreasWrapper: '<div class="keditor-ui keditor-content-areas-wrapper"></div>',
         containerSettingEnabled: false,
         containerSettingInitFunction: null,
         containerSettingShowFunction: null,
@@ -232,7 +232,7 @@
                     target.after(keditorWrapper);
                     keditorWrapper.attr({
                         id: keditorWrapperId,
-                        class: 'keditor-wrapper'
+                        class: 'keditor-ui keditor-wrapper'
                     });
                     
                     keditorWrapper.html(htmlContent);
@@ -297,14 +297,14 @@
             
             var self = this;
             var options = self.options;
-            var originalContent = target.html();
+            var originalContent = target.is('textarea') ? target.val() : target.html();
             var iframe = $('<iframe />');
             var iframeId = self.generateId('frame');
             
             target.after(iframe);
             iframe.attr({
                 'id': iframeId,
-                'class': 'keditor-frame'
+                'class': 'keditor-ui keditor-frame'
             });
             
             target.css('display', 'none');
@@ -376,20 +376,25 @@
                 flog('Render default KEditor snippet container');
                 
                 body.append(
-                    '<div id="keditor-sidebar">' +
-                    '   <a id="keditor-sidebar-toggler"><i class="fa fa-chevron-right"></i></a>' +
-                    '   <div id="keditor-snippets-list"></div>' +
-                    '   <div id="keditor-snippets-content" style="display: none"></div>' +
-                    '   <div id="keditor-setting-panel">' +
-                    '       <div id="keditor-setting-header"><span id="keditor-setting-title"></span><a href="#" id="keditor-setting-closer"><i class="fa fa-arrow-right"></i></a></div>' +
-                    '       <div id="keditor-setting-body"><div id="keditor-setting-forms"></div></div>' +
+                    '<div id="keditor-sidebar" class="keditor-ui">' +
+                    '   <a id="keditor-sidebar-toggler" class="keditor-ui"><i class="fa fa-chevron-right"></i></a>' +
+                    '   <div id="keditor-snippets-list" class="keditor-ui"></div>' +
+                    '   <div id="keditor-snippets-content" class="keditor-ui" style="display: none"></div>' +
+                    '   <div id="keditor-setting-panel" class="keditor-ui">' +
+                    '       <div id="keditor-setting-header" class="keditor-ui">' +
+                    '           <span id="keditor-setting-title" class="keditor-ui"></span>' +
+                    '           <a href="#" id="keditor-setting-closer" class="keditor-ui"><i class="fa fa-arrow-right"></i></a>' +
+                    '       </div>' +
+                    '       <div id="keditor-setting-body" class="keditor-ui">' +
+                    '           <div id="keditor-setting-forms" class="keditor-ui"></div>' +
+                    '       </div>' +
                     '   </div>' +
                     '</div>'
                 );
                 self.initSidebarToggler();
             } else {
                 flog('Render KEditor snippets content after custom snippets list with id="' + options.snippetsListId + '"');
-                body.find('#' + options.snippetsListId).after('<div id="keditor-snippets-content" style="display: none"></div>');
+                body.find('#' + options.snippetsListId).after('<div id="keditor-snippets-content" class="keditor-ui" style="display: none"></div>');
             }
             
             if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
@@ -441,9 +446,9 @@
             var categories = self['snippets' + type + 'Categories'];
             
             var filterHtml = '';
-            filterHtml += '<div id="keditor-' + lowerCaseType + '-snippets-filter-wrapper" class="keditor-snippets-filter-wrapper">';
-            filterHtml += '     <input type="text" id="keditor-' + lowerCaseType + '-snippets-search" class="keditor-snippets-search" value="" placeholder="Type to search..." />';
-            filterHtml += '     <select id="keditor-' + lowerCaseType + '-snippets-filter" class="keditor-snippets-filter">';
+            filterHtml += '<div id="keditor-' + lowerCaseType + '-snippets-filter-wrapper" class="keditor-ui keditor-snippets-filter-wrapper">';
+            filterHtml += '     <input type="text" id="keditor-' + lowerCaseType + '-snippets-search" class="keditor-ui keditor-snippets-search" value="" placeholder="Type to search..." />';
+            filterHtml += '     <select id="keditor-' + lowerCaseType + '-snippets-filter" class="keditor-ui keditor-snippets-filter">';
             filterHtml += '         <option value="" selected="selected">All</option>';
             
             for (var i = 0; i < categories.length; i++) {
@@ -579,8 +584,8 @@
                 
                 flog('Snippet #' + i + ' type=' + type + ' categories=' + categories, previewUrl, content);
                 
-                snippetHtml += '<section class="keditor-snippet" data-snippet="#keditor-snippet-' + i + '" data-type="' + type + '" ' + (options.snippetsTooltipEnabled ? 'data-toggle="tooltip" data-placement="' + options.snippetsTooltipPosition + '"' : '') + ' title="' + title + '" data-categories="' + categories + '">';
-                snippetHtml += '   <img class="keditor-snippet-preview" src="' + previewUrl + '" />';
+                snippetHtml += '<section class="keditor-ui keditor-snippet" data-snippet="#keditor-snippet-' + i + '" data-type="' + type + '" ' + (options.snippetsTooltipEnabled ? 'data-toggle="tooltip" data-placement="' + options.snippetsTooltipPosition + '"' : '') + ' title="' + title + '" data-categories="' + categories + '">';
+                snippetHtml += '   <img class="keditor-ui keditor-snippet-preview" src="' + previewUrl + '" />';
                 snippetHtml += '</section>';
                 
                 categories = categories.split(options.snippetsCategoriesSeparator);
@@ -601,13 +606,13 @@
             self.snippetsComponentCategories = self.beautifyCategories(self.snippetsComponentCategories);
             
             body.find('#' + options.snippetsListId).html(
-                '<ul id="keditor-snippets-type-switcher" class="nav nav-tabs nav-justified">' +
-                '    <li class="active"><a href="#keditor-container-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabContainersTitle + '">' + options.tabContainersText + '</a></li>' +
-                '    <li><a href="#keditor-component-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabComponentsTitle + '">' + options.tabComponentsText + '</a></li>' +
+                '<ul id="keditor-snippets-type-switcher" class="keditor-ui keditor-tabs">' +
+                '    <li class="keditor-ui keditor-tab active"><a class="keditor-ui" href="#keditor-container-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabContainersTitle + '">' + options.tabContainersText + '</a></li>' +
+                '    <li class="keditor-ui keditor-tab"><a class="keditor-ui" href="#keditor-component-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabComponentsTitle + '">' + options.tabComponentsText + '</a></li>' +
                 '</ul>' +
-                '<div id="keditor-snippets-container" class="tab-content">' +
-                '   <div class="tab-pane keditor-snippets active" id="keditor-container-snippets-tab"><div class="keditor-snippets-inner">' + snippetsContainerHtml + '</div></div>' +
-                '   <div class="tab-pane keditor-snippets" id="keditor-component-snippets-tab"><div class="keditor-snippets-inner">' + snippetsComponentHtml + '</div></div>' +
+                '<div id="keditor-snippets-container" class="keditor-ui keditor-tabs-content">' +
+                '   <div class="keditor-ui keditor-tab-content active" id="keditor-container-snippets-tab"><div class="keditor-ui keditor-tab-content-inner">' + snippetsContainerHtml + '</div></div>' +
+                '   <div class="keditor-ui keditor-tab-content" id="keditor-component-snippets-tab"><div class="keditor-ui keditor-tab-content-inner">' + snippetsComponentHtml + '</div></div>' +
                 '</div>'
             ).addClass('loaded-snippets');
             body.find('#keditor-snippets-content').html(snippetsContentHtml);
@@ -682,12 +687,12 @@
                 for (var tabName in options.extraTabs) {
                     var tabData = options.extraTabs[tabName];
                     
-                    switcherWrapper.append('<li><a href="#keditor-extra-tab-' + tabName + '"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom" title="' + tabData.title + '"' : '') + '>' + tabData.text + '</a></li>');
-                    tabPaneWrapper.append('<div class="tab-pane keditor-snippets" id="keditor-extra-tab-' + tabName + '"><div class="keditor-snippets-inner">' + tabData.content + '</div></div>');
+                    switcherWrapper.append('<li class="keditor-ui keditor-tab"><a class="keditor-ui" href="#keditor-extra-tab-' + tabName + '"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom" title="' + tabData.title + '"' : '') + '>' + tabData.text + '</a></li>');
+                    tabPaneWrapper.append('<div class="keditor-ui keditor-tab-content" id="keditor-extra-tab-' + tabName + '"><div class="keditor-tab-content-inner">' + tabData.content + '</div></div>');
                 }
             }
             
-            self.initNiceScroll(tabPaneWrapper.find('.keditor-snippets-inner'));
+            self.initNiceScroll(tabPaneWrapper.find('.keditor-tab-content-inner'));
         },
         
         initTabsSwitcher: function () {
@@ -696,7 +701,7 @@
             var self = this;
             var body = self.body;
             var switcherLis = body.find('#keditor-snippets-type-switcher li');
-            var tabPane = body.find('#keditor-snippets-container .tab-pane');
+            var tabContent = body.find('#keditor-snippets-container .keditor-tab-content');
             
             switcherLis.find('a').on('click', function (e) {
                 e.preventDefault();
@@ -707,7 +712,7 @@
                 
                 if (!li.hasClass('active')) {
                     var activatedLi = switcherLis.filter('.active');
-                    var activatedPane = tabPane.filter('.active');
+                    var activatedPane = tabContent.filter('.active');
                     var targetDiv = body.find(href);
                     
                     activatedLi.removeClass('active');
@@ -746,7 +751,7 @@
             if (options.containerSettingEnabled === true) {
                 if (typeof options.containerSettingInitFunction === 'function') {
                     
-                    var form = $('<div id="keditor-container-setting" class="keditor-setting-form clearfix"></div>');
+                    var form = $('<div id="keditor-container-setting" class="keditor-ui keditor-setting-form clearfix"></div>');
                     settingForms.append(form);
                     
                     flog('Initialize container setting panel');
@@ -830,7 +835,7 @@
                 if (settingForm.length === 0) {
                     var componentData = KEditor.components[componentType];
                     if (typeof componentData.initSettingForm === 'function') {
-                        settingForm = $('<div id="keditor-setting-' + componentType + '" data-type="' + componentType + '" class="keditor-setting-form clearfix active"></div>');
+                        settingForm = $('<div id="keditor-setting-' + componentType + '" data-type="' + componentType + '" class="keditor-ui keditor-setting-form clearfix active"></div>');
                         var loadingText = $('<span />').html('Loading...');
                         settingForms.append(settingForm);
                         settingForm.append(loadingText);
@@ -998,8 +1003,8 @@
                         flog('Snippet content', snippetContent);
                         
                         var container = $(
-                            '<section class="keditor-container">' +
-                            '   <section class="keditor-container-inner">' + snippetContent + '</section>' +
+                            '<section class="keditor-ui keditor-container">' +
+                            '   <section class="keditor-ui keditor-container-inner">' + snippetContent + '</section>' +
                             '</section>'
                         );
                         helper.replaceWith(container);
@@ -1048,10 +1053,10 @@
             
             if (isSection) {
                 target.addClass('keditor-container');
-                target.wrapInner('<section class="keditor-container-inner"></section>');
+                target.wrapInner('<section class="keditor-ui keditor-container-inner"></section>');
                 container = target;
             } else {
-                target.wrap('<section class="keditor-container"><section class="keditor-container-inner"></section></section>');
+                target.wrap('<section class="keditor-ui keditor-container"><section class="keditor-ui keditor-container-inner"></section></section>');
                 container = target.parent().parent();
             }
             
@@ -1069,15 +1074,15 @@
                 
                 var settingBtn = '';
                 if (options.containerSettingEnabled === true) {
-                    settingBtn = '<a href="javascript:void(0);" class="btn-container-setting">' + options.btnSettingContainerText + '</a>';
+                    settingBtn = '<a href="javascript:void(0);" class="keditor-ui btn-container-setting">' + options.btnSettingContainerText + '</a>';
                 }
                 
                 flog('Render KEditor toolbar for container', container);
                 container.append(
                     '<div class="keditor-toolbar keditor-toolbar-container">' +
-                    '   <a href="javascript:void(0);" class="btn-container-reposition">' + options.btnMoveContainerText + '</a>' + settingBtn +
-                    '   <a href="javascript:void(0);" class="btn-container-duplicate">' + options.btnDuplicateContainerText + '</a>' +
-                    '   <a href="javascript:void(0);" class="btn-container-delete">' + options.btnDeleteContainerText + '</a>' +
+                    '   <a href="javascript:void(0);" class="keditor-ui btn-container-reposition">' + options.btnMoveContainerText + '</a>' + settingBtn +
+                    '   <a href="javascript:void(0);" class="keditor-ui btn-container-duplicate">' + options.btnDuplicateContainerText + '</a>' +
+                    '   <a href="javascript:void(0);" class="keditor-ui btn-container-delete">' + options.btnDeleteContainerText + '</a>' +
                     '</div>'
                 );
                 
@@ -1146,8 +1151,8 @@
                         
                         var dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
                         var component = $(
-                            '<section class="keditor-component" data-type="' + componentType + '" ' + dataAttributes.join(' ') + '>' +
-                            '   <section class="keditor-component-content">' + snippetContent + '</section>' +
+                            '<section class="keditor-ui keditor-component" data-type="' + componentType + '" ' + dataAttributes.join(' ') + '>' +
+                            '   <section class="keditor-ui keditor-component-content">' + snippetContent + '</section>' +
                             '</section>'
                         );
                         helper.replaceWith(component);
@@ -1195,10 +1200,10 @@
             
             if (isSection) {
                 target.addClass('keditor-component');
-                target.wrapInner('<section class="keditor-component-content"></section>');
+                target.wrapInner('<section class="keditor-ui keditor-component-content"></section>');
                 component = target;
             } else {
-                target.wrap('<section class="keditor-component"><section class="keditor-component-content"></section></section>');
+                target.wrap('<section class="keditor-ui keditor-component"><section class="keditor-ui keditor-component-content"></section></section>');
                 component = target.parent().parent();
             }
             
@@ -1283,15 +1288,15 @@
                 var isSettingEnabled = componentData.settingEnabled;
                 var settingBtn = '';
                 if (isSettingEnabled) {
-                    settingBtn = '<a href="javascript:void(0);" class="btn-component-setting">' + options.btnSettingComponentText + '</a>';
+                    settingBtn = '<a href="javascript:void(0);" class="keditor-ui btn-component-setting">' + options.btnSettingComponentText + '</a>';
                 }
                 
                 flog('Render KEditor toolbar for component', component);
                 component.append(
                     '<div class="keditor-toolbar keditor-toolbar-component">' +
-                    '   <a href="javascript:void(0);" class="btn-component-reposition">' + options.btnMoveComponentText + '</a>' + settingBtn +
-                    '   <a href="javascript:void(0);" class="btn-component-duplicate">' + options.btnDuplicateComponentText + '</a>' +
-                    '   <a href="javascript:void(0);" class="btn-component-delete">' + options.btnDeleteComponentText + '</a>' +
+                    '   <a href="javascript:void(0);" class="keditor-ui btn-component-reposition">' + options.btnMoveComponentText + '</a>' + settingBtn +
+                    '   <a href="javascript:void(0);" class="keditor-ui btn-component-duplicate">' + options.btnDuplicateComponentText + '</a>' +
+                    '   <a href="javascript:void(0);" class="keditor-ui btn-component-delete">' + options.btnDeleteComponentText + '</a>' +
                     '</div>'
                 );
                 

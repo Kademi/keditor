@@ -25,6 +25,7 @@ div.cke_float[id*="cke_keditor-component-content-"] .cke_toolbox {
 div.cke_float[id*="cke_keditor-component-content-"] .cke_toolbar {
   float: none !important;
   display: inline-block !important;
+  vertical-align: top !important;
 }
 div.cke_float[id*="cke_keditor-component-content-"] .cke_toolbar_break {
   display: none !important;

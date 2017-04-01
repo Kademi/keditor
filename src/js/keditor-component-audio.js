@@ -1,32 +1,25 @@
-/**
- * KEditor Audio Component
- * @copyright: Kademi (http://kademi.co)
- * @author: Kademi (http://kademi.co)
- * @version: @{version}
- * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
- */
 (function ($) {
     var KEditor = $.keditor;
     var flog = KEditor.log;
-
+    
     KEditor.components['audio'] = {
         getContent: function (component, keditor) {
             flog('getContent "audio" component, component');
-
+            
             var componentContent = component.children('.keditor-component-content');
             var audio = componentContent.find('audio');
             audio.unwrap();
-
+            
             return componentContent.html();
         },
-
+        
         settingEnabled: true,
-
+        
         settingTitle: 'Audio Settings',
-
+        
         initSettingForm: function (form, keditor) {
             flog('init "audio" settings', form);
-
+            
             form.append(
                 '<form class="form-horizontal">' +
                 '<div class="form-group">' +
@@ -59,27 +52,27 @@
                 '</form>'
             );
         },
-
+        
         showSettingForm: function (form, component, keditor) {
             flog('showSettingForm "audio" component', form, component);
-
+            
             var options = keditor.options;
-
+            
             var audio = component.find('audio');
             var fileInput = form.find('#audioFileInput');
             var btnAudioFileInput = form.find('.btn-audioFileInput');
             btnAudioFileInput.off('click').on('click', function (e) {
                 e.preventDefault();
-
+                
                 fileInput.trigger('click');
             });
             fileInput.off('change').on('change', function () {
                 var file = this.files[0];
                 if (/audio/.test(file.type)) {
                     // Todo: Upload to your server :)
-
+                    
                     audio.attr('src', URL.createObjectURL(file));
-
+                    
                     audio.load(function () {
                         keditor.showSettingPanel(component, options);
                     });
@@ -87,7 +80,7 @@
                     alert('Your selected file is not an audio file!');
                 }
             });
-
+            
             var autoplayToggle = form.find('#audio-autoplay');
             autoplayToggle.off('click').on('click', function (e) {
                 if (this.checked) {
@@ -96,7 +89,7 @@
                     audio.removeAttr('autoplay');
                 }
             });
-
+            
             var showcontrolsToggle = form.find('#audio-showcontrols');
             showcontrolsToggle.off('click').on('click', function (e) {
                 if (this.checked) {
@@ -105,7 +98,7 @@
                     audio.removeAttr('controls');
                 }
             });
-
+            
             var audioWidth = form.find('#audio-width');
             audioWidth.off('change').on('change', function () {
                 audio.css('width', this.value + '%');

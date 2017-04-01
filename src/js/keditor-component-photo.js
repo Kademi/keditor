@@ -1,10 +1,3 @@
-/**
- * KEditor Photo Component
- * @copyright: Kademi (http://kademi.co)
- * @author: Kademi (http://kademi.co)
- * @version: @{version}
- * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
- */
 (function ($) {
     var KEditor = $.keditor;
     var flog = KEditor.log;

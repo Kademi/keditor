@@ -3,25 +3,27 @@
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
  * @version: @{version}
- * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
  */
 // ==================================================================================
 // Import
 // ==================================================================================
 @import "bootstrap/variables";
 @import "bootstrap/mixins";
-@import "_variables";
-@import "keditor";
 
 /* ==================================================================================
-   Settings panel
+   Bootstrap style for setting form controls
    ================================================================================== */
 #keditor-setting-forms {
     .keditor-setting-form {
-        .form-group {
-            .clearfix;
+        * {
+            &,
+            &:before,
+            &:after {
+                box-sizing: border-box;
+            }
         }
-    
+        
         @import "bootstrap/mixins";
         @import "bootstrap/grid";
         @import "bootstrap/forms";

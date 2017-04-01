@@ -18,14 +18,15 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
 
 # Dependencies
  * jQuery: http://jquery.com/
- * jQuery UI: https://jqueryui.com/
- * NiceScroll: http://areaaperta.com/nicescroll/ (Optional)
- * Bootstrap: http://getbootstrap.com/
+ * jQuery UI: https://jqueryui.com/ (Requires only draggable, droppable and sortable)
+ * NiceScroll: http://areaaperta.com/nicescroll/ (Optional for scroll bar)
+ * Bootstrap: http://getbootstrap.com/ (Optional for style)
  * FontAwesome: http://fontawesome.io/ (Optional for icons)
 
 # Configuration
 ```javascript
 /**
+ * @option {Boolean} niceScrollEnabled Enable niceScroll or not
  * @option {String} btnMoveContainerText Text content for move button of container
  * @option {String} btnMoveComponentText Text content for move button of component
  * @option {String} btnSettingContainerText Text content for setting button of container
@@ -52,9 +53,17 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
  * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {Boolean} snippetsTooltipEnabled Bootstrap tooltip is enable for snippet or not
  * @option {String} snippetsTooltipPosition Position of Bootstrap tooltip for snippet. Can be 'left', 'right', 'top' and 'bottom'
- * @option {Boolean} snippetsFilterEnabled Enable filtering snippets by categories or not
+ * @option {Boolean} snippetsFilterEnabled Enable filtering snippets by categories and text searching or not
  * @option {String} snippetsCategoriesSeparator The separator character between each categories
- * @option {Boolean} iframeMode KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
+ * @option {Boolean} iframeMode KEditor is created inside an iframe or not. KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
+ * @option {Array<Object>} contentStyles Content styles for iframe mode
+ * Example: [
+ *     {
+ *         href: '/path/to/style/file'
+ *     }, {
+ *         content: 'a { color: red; }'
+ *     }
+ * ]
  * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
  * @option {String} contentAreasWrapper The wrapper element for all contents inside iframe. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag
  * @option {Boolean} containerSettingEnabled Enable setting panel for container
@@ -86,6 +95,7 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
  * @option {Function} onDynamicContentError Callback will be called if loading dynamic content is error, abort or timeout. Arguments: dynamicElement, response, status, xhr
  */
 $.keditor.DEFAULTS = {
+    niceScrollEnabled: true,
     btnMoveContainerText: '<i class="fa fa-sort"></i>',
     btnMoveComponentText: '<i class="fa fa-arrows"></i>',
     btnSettingContainerText: '<i class="fa fa-cog"></i>',
@@ -108,8 +118,9 @@ $.keditor.DEFAULTS = {
     snippetsFilterEnabled: true,
     snippetsCategoriesSeparator: ';',
     iframeMode: false,
+    contentStyles: [],
     contentAreasSelector: null,
-    contentAreasWrapper: '<div class="keditor-content-areas-wrapper container"></div>',
+    contentAreasWrapper: '<div class="keditor-ui keditor-content-areas-wrapper"></div>',
     containerSettingEnabled: false,
     containerSettingInitFunction: null,
     containerSettingShowFunction: null,

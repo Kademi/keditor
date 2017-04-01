@@ -3,14 +3,14 @@
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
  * @version: @{version}
- * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
  */
 /**!
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
  * @version: @{version}
- * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
  */
 /* ==================================================================================
    Body
@@ -459,8 +459,13 @@ body.highlighted-container-content .keditor-container-content:before {
   opacity: 0.5;
 }
 /* ==================================================================================
-   Settings panel
+   Bootstrap style for setting form controls
    ================================================================================== */
+#keditor-setting-forms .keditor-setting-form *,
+#keditor-setting-forms .keditor-setting-form *:before,
+#keditor-setting-forms .keditor-setting-form *:after {
+  box-sizing: border-box;
+}
 #keditor-setting-forms .keditor-setting-form .form-group:before,
 #keditor-setting-forms .keditor-setting-form .form-group:after {
   content: " ";

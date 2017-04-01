@@ -282,6 +282,7 @@ body.highlighted-container-content .keditor-container-content:before {
 #keditor-setting-forms .keditor-setting-form {
   overflow: hidden;
   display: none;
+  min-height: 100%;
 }
 #keditor-setting-forms .keditor-setting-form.active {
   display: block;

@@ -305,6 +305,11 @@
             target.attr('data-keditor-frame', '#' + iframeId);
             
             var iframeDoc = iframe.contents();
+            // Fix issue Firefox can't render content inside iframe
+            // ======================================================
+            iframeDoc.get(0).open();
+            iframeDoc.get(0).close();
+            // ======================================================
             var iframeHead = iframeDoc.find('head');
             var iframeBody = iframeDoc.find('body');
             
@@ -340,11 +345,13 @@
             var contentAreasWrapper;
             if (options.contentAreasWrapper) {
                 contentAreasWrapper = $(options.contentAreasWrapper);
-                iframeBody.append(contentAreasWrapper);
                 contentAreasWrapper.html(originalContent);
+                iframeBody.append(contentAreasWrapper);
             } else {
                 iframeBody.html(originalContent);
             }
+            
+            window.a = iframeBody;
             
             // In frame, have to use default snippets container
             options.snippetsListId = KEditor.DEFAULTS.snippetsListId;

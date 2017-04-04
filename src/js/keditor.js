@@ -351,8 +351,6 @@
                 iframeBody.html(originalContent);
             }
             
-            window.a = iframeBody;
-            
             // In frame, have to use default snippets container
             options.snippetsListId = KEditor.DEFAULTS.snippetsListId;
             

@@ -39,21 +39,14 @@ gulp.task('clean-snippets-examples', function () {
 // =========================================================================
 // Components tasks
 // =========================================================================
-var buildComponents = function (typeType) {
-    return gulp.src(['./src/' + typeType + '/keditor-component-*.' + typeType])
+gulp.task('build-js-components', function () {
+    return gulp.src(['./src/js/components/*.js'])
         .pipe(plumber())
-        .pipe(concat('keditor-components.' + typeType + ''))
+        .pipe(concat('keditor-components.js'))
         .pipe(rename({
             suffix: '-' + pjson.version
         }))
-        .pipe(gulp.dest('./dist/' + typeType + '/'))
-};
-
-gulp.task('build-css-components', function () {
-    return buildComponents('css');
-});
-gulp.task('build-js-components', function () {
-    return buildComponents('js');
+        .pipe(gulp.dest('./dist/js/'))
 });
 
 // =========================================================================
@@ -150,8 +143,9 @@ gulp.task('watch', function () {
 // =========================================================================
 // Main tasks
 // =========================================================================
-gulp.task('build-css-dist', gulpsync.sync(['build-css', 'clean-css-dist', 'copy-css', 'build-css-components', 'min-css', 'prepend-header-css']));
-gulp.task('build-js-dist', gulpsync.sync(['clean-js-dist', 'copy-js', 'build-js-components', 'min-js', 'prepend-header-js']));
+gulp.task('build-css-dist', gulpsync.sync(['build-css', 'clean-css-dist', 'copy-css', 'min-css', 'prepend-header-css']));
+//gulp.task('build-js-dist', gulpsync.sync(['clean-js-dist', 'copy-js', 'build-js-components', 'min-js', 'prepend-header-js']));
+gulp.task('build-js-dist', gulpsync.sync(['clean-js-dist', 'build-js-components', 'copy-js', 'min-js', 'prepend-header-js']));
 
 gulp.task('build', ['build-css-dist', 'build-js-dist', 'build-snippets-examples']);
 

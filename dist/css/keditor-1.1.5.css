@@ -2,8 +2,8 @@
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.4
- * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap, FontAwesome (optional)
+ * @version: 1.1.5
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
  */
 /* ==================================================================================
    Body
@@ -13,17 +13,22 @@ body {
   overflow-y: scroll;
 }
 /* ==================================================================================
-   KEditor base
+   Keditor UI
    ================================================================================== */
-#keditor-sidebar,
-.keditor-toolbar {
-  font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+.keditor-ui {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
 }
-#keditor-sidebar small,
-.keditor-toolbar small,
-#keditor-sidebar .small,
-.keditor-toolbar .small {
-  font-size: 88% !important;
+.keditor-ui,
+.keditor-ui:before,
+.keditor-ui:after {
+  box-sizing: border-box;
+}
+.keditor-ui small,
+.keditor-ui .small {
+  font-size: 88%;
 }
 /* ==================================================================================
    opened-keditor-sidebar
@@ -75,6 +80,8 @@ body.highlighted-container-content .keditor-container-content:before {
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
+  font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
 }
 #keditor-sidebar:hover {
   opacity: 1;
@@ -98,6 +105,46 @@ body.highlighted-container-content .keditor-container-content:before {
   line-height: inherit;
 }
 /* ==================================================================================
+   KEditor Tab
+   ================================================================================== */
+.keditor-tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.keditor-tabs .keditor-tab {
+  display: table-cell;
+  width: 1%;
+  position: relative;
+}
+.keditor-tabs .keditor-tab a {
+  display: block;
+  border-radius: 3px 3px 0 0;
+  height: 42px;
+  padding: 10px 5px;
+  text-align: center;
+  border: 1px solid transparent;
+  border-bottom-color: #ddd;
+  color: #aaa;
+}
+.keditor-tabs .keditor-tab.active a {
+  font-weight: bold;
+  border-color: #ddd;
+  border-bottom-color: #fff;
+  background: #fff;
+  color: #333;
+}
+/* ==================================================================================
+   KEditor Tab Contents
+   ================================================================================== */
+.keditor-tabs-content .keditor-tab-content {
+  display: none;
+}
+.keditor-tabs-content .keditor-tab-content.active {
+  display: block;
+}
+/* ==================================================================================
    Snippets
    ================================================================================== */
 #keditor-snippets-list {
@@ -108,25 +155,7 @@ body.highlighted-container-content .keditor-container-content:before {
   border-color: #ccc;
 }
 #keditor-snippets-list .keditor-snippet.not-matched {
-  height: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  overflow: hidden;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  border: 0 !important;
-  opacity: 0 !important;
-}
-#keditor-snippets-type-switcher {
-  margin: 0;
-}
-#keditor-snippets-type-switcher > li > a {
-  border-radius: 3px 3px 0 0;
-  height: 42px;
-  padding: 10px 5px;
-}
-#keditor-snippets-type-switcher > li.active > a {
-  font-weight: bold;
+  display: none;
 }
 #keditor-snippets-container {
   height: calc(100% - 42px);
@@ -135,27 +164,27 @@ body.highlighted-container-content .keditor-container-content:before {
   border: solid #ddd;
   border-width: 0 1px 1px;
 }
-#keditor-snippets-container > .keditor-snippets {
+#keditor-snippets-container > .keditor-tab-content {
   height: 100%;
 }
-#keditor-snippets-container > .keditor-snippets > .keditor-snippets-inner {
+#keditor-snippets-container > .keditor-tab-content > .keditor-tab-content-inner {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }
-#keditor-snippets-container > .keditor-snippets > .keditor-snippets-inner:before,
-#keditor-snippets-container > .keditor-snippets > .keditor-snippets-inner:after {
+#keditor-snippets-container > .keditor-tab-content > .keditor-tab-content-inner:before,
+#keditor-snippets-container > .keditor-tab-content > .keditor-tab-content-inner:after {
   content: " ";
   display: table;
 }
-#keditor-snippets-container > .keditor-snippets > .keditor-snippets-inner:after {
+#keditor-snippets-container > .keditor-tab-content > .keditor-tab-content-inner:after {
   clear: both;
 }
-#keditor-snippets-container > .keditor-snippets > .keditor-snippets-filter-wrapper {
+#keditor-snippets-container > .keditor-tab-content > .keditor-snippets-filter-wrapper {
   margin: 0 5px;
 }
-#keditor-snippets-container > .keditor-snippets > .keditor-snippets-filter-wrapper .keditor-snippets-filter,
-#keditor-snippets-container > .keditor-snippets > .keditor-snippets-filter-wrapper .keditor-snippets-search {
+#keditor-snippets-container > .keditor-tab-content > .keditor-snippets-filter-wrapper .keditor-snippets-filter,
+#keditor-snippets-container > .keditor-tab-content > .keditor-snippets-filter-wrapper .keditor-snippets-search {
   border: 1px solid #ddd;
   height: 34px;
   padding: 5px 10px;
@@ -165,7 +194,7 @@ body.highlighted-container-content .keditor-container-content:before {
   display: block;
   margin-bottom: 10px;
 }
-#keditor-snippets-container > .keditor-snippets > .keditor-snippets-filter-wrapper + .keditor-snippets-inner {
+#keditor-snippets-container > .keditor-tab-content > .keditor-snippets-filter-wrapper + .keditor-tab-content-inner {
   height: calc(100% - 88px);
 }
 .keditor-snippet {
@@ -260,6 +289,7 @@ body.highlighted-container-content .keditor-container-content:before {
 #keditor-setting-forms .keditor-setting-form {
   overflow: hidden;
   display: none;
+  min-height: 100%;
 }
 #keditor-setting-forms .keditor-setting-form.active {
   display: block;
@@ -270,6 +300,7 @@ body.highlighted-container-content .keditor-container-content:before {
 .keditor-toolbar {
   position: absolute;
   display: none;
+  font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .keditor-toolbar > a {
   padding: 1px 3px;

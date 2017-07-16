@@ -25,7 +25,8 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
 
 # Configuration
 ```javascript
-/**
+/**!
+ * Configuration:
  * @option {Boolean} niceScrollEnabled Enable niceScroll or not
  * @option {String} btnMoveContainerText Text content for move button of container
  * @option {String} btnMoveComponentText Text content for move button of component
@@ -65,7 +66,7 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
  *     }
  * ]
  * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
- * @option {String} contentAreasWrapper The wrapper element for all contents inside iframe. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag
+ * @option {String} contentAreasWrapper The wrapper element for all contents inside iframe or new div which will contains content of textarea. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag, just leave it as blank
  * @option {Boolean} containerSettingEnabled Enable setting panel for container
  * @option {Function} containerSettingInitFunction Method will be called when initializing setting panel for container
  * @option {Function} containerSettingShowFunction Method will be called when setting panel for container is showed

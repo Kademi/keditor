@@ -128,6 +128,22 @@ gulp.task('prepend-header-js', function () {
 // Examples tasks
 // =========================================================================
 gulp.task('build-snippets-examples', gulpsync.sync(['clean-snippets-examples', 'copy-snippets-src-examples']));
+gulp.task('replace-keditor-assets', function () {
+    return gulp.src(['./examples/*.html'])
+        .pipe(replace(/(<!-- Start of KEditor styles -->)(.|[\n\r])*.+(.|[\n\r])*(<!-- End of KEditor styles -->)/,
+            '$1' +
+            '\n        <link rel="stylesheet" type="text/css" href="../dist/css/keditor-' + pjson.version + '.min.css" />' +
+            '\n        <link rel="stylesheet" type="text/css" href="../dist/css/keditor-components-' + pjson.version + '.min.css" />' +
+            '\n        $4'
+        ))
+        .pipe(replace(/(<!-- Start of KEditor scripts -->)(.|[\n\r])*.+(.|[\n\r])*(<!-- End of KEditor scripts -->)/,
+            '$1' +
+            '\n        <script type="text/javascript" src="../dist/js/keditor-' + pjson.version + '.min.js"></script>' +
+            '\n        <script type="text/javascript" src="../dist/js/keditor-components-' + pjson.version + '.min.js"></script>' +
+            '\n        $4'
+        ))
+        .pipe(gulp.dest('./examples/'));
+});
 
 // =========================================================================
 // Build CSS
@@ -153,7 +169,7 @@ gulp.task('watch', function () {
 gulp.task('build-css-dist', gulpsync.sync(['build-css', 'clean-css-dist', 'copy-css', 'build-css-components', 'min-css', 'prepend-header-css']));
 gulp.task('build-js-dist', gulpsync.sync(['clean-js-dist', 'copy-js', 'build-js-components', 'min-js', 'prepend-header-js']));
 
-gulp.task('build', ['build-css-dist', 'build-js-dist', 'build-snippets-examples']);
+gulp.task('build', ['build-css-dist', 'build-js-dist', 'build-snippets-examples', 'replace-keditor-assets']);
 
 gulp.task('dev', ['build-css', 'watch']);
 

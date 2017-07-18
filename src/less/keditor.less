@@ -82,7 +82,7 @@ body.highlighted-container-content {
    ================================================================================== */
 #keditor-sidebar {
     position: fixed;
-    z-index: 100;
+    z-index: 1031;
     top: 0;
     right: -255px;
     bottom: 0;
@@ -152,7 +152,7 @@ body.highlighted-container-content {
                 border-color: @border-color;
                 border-bottom-color: #fff;
                 background: #fff;
-                color: @tab-active-color ;
+                color: @tab-active-color;
             }
         }
     }
@@ -330,6 +330,7 @@ body.highlighted-container-content {
 .keditor-toolbar {
     position: absolute;
     display: none;
+    z-index: 5;
     font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
     
     > a {
@@ -439,12 +440,11 @@ body.highlighted-container-content {
     }
     
     .keditor-toolbar {
-        top: -24px;
-        right: -2px;
-        left: -2px;
+        top: 0;
+        left: 0;
         background-color: @container-content-toolbar-bg;
-        padding: 2px 2px;
-        text-align: right;
+        padding: 0 2px 2px;
+        text-align: left;
         
         > a {
             border: 0;
@@ -482,10 +482,6 @@ body.highlighted-container-content {
     
     &:hover {
         z-index: 2;
-        
-        &:before {
-            border-top: 0;
-        }
         
         .keditor-toolbar {
             display: block;

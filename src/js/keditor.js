@@ -41,6 +41,7 @@
  * @option {String} contentAreasSelector Selector of content areas. If is null or selector does not match any elements, will create default content area and wrap all content inside it.
  * @option {String} contentAreasWrapper The wrapper element for all contents inside iframe or new div which will contains content of textarea. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag, just leave it as blank
  * @option {Boolean} containerSettingEnabled Enable setting panel for container
+ * @option {String} containerSettingId Id of the container containg the form to use as to set the container settings
  * @option {Function} containerSettingInitFunction Method will be called when initializing setting panel for container
  * @option {Function} containerSettingShowFunction Method will be called when setting panel for container is showed
  * @option {Function} containerSettingHideFunction Method will be called when setting panel for container is hidden
@@ -762,11 +763,19 @@
             });
             
             if (options.containerSettingEnabled === true) {
+                var form = $('<div id="keditor-container-setting" class="keditor-setting-form clearfix"></div>');
+                // see if a form exists for container settings
+                var containerForm = $("#"+options.containerSettingId);
+                // if it does
+                if(containerForm.length > 0){
+                	// hide the form if not already hidden
+                	containerForm.hide();
+                	// grab the contents and append to #keditor-container-setting
+                	form.append(containerForm.html());
+                }
+                settingForms.append(form);
+                
                 if (typeof options.containerSettingInitFunction === 'function') {
-                    
-                    var form = $('<div id="keditor-container-setting" class="keditor-ui keditor-setting-form clearfix"></div>');
-                    settingForms.append(form);
-                    
                     flog('Initialize container setting panel');
                     options.containerSettingInitFunction.call(self, form, self);
                 } else {

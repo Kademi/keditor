@@ -1709,6 +1709,16 @@
             });
         },
         
+      setContent: function(data) {
+          var target = $(this);
+          flog('setContent KEditor', target, data);
+          var keditor = target.data('keditor');
+          target.html(data);
+          var body = keditor.body;
+          body.removeClass('initialized-click-event-handlers');
+          KEditor.prototype.init.call(keditor, target);
+        },
+
         getContent: function (inArray) {
             var target = $(this);
             var keditor = target.data('keditor');

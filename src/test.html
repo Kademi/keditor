@@ -22,46 +22,33 @@
         <script src="js/keditor-component-vimeo.js"></script>
         <script src="js/keditor-component-youtube.js"></script>
     </head>
-
+    
     <body>
-        <div id="keditor1">
-            <section>
-                <div class="row">
-                    <div class="col-md-12" data-type="container-content" data-category-id="cate01" data-product-id="prod01" data-store-id="store01">
-                        <section data-type="component-photo">
-                            <div class="photo-panel">
-                                <img src="../examples/snippets/default/img/yenbai_vietnam.jpg" />
-                            </div>
-                        </section>
-                        <section data-type="component-nonExisting" data-category-id="cate01" data-product-id="prod01" data-store-id="store01">
-                            <div data-dynamic-href="snippets/default/_dynamic_content.html"></div>
-                        </section>
+        <div class="container">
+            <div id="keditor1">
+                <section>
+                    <div class="row">
+                        <div class="col-md-6" data-type="container-content">
+                            <section>
+                                <div class="row">
+                                    <div class="col-md-6" data-type="container-content">
+                                    </div>
+                                </div>
+                            </section>
+                            <section data-type="component-photo">
+                                <div class="photo-panel">
+                                    <img src="../examples/snippets/default/img/yenbai_vietnam.jpg" class="img-responsive" />
+                                </div>
+                            </section>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
-
-        <textarea id="keditor2">
-    <!-- DATA -->
-<section>
-<div class="row">
-<div class="col-md-12" data-type="container-content">
-<section data-type="component-text">
-<div class="page-header">
-<h1 style="margin-bottom: 30px; font-size: 50px;"><b class="text-uppercase">Welcome to KEditor</b> <small>Kademi Editor</small></h1>
-<p class="lead"><em>It's open source editor based-on CKEditor with support drag and drop snippets</em></p>
-</div>
-</section>
-</div>
-</div>
-</section>
-            <!-- END DATA -->
-        </textarea>
-
+        
         <script type="text/javascript">
             $(function () {
                 $('#keditor1').keditor({
-                    iframeMode: true,
                     tabContainersText: '<i class="fa fa-th-list"></i>',
                     tabComponentsText: '<i class="fa fa-file"></i>',
                     extraTabs: {
@@ -69,9 +56,9 @@
                             text: '<i class="fa fa-cogs"></i>',
                             title: 'Settings',
                             content: (
-                                    '<div class="form-horizontal">' +
-                                    '   <h3>Here is Custom Tab Content!</h3>' +
-                                    '</div>'
+                                '<div class="form-horizontal">' +
+                                '   <h3>Here is Custom Tab Content!</h3>' +
+                                '</div>'
                             )
                         }
                     },
@@ -82,9 +69,9 @@
                     containerSettingInitFunction: function (form, keditor) {
                         console.log(form, keditor);
                         form.append(
-                                '<div class="form-horizontal">' +
-                                '   <h3>Here is Setting Container Panel!</h3>' +
-                                '</div>'
+                            '<div class="form-horizontal">' +
+                            '   <h3>Here is Setting Container Panel!</h3>' +
+                            '</div>'
                         );
                     },
                     containerSettingShowFunction: function (form, container, keditor) {
@@ -93,11 +80,6 @@
                     containerSettingHideFunction: function (form, keditor) {
                         console.log(form, keditor);
                     }
-                });
-
-
-                $('#keditor2').keditor({
-                    iframeMode: true
                 });
             });
         </script>

@@ -28,6 +28,7 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
 /**!
  * Configuration:
  * @option {Boolean} niceScrollEnabled Enable niceScroll or not
+ * @option {Boolean} nestedContainerEnabled Enable nested container or not
  * @option {String} btnMoveContainerText Text content for move button of container
  * @option {String} btnMoveComponentText Text content for move button of component
  * @option {String} btnSettingContainerText Text content for setting button of container
@@ -49,7 +50,7 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
  *         content: 'Here is content of My Extra Tab #1'
  *     }
  * }
- * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component - jQuery object of component
+ * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component
  * @option {String} snippetsUrl Url to snippets file
  * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {Boolean} snippetsTooltipEnabled Bootstrap tooltip is enable for snippet or not
@@ -95,8 +96,9 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
  * @option {Function} onDynamicContentLoaded Callback will be called after dynamic content is loaded. Arguments: dynamicElement, response, status, xhr
  * @option {Function} onDynamicContentError Callback will be called if loading dynamic content is error, abort or timeout. Arguments: dynamicElement, response, status, xhr
  */
-$.keditor.DEFAULTS = {
+$.keditor.DEFAULTS = {    
     niceScrollEnabled: true,
+    nestedContainerEnabled: true,
     btnMoveContainerText: '<i class="fa fa-sort"></i>',
     btnMoveComponentText: '<i class="fa fa-arrows"></i>',
     btnSettingContainerText: '<i class="fa fa-cog"></i>',

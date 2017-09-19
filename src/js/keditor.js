@@ -1487,8 +1487,7 @@
             
             var container = btn.closest('.keditor-container');
             var contentArea = container.parent();
-            var newContainer = $(self.getContainerContent(container));
-            
+            var newContainer = $(self.getContainerContent(container, btn.parent().hasClass('keditor-toolbar-sub-container')));
             container.after(newContainer);
             self.convertToContainer(contentArea, newContainer);
             

@@ -492,9 +492,9 @@ body.highlighted-container-content {
 /* ==================================================================================
    Drag n Drop helper
    ================================================================================== */
-.keditor-snippet {
-    // When dragging
-    &.ui-draggable-dragging {
+// When dragging
+.ui-draggable-dragging {
+    &.keditor-snippet {
         .transition(none) !important;
     }
 }
@@ -508,8 +508,8 @@ body.highlighted-container-content {
     outline: none !important;
 }
 
-.keditor-section {
-    &.ui-sortable-helper {
+.ui-sortable-helper {
+    &.keditor-section {
         background: @snippet-bg !important;
         opacity: 0.5;
     }

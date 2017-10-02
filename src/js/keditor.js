@@ -1060,6 +1060,13 @@
             },
             stop: function () {
                 body.removeClass('highlighted-container-content');
+                contentArea.removeClass('keditor-highlighted-dropzone');
+            },
+            over: function () {
+                contentArea.addClass('keditor-highlighted-dropzone');
+            },
+            out: function () {
+                contentArea.addClass('keditor-highlighted-dropzone');
             }
         });
         
@@ -1255,6 +1262,13 @@
             },
             stop: function () {
                 body.removeClass('highlighted-container-content');
+                containerContent.removeClass('keditor-highlighted-dropzone');
+            },
+            over: function () {
+                containerContent.addClass('keditor-highlighted-dropzone');
+            },
+            out: function () {
+                containerContent.removeClass('keditor-highlighted-dropzone');
             }
         });
         

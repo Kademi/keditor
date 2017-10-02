@@ -669,6 +669,7 @@
             start: function () {
                 body.find('[contenteditable]').blur();
                 body.find('.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                body.addClass('highlighted-container-content');
                 
                 if (options.nestedContainerEnabled) {
                     body.find('.keditor-sub-container-content').sortable('disable');
@@ -683,6 +684,7 @@
                 if (options.nestedContainerEnabled) {
                     body.find('.keditor-sub-container-content').sortable('enable');
                 }
+                body.removeClass('highlighted-container-content');
             }
         });
         
@@ -1052,6 +1054,12 @@
                 if (typeof options.onContentChanged === 'function') {
                     options.onContentChanged.call(self, event, contentArea);
                 }
+            },
+            start: function () {
+                body.addClass('highlighted-container-content');
+            },
+            stop: function () {
+                body.removeClass('highlighted-container-content');
             }
         });
         
@@ -1241,6 +1249,12 @@
                 if (typeof options.onContentChanged === 'function') {
                     options.onContentChanged.call(self, event, contentArea);
                 }
+            },
+            start: function () {
+                body.addClass('highlighted-container-content');
+            },
+            stop: function () {
+                body.removeClass('highlighted-container-content');
             }
         });
         

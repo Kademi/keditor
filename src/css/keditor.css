@@ -425,7 +425,7 @@ body.highlighted-container-content .keditor-container-content:before {
 /* ==================================================================================
    Drag n Drop helper
    ================================================================================== */
-.keditor-snippet.ui-draggable-dragging {
+.ui-draggable-dragging.keditor-snippet {
   -webkit-transition: none !important;
   -o-transition: none !important;
   transition: none !important;
@@ -438,7 +438,7 @@ body.highlighted-container-content .keditor-container-content:before {
   float: none !important;
   outline: none !important;
 }
-.keditor-section.ui-sortable-helper {
+.ui-sortable-helper.keditor-section {
   background: #fff !important;
   opacity: 0.5;
 }

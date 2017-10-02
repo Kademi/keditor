@@ -76,27 +76,27 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
  * @option {Function} onInitFrame Callback will be called after iframe and content areas wrapper inside it are created. Arguments: frame, frameHead, frameBody
  * @option {Function} onSidebarToggled Callback will be called after toggled sidebar. Arguments: isOpened
  * @option {Function} onInitContentArea Callback will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
- * @option {Function} onContentChanged Callback will be called when content is changed. Includes add, delete, duplicate container or component. Or content of a component is changed. Arguments: event
- * @option {Function} onInitContainer Callback will be called when initializing container. It can return array of jQuery objects which will be initialized as editable components in container content (NOTE: these objects MUST be under elements which have attribute data-type="container-content"). By default, all first level sections under container content will be initialized. Arguments: container
- * @option {Function} onBeforeContainerDeleted Callback will be called before container is deleted. Arguments: event, selectedContainer
- * @option {Function} onContainerDeleted Callback will be called after container and its components are already deleted. Arguments: event, selectedContainer
- * @option {Function} onContainerChanged Callback will be called when content of container is changed. It can be when container received new component from snippet or from other container. Or content of any components are changed or any components are deleted or duplicated. Arguments: event, changedContainer
- * @option {Function} onContainerDuplicated Callback will be called when a container is duplicated. Arguments: event, originalContainer, newContainer
- * @option {Function} onContainerSelected Callback will be called when a container is selected. Arguments: event, selectedContainer
- * @option {Function} onContainerSnippetDropped Callback will be called when a container snippet is dropped into content area. Arguments: event, newContainer, droppedContainer
+ * @option {Function} onContentChanged Callback will be called when content is changed. Includes add, delete, duplicate container or component. Or content of a component is changed. Arguments: event, contentArea
+ * @option {Function} onInitContainer Callback will be called when initializing container. It can return array of jQuery objects which will be initialized as editable components in container content (NOTE: these objects MUST be under elements which have attribute data-type="container-content"). By default, all first level sections under container content will be initialized. Arguments: container, contentArea
+ * @option {Function} onBeforeContainerDeleted Callback will be called before container is deleted. Arguments: event, selectedContainer, contentArea
+ * @option {Function} onContainerDeleted Callback will be called after container and its components are already deleted. Arguments: event, selectedContainer, contentArea
+ * @option {Function} onContainerChanged Callback will be called when content of container is changed. It can be when container received new component from snippet or from other container. Or content of any components are changed or any components are deleted or duplicated. Arguments: event, changedContainer, contentArea
+ * @option {Function} onContainerDuplicated Callback will be called when a container is duplicated. Arguments: event, originalContainer, newContainer, contentArea
+ * @option {Function} onContainerSelected Callback will be called when a container is selected. Arguments: event, selectedContainer, contentArea
+ * @option {Function} onContainerSnippetDropped Callback will be called when a container snippet is dropped into content area. Arguments: event, newContainer, droppedSnippet, contentArea
  * @option {Function} onComponentReady Callback will be called after component is initialized. This callback is available or not is depend on component type handler.
- * @option {Function} onInitComponent Callback will be called when initializing component. Arguments: component
- * @option {Function} onBeforeComponentDeleted Callback will be called before a component is deleted. Arguments: event, selectedComponent
- * @option {Function} onComponentDeleted Callback will be called after a component is deleted. Arguments: event, selectedComponent
- * @option {Function} onComponentChanged Callback will be called when content of a component is changed. Arguments: event, changedComponent
- * @option {Function} onComponentDuplicated Callback will be called when a component is duplicated. Arguments: event, originalComponent, newComponent
- * @option {Function} onComponentSelected Callback will be called when a component is selected. Arguments: event, selectedComponent
- * @option {Function} onComponentSnippetDropped Callback will be called after a component snippet is dropped into a container. Arguments: event, newComponent, droppedComponent
- * @option {Function} onBeforeDynamicContentLoad Callback will be called before loading dynamic content. Arguments: dynamicElement, component
- * @option {Function} onDynamicContentLoaded Callback will be called after dynamic content is loaded. Arguments: dynamicElement, response, status, xhr
- * @option {Function} onDynamicContentError Callback will be called if loading dynamic content is error, abort or timeout. Arguments: dynamicElement, response, status, xhr
+ * @option {Function} onInitComponent Callback will be called when initializing component. Arguments: component, contentArea
+ * @option {Function} onBeforeComponentDeleted Callback will be called before a component is deleted. Arguments: event, selectedComponent, contentArea
+ * @option {Function} onComponentDeleted Callback will be called after a component is deleted. Arguments: event, selectedComponent, contentArea
+ * @option {Function} onComponentChanged Callback will be called when content of a component is changed. Arguments: event, changedComponent, contentArea
+ * @option {Function} onComponentDuplicated Callback will be called when a component is duplicated. Arguments: event, originalComponent, newComponent, contentArea
+ * @option {Function} onComponentSelected Callback will be called when a component is selected. Arguments: event, selectedComponent, contentArea
+ * @option {Function} onComponentSnippetDropped Callback will be called after a component snippet is dropped into a container. Arguments: event, newComponent, droppedSnippet, contentArea
+ * @option {Function} onBeforeDynamicContentLoad Callback will be called before loading dynamic content. Arguments: dynamicElement, component, contentArea
+ * @option {Function} onDynamicContentLoaded Callback will be called after dynamic content is loaded. Arguments: dynamicElement, response, status, xhr, contentArea
+ * @option {Function} onDynamicContentError Callback will be called if loading dynamic content is error, abort or timeout. Arguments: dynamicElement, response, status, xhr, contentArea
  */
-$.keditor.DEFAULTS = {    
+$.keditor.DEFAULTS = {
     niceScrollEnabled: true,
     nestedContainerEnabled: true,
     btnMoveContainerText: '<i class="fa fa-sort"></i>',
@@ -136,43 +136,43 @@ $.keditor.DEFAULTS = {
     },
     onInitContentArea: function (contentArea) {
     },
-    onContentChanged: function (event) {
+    onContentChanged: function (event, contentArea) {
     },
-    onInitContainer: function (container) {
+    onInitContainer: function (container, contentArea) {
     },
-    onBeforeContainerDeleted: function (event, selectedContainer) {
+    onBeforeContainerDeleted: function (event, selectedContainer, contentArea) {
     },
-    onContainerDeleted: function (event, selectedContainer) {
+    onContainerDeleted: function (event, selectedContainer, contentArea) {
     },
-    onContainerChanged: function (event, changedContainer) {
+    onContainerChanged: function (event, changedContainer, contentArea) {
     },
-    onContainerDuplicated: function (event, originalContainer, newContainer) {
+    onContainerDuplicated: function (event, originalContainer, newContainer, contentArea) {
     },
-    onContainerSelected: function (event, selectedContainer) {
+    onContainerSelected: function (event, selectedContainer, contentArea) {
     },
-    onContainerSnippetDropped: function (event, newContainer, droppedContainer) {
+    onContainerSnippetDropped: function (event, newContainer, droppedSnippet, contentArea) {
     },
     onComponentReady: function (component) {
     },
-    onInitComponent: function (component) {
+    onInitComponent: function (component, contentArea) {
     },
-    onBeforeComponentDeleted: function (event, selectedComponent) {
+    onBeforeComponentDeleted: function (event, selectedComponent, contentArea) {
     },
-    onComponentDeleted: function (event, selectedComponent) {
+    onComponentDeleted: function (event, selectedComponent, contentArea) {
     },
-    onComponentChanged: function (event, changedComponent) {
+    onComponentChanged: function (event, changedComponent, contentArea) {
     },
-    onComponentDuplicated: function (event, originalComponent, newComponent) {
+    onComponentDuplicated: function (event, originalComponent, newComponent, contentArea) {
     },
-    onComponentSelected: function (event, selectedComponent) {
+    onComponentSelected: function (event, selectedComponent, contentArea) {
     },
-    onComponentSnippetDropped: function (event, newComponent, droppedComponent) {
+    onComponentSnippetDropped: function (event, newComponent, droppedSnippet, contentArea) {
     },
-    onBeforeDynamicContentLoad: function (dynamicElement, component) {
+    onBeforeDynamicContentLoad: function (dynamicElement, component, contentArea) {
     },
-    onDynamicContentLoaded: function (dynamicElement, response, status, xhr) {
+    onDynamicContentLoaded: function (dynamicElement, response, status, xhr, contentArea) {
     },
-    onDynamicContentError: function (dynamicElement, response, status, xhr) {
+    onDynamicContentError: function (dynamicElement, response, status, xhr, contentArea) {
     }
 };
 ```

@@ -38,12 +38,17 @@ body.opened-keditor-sidebar #keditor-sidebar {
 body.highlighted-container-content .keditor-container:before {
   display: none !important;
 }
+body.highlighted-container-content .keditor-container-content {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
 .keditor-highlighted-dropzone.keditor-container-content {
   padding-top: 20px !important;
   padding-bottom: 20px !important;
 }
 .keditor-highlighted-dropzone.keditor-container-content:before {
   border-color: #2eb2e4;
+  border-width: 2px;
   z-index: 99;
 }
 /* ==================================================================================

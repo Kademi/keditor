@@ -75,8 +75,10 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
  * @option {Function} onReady Callback will be called after keditor instance is ready
  * @option {Function} onInitFrame Callback will be called after iframe and content areas wrapper inside it are created. Arguments: frame, frameHead, frameBody
  * @option {Function} onSidebarToggled Callback will be called after toggled sidebar. Arguments: isOpened
- * @option {Function} onInitContentArea Callback will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
  * @option {Function} onContentChanged Callback will be called when content is changed. Includes add, delete, duplicate container or component. Or content of a component is changed. Arguments: event, contentArea
+ * @option {Function} onBeforeInitContentArea Callback will be called before initializing container. Arguments: contentArea
+ * @option {Function} onInitContentArea Callback will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
+ * @option {Function} onBeforeInitContainer Callback will be called before initializing container. Arguments: container, contentArea
  * @option {Function} onInitContainer Callback will be called when initializing container. It can return array of jQuery objects which will be initialized as editable components in container content (NOTE: these objects MUST be under elements which have attribute data-type="container-content"). By default, all first level sections under container content will be initialized. Arguments: container, contentArea
  * @option {Function} onBeforeContainerDeleted Callback will be called before container is deleted. Arguments: event, selectedContainer, contentArea
  * @option {Function} onContainerDeleted Callback will be called after container and its components are already deleted. Arguments: event, selectedContainer, contentArea
@@ -85,6 +87,7 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
  * @option {Function} onContainerSelected Callback will be called when a container is selected. Arguments: event, selectedContainer, contentArea
  * @option {Function} onContainerSnippetDropped Callback will be called when a container snippet is dropped into content area. Arguments: event, newContainer, droppedSnippet, contentArea
  * @option {Function} onComponentReady Callback will be called after component is initialized. This callback is available or not is depend on component type handler.
+ * @option {Function} onBeforeInitComponent Callback will be called before initializing component. Arguments: component, contentArea
  * @option {Function} onInitComponent Callback will be called when initializing component. Arguments: component, contentArea
  * @option {Function} onBeforeComponentDeleted Callback will be called before a component is deleted. Arguments: event, selectedComponent, contentArea
  * @option {Function} onComponentDeleted Callback will be called after a component is deleted. Arguments: event, selectedComponent, contentArea

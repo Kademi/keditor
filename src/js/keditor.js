@@ -1453,8 +1453,6 @@
             
             var container = self.getClickedElement(e, '.keditor-container');
             if (container) {
-                flog('Click on .keditor-container', container);
-                
                 if (!container.hasClass('showed-keditor-toolbar')) {
                     body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                     body.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
@@ -1474,8 +1472,6 @@
             
             var component = self.getClickedElement(e, '.keditor-component');
             if (component) {
-                flog('Click on .keditor-component', component);
-                
                 if (!component.hasClass('showed-keditor-toolbar')) {
                     body.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                     component.addClass('showed-keditor-toolbar');

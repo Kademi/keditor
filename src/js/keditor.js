@@ -559,8 +559,6 @@
     };
     
     KEditor.prototype.beautifyCategories = function (categories) {
-        flog('beautifyCategories', categories);
-        
         var newArray = [];
         for (var i = 0; i < categories.length; i++) {
             var category = categories[i] || '';
@@ -1336,28 +1334,25 @@
                 '</div>'
             );
             
-            var dynamicContentRequests = [];
             component.find('[data-dynamic-href]').each(function () {
                 var dynamicElement = $(this);
                 
-                dynamicContentRequests.push(self.initDynamicContent(dynamicElement));
+                self.initDynamicContent(dynamicElement);
             });
             
-            $.when.apply(null, dynamicContentRequests).then(function () {
-                if (typeof componentData.init === 'function') {
-                    componentData.init.call(componentData, contentArea, container, component, self);
-                } else {
-                    body.removeClass('highlighted-container-content');
-                    flog('"init" function of component type "' + componentType + '" does not exist');
-                }
-                
-                if (typeof options.onInitComponent === 'function') {
-                    options.onInitComponent.call(self, component, contentArea);
-                }
-                
-                component.addClass('keditor-initialized-component');
-                component.removeClass('keditor-initializing-component');
-            });
+            if (typeof componentData.init === 'function') {
+                componentData.init.call(componentData, contentArea, container, component, self);
+            } else {
+                body.removeClass('highlighted-container-content');
+                flog('"init" function of component type "' + componentType + '" does not exist');
+            }
+            
+            if (typeof options.onInitComponent === 'function') {
+                options.onInitComponent.call(self, component, contentArea);
+            }
+            
+            component.addClass('keditor-initialized-component');
+            component.removeClass('keditor-initializing-component');
         } else {
             if (component.hasClass('keditor-initialized-component')) {
                 flog('Component is already initialized!');

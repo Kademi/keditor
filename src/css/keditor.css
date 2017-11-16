@@ -35,16 +35,11 @@ body.opened-keditor-sidebar #keditor-sidebar {
 /* ==================================================================================
    highlighted-container-content
    ================================================================================== */
+body.highlighted-container-content .keditor-container {
+  margin: 30px 0 !important;
+}
 body.highlighted-container-content .keditor-container:before {
   display: none !important;
-}
-body.highlighted-container-content .keditor-container-content {
-  padding-top: 20px !important;
-  padding-bottom: 20px !important;
-}
-.keditor-highlighted-dropzone.keditor-container-content {
-  padding-top: 20px !important;
-  padding-bottom: 20px !important;
 }
 .keditor-highlighted-dropzone.keditor-container-content:before {
   border-color: #2eb2e4;
@@ -438,6 +433,13 @@ body.highlighted-container-content .keditor-container-content {
 /* ==================================================================================
    Drag n Drop helper
    ================================================================================== */
+.keditor-ui-dragging {
+  display: block !important;
+  opacity: 0.5 !important;
+}
+.keditor-ui-dragging .keditor-toolbar {
+  display: none !important;
+}
 .ui-draggable-dragging.keditor-snippet {
   -webkit-transition: none !important;
   -o-transition: none !important;
@@ -465,4 +467,10 @@ body.highlighted-container-content .keditor-container-content {
 .ui-sortable-helper.keditor-section {
   background: #fff !important;
   opacity: 0.5;
+}
+.ui-sortable-helper.keditor-container:before,
+.ui-sortable-helper.keditor-component:before,
+.ui-sortable-helper.keditor-container .keditor-toolbar,
+.ui-sortable-helper.keditor-component .keditor-toolbar {
+  display: none !important;
 }

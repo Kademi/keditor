@@ -317,22 +317,22 @@
         
         flog('Render Keditor sidebar');
         sidebarContainer.append(
-                '<div id="keditor-sidebar" class="keditor-ui">' +
-                '   <a id="keditor-sidebar-toggler" class="keditor-ui"><i class="fa fa-chevron-right"></i></a>' +
-                '   <div id="keditor-snippets-list" class="keditor-ui"></div>' +
-                '   <div id="keditor-snippets-content" class="keditor-ui" style="display: none"></div>' +
-                '   <div id="keditor-setting-panel" class="keditor-ui">' +
-                '       <div id="keditor-setting-header" class="keditor-ui">' +
-                '           <span id="keditor-setting-title" class="keditor-ui"></span>' +
-                '           <a href="#" id="keditor-setting-closer" class="keditor-ui"><i class="fa fa-arrow-right"></i></a>' +
-                '       </div>' +
-                '       <div id="keditor-setting-body" class="keditor-ui">' +
-                '           <div id="keditor-setting-forms" class="keditor-ui"></div>' +
-                '       </div>' +
-                '   </div>' +
-                '</div>'
-            );
-            self.initSidebarToggler();
+            '<div id="keditor-sidebar" class="keditor-ui">' +
+            '   <a id="keditor-sidebar-toggler" class="keditor-ui"><i class="fa fa-chevron-right"></i></a>' +
+            '   <div id="keditor-snippets-list" class="keditor-ui"></div>' +
+            '   <div id="keditor-snippets-content" class="keditor-ui" style="display: none"></div>' +
+            '   <div id="keditor-setting-panel" class="keditor-ui">' +
+            '       <div id="keditor-setting-header" class="keditor-ui">' +
+            '           <span id="keditor-setting-title" class="keditor-ui"></span>' +
+            '           <a href="#" id="keditor-setting-closer" class="keditor-ui"><i class="fa fa-arrow-right"></i></a>' +
+            '       </div>' +
+            '       <div id="keditor-setting-body" class="keditor-ui">' +
+            '           <div id="keditor-setting-forms" class="keditor-ui"></div>' +
+            '       </div>' +
+            '   </div>' +
+            '</div>'
+        );
+        self.initSidebarToggler();
         
         if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
             flog('Getting snippets form "' + options.snippetsUrl + '"...');
@@ -946,6 +946,7 @@
         contentArea.sortable({
             handle: '.keditor-toolbar-container:not(.keditor-toolbar-sub-container) .btn-container-reposition',
             items: '> section',
+            helper: 'clone',
             connectWith: '.keditor-content-area',
             axis: 'y',
             tolerance: 'pointer',
@@ -979,6 +980,10 @@
                     }
                     
                     self.initContainer(contentArea, container);
+                } else {
+                    if (helper) {
+                        helper.remove();
+                    }
                 }
                 
                 self.hideSettingPanel();
@@ -987,14 +992,20 @@
                     options.onContentChanged.call(self, event, contentArea);
                 }
                 
+                item.addClass('keditor-ui-dragging');
                 contentArea.removeClass('keditor-highlighted-dropzone');
             },
-            start: function () {
+            start: function (e, ui) {
                 body.addClass('highlighted-container-content');
+                ui.item.addClass('keditor-ui-dragging');
             },
-            stop: function () {
+            stop: function (e, ui) {
                 body.removeClass('highlighted-container-content');
                 contentArea.removeClass('keditor-highlighted-dropzone');
+                if (ui.helper) {
+                    ui.helper.remove();
+                }
+                ui.item.removeClass('keditor-ui-dragging');
             },
             over: function () {
                 contentArea.addClass('keditor-highlighted-dropzone');
@@ -1121,6 +1132,7 @@
         flog('Initialize $.fn.sortable for container content');
         containerContent.sortable({
             handle: '.btn-component-reposition, .btn-container-reposition',
+            helper: 'clone',
             items: '> section',
             connectWith: '.keditor-container-content',
             tolerance: 'pointer',
@@ -1179,6 +1191,9 @@
                         self.initComponent(contentArea, container, component);
                     }
                 } else {
+                    if (helper) {
+                        helper.remove();
+                    }
                     container = item.closest('.keditor-container');
                 }
                 
@@ -1195,14 +1210,21 @@
                     options.onContentChanged.call(self, event, contentArea);
                 }
                 
+                item.removeClass('keditor-ui-dragging');
                 contentArea.removeClass('keditor-highlighted-dropzone');
             },
-            start: function () {
+            start: function (e, ui) {
                 body.addClass('highlighted-container-content');
+                ui.item.addClass('keditor-ui-dragging');
             },
-            stop: function () {
+            stop: function (e, ui) {
                 body.removeClass('highlighted-container-content');
                 containerContent.removeClass('keditor-highlighted-dropzone');
+                
+                if (ui.helper) {
+                    ui.helper.remove();
+                }
+                ui.item.removeClass('keditor-ui-dragging');
             },
             over: function () {
                 containerContent.addClass('keditor-highlighted-dropzone');

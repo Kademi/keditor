@@ -566,6 +566,19 @@
         return newArray.sort();
     };
     
+    KEditor.prototype.getConnectedForContainerSnippets = function () {
+        var self = this;
+        var options = self.options;
+        var body = self.body;
+        
+        var selector = '.keditor-content-area';
+        if (options.nestedContainerEnabled) {
+            selector += ',.keditor-container-content:not(.keditor-sub-container-content)';
+        }
+        
+        return body.find(selector);
+    };
+    
     KEditor.prototype.initSnippets = function () {
         flog('initSnippets');
         
@@ -573,21 +586,14 @@
         var options = self.options;
         var body = self.body;
         var snippetsList = body.find('#keditor-snippets-list');
-        var containerSnippets = snippetsList.find('.keditor-snippet[data-type=container]');
-        var componentSnippets = snippetsList.find('.keditor-snippet[data-type^=component]');
-        var getConnectedSortable = function () {
-            var selector = '.keditor-content-area';
-            if (options.nestedContainerEnabled) {
-                selector += ',.keditor-container-content:not(.keditor-sub-container-content)';
-            }
-            return body.find(selector);
-        };
+        var containerSnippets = self.containerSnippets = snippetsList.find('.keditor-snippet[data-type=container]');
+        var componentSnippets = self.componentSnippets = snippetsList.find('.keditor-snippet[data-type^=component]');
         
         flog('Initialize $.fn.draggable for container snippets list');
         containerSnippets.draggable({
             helper: 'clone',
             revert: 'invalid',
-            connectToSortable: getConnectedSortable(),
+            connectToSortable: self.getConnectedForContainerSnippets(),
             start: function () {
                 body.find('[contenteditable]').blur();
                 body.find('.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
@@ -599,7 +605,7 @@
             },
             stop: function () {
                 if (options.nestedContainerEnabled) {
-                    containerSnippets.draggable('option', 'connectToSortable', getConnectedSortable());
+                    containerSnippets.draggable('option', 'connectToSortable', self.getConnectedForContainerSnippets());
                 }
                 componentSnippets.draggable('option', 'connectToSortable', body.find('.keditor-container-content'));
                 
@@ -1722,6 +1728,37 @@
         });
         
         return inArray ? result : result.join('\n');
+    };
+    
+    KEditor.prototype.setContent = function (content, contentArea) {
+        var self = this;
+        var options = self.options;
+        var body = self.body;
+        var target = options.iframeMode ? self.body : self.element;
+        
+        if (target.is('textarea')) {
+            target = $(target.attr('data-keditor-wrapper'));
+        }
+        
+        if (!contentArea) {
+            contentArea = target.children();
+        } else {
+            if (!contentArea.jquery) {
+                contentArea = target.find(contentArea);
+            }
+        }
+        
+        if (contentArea.length === 0) {
+            error('Content area does not exist!');
+        }
+        
+        contentArea.html(content);
+        self.initContentArea(contentArea);
+        
+        if (options.nestedContainerEnabled) {
+            self.containerSnippets.draggable('option', 'connectToSortable', self.getConnectedForContainerSnippets());
+        }
+        self.componentSnippets.draggable('option', 'connectToSortable', body.find('.keditor-container-content'));
     };
     
     KEditor.prototype.getOptions = function () {

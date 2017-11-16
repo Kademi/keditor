@@ -42,8 +42,16 @@ body.opened-keditor-sidebar #keditor-sidebar {
 /* ==================================================================================
    highlighted-container-content
    ================================================================================== */
-body.highlighted-container-content .keditor-container-content:before {
+body.highlighted-container-content .keditor-container {
+  margin: 30px 0 !important;
+}
+body.highlighted-container-content .keditor-container:before {
+  display: none !important;
+}
+.keditor-highlighted-dropzone.keditor-container-content:before {
   border-color: #2eb2e4;
+  border-width: 2px;
+  z-index: 99;
 }
 /* ==================================================================================
    Frame
@@ -432,20 +440,44 @@ body.highlighted-container-content .keditor-container-content:before {
 /* ==================================================================================
    Drag n Drop helper
    ================================================================================== */
-.keditor-snippet.ui-draggable-dragging {
+.keditor-ui-dragging {
+  display: block !important;
+  opacity: 0.5 !important;
+}
+.keditor-ui-dragging .keditor-toolbar {
+  display: none !important;
+}
+.ui-draggable-dragging.keditor-snippet {
   -webkit-transition: none !important;
   -o-transition: none !important;
   transition: none !important;
 }
-.ui-sortable-placeholder {
+.ui-sortable-placeholder.keditor-snippet,
+.ui-sortable-placeholder.keditor-container,
+.ui-sortable-placeholder.keditor-component {
   background: #eee !important;
   visibility: visible !important;
-  height: 10px !important;
+  height: 20px !important;
   margin: 5px 0 !important;
   float: none !important;
   outline: none !important;
+  padding: 0 !important;
 }
-.keditor-section.ui-sortable-helper {
+.ui-sortable-placeholder.keditor-snippet:before,
+.ui-sortable-placeholder.keditor-container:before,
+.ui-sortable-placeholder.keditor-component:before,
+.ui-sortable-placeholder.keditor-snippet:after,
+.ui-sortable-placeholder.keditor-container:after,
+.ui-sortable-placeholder.keditor-component:after {
+  display: none !important;
+}
+.ui-sortable-helper.keditor-section {
   background: #fff !important;
   opacity: 0.5;
+}
+.ui-sortable-helper.keditor-container:before,
+.ui-sortable-helper.keditor-component:before,
+.ui-sortable-helper.keditor-container .keditor-toolbar,
+.ui-sortable-helper.keditor-component .keditor-toolbar {
+  display: none !important;
 }

@@ -7,6 +7,7 @@ KEditor is a jQuery plugin which provides a content editor with drag and drop sn
  * [Configuration](#configuration)
  * [Iframe mode](#iframe-mode)
  * [How to get content of KEditor](#how-to-get-content-of-keditor)
+ * [How to set content of KEditor](#how-to-set-content-of-keditor)
  * [Customize snippet](#customize-snippet)
  * [Customize component type](#customize-component-type)
  * [Dynamic content](#dynamic-content)
@@ -229,6 +230,20 @@ When `iframeMode` is ON, all elements which have `data-type=keditor-style` will 
 # How to get content of KEditor
 ```javascript
 $('#id').keditor('getContent');
+```
+
+# How to set content of KEditor
+```javascript
+/**
+ * @param {String} content HTML content
+ * @param {String|jQuery} contentArea Can be selector or jQuery object of content area which you want to set new content. If you have only a content area, you can leave it blank
+ */
+KEditor.prototype.setContent(content, contentArea);
+```
+
+Example:
+```javascript
+$('#id').keditor('setContent', '<section><div class="row"><div class="col-md-6" data-type="container-content"><section data-type="component-text">New content</section></div></div></section>');
 ```
 
 # Customize snippet

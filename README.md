@@ -51,8 +51,8 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
  *     }
  * }
  * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component
+ * @option {String|jQuery} sidebarContainer The place which sidebar will be appended to. If it's blank, will be appended to body 
  * @option {String} snippetsUrl Url to snippets file
- * @option {String} snippetsListId Id of element which contains snippets. As default, value is "keditor-snippets-list" and KEditor will render snippets sidebar automatically. If you specific other id, only snippets will rendered and put into your element
  * @option {Boolean} snippetsTooltipEnabled Bootstrap tooltip is enable for snippet or not
  * @option {String} snippetsTooltipPosition Position of Bootstrap tooltip for snippet. Can be 'left', 'right', 'top' and 'bottom'
  * @option {Boolean} snippetsFilterEnabled Enable filtering snippets by categories and text searching or not
@@ -117,8 +117,8 @@ $.keditor.DEFAULTS = {
     tabTooltipEnabled: true,
     extraTabs: null,
     defaultComponentType: 'blank',
+    sidebarContainer: null,
     snippetsUrl: 'snippets/default/snippets.html',
-    snippetsListId: 'keditor-snippets-list',
     snippetsTooltipEnabled: true,
     snippetsTooltipPosition: 'left',
     snippetsFilterEnabled: true,

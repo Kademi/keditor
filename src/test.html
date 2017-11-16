@@ -25,6 +25,7 @@
     
     <body>
         <div class="container">
+            <div id="sidebar-container-customer"></div>
             <div id="keditor1">
                 <section>
                     <div class="row">
@@ -49,6 +50,7 @@
         <script type="text/javascript">
             $(function () {
                 $('#keditor1').keditor({
+                    sidebarContainer: '#sidebar-container-customer',
                     tabContainersText: '<i class="fa fa-th-list"></i>',
                     tabComponentsText: '<i class="fa fa-file"></i>',
                     extraTabs: {

@@ -57,8 +57,8 @@
         tabTooltipEnabled: true,
         extraTabs: null,
         defaultComponentType: 'blank',
+        sidebarContainer: null,
         snippetsUrl: 'snippets/default/snippets.html',
-        snippetsListId: 'keditor-snippets-list',
         snippetsTooltipEnabled: true,
         snippetsTooltipPosition: 'left',
         snippetsFilterEnabled: true,
@@ -294,9 +294,6 @@
             iframeBody.html(originalContent);
         }
         
-        // In frame, have to use default snippets container
-        options.snippetsListId = KEditor.DEFAULTS.snippetsListId;
-        
         self.body = iframeBody;
         
         if (typeof options.onInitFrame === 'function') {
@@ -313,11 +310,13 @@
         var options = self.options;
         var body = self.body;
         body.addClass('opened-keditor-sidebar');
+        var sidebarContainer = body;
+        if (options.sidebarContainer) {
+            sidebarContainer = body.find(options.sidebarContainer);
+        }
         
-        if (options.snippetsListId === KEditor.DEFAULTS.snippetsListId) {
-            flog('Render default KEditor snippet container');
-            
-            body.append(
+        flog('Render Keditor sidebar');
+        sidebarContainer.append(
                 '<div id="keditor-sidebar" class="keditor-ui">' +
                 '   <a id="keditor-sidebar-toggler" class="keditor-ui"><i class="fa fa-chevron-right"></i></a>' +
                 '   <div id="keditor-snippets-list" class="keditor-ui"></div>' +
@@ -334,10 +333,6 @@
                 '</div>'
             );
             self.initSidebarToggler();
-        } else {
-            flog('Render KEditor snippets content after custom snippets list with id="' + options.snippetsListId + '"');
-            body.find('#' + options.snippetsListId).after('<div id="keditor-snippets-content" class="keditor-ui" style="display: none"></div>');
-        }
         
         if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
             flog('Getting snippets form "' + options.snippetsUrl + '"...');
@@ -362,7 +357,7 @@
                     
                     if (options.snippetsTooltipEnabled || options.tabTooltipEnabled) {
                         flog('Initialize Bootstrap tooltip plugin');
-                        body.find('#' + options.snippetsListId).find('[data-toggle="tooltip"]').tooltip();
+                        body.find('#keditor-snippets-list').find('[data-toggle="tooltip"]').tooltip();
                     }
                     
                     if (typeof options.onReady === 'function') {
@@ -545,7 +540,7 @@
         self.snippetsContainerCategories = self.beautifyCategories(self.snippetsContainerCategories);
         self.snippetsComponentCategories = self.beautifyCategories(self.snippetsComponentCategories);
         
-        body.find('#' + options.snippetsListId).html(
+        body.find('#keditor-snippets-list').html(
             '<ul id="keditor-snippets-type-switcher" class="keditor-ui keditor-tabs">' +
             '    <li class="keditor-ui keditor-tab active"><a class="keditor-ui" href="#keditor-container-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabContainersTitle + '">' + options.tabContainersText + '</a></li>' +
             '    <li class="keditor-ui keditor-tab"><a class="keditor-ui" href="#keditor-component-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabComponentsTitle + '">' + options.tabComponentsText + '</a></li>' +
@@ -577,7 +572,7 @@
         var self = this;
         var options = self.options;
         var body = self.body;
-        var snippetsList = body.find('#' + options.snippetsListId);
+        var snippetsList = body.find('#keditor-snippets-list');
         var containerSnippets = snippetsList.find('.keditor-snippet[data-type=container]');
         var componentSnippets = snippetsList.find('.keditor-snippet[data-type^=component]');
         var getConnectedSortable = function () {
@@ -1452,7 +1447,7 @@
             container.after(newContainer);
             self.convertToContainer(contentArea, newContainer);
             
-            var snippetsList = body.find('#' + options.snippetsListId);
+            var snippetsList = body.find('#keditor-snippets-list');
             var componentSnippets = snippetsList.find('.keditor-snippet[data-type^=component]');
             var currentLinkedContainerContents = componentSnippets.draggable('option', 'connectToSortable');
             componentSnippets.draggable('option', 'connectToSortable', currentLinkedContainerContents.add(newContainer.find('.keditor-container-content')));

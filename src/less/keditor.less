@@ -530,6 +530,7 @@ body.highlighted-container-content {
         float: none !important;
         outline: none !important;
         padding: 0 !important;
+        opacity: 1 !important;
         
         &:before,
         &:after {
@@ -541,14 +542,18 @@ body.highlighted-container-content {
 .ui-sortable-helper {
     &.keditor-section {
         background: @snippet-bg !important;
-        opacity: 0.5;
     }
     
-    &.keditor-container,
+    &.keditor-container {
+        .keditor-toolbar.keditor-toolbar-container {
+            display: block !important;
+        }
+    }
+    
     &.keditor-component {
         &:before,
         .keditor-toolbar {
-            display: none !important;
+            display: block !important;
         }
     }
 }

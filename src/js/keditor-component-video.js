@@ -3,6 +3,17 @@
     var flog = KEditor.log;
 
     KEditor.components['video'] = {
+        init: function (contentArea, container, component, keditor) {
+            flog('init "video" component', component);
+
+            var componentContent = component.children('.keditor-component-content');
+            var video = componentContent.find('video');
+
+            if (!video.parent().is('.video-wrapper')) {
+                video.wrap('<div class="video-wrapper"></div>');
+            }
+        },
+
         getContent: function (component, keditor) {
             flog('getContent "video" component', component);
 
@@ -22,48 +33,48 @@
 
             form.append(
                 '<form class="form-horizontal">' +
-                '<div class="form-group">' +
-                '<label for="videoFileInput" class="col-sm-12">Video file</label>' +
-                '<div class="col-sm-12">' +
-                '<div class="video-toolbar">' +
-                '<a href="#" class="btn-videoFileInput btn btn-sm btn-primary"><i class="fa fa-upload"></i></a>' +
-                '<input id="videoFileInput" type="file" style="display: none">' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<label for="video-autoplay" class="col-sm-12">Autoplay</label>' +
-                '<div class="col-sm-12">' +
-                '<input type="checkbox" id="video-autoplay" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<label for="video-loop" class="col-sm-12">Loop</label>' +
-                '<div class="col-sm-12">' +
-                '<input type="checkbox" id="video-loop" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<label for="video-showcontrols" class="col-sm-12">Show Controls</label>' +
-                '<div class="col-sm-12">' +
-                '<input type="checkbox" id="video-showcontrols" checked />' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<label for="" class="col-sm-12">Ratio</label>' +
-                '<div class="col-sm-12">' +
-                '<input type="radio" name="video-radio" class="video-ratio" value="4/3" checked /> 4:3' +
-                '</div>' +
-                '<div class="col-sm-12">' +
-                '<input type="radio" name="video-radio" class="video-ratio" value="16/9" /> 16:9' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<label for="video-width" class="col-sm-12">Width (px)</label>' +
-                '<div class="col-sm-12">' +
-                '<input type="number" id="video-width" min="320" max="1920" class="form-control" value="320" />' +
-                '</div>' +
-                '</div>' +
+                '    <div class="form-group">' +
+                '        <label for="videoFileInput" class="col-sm-12">Video file</label>' +
+                '        <div class="col-sm-12">' +
+                '            <div class="video-toolbar">' +
+                '                <a href="#" class="btn-videoFileInput btn btn-sm btn-primary"><i class="fa fa-upload"></i></a>' +
+                '                <input id="videoFileInput" type="file" style="display: none">' +
+                '            </div>' +
+                '        </div>' +
+                '    </div>' +
+                '    <div class="form-group">' +
+                '        <label for="video-autoplay" class="col-sm-12">Autoplay</label>' +
+                '        <div class="col-sm-12">' +
+                '            <input type="checkbox" id="video-autoplay" />' +
+                '        </div>' +
+                '    </div>' +
+                '    <div class="form-group">' +
+                '        <label for="video-loop" class="col-sm-12">Loop</label>' +
+                '        <div class="col-sm-12">' +
+                '            <input type="checkbox" id="video-loop" />' +
+                '        </div>' +
+                '    </div>' +
+                '    <div class="form-group">' +
+                '        <label for="video-showcontrols" class="col-sm-12">Show Controls</label>' +
+                '        <div class="col-sm-12">' +
+                '            <input type="checkbox" id="video-showcontrols" checked />' +
+                '        </div>' +
+                '    </div>' +
+                '    <div class="form-group">' +
+                '        <label for="" class="col-sm-12">Ratio</label>' +
+                '        <div class="col-sm-12">' +
+                '            <input type="radio" name="video-radio" class="video-ratio" value="4/3" checked /> 4:3' +
+                '        </div>' +
+                '        <div class="col-sm-12">' +
+                '            <input type="radio" name="video-radio" class="video-ratio" value="16/9" /> 16:9' +
+                '        </div>' +
+                '    </div>' +
+                '    <div class="form-group">' +
+                '        <label for="video-width" class="col-sm-12">Width (px)</label>' +
+                '        <div class="col-sm-12">' +
+                '            <input type="number" id="video-width" min="320" max="1920" class="form-control" value="320" />' +
+                '        </div>' +
+                '    </div>' +
                 '</form>'
             );
         },

@@ -12,17 +12,7 @@
         <link rel="stylesheet" type="text/css" href="css/examples.css" />
         <script type="text/javascript" src="plugins/jquery-1.11.3/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="../examples/plugins/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-        <script type="text/javascript">
-            var bsTooltip = $.fn.tooltip;
-            var bsButton = $.fn.button;
-        </script>
-        <script src="plugins/jquery-ui-1.11.4/jquery-ui.min.js"></script>
-        <script type="text/javascript">
-            $.widget.bridge('uibutton', $.ui.button);
-            $.widget.bridge('uitooltip', $.ui.tooltip);
-            $.fn.tooltip = bsTooltip;
-            $.fn.button = bsButton;
-        </script>
+        <script type="text/javascript" src="plugins/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
         <script type="text/javascript" src="plugins/jquery.nicescroll-3.6.6/jquery.nicescroll.min.js"></script>
         <script type="text/javascript" src="plugins/ckeditor-4.5.6/ckeditor.js"></script>
         <script type="text/javascript" src="plugins/ckeditor-4.5.6/adapters/jquery.js"></script>
@@ -33,37 +23,43 @@
     </head>
 
     <body>
-        <div id="content-area1">
-            <section>
-                <div data-type="container-content">
-                    <section data-type="component-text">
-                        <h1>Content Area #1</h1>
+        <div class="container">
+            <div id="editor">
+                <div id="header">
+                    <section>
+                        <div data-type="container-content">
+                            <section data-type="component-text">
+                                <h1 class="text-center well-lg">Header</h1>
+                            </section>
+                        </div>
                     </section>
                 </div>
-            </section>
-        </div>
-        <div id="content-area2">
-            <section>
-                <div data-type="container-content">
-                    <section data-type="component-text">
-                        <h1>Content Area #2</h1>
+                <div id="body">
+                    <section>
+                        <div data-type="container-content">
+                            <section data-type="component-text">
+                                <h1 class="text-center well-lg">Body</h1>
+                            </section>
+                        </div>
                     </section>
                 </div>
-            </section>
-        </div>
-        <div id="content-area3">
-            <section>
-                <div data-type="container-content">
-                    <section data-type="component-text">
-                        <h1>Content Area #3</h1>
+                <div id="footer">
+                    <section>
+                        <div data-type="container-content">
+                            <section data-type="component-text">
+                                <h1 class="text-center well-lg">Footer</h1>
+                            </section>
+                        </div>
                     </section>
                 </div>
-            </section>
+            </div>
         </div>
         
         <script type="text/javascript">
             $(function() {
-                $('#content-area1, #content-area2, #content-area3').keditor();
+                $('#editor').keditor({
+                    contentAreasSelector: '#header, #body, #footer'
+                });
             });
         </script>
     </body>

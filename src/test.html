@@ -25,89 +25,43 @@
     
     <body>
         <div class="container">
-            <div id="sidebar-container-customer"></div>
+            <button id="btn-set-content" type="button">Set Content</button>
             <div id="keditor1">
-                <section>
-                    <div class="row">
-                        <div class="col-md-6" data-type="container-content">
-                            
-                            <section data-type="component-photo">
-                                <div class="photo-panel">
-                                    <img src="../examples/snippets/default/img/yenbai_vietnam.jpg" class="img-responsive" style="display: inline-block;">
-                                </div>
-                            </section>
-                        </div>
-                        <div class="col-md-6" data-type="container-content">
-                            <section data-type="component-photo">
-                                <div class="photo-panel">
-                                    <img src="snippets/default/img/somewhere_bangladesh.jpg" width="100%" height="" style="display: inline-block;">
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="row">
-                        <div class="col-sm-4" data-type="container-content">
-                            <section data-type="component-photo">
-                                <div class="photo-panel">
-                                    <img src="../examples/snippets/default/img/yenbai_vietnam.jpg" class="img-responsive" style="display: inline-block;">
-                                </div>
-                            </section>
-                        </div>
-                        <div class="col-sm-4" data-type="container-content">
-                            <section data-type="component-photo">
-                                <div class="photo-panel">
-                                    <img src="snippets/default/img/somewhere_bangladesh.jpg" width="100%" height="" style="display: inline-block;">
-                                </div>
-                            </section>
-                        </div>
-                        <div class="col-sm-4" data-type="container-content">
-                            <section data-type="component-photo">
-                                <div class="photo-panel">
-                                    <img src="../examples/snippets/default/img/yenbai_vietnam.jpg" class="img-responsive" style="display: inline-block;">
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </section>
             </div>
         </div>
         
         <script type="text/javascript">
             $(function () {
                 $('#keditor1').keditor({
-                    sidebarContainer: '#sidebar-container-customer',
-                    tabContainersText: '<i class="fa fa-th-list"></i>',
-                    tabComponentsText: '<i class="fa fa-file"></i>',
-                    extraTabs: {
-                        setting: {
-                            text: '<i class="fa fa-cogs"></i>',
-                            title: 'Settings',
-                            content: (
-                                '<div class="form-horizontal">' +
-                                '   <h3>Here is Custom Tab Content!</h3>' +
-                                '</div>'
-                            )
-                        }
-                    },
+                    niceScrollEnabled: false,
+                    iframeMode: true,
                     tabTooltipEnabled: false,
-                    snippetsTooltipEnabled: false,
-                    containerSettingEnabled: true,
-                    containerSettingInitFunction: function (form, keditor) {
-                        console.log(form, keditor);
-                        form.append(
-                            '<div class="form-horizontal">' +
-                            '   <h3>Here is Setting Container Panel!</h3>' +
-                            '</div>'
-                        );
-                    },
-                    containerSettingShowFunction: function (form, container, keditor) {
-                        console.log(form, container, keditor);
-                    },
-                    containerSettingHideFunction: function (form, keditor) {
-                        console.log(form, keditor);
-                    }
+                    snippetsTooltipEnabled: false
+                });
+
+                $('#btn-set-content').on('click', function (e) {
+                    e.preventDefault();
+
+                    $('#keditor1').keditor('setContent',
+                        '<section>' +
+                        '    <div class="row">' +
+                        '        <div class="col-md-12" data-type="container-content">' +
+                        '            <section>' +
+                        '                <div class="row">' +
+                        '                    <div class="col-md-12" data-type="container-content">' +
+                        '                        <section data-type="component-video">' +
+                        '                            <video width="320" height="180" controls="" style="background: #222;">' +
+                        '                                <source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">' +
+                        '                                <source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">' +
+                        '                            </video>' +
+                        '                        </section>' +
+                        '                    </div>' +
+                        '                </div>' +
+                        '            </section>' +
+                        '        </div>' +
+                        '    </div>' +
+                        '</section>'
+                    );
                 });
             });
         </script>

@@ -285,14 +285,13 @@
         flog('All styles are added');
         
         flog('Adding original content to iframe...');
-        var contentAreasWrapper;
-        if (options.contentAreasWrapper) {
-            contentAreasWrapper = $(options.contentAreasWrapper);
-            contentAreasWrapper.html(originalContent);
-            iframeBody.append(contentAreasWrapper);
-        } else {
-            iframeBody.html(originalContent);
+        if (!options.contentAreasWrapper) {
+            options.contentAreasWrapper = '<div class="keditor-ui keditor-content-areas-wrapper"></div>';
         }
+
+        var contentAreasWrapper = self.contentAreasWrapper = $(options.contentAreasWrapper);
+        contentAreasWrapper.html(originalContent);
+        iframeBody.append(contentAreasWrapper);
         
         self.body = iframeBody;
         
@@ -300,7 +299,7 @@
             options.onInitFrame.call(self, iframe, iframeHead, iframeBody);
         }
         
-        return contentAreasWrapper || iframeBody;
+        return contentAreasWrapper;
     };
     
     KEditor.prototype.initSidebar = function () {
@@ -1756,7 +1755,7 @@
         var self = this;
         var options = self.options;
         var body = self.body;
-        var target = options.iframeMode ? self.body : self.element;
+        var target = options.iframeMode ? self.contentAreasWrapper : self.element;
         
         if (target.is('textarea')) {
             target = $(target.attr('data-keditor-wrapper'));

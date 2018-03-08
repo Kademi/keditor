@@ -32,7 +32,7 @@
         this.init(target);
     };
     
-``    // KEditor instances
+    // KEditor instances
     KEditor.instances = {};
     
     // Turn on/off debug mode

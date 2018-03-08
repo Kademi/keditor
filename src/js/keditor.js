@@ -32,6 +32,9 @@
         this.init(target);
     };
     
+``    // KEditor instances
+    KEditor.instances = {};
+    
     // Turn on/off debug mode
     KEditor.debug = true;
     
@@ -167,7 +170,7 @@
                 }
                 
                 keditorWrapper.html(htmlContent);
-                target.css('display', 'none');
+                target.addClass('keditor-hidden-element');
                 target.attr('data-keditor-wrapper', '#' + keditorWrapperId);
                 
                 target = keditorWrapper;
@@ -238,7 +241,7 @@
             'class': 'keditor-ui keditor-frame'
         });
         
-        target.css('display', 'none');
+        target.addClass('keditor-hidden-element');
         target.attr('data-keditor-frame', '#' + iframeId);
         
         var iframeDoc = self.iframeDoc = iframe.contents();
@@ -288,7 +291,7 @@
         if (!options.contentAreasWrapper) {
             options.contentAreasWrapper = '<div class="keditor-ui keditor-content-areas-wrapper"></div>';
         }
-
+        
         var contentAreasWrapper = self.contentAreasWrapper = $(options.contentAreasWrapper);
         contentAreasWrapper.html(originalContent);
         iframeBody.append(contentAreasWrapper);
@@ -1783,24 +1786,71 @@
     };
     
     KEditor.prototype.getOptions = function () {
-        var keditor = $(this).data('keditor');
+        return $.extend(true, {}, this.options);
+    };
+    
+    KEditor.prototype.destroy = function (getLatestContent) {
+        var target = this.element;
+        var instanceId = target.attr('data-keditor-instance');
         
-        return $.extend(true, {}, keditor.options);
+        if (getLatestContent) {
+            var content = this.getContent(false);
+            
+            if (target.is('textarea')) {
+                target.val(content);
+            } else {
+                target.html(content);
+            }
+        }
+        
+        if (this.options.iframeMode) {
+            $(target.attr('data-keditor-frame')).remove();
+            target.removeAttr('data-keditor-frame');
+        } else {
+            if (target.is('textarea')) {
+                $(target.attr('data-keditor-wrapper')).remove();
+                target.removeAttr('data-keditor-wrapper');
+            }
+            
+            var notIframeInstanceCount = 0;
+            for (var instanceId in KEditor.instances) {
+                if (!KEditor.instances[instanceId].options.iframeMode) {
+                    notIframeInstanceCount++;
+                }
+            }
+            
+            if (notIframeInstanceCount === 0) {
+                this.body.removeClass('initialized-snippets-list opened-keditor-sidebar');
+                this.body.find('#keditor-sidebar').remove();
+            }
+        }
+        
+        target.removeAttr('data-keditor-instance');
+        target.removeClass('keditor-hidden-element');
+        target.data('keditor', null);
+        delete KEditor.instances[instanceId];
     };
     
     // KEditor plugins
     $.fn.keditor = function (options) {
-        var element = $(this)
-        var data = element.data('keditor');
-        
-        if (!data) {
-            element.data('keditor', (data = new KEditor(element, options)));
-        }
+        var element = $(this);
+        var instance = element.data('keditor');
         
         if (typeof options == 'string') {
-            return data[options].apply(data, Array.prototype.slice.call(arguments, 1));
+            if (instance && instance[options] && typeof instance[options] === 'function') {
+                return instance[options].apply(instance, Array.prototype.slice.call(arguments, 1));
+            }
         } else {
-            return data;
+            if (!instance) {
+                instance = new KEditor(element, options);
+                element.data('keditor', instance);
+                
+                var instanceId = instance.generateId('instance');
+                element.attr('data-keditor-instance', instanceId);
+                KEditor.instances[instanceId] = instance;
+            }
+            
+            return instance;
         }
     };
     

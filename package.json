@@ -24,7 +24,6 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-concat-util": "^0.5.5",
-    "gulp-copy": "0.0.2",
     "gulp-cssmin": "^0.1.7",
     "gulp-header": "^1.8.9",
     "gulp-less": "^3.3.2",

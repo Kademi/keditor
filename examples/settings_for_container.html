@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>KEditor - Kademi Content Editor</title>
+        <link rel="stylesheet" type="text/css" href="plugins/bootstrap-3.3.6/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="plugins/font-awesome-4.5.0/css/font-awesome.min.css" />
+        <!-- Start of KEditor styles -->
+        <link rel="stylesheet" type="text/css" href="../dist/css/keditor.min.css" />
+        <link rel="stylesheet" type="text/css" href="../dist/css/keditor-components.min.css" />
+        <!-- End of KEditor styles -->
+        <link rel="stylesheet" type="text/css" href="plugins/code-prettify/src/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="css/examples.css" />
+    </head>
+    
+    <body>
+        <div data-keditor="html">
+            <div id="content-area">
+                <section>
+                    <div class="row">
+                        <div class="col-sm-6" data-type="container-content">
+                            <section data-type="component-text">
+                                <div class="page-header">
+                                    <h1><b class="text-uppercase">Welcome to KEditor</b>
+                                    </h1>
+                                    
+                                    <p class="lead">In this example, we'll show you how to enable settings for container</p>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-sm-6" data-type="container-content">
+                            <section data-type="component-photo">
+                                <div class="photo-panel">
+                                    <img src="snippets/default/img/somewhere_bangladesh.jpg" style="display: inline-block;" height="" width="100%">
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        
+        <script type="text/javascript" src="plugins/jquery-1.11.3/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="plugins/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="plugins/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="plugins/jquery.nicescroll-3.6.6/jquery.nicescroll.min.js"></script>
+        <script type="text/javascript" src="plugins/ckeditor-4.5.6/ckeditor.js"></script>
+        <script type="text/javascript" src="plugins/ckeditor-4.5.6/adapters/jquery.js"></script>
+        <!-- Start of KEditor scripts -->
+        <script type="text/javascript" src="../dist/js/keditor.min.js"></script>
+        <script type="text/javascript" src="../dist/js/keditor-components.min.js"></script>
+        <!-- End of KEditor scripts -->
+        <script type="text/javascript" src="plugins/code-prettify/src/prettify.js"></script>
+        <script type="text/javascript" src="plugins/js-beautify-1.7.5/js/lib/beautify.js"></script>
+        <script type="text/javascript" src="plugins/js-beautify-1.7.5/js/lib/beautify-html.js"></script>
+        <script type="text/javascript" src="js/examples.js"></script>
+        <script type="text/javascript" data-keditor="script">
+            $(function () {
+                $('#content-area').keditor({
+                    containerSettingEnabled: true,
+                    containerSettingInitFunction: function (form, keditor) {
+                        // Add control for settings form
+                        form.append(
+                            '<div class="form-horizontal">' +
+                            '   <div class="form-group">' +
+                            '       <div class="col-sm-12">' +
+                            '           <label>Background color</label>' +
+                            '           <input type="text" class="form-control txt-bg-color" />' +
+                            '       </div>' +
+                            '   </div>' +
+                            '</div>'
+                        );
+                        
+                        // Add event handle for background color textbox
+                        form.find('.txt-bg-color').on('change', function () {
+                            // Get current setting container
+                            var container = keditor.getSettingContainer();
+                            // Find '.row' for setting background color
+                            // Note: Make sure you have a div for setting background color
+                            var row = container.find('.row');
+                            // Set background color with value of textbox
+                            row.css('background-color', this.value);
+                        });
+                    },
+                    containerSettingShowFunction: function (form, container, keditor) {
+                        // Find '.row' div
+                        // Note: Make sure you have a div for setting background color
+                        var row = container.find('.row');
+                        // User "prop()" method to get properties of HTML element
+                        var backgroundColor = row.prop('style').backgroundColor || '';
+                        // User 'backgroundColor' for value of background color textbox
+                        form.find('.txt-bg-color').val(backgroundColor);
+                    },
+                    containerSettingHideFunction: function (form, keditor) {
+                        // Clean value of background color textbox when hiding settings form
+                        form.find('.txt-bg-color').val('');
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

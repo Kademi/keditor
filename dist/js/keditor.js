@@ -366,7 +366,9 @@
                     
                     if (options.snippetsTooltipEnabled || options.tabTooltipEnabled) {
                         flog('Initialize Bootstrap tooltip plugin');
-                        body.find('#keditor-snippets-list').find('[data-toggle="tooltip"]').tooltip();
+                        body.find('#keditor-snippets-list').find('[data-toggle="tooltip"]').tooltip({
+                            trigger: 'hover'
+                        });
                     }
                     
                     if (typeof options.onReady === 'function') {

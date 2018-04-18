@@ -1,0 +1,10 @@
+#! /bin/sh
+#
+# Test suite launcher
+#
+
+if [ -z $PYTHON ]; then
+    env python js-beautify-test.py
+else
+    env $PYTHON js-beautify-test.py
+fi

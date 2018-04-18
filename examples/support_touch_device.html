@@ -9,7 +9,31 @@
         <link rel="stylesheet" type="text/css" href="../dist/css/keditor.min.css" />
         <link rel="stylesheet" type="text/css" href="../dist/css/keditor-components.min.css" />
         <!-- End of KEditor styles -->
+        <link rel="stylesheet" type="text/css" href="plugins/code-prettify/src/prettify.css" />
         <link rel="stylesheet" type="text/css" href="css/examples.css" />
+    </head>
+    
+    <body>
+        <div data-keditor="html">
+            <div id="content-area">
+                <section>
+                    <div class="row">
+                        <div class="col-sm-12" data-type="container-content">
+                            <section data-type="component-text">
+                                <div class="page-header">
+                                    <h1><b class="text-uppercase">Welcome to KEditor</b></h1>
+                                    <p class="lead">To use KEditor in touch devices, please use this plugin for enable Drag &amp; Drop on Touch Devices:
+                                        <a href="http://touchpunch.furf.com/" rel="nofollow">jQuery UI Touch Punch</a>
+                                    </p>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <script type="text/html" src="plugins/jquery-ui.touch-punch-0.2.3/jquery.ui.touch-punch.min.js"></script>
+        </div>
+        
         <script type="text/javascript" src="plugins/jquery-1.11.3/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="../examples/plugins/bootstrap-3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="plugins/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
@@ -21,19 +45,15 @@
         <script type="text/javascript" src="../dist/js/keditor.min.js"></script>
         <script type="text/javascript" src="../dist/js/keditor-components.min.js"></script>
         <!-- End of KEditor scripts -->
-    </head>
-
-    <body>
-        <div id="content-area"></div>
-        
-        <script type="text/javascript">
-            $(function() {
+        <script type="text/javascript" src="plugins/code-prettify/src/prettify.js"></script>
+        <script type="text/javascript" src="plugins/js-beautify-1.7.5/js/lib/beautify.js"></script>
+        <script type="text/javascript" src="plugins/js-beautify-1.7.5/js/lib/beautify-html.js"></script>
+        <script type="text/javascript" src="js/examples.js"></script>
+        <script type="text/javascript" data-keditor="script">
+            $(function () {
                 $('#content-area').keditor({
-                    tabTooltipEnabled: false,
-                    snippetsTooltipEnabled: false,
-                    onReady: function () {
-                        $('.keditor-content-area').css('min-height', $(window).height());
-                    }
+                    tabTooltipEnabled: false, // disable bootstrap tooltip of tab on touch device
+                    snippetsTooltipEnabled: false  // disable bootstrap tooltip of snippets on touch device
                 });
             });
         </script>

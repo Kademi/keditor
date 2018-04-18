@@ -44,13 +44,15 @@
         );
         
         var htmlCode = $('[data-keditor="html"]').html();
+        var htmlInclude = $('<div />').html($('[data-keditor="html-include"]').clone()).html();
+        htmlInclude = htmlInclude.replace('data-keditor="html-include"', '');
+        htmlCode += htmlInclude;
         htmlCode = html_beautify(htmlCode, {
             'indent_size': '4',
             'indent_char': ' ',
             'space_after_anon_function': true,
             'end_with_newline': true
         });
-        htmlCode = htmlCode.replace(' type="text/html"', '');
         htmlCode = htmlCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         modal.find('#html .prettyprint').html(htmlCode);
         

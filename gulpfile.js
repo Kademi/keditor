@@ -7,7 +7,6 @@ var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
-var copy = require('gulp-copy');
 var pjson = require('./package.json');
 var rimraf = require('gulp-rimraf');
 var replace = require('gulp-replace');
@@ -43,9 +42,6 @@ var buildComponents = function (typeType) {
     return gulp.src(['./src/' + typeType + '/keditor-component-*.' + typeType])
         .pipe(plumber())
         .pipe(concat('keditor-components.' + typeType + ''))
-        .pipe(rename({
-            suffix: '-' + pjson.version
-        }))
         .pipe(gulp.dest('./dist/' + typeType + '/'))
 };
 
@@ -61,16 +57,11 @@ gulp.task('build-js-components', function () {
 // =========================================================================
 gulp.task('copy-css', function () {
     return gulp.src('./src/css/*.css')
-        .pipe(rename({
-            suffix: '-' + pjson.version
-        }))
         .pipe(gulp.dest('./dist/css/'));
 });
 gulp.task('copy-js', function () {
     return gulp.src('./src/js/*.js')
-        .pipe(rename({
-            suffix: '-' + pjson.version
-        }))
+        .pipe(replace('@{version}', pjson.version))
         .pipe(gulp.dest('./dist/js/'));
 });
 gulp.task('copy-snippets-src-examples', function () {
@@ -128,22 +119,6 @@ gulp.task('prepend-header-js', function () {
 // Examples tasks
 // =========================================================================
 gulp.task('build-snippets-examples', gulpsync.sync(['clean-snippets-examples', 'copy-snippets-src-examples']));
-gulp.task('replace-keditor-assets', function () {
-    return gulp.src(['./examples/*.html'])
-        .pipe(replace(/(<!-- Start of KEditor styles -->)(.|[\n\r])*.+(.|[\n\r])*(<!-- End of KEditor styles -->)/,
-            '$1' +
-            '\n        <link rel="stylesheet" type="text/css" href="../dist/css/keditor-' + pjson.version + '.min.css" />' +
-            '\n        <link rel="stylesheet" type="text/css" href="../dist/css/keditor-components-' + pjson.version + '.min.css" />' +
-            '\n        $4'
-        ))
-        .pipe(replace(/(<!-- Start of KEditor scripts -->)(.|[\n\r])*.+(.|[\n\r])*(<!-- End of KEditor scripts -->)/,
-            '$1' +
-            '\n        <script type="text/javascript" src="../dist/js/keditor-' + pjson.version + '.min.js"></script>' +
-            '\n        <script type="text/javascript" src="../dist/js/keditor-components-' + pjson.version + '.min.js"></script>' +
-            '\n        $4'
-        ))
-        .pipe(gulp.dest('./examples/'));
-});
 
 // =========================================================================
 // Build CSS
@@ -169,7 +144,7 @@ gulp.task('watch', function () {
 gulp.task('build-css-dist', gulpsync.sync(['build-css', 'clean-css-dist', 'copy-css', 'build-css-components', 'min-css', 'prepend-header-css']));
 gulp.task('build-js-dist', gulpsync.sync(['clean-js-dist', 'copy-js', 'build-js-components', 'min-js', 'prepend-header-js']));
 
-gulp.task('build', ['build-css-dist', 'build-js-dist', 'build-snippets-examples', 'replace-keditor-assets']);
+gulp.task('build', ['build-css-dist', 'build-js-dist', 'build-snippets-examples']);
 
 gulp.task('dev', ['build-css', 'watch']);
 

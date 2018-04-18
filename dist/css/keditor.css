@@ -438,6 +438,12 @@ body.highlighted-container-content .keditor-container:before {
   display: block;
 }
 /* ==================================================================================
+   Hidden element
+   ================================================================================== */
+.keditor-hidden-element {
+  display: none !important;
+}
+/* ==================================================================================
    Drag n Drop helper
    ================================================================================== */
 .keditor-ui-dragging {
@@ -462,6 +468,7 @@ body.highlighted-container-content .keditor-container:before {
   float: none !important;
   outline: none !important;
   padding: 0 !important;
+  opacity: 1 !important;
 }
 .ui-sortable-placeholder.keditor-snippet:before,
 .ui-sortable-placeholder.keditor-container:before,
@@ -473,11 +480,11 @@ body.highlighted-container-content .keditor-container:before {
 }
 .ui-sortable-helper.keditor-section {
   background: #fff !important;
-  opacity: 0.5;
 }
-.ui-sortable-helper.keditor-container:before,
+.ui-sortable-helper.keditor-container .keditor-toolbar.keditor-toolbar-container {
+  display: block !important;
+}
 .ui-sortable-helper.keditor-component:before,
-.ui-sortable-helper.keditor-container .keditor-toolbar,
 .ui-sortable-helper.keditor-component .keditor-toolbar {
-  display: none !important;
+  display: block !important;
 }

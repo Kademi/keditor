@@ -229,7 +229,16 @@ When `iframeMode` is ON, all elements which have `data-type=keditor-style` will 
 
 # How to get content of KEditor
 ```javascript
-$('#id').keditor('getContent');
+/**
+ * @param {Boolean} inArray Return your content in array format or just plain string
+ */
+KEditor.prototype.getContent(inArray);
+```
+
+Example:
+```javascript
+$('#target1').keditor('getContent'); // For only 1 content-area
+$('#target2').keditor('getContent', true); // For more than 1 content-area and you want to get them separately
 ```
 
 # How to set content of KEditor

@@ -21,23 +21,71 @@
         <script src="js/keditor-component-video.js"></script>
         <script src="js/keditor-component-vimeo.js"></script>
         <script src="js/keditor-component-youtube.js"></script>
+        
+        <style>
+            #keditor1,
+            #keditor2,
+            #keditor3 {
+                min-height: 200px;
+                margin: 20px 0;
+                border: 2px dashed #ddd;
+            }
+        </style>
     </head>
     
     <body>
         <div class="container">
             <button id="btn-set-content" type="button">Set Content</button>
+            <button id="btn-set-content2" type="button">Set Content 2</button>
+            <button id="btn-set-content3" type="button">Set Content 3</button>
             <button id="btn-init" type="button">Init</button>
             <button id="btn-destroy" type="button">Destroy</button>
             <div id="keditor1">
             </div>
+            <div id="keditor2">
+            </div>
+            <div id="keditor3">
+            </div>
         </div>
         
         <script type="text/javascript">
+            function newContent() {
+                return (
+                    '<section>' +
+                    '    <div class="row">' +
+                    '        <div class="col-md-12" data-type="container-content">' +
+                    '            <section>' +
+                    '                <div class="row">' +
+                    '                    <div class="col-md-12" data-type="container-content">' +
+                    '                        <section data-type="component-video">' +
+                    '                            <video width="320" height="180" controls="" style="background: #222;">' +
+                    '                                <source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">' +
+                    '                                <source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">' +
+                    '                            </video>' +
+                    '                        </section>' +
+                    '                    </div>' +
+                    '                </div>' +
+                    '            </section>' +
+                    '        </div>' +
+                    '    </div>' +
+                    '</section>'
+                );
+            }
+            
             $(function () {
                 $('#btn-init').on('click', function (e) {
                     $('#keditor1').keditor({
                         niceScrollEnabled: false,
-                        iframeMode: true,
+                        tabTooltipEnabled: false,
+                        snippetsTooltipEnabled: false
+                    });
+                    $('#keditor2').keditor({
+                        niceScrollEnabled: false,
+                        tabTooltipEnabled: false,
+                        snippetsTooltipEnabled: false
+                    });
+                    $('#keditor3').keditor({
+                        niceScrollEnabled: false,
                         tabTooltipEnabled: false,
                         snippetsTooltipEnabled: false
                     });
@@ -46,30 +94,23 @@
                 $('#btn-destroy').on('click', function (e) {
                     $('#keditor1').keditor('destroy');
                 });
-
+                
                 $('#btn-set-content').on('click', function (e) {
                     e.preventDefault();
-
-                    $('#keditor1').keditor('setContent',
-                        '<section>' +
-                        '    <div class="row">' +
-                        '        <div class="col-md-12" data-type="container-content">' +
-                        '            <section>' +
-                        '                <div class="row">' +
-                        '                    <div class="col-md-12" data-type="container-content">' +
-                        '                        <section data-type="component-video">' +
-                        '                            <video width="320" height="180" controls="" style="background: #222;">' +
-                        '                                <source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">' +
-                        '                                <source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">' +
-                        '                            </video>' +
-                        '                        </section>' +
-                        '                    </div>' +
-                        '                </div>' +
-                        '            </section>' +
-                        '        </div>' +
-                        '    </div>' +
-                        '</section>'
-                    );
+                    
+                    $('#keditor1').keditor('setContent', newContent());
+                });
+                
+                $('#btn-set-content2').on('click', function (e) {
+                    e.preventDefault();
+                    
+                    $('#keditor2').keditor('setContent', newContent());
+                });
+                
+                $('#btn-set-content3').on('click', function (e) {
+                    e.preventDefault();
+                    
+                    $('#keditor3').keditor('setContent', newContent());
                 });
             });
         </script>

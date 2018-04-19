@@ -181,6 +181,9 @@
         var ajaxRequest;
         if (body.hasClass('initialized-snippets-list')) {
             flog('Snippets list is already initialized!');
+            var snippetsList = body.find('#keditor-snippets-list');
+            self.containerSnippets = snippetsList.find('.keditor-snippet[data-type=container]');
+            self.componentSnippets = snippetsList.find('.keditor-snippet[data-type^=component]');
         } else {
             ajaxRequest = self.initSidebar();
             body.addClass('initialized-snippets-list');

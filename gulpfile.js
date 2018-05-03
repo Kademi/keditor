@@ -104,9 +104,9 @@ gulp.task('min-js', function () {
 // =========================================================================
 var prependHeader = function (fileType) {
     return gulp.src(['./dist/' + fileType + '/*.' + fileType])
-        .pipe(header(fs.readFileSync('./header.txt', 'utf8'), {pkg: pjson}))
+        .pipe(header(fs.readFileSync('./header.txt', 'utf8'), { pkg: pjson }))
         .pipe(gulp.dest('./dist/' + fileType));
-}
+};
 
 gulp.task('prepend-header-css', function () {
     return prependHeader('css')

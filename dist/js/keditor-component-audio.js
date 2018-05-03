@@ -2,7 +2,7 @@
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.5
+ * @version: 1.1.6
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
  */
 (function ($) {
@@ -29,33 +29,33 @@
             
             form.append(
                 '<form class="form-horizontal">' +
-                '<div class="form-group">' +
-                '<label for="audioFileInput" class="col-sm-12">Audio file</label>' +
-                '<div class="col-sm-12">' +
-                '<div class="audio-toolbar">' +
-                '<a href="#" class="btn-audioFileInput btn btn-sm btn-primary"><i class="fa fa-upload"></i></a>' +
-                '<input id="audioFileInput" type="file" style="display: none">' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<label for="audio-autoplay" class="col-sm-12">Autoplay</label>' +
-                '<div class="col-sm-12">' +
-                '<input type="checkbox" id="audio-autoplay" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<label for="audio-showcontrols" class="col-sm-12">Show Controls</label>' +
-                '<div class="col-sm-12">' +
-                '<input type="checkbox" id="audio-showcontrols" checked />' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<label for="audio-width" class="col-sm-12">Width (%)</label>' +
-                '<div class="col-sm-12">' +
-                '<input type="number" id="audio-width" min="20" max="100" class="form-control" value="100" />' +
-                '</div>' +
-                '</div>' +
+                '     <div class="form-group">' +
+                '         <label for="audioFileInput" class="col-sm-12">Audio file</label>' +
+                '         <div class="col-sm-12">' +
+                '             <div class="audio-toolbar">' +
+                '                 <a href="#" class="btn-audioFileInput btn btn-sm btn-primary"><i class="fa fa-upload"></i></a>' +
+                '                 <input id="audioFileInput" type="file" style="display: none" />' +
+                '             </div>' +
+                '         </div>' +
+                '     </div>' +
+                '     <div class="form-group">' +
+                '         <label for="audio-autoplay" class="col-sm-12">Autoplay</label>' +
+                '         <div class="col-sm-12">' +
+                '             <input type="checkbox" id="audio-autoplay" />' +
+                '         </div>' +
+                '     </div>' +
+                '     <div class="form-group">' +
+                '         <label for="audio-showcontrols" class="col-sm-12">Show Controls</label>' +
+                '         <div class="col-sm-12">' +
+                '             <input type="checkbox" id="audio-showcontrols" checked />' +
+                '         </div>' +
+                '     </div>' +
+                '     <div class="form-group">' +
+                '         <label for="audio-width" class="col-sm-12">Width (%)</label>' +
+                '         <div class="col-sm-12">' +
+                '             <input type="number" id="audio-width" min="20" max="100" class="form-control" value="100" />' +
+                '         </div>' +
+                '     </div>' +
                 '</form>'
             );
         },

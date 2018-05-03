@@ -119,7 +119,7 @@ $.keditor.DEFAULTS = {
     extraTabs: null,
     defaultComponentType: 'blank',
     sidebarContainer: null,
-    snippetsUrl: 'snippets/default/snippets.html',
+    snippetsUrl: 'snippets/snippets.html',
     snippetsTooltipEnabled: true,
     snippetsTooltipPosition: 'left',
     snippetsFilterEnabled: true,

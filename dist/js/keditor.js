@@ -2,8 +2,8 @@
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.5
- * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
+ * @version: 2.0.0
+ * @dependencies: $, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
  */
 (function ($) {
     // Log function will print log message
@@ -22,12 +22,6 @@
     };
     
     // Check dependencies
-    if (!$.fn.draggable) {
-        error('$.fn.draggable does not exist. Please import $.fn.draggable into your document for continue using KEditor.');
-    }
-    if (!$.fn.droppable) {
-        error('$.fn.droppable does not exist. Please import $.fn.droppable into your document for continue using KEditor.');
-    }
     if (!$.fn.sortable) {
         error('$.fn.sortable does not exist. Please import $.fn.sortable into your document for continue using KEditor.');
     }
@@ -46,7 +40,7 @@
     KEditor.debug = true;
     
     // Version of KEditor
-    KEditor.version = '1.1.5';
+    KEditor.version = '2.0.0';
     
     // Default configuration of KEditor
     KEditor.DEFAULTS = {
@@ -68,7 +62,7 @@
         extraTabs: null,
         defaultComponentType: 'blank',
         sidebarContainer: null,
-        snippetsUrl: 'snippets/default/snippets.html',
+        snippetsUrl: 'snippets/snippets.html',
         snippetsTooltipEnabled: true,
         snippetsTooltipPosition: 'left',
         snippetsFilterEnabled: true,
@@ -188,6 +182,9 @@
         var ajaxRequest;
         if (body.hasClass('initialized-snippets-list')) {
             flog('Snippets list is already initialized!');
+            var snippetsList = body.find('#keditor-snippets-list');
+            self.containerSnippets = snippetsList.find('.keditor-snippet[data-type=container]');
+            self.componentSnippets = snippetsList.find('.keditor-snippet[data-type^=component]');
         } else {
             ajaxRequest = self.initSidebar();
             body.addClass('initialized-snippets-list');

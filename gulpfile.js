@@ -56,11 +56,11 @@ gulp.task('build-js-components', function () {
 // Copy tasks
 // =========================================================================
 gulp.task('copy-css', function () {
-    return gulp.src('./src/css/*.css')
+    return gulp.src(['./src/css/keditor.css', './src/css/keditor-bootstrap-form.css'])
         .pipe(gulp.dest('./dist/css/'));
 });
 gulp.task('copy-js', function () {
-    return gulp.src('./src/js/*.js')
+    return gulp.src('./src/js/keditor.js')
         .pipe(replace('@{version}', pjson.version))
         .pipe(gulp.dest('./dist/js/'));
 });

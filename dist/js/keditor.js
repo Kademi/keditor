@@ -5,12 +5,12 @@
  * @version: 2.0.0
  * @dependencies: $, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
  */
-(function ($) {
+(function (window, $) {
     // Log function will print log message
     var flog = function () {
-        if (typeof (console) !== 'undefined' && KEditor.debug === true) {
+        if (console && typeof console.log === 'function' && KEditor.debug === true) {
             var args = Array.prototype.slice.apply(arguments);
-            args.unshift('[KEditor]');
+            args.unshift('[ KEditor ] ');
             
             console.log.apply(console, args);
         }
@@ -37,7 +37,7 @@
     KEditor.instances = {};
     
     // Turn on/off debug mode
-    KEditor.debug = true;
+    KEditor.debug = false;
     
     // Version of KEditor
     KEditor.version = '2.0.0';
@@ -1865,4 +1865,4 @@
     // Export KEditor
     $.keditor = KEditor;
     
-})(jQuery);
+})(window, jQuery);

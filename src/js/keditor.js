@@ -1,9 +1,9 @@
-(function ($) {
+(function (window, $) {
     // Log function will print log message
     var flog = function () {
-        if (typeof (console) !== 'undefined' && KEditor.debug === true) {
+        if (console && typeof console.log === 'function' && KEditor.debug === true) {
             var args = Array.prototype.slice.apply(arguments);
-            args.unshift('[KEditor]');
+            args.unshift('[ KEditor ] ');
             
             console.log.apply(console, args);
         }
@@ -11,39 +11,15 @@
     
     // Throw error message
     var error = function (msg) {
-        throw new Error('[KEditor] ' + msg);
+        throw new Error('[ KEditor ] ' + msg);
     };
     
     // Check dependencies
-    if (!$.fn.draggable) {
-        error('$.fn.draggable does not exist. Please import $.fn.draggable into your document for continue using KEditor.');
-    }
-    if (!$.fn.droppable) {
-        error('$.fn.droppable does not exist. Please import $.fn.droppable into your document for continue using KEditor.');
-    }
     if (!$.fn.sortable) {
         error('$.fn.sortable does not exist. Please import $.fn.sortable into your document for continue using KEditor.');
     }
     
-    // KEditor class
-    var KEditor = function (target, options) {
-        this.element = target;
-        this.options = $.extend({}, KEditor.DEFAULTS, options);
-        this.init(target);
-    };
-    
-    // KEditor instances
-    KEditor.instances = {};
-    
-    // Turn on/off debug mode
-    KEditor.debug = true;
-    
-    // Version of KEditor
-    KEditor.version = '@{version}';
-    
-    // Default configuration of KEditor
-    KEditor.DEFAULTS = {
-        niceScrollEnabled: true,
+    var DEFAULTS = {
         nestedContainerEnabled: true,
         btnMoveContainerText: '<i class="fa fa-sort"></i>',
         btnMoveComponentText: '<i class="fa fa-arrows"></i>',
@@ -53,17 +29,8 @@
         btnDuplicateComponentText: '<i class="fa fa-files-o"></i>',
         btnDeleteContainerText: '<i class="fa fa-times"></i>',
         btnDeleteComponentText: '<i class="fa fa-times"></i>',
-        tabContainersText: 'Containers',
-        tabContainersTitle: 'Containers',
-        tabComponentsText: 'Components',
-        tabComponentsTitle: 'Components',
-        tabTooltipEnabled: true,
-        extraTabs: null,
         defaultComponentType: 'blank',
-        sidebarContainer: null,
         snippetsUrl: 'snippets/snippets.html',
-        snippetsTooltipEnabled: true,
-        snippetsTooltipPosition: 'left',
         snippetsFilterEnabled: true,
         snippetsCategoriesSeparator: ';',
         iframeMode: false,
@@ -76,9 +43,15 @@
         containerSettingHideFunction: null,
         onReady: function () {
         },
-        onInitFrame: function (frame, frameHead, frameBody) {
+        
+        onSnippetsLoaded: function (modal) {
+        
         },
-        onSidebarToggled: function (isOpened) {
+        onSnippetsError: function (modal, error) {
+        
+        },
+        
+        onInitFrame: function (frame, frameHead, frameBody) {
         },
         onContentChanged: function (event, contentArea) {
         },
@@ -132,73 +105,30 @@
         }
     };
     
+    // KEditor class
+    var KEditor = function (target, options) {
+        var instanceId = this.generateId('instance');
+        target.attr('data-keditor-instance', instanceId);
+        KEditor.instances[instanceId] = this;
+        
+        this.element = target;
+        this.options = $.extend({}, DEFAULTS, options);
+        this.init();
+    };
+    
+    // KEditor instances
+    KEditor.instances = {};
+    
+    // Turn on/off debug mode
+    KEditor.debug = false;
+    
+    // Version of KEditor
+    KEditor.version = '@{version}';
+    
     // Component types
     KEditor.components = {
         blank: {
             settingEnabled: false
-        }
-    };
-    
-    // Export log methods;
-    KEditor.log = flog;
-    KEditor.error = error;
-    
-    KEditor.prototype.init = function (target) {
-        var self = this;
-        var options = self.options;
-        
-        if (options.iframeMode) {
-            target = self.initFrame(target);
-        } else {
-            self.window = window;
-            self.body = $(document.body);
-            
-            if (target.is('textarea')) {
-                flog('Target is textarea', target);
-                
-                var htmlContent = target.val();
-                var keditorWrapper = $(options.contentAreasWrapper || '<div />');
-                target.after(keditorWrapper);
-                keditorWrapper.attr({
-                    class: 'keditor-ui keditor-wrapper'
-                });
-                
-                var keditorWrapperId = keditorWrapper.attr('id');
-                if (!keditorWrapperId) {
-                    keditorWrapperId = self.generateId('wrapper');
-                    keditorWrapper.attr('id', keditorWrapperId);
-                }
-                
-                keditorWrapper.html(htmlContent);
-                target.addClass('keditor-hidden-element');
-                target.attr('data-keditor-wrapper', '#' + keditorWrapperId);
-                
-                target = keditorWrapper;
-            }
-        }
-        
-        var body = self.body;
-        var ajaxRequest;
-        if (body.hasClass('initialized-snippets-list')) {
-            flog('Snippets list is already initialized!');
-            var snippetsList = body.find('#keditor-snippets-list');
-            self.containerSnippets = snippetsList.find('.keditor-snippet[data-type=container]');
-            self.componentSnippets = snippetsList.find('.keditor-snippet[data-type^=component]');
-        } else {
-            ajaxRequest = self.initSidebar();
-            body.addClass('initialized-snippets-list');
-        }
-        if (body.hasClass('initialized-click-event-handlers')) {
-            flog('CLick event handlers is already initialized!');
-        } else {
-            self.initKEditorClicks();
-            body.addClass('initialized-click-event-handlers');
-        }
-        
-        self.initContentAreas(target);
-        
-        if (!ajaxRequest && typeof options.onReady === 'function') {
-            options.onReady.call(self);
         }
     };
     
@@ -207,25 +137,38 @@
         return 'keditor-' + type + '-' + timestamp;
     };
     
-    KEditor.prototype.initNiceScroll = function (target) {
-        flog('initNiceScroll', target);
+    KEditor.prototype.init = function () {
+        var self = this;
+        var element = self.element;
+        var options = self.options;
+        var contentAreasWrapper;
         
-        if ($.fn.niceScroll && this.options.niceScrollEnabled) {
-            flog('Initialize $.fn.niceScroll');
-            target.niceScroll({
-                cursorcolor: '#999',
-                cursorwidth: 6,
-                railpadding: {
-                    top: 0,
-                    right: 0,
-                    left: 0,
-                    bottom: 0
-                },
-                cursorborder: '',
-                disablemutationobserver: true
-            });
+        if (options.iframeMode) {
+            contentAreasWrapper = self.initFrame(element);
         } else {
-            flog('$.fn.niceScroll does not exist. Use default sidebar.');
+            self.window = window;
+            self.body = $(document.body);
+            
+            if (element.is('textarea')) {
+                contentAreasWrapper = $(options.contentAreasWrapper || '<div />');
+                element.after(contentAreasWrapper);
+                contentAreasWrapper.attr('class', 'keditor-ui keditor-content-area-wrapper');
+                
+                if (!contentAreasWrapper.attr('id')) {
+                    contentAreasWrapper.attr('id', self.generateId('content-area-wrapper'));
+                }
+                
+                contentAreasWrapper.html(element.val());
+                element.addClass('keditor-hidden-element');
+            }
+        }
+        
+        self.contentAreasWrapper = contentAreasWrapper;
+        self.initSnippetsModal();
+        self.initContentAreas(element);
+        
+        if (typeof options.onReady === 'function') {
+            options.onReady.call(self);
         }
     };
     
@@ -308,76 +251,122 @@
         return contentAreasWrapper;
     };
     
-    KEditor.prototype.initSidebar = function () {
-        flog('initSidebar');
-        
+    KEditor.prototype.initSnippetsModal = function () {
         var self = this;
         var options = self.options;
-        var body = self.body;
-        body.addClass('opened-keditor-sidebar');
-        var sidebarContainer = body;
-        if (options.sidebarContainer) {
-            sidebarContainer = body.find(options.sidebarContainer);
-        }
         
-        flog('Render Keditor sidebar');
-        sidebarContainer.append(
-            '<div id="keditor-sidebar" class="keditor-ui">' +
-            '   <a id="keditor-sidebar-toggler" class="keditor-ui"><i class="fa fa-chevron-right"></i></a>' +
-            '   <div id="keditor-snippets-list" class="keditor-ui"></div>' +
-            '   <div id="keditor-snippets-content" class="keditor-ui" style="display: none"></div>' +
-            '   <div id="keditor-setting-panel" class="keditor-ui">' +
-            '       <div id="keditor-setting-header" class="keditor-ui">' +
-            '           <span id="keditor-setting-title" class="keditor-ui"></span>' +
-            '           <a href="#" id="keditor-setting-closer" class="keditor-ui"><i class="fa fa-arrow-right"></i></a>' +
+        var modal = $(
+            '<div class="keditor-ui keditor-modal">' +
+            '   <div class="keditor-modal-header">' +
+            '       <button type="button" class="keditor-modal-close">&times;</button>' +
+            '       <h4 class="keditor-modal-title"></h4>' +
+            '   </div>' +
+            '   <div class="keditor-modal-body">' +
+            '       <div class="keditor-snippets-wrapper keditor-snippets-wrapper-container">' +
+            '           <div class="keditor-snippets keditor-snippet-container"></div>' +
             '       </div>' +
-            '       <div id="keditor-setting-body" class="keditor-ui">' +
-            '           <div id="keditor-setting-forms" class="keditor-ui"></div>' +
+            '       <div class="keditor-snippets-wrapper keditor-snippets-wrapper-component">' +
+            '           <div class="keditor-snippets keditor-snippet-component"></div>' +
             '       </div>' +
+            '   </div>' +
+            '   <div class="keditor-modal-footer">' +
+            '       <button type="button" class="keditor-ui keditor-btn keditor-btn-default keditor-modal-close">Close</button>' +
+            '       <button type="button" class="keditor-ui keditor-btn keditor-btn-primary keditor-modal-add">Add</button>' +
             '   </div>' +
             '</div>'
         );
-        self.initSidebarToggler();
         
         if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
             flog('Getting snippets form "' + options.snippetsUrl + '"...');
-            
-            return $.ajax({
+    
+            $.ajax({
                 type: 'get',
                 dataType: 'html',
                 url: options.snippetsUrl,
                 success: function (resp) {
                     flog('Success in getting snippets');
                     
+                    if (typeof options.onSnippetsLoaded === 'function') {
+                        resp = options.onSnippetsLoaded.call(self, resp) || resp;
+                    }
+            
                     self.renderSnippets(resp);
                     self.initSnippets();
-                    self.initTabs();
-                    self.initTabsSwitcher();
-                    self.initSettingPanel();
-                    
+            
                     if (options.snippetsFilterEnabled) {
                         self.initSnippetsFilter('Container');
                         self.initSnippetsFilter('Component');
                     }
-                    
-                    if (options.snippetsTooltipEnabled || options.tabTooltipEnabled) {
-                        flog('Initialize Bootstrap tooltip plugin');
-                        body.find('#keditor-snippets-list').find('[data-toggle="tooltip"]').tooltip({
-                            trigger: 'hover'
-                        });
-                    }
-                    
-                    if (typeof options.onReady === 'function') {
-                        options.onReady.call(self);
-                    }
                 },
                 error: function (jqXHR) {
                     flog('Error when getting snippets', jqXHR);
+                    if (typeof options.onSnippetsError === 'function') {
+                        options.onSnippetsError.call(self, jqXHR);
+                    }
                 }
             });
         } else {
             error('"snippetsUrl" must be not null!');
         }
+        
+        modal.appendTo(document.body);
+    };
+    
+    KEditor.prototype.renderSnippets = function (resp) {
+        flog('renderSnippets');
+        
+        var self = this;
+        var options = self.options;
+        var body = self.body;
+        
+        var snippetsContainerHtml = '';
+        var snippetsComponentHtml = '';
+        var snippetsContentHtml = '';
+        
+        self.snippetsContainerCategories = [];
+        self.snippetsComponentCategories = [];
+        
+        $(resp).filter('div').each(function (i) {
+            var snippet = $(this);
+            var content = snippet.html().trim();
+            var previewUrl = snippet.attr('data-preview');
+            var type = snippet.attr('data-type');
+            var title = snippet.attr('data-keditor-title');
+            var categories = snippet.attr('data-keditor-categories') || '';
+    
+            var snippetHtml = '';
+            snippetHtml += '<section class="keditor-ui keditor-snippet" data-snippet="#keditor-snippet-' + i + '" data-type="' + type + '" title="' + title + '" data-keditor-categories="' + categories + '">';
+            snippetHtml += '   <img class="keditor-ui keditor-snippet-preview" src="' + previewUrl + '" />';
+            snippetHtml += '</section>';
+            
+            categories = categories.split(options.snippetsCategoriesSeparator);
+            
+            if (type === 'container') {
+                snippetsContainerHtml += snippetHtml;
+                self.snippetsContainerCategories = self.snippetsContainerCategories.concat(categories);
+            } else if (type.indexOf('component') !== -1) {
+                snippetsComponentHtml += snippetHtml;
+                self.snippetsComponentCategories = self.snippetsComponentCategories.concat(categories);
+            }
+            
+            var dataAttributes = self.getDataAttributes(snippet, ['data-preview', 'data-type', 'data-keditor-title', 'data-keditor-categories'], true);
+            snippetsContentHtml += '<script id="keditor-snippet-' + i + '" type="text/html" ' + dataAttributes.join(' ') + '>' + content + '</script>';
+        });
+        
+        self.snippetsContainerCategories = self.beautifyCategories(self.snippetsContainerCategories);
+        self.snippetsComponentCategories = self.beautifyCategories(self.snippetsComponentCategories);
+        
+        body.find('#keditor-snippets-list').html(
+            '<ul id="keditor-snippets-type-switcher" class="keditor-ui keditor-tabs">' +
+            '    <li class="keditor-ui keditor-tab active"><a class="keditor-ui" href="#keditor-container-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabContainersTitle + '">' + options.tabContainersText + '</a></li>' +
+            '    <li class="keditor-ui keditor-tab"><a class="keditor-ui" href="#keditor-component-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabComponentsTitle + '">' + options.tabComponentsText + '</a></li>' +
+            '</ul>' +
+            '<div id="keditor-snippets-container" class="keditor-ui keditor-tabs-content">' +
+            '   <div class="keditor-ui keditor-tab-content active" id="keditor-container-snippets-tab"><div class="keditor-ui keditor-tab-content-inner">' + snippetsContainerHtml + '</div></div>' +
+            '   <div class="keditor-ui keditor-tab-content" id="keditor-component-snippets-tab"><div class="keditor-ui keditor-tab-content-inner">' + snippetsComponentHtml + '</div></div>' +
+            '</div>'
+        ).addClass('loaded-snippets');
+        body.find('#keditor-snippets-content').html(snippetsContentHtml);
     };
     
     KEditor.prototype.initSnippetsFilter = function (type) {
@@ -469,97 +458,6 @@
         });
     };
     
-    KEditor.prototype.toggleSidebar = function (showSidebar) {
-        flog('toggleSidebar', showSidebar);
-        
-        var self = this;
-        var options = self.options;
-        var body = self.body;
-        var icon = body.find('#keditor-sidebar-toggler i');
-        
-        if (showSidebar) {
-            body.addClass('opened-keditor-sidebar');
-            icon.attr('class', 'fa fa-chevron-right')
-        } else {
-            body.removeClass('opened-keditor-sidebar');
-            icon.attr('class', 'fa fa-chevron-left')
-        }
-        
-        if (typeof options.onSidebarToggled === 'function') {
-            options.onSidebarToggled.call(self, showSidebar);
-        }
-    };
-    
-    KEditor.prototype.initSidebarToggler = function () {
-        flog('initSidebarToggler');
-        
-        var self = this;
-        var body = self.body;
-        
-        body.find('#keditor-sidebar-toggler').on('click', function (e) {
-            e.preventDefault();
-            
-            self.toggleSidebar(!body.hasClass('opened-keditor-sidebar'));
-        });
-    };
-    
-    KEditor.prototype.renderSnippets = function (resp) {
-        flog('renderSnippets');
-        
-        var self = this;
-        var options = self.options;
-        var body = self.body;
-        
-        var snippetsContainerHtml = '';
-        var snippetsComponentHtml = '';
-        var snippetsContentHtml = '';
-        
-        self.snippetsContainerCategories = [];
-        self.snippetsComponentCategories = [];
-        
-        $('<div />').html(resp).find('> div').each(function (i) {
-            var snippet = $(this);
-            var content = snippet.html().trim();
-            var previewUrl = snippet.attr('data-preview');
-            var type = snippet.attr('data-type');
-            var title = snippet.attr('data-keditor-title');
-            var snippetHtml = '';
-            var categories = snippet.attr('data-keditor-categories') || '';
-            
-            snippetHtml += '<section class="keditor-ui keditor-snippet" data-snippet="#keditor-snippet-' + i + '" data-type="' + type + '" ' + (options.snippetsTooltipEnabled ? 'data-toggle="tooltip" data-placement="' + options.snippetsTooltipPosition + '"' : '') + ' title="' + title + '" data-keditor-categories="' + categories + '">';
-            snippetHtml += '   <img class="keditor-ui keditor-snippet-preview" src="' + previewUrl + '" />';
-            snippetHtml += '</section>';
-            
-            categories = categories.split(options.snippetsCategoriesSeparator);
-            
-            if (type === 'container') {
-                snippetsContainerHtml += snippetHtml;
-                self.snippetsContainerCategories = self.snippetsContainerCategories.concat(categories);
-            } else if (type.indexOf('component') !== -1) {
-                snippetsComponentHtml += snippetHtml;
-                self.snippetsComponentCategories = self.snippetsComponentCategories.concat(categories);
-            }
-            
-            var dataAttributes = self.getDataAttributes(snippet, ['data-preview', 'data-type', 'data-keditor-title', 'data-keditor-categories'], true);
-            snippetsContentHtml += '<script id="keditor-snippet-' + i + '" type="text/html" ' + dataAttributes.join(' ') + '>' + content + '</script>';
-        });
-        
-        self.snippetsContainerCategories = self.beautifyCategories(self.snippetsContainerCategories);
-        self.snippetsComponentCategories = self.beautifyCategories(self.snippetsComponentCategories);
-        
-        body.find('#keditor-snippets-list').html(
-            '<ul id="keditor-snippets-type-switcher" class="keditor-ui keditor-tabs">' +
-            '    <li class="keditor-ui keditor-tab active"><a class="keditor-ui" href="#keditor-container-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabContainersTitle + '">' + options.tabContainersText + '</a></li>' +
-            '    <li class="keditor-ui keditor-tab"><a class="keditor-ui" href="#keditor-component-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabComponentsTitle + '">' + options.tabComponentsText + '</a></li>' +
-            '</ul>' +
-            '<div id="keditor-snippets-container" class="keditor-ui keditor-tabs-content">' +
-            '   <div class="keditor-ui keditor-tab-content active" id="keditor-container-snippets-tab"><div class="keditor-ui keditor-tab-content-inner">' + snippetsContainerHtml + '</div></div>' +
-            '   <div class="keditor-ui keditor-tab-content" id="keditor-component-snippets-tab"><div class="keditor-ui keditor-tab-content-inner">' + snippetsComponentHtml + '</div></div>' +
-            '</div>'
-        ).addClass('loaded-snippets');
-        body.find('#keditor-snippets-content').html(snippetsContentHtml);
-    };
-    
     KEditor.prototype.beautifyCategories = function (categories) {
         var newArray = [];
         for (var i = 0; i < categories.length; i++) {
@@ -638,66 +536,6 @@
         });
     };
     
-    KEditor.prototype.initTabs = function () {
-        flog('initTabs');
-        
-        var self = this;
-        var body = self.body;
-        var options = self.options;
-        var switcherWrapper = body.find('#keditor-snippets-type-switcher');
-        var tabPaneWrapper = body.find('#keditor-snippets-container');
-        
-        if (options.extraTabs && $.isPlainObject(options.extraTabs)) {
-            flog('Add extra tabs', options.extraTabs);
-            
-            for (var tabName in options.extraTabs) {
-                var tabData = options.extraTabs[tabName];
-                
-                switcherWrapper.append('<li class="keditor-ui keditor-tab"><a class="keditor-ui" href="#keditor-extra-tab-' + tabName + '"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom" title="' + tabData.title + '"' : '') + '>' + tabData.text + '</a></li>');
-                tabPaneWrapper.append('<div class="keditor-ui keditor-tab-content" id="keditor-extra-tab-' + tabName + '"><div class="keditor-tab-content-inner">' + tabData.content + '</div></div>');
-            }
-        }
-        
-        self.initNiceScroll(tabPaneWrapper.find('.keditor-tab-content-inner'));
-    };
-    
-    KEditor.prototype.initTabsSwitcher = function () {
-        flog('initTabsSwitcher');
-        
-        var self = this;
-        var body = self.body;
-        var switcherLis = body.find('#keditor-snippets-type-switcher li');
-        var tabContent = body.find('#keditor-snippets-container .keditor-tab-content');
-        
-        switcherLis.find('a').on('click', function (e) {
-            e.preventDefault();
-            
-            var a = $(this);
-            var li = a.parent();
-            var href = a.attr('href');
-            
-            if (!li.hasClass('active')) {
-                var activatedLi = switcherLis.filter('.active');
-                var activatedPane = tabContent.filter('.active');
-                var targetDiv = body.find(href);
-                
-                activatedLi.removeClass('active');
-                activatedPane.removeClass('active');
-                
-                li.addClass('active');
-                targetDiv.addClass('active');
-                
-                if ($.fn.niceScroll && self.options.niceScrollEnabled) {
-                    activatedPane.getNiceScroll().hide();
-                    
-                    var targetNiceScroll = targetDiv.getNiceScroll();
-                    targetNiceScroll.show();
-                    targetNiceScroll.resize();
-                }
-            }
-        });
-    };
-    
     KEditor.prototype.initSettingPanel = function () {
         flog('initSettingPanel');
         
@@ -712,7 +550,6 @@
         });
         
         var settingForms = body.find('#keditor-setting-forms');
-        self.initNiceScroll(settingForms);
         settingForms.on('submit', 'form', function (e) {
             e.preventDefault();
             return false;
@@ -1849,10 +1686,6 @@
             if (!instance) {
                 instance = new KEditor(element, options);
                 element.data('keditor', instance);
-                
-                var instanceId = instance.generateId('instance');
-                element.attr('data-keditor-instance', instanceId);
-                KEditor.instances[instanceId] = instance;
             }
             
             return instance;
@@ -1861,7 +1694,14 @@
     
     $.fn.keditor.constructor = KEditor;
     
-    // Export KEditor
-    $.keditor = KEditor;
+    // Export default configuration
+    KEditor.DEFAULTS = DEFAULTS;
     
-})(jQuery);
+    // Export log methods;
+    KEditor.log = flog;
+    KEditor.error = error;
+    
+    // Export KEditor
+    window.KEditor = $.keditor = KEditor;
+    
+})(window, jQuery);

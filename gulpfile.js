@@ -12,6 +12,7 @@ var rimraf = require('gulp-rimraf');
 var replace = require('gulp-replace');
 var concat = require('gulp-concat-util');
 var header = require('gulp-header');
+var babel = require('gulp-babel');
 var fs = require('fs');
 
 // =========================================================================
@@ -27,9 +28,6 @@ gulp.task('clean-css-dist', function () {
 });
 gulp.task('clean-js-dist', function () {
     return clearFolder('./dist/js/*.*');
-});
-gulp.task('clean-css-src', function () {
-    return clearFolder('./src/css/*.*');
 });
 gulp.task('clean-snippets-examples', function () {
     return clearFolder('./examples/snippets');
@@ -123,19 +121,33 @@ gulp.task('build-snippets-examples', gulpsync.sync(['clean-snippets-examples', '
 // =========================================================================
 // Build CSS
 // =========================================================================
-gulp.task('compile-less', function () {
+gulp.task('build-css', function () {
     return gulp.src(['./src/less/*.less', '!./src/less/_*.less'])
         .pipe(plumber())
         .pipe(less())
         .pipe(gulp.dest('./src/css/')).on('error', gutil.log);
 });
-gulp.task('build-css', gulpsync.sync(['clean-css-src', 'compile-less']));
+
+// =========================================================================
+// Build JS
+// =========================================================================
+gulp.task('build-js-dev', function () {
+    return gulp.src(['./src/js/*.js'])
+        .pipe(babel({
+            presets: ['env'],
+            plugins: [
+                'transform-class-properties'
+            ]
+        }))
+        .pipe(gulp.dest('./src/js-dev/')).on('error', gutil.log);
+});
 
 // =========================================================================
 // Watch
 // =========================================================================
 gulp.task('watch', function () {
     gulp.watch(['./src/less/*.less'], ['build-css']);
+    gulp.watch(['./src/js/*.js'], ['build-js-dev']);
 });
 
 // =========================================================================
@@ -146,7 +158,7 @@ gulp.task('build-js-dist', gulpsync.sync(['clean-js-dist', 'copy-js', 'build-js-
 
 gulp.task('build', ['build-css-dist', 'build-js-dist', 'build-snippets-examples']);
 
-gulp.task('dev', ['build-css', 'watch']);
+gulp.task('dev', ['build-css', 'build-js-dev', 'watch']);
 
 // Gulp Default
 gulp.task('default', ['build', 'dev']);

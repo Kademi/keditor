@@ -1,17 +1,14 @@
 (function (window, $) {
     // Log function will print log message
-    var flog = function () {
+    const flog = (...args) => {
         if (console && typeof console.log === 'function' && KEditor.debug === true) {
-            var args = Array.prototype.slice.apply(arguments);
-            args.unshift('[ KEditor ] ');
-            
-            console.log.apply(console, args);
+            console.log.apply(console, ['[ KEditor ] ', ...args]);
         }
     };
     
     // Throw error message
-    var error = function (msg) {
-        throw new Error('[ KEditor ] ' + msg);
+    const error = (message) => {
+        throw new Error(`[ KEditor ] ${message}`);
     };
     
     // Check dependencies
@@ -19,7 +16,7 @@
         error('$.fn.sortable does not exist. Please import $.fn.sortable into your document for continue using KEditor.');
     }
     
-    var DEFAULTS = {
+    const DEFAULTS = {
         nestedContainerEnabled: true,
         btnMoveContainerText: '<i class="fa fa-sort"></i>',
         btnMoveComponentText: '<i class="fa fa-arrows"></i>',
@@ -106,299 +103,275 @@
     };
     
     // KEditor class
-    var KEditor = function (target, options) {
-        var instanceId = this.generateId('instance');
-        target.attr('data-keditor-instance', instanceId);
-        KEditor.instances[instanceId] = this;
-        
-        this.element = target;
-        this.options = $.extend({}, DEFAULTS, options);
-        this.init();
-    };
+    class KEditor {
+        constructor(target, config) {
+            let instanceId = this.generateId('instance');
+            target.attr('data-keditor-instance', instanceId);
+            KEditor.instances[instanceId] = this;
     
-    // KEditor instances
-    KEditor.instances = {};
-    
-    // Turn on/off debug mode
-    KEditor.debug = false;
-    
-    // Version of KEditor
-    KEditor.version = '@{version}';
-    
-    // Component types
-    KEditor.components = {
-        blank: {
-            settingEnabled: false
-        }
-    };
-    
-    KEditor.prototype.generateId = function (type) {
-        var timestamp = (new Date()).getTime();
-        return 'keditor-' + type + '-' + timestamp;
-    };
-    
-    KEditor.prototype.init = function () {
-        var self = this;
-        var element = self.element;
-        var options = self.options;
-        var contentAreasWrapper;
-        
-        if (options.iframeMode) {
-            contentAreasWrapper = self.initFrame(element);
-        } else {
-            self.window = window;
-            self.body = $(document.body);
+            let element = this.element = target;
+            let options = this.options = $.extend({}, DEFAULTS, config);
             
-            if (element.is('textarea')) {
-                contentAreasWrapper = $(options.contentAreasWrapper || '<div />');
-                element.after(contentAreasWrapper);
-                contentAreasWrapper.attr('class', 'keditor-ui keditor-content-area-wrapper');
-                
-                if (!contentAreasWrapper.attr('id')) {
-                    contentAreasWrapper.attr('id', self.generateId('content-area-wrapper'));
-                }
-                
-                contentAreasWrapper.html(element.val());
-                element.addClass('keditor-hidden-element');
-            }
-        }
-        
-        self.contentAreasWrapper = contentAreasWrapper;
-        self.initSnippetsModal();
-        self.initContentAreas(element);
-        
-        if (typeof options.onReady === 'function') {
-            options.onReady.call(self);
-        }
-    };
+            let contentAreasWrapper;
     
-    KEditor.prototype.initFrame = function (target) {
-        flog('initFrame', target);
-        
-        var self = this;
-        var options = self.options;
-        var originalContent = target.is('textarea') ? target.val() : target.html();
-        var iframe = $('<iframe />');
-        var iframeId = self.generateId('frame');
-        
-        target.after(iframe);
-        iframe.attr({
-            'id': iframeId,
-            'class': 'keditor-ui keditor-frame'
-        });
-        
-        target.addClass('keditor-hidden-element');
-        target.attr('data-keditor-frame', '#' + iframeId);
-        
-        var iframeDoc = self.iframeDoc = iframe.contents();
-        // Fix issue Firefox can't render content inside iframe
-        // ======================================================
-        iframeDoc.get(0).open();
-        iframeDoc.get(0).close();
-        // ======================================================
-        self.window = iframe[0].contentWindow ? iframe[0].contentWindow : iframe[0].contentDocument.defaultView;
-        var iframeHead = self.iframeHead = iframeDoc.find('head');
-        var iframeBody = self.iframeBody = iframeDoc.find('body');
-        
-        flog('Adding styles to iframe...');
-        var styles = '';
-        $('[data-type="keditor-style"]').each(function () {
-            var style = $(this);
-            var href = style.attr('href') || style.attr('data-href') || '';
-            
-            if (href) {
-                styles += '<link rel="stylesheet" type="text/css" href="' + href + '" />\n';
+            if (options.iframeMode) {
+                contentAreasWrapper = self.initFrame(element);
             } else {
-                styles += '<style type="text/css">' + style.html() + '</style>\n';
-            }
-        });
+                this.window = window;
+                this.body = $(document.body);
         
-        if (options.contentStyles && $.isArray(options.contentStyles)) {
-            $.each(options.contentStyles, function (i, style) {
-                var idStr = '';
-                if (style.id) {
-                    idStr = ' id="' + style.id + '" '
+                if (element.is('textarea')) {
+                    contentAreasWrapper = $(options.contentAreasWrapper || '<div />');
+                    element.after(contentAreasWrapper);
+                    contentAreasWrapper.attr('class', 'keditor-ui keditor-content-area-wrapper');
+            
+                    if (!contentAreasWrapper.attr('id')) {
+                        contentAreasWrapper.attr('id', self.generateId('content-area-wrapper'));
+                    }
+            
+                    contentAreasWrapper.html(element.val());
+                    element.addClass('keditor-hidden-element');
                 }
-                
-                if (style.href) {
-                    styles += '<link rel="stylesheet" type="text/css" href="' + style.href + '"' + idStr + ' />\n';
+            }
+    
+            this.contentAreasWrapper = contentAreasWrapper;
+            this.initSnippetsModal();
+            this.initContentAreas(element);
+    
+            if (typeof options.onReady === 'function') {
+                options.onReady.call(this);
+            }
+        }
+    
+        generateId(type) {
+            let timestamp = (new Date()).getTime();
+            return `keditor-${type}-${timestamp}`;
+        }
+    
+        initFrame(target) {
+            flog('initFrame', target);
+        
+            let self = this;
+            let options = self.options;
+            let originalContent = target.is('textarea') ? target.val() : target.html();
+            let iframe = $('<iframe />');
+            let iframeId = self.generateId('frame');
+        
+            target.after(iframe);
+            iframe.attr({
+                'id': iframeId,
+                'class': 'keditor-ui keditor-frame'
+            });
+        
+            target.addClass('keditor-hidden-element');
+            target.attr('data-keditor-frame', `#${iframeId}`);
+        
+            let iframeDoc = self.iframeDoc = iframe.contents();
+            
+            // Fix issue Firefox can't render content inside iframe
+            // ======================================================
+            iframeDoc.get(0).open();
+            iframeDoc.get(0).close();
+            // ======================================================
+            
+            self.window = iframe[0].contentWindow ? iframe[0].contentWindow : iframe[0].contentDocument.defaultView;
+            let iframeHead = self.iframeHead = iframeDoc.find('head');
+            let iframeBody = self.iframeBody = iframeDoc.find('body');
+        
+            flog('Adding styles to iframe...');
+            let styles = '';
+            $('[data-type="keditor-style"]').each(function () {
+                let style = $(this);
+                let href = style.attr('href') || style.attr('data-href') || '';
+            
+                if (href) {
+                    styles += `<link rel="stylesheet" type="text/css" href="${href}" />\n`;
                 } else {
-                    styles += '<style type="text/css"' + idStr + '>' + style.content + '</style>\n';
+                    styles += `<style type="text/css">${style.html()}</style>\n`;
                 }
             });
-        }
         
-        flog('Styles: \n' + styles);
-        
-        iframeHead.append(styles);
-        flog('All styles are added');
-        
-        flog('Adding original content to iframe...');
-        if (!options.contentAreasWrapper) {
-            options.contentAreasWrapper = '<div class="keditor-ui keditor-content-areas-wrapper"></div>';
-        }
-        
-        var contentAreasWrapper = self.contentAreasWrapper = $(options.contentAreasWrapper);
-        contentAreasWrapper.html(originalContent);
-        iframeBody.append(contentAreasWrapper);
-        
-        self.body = iframeBody;
-        
-        if (typeof options.onInitFrame === 'function') {
-            options.onInitFrame.call(self, iframe, iframeHead, iframeBody);
-        }
-        
-        return contentAreasWrapper;
-    };
-    
-    KEditor.prototype.initSnippetsModal = function () {
-        var self = this;
-        var options = self.options;
-        
-        var modal = $(
-            '<div class="keditor-ui keditor-modal">' +
-            '   <div class="keditor-modal-header">' +
-            '       <button type="button" class="keditor-modal-close">&times;</button>' +
-            '       <h4 class="keditor-modal-title"></h4>' +
-            '   </div>' +
-            '   <div class="keditor-modal-body">' +
-            '       <div class="keditor-snippets-wrapper keditor-snippets-wrapper-container">' +
-            '           <div class="keditor-snippets keditor-snippet-container"></div>' +
-            '       </div>' +
-            '       <div class="keditor-snippets-wrapper keditor-snippets-wrapper-component">' +
-            '           <div class="keditor-snippets keditor-snippet-component"></div>' +
-            '       </div>' +
-            '   </div>' +
-            '   <div class="keditor-modal-footer">' +
-            '       <button type="button" class="keditor-ui keditor-btn keditor-btn-default keditor-modal-close">Close</button>' +
-            '       <button type="button" class="keditor-ui keditor-btn keditor-btn-primary keditor-modal-add">Add</button>' +
-            '   </div>' +
-            '</div>'
-        );
-        
-        if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
-            flog('Getting snippets form "' + options.snippetsUrl + '"...');
-    
-            $.ajax({
-                type: 'get',
-                dataType: 'html',
-                url: options.snippetsUrl,
-                success: function (resp) {
-                    flog('Success in getting snippets');
-                    
-                    if (typeof options.onSnippetsLoaded === 'function') {
-                        resp = options.onSnippetsLoaded.call(self, resp) || resp;
+            if (options.contentStyles && $.isArray(options.contentStyles)) {
+                $.each(options.contentStyles, function (i, style) {
+                    let idStr = '';
+                    if (style.id) {
+                        idStr = ` id="${style.id}" `;
                     }
-            
-                    self.renderSnippets(resp);
-                    self.initSnippets();
-            
-                    if (options.snippetsFilterEnabled) {
-                        self.initSnippetsFilter('Container');
-                        self.initSnippetsFilter('Component');
+                
+                    if (style.href) {
+                        styles += `<link rel="stylesheet" type="text/css" href="${style.href}" ${idStr} />\n`;
+                    } else {
+                        styles += `<style type="text/css" ${idStr}>${style.content}</style>\n`;
                     }
-                },
-                error: function (jqXHR) {
-                    flog('Error when getting snippets', jqXHR);
-                    if (typeof options.onSnippetsError === 'function') {
-                        options.onSnippetsError.call(self, jqXHR);
-                    }
-                }
-            });
-        } else {
-            error('"snippetsUrl" must be not null!');
-        }
-        
-        modal.appendTo(document.body);
-    };
-    
-    KEditor.prototype.renderSnippets = function (resp) {
-        flog('renderSnippets');
-        
-        var self = this;
-        var options = self.options;
-        var body = self.body;
-        
-        var snippetsContainerHtml = '';
-        var snippetsComponentHtml = '';
-        var snippetsContentHtml = '';
-        
-        self.snippetsContainerCategories = [];
-        self.snippetsComponentCategories = [];
-        
-        $(resp).filter('div').each(function (i) {
-            var snippet = $(this);
-            var content = snippet.html().trim();
-            var previewUrl = snippet.attr('data-preview');
-            var type = snippet.attr('data-type');
-            var title = snippet.attr('data-keditor-title');
-            var categories = snippet.attr('data-keditor-categories') || '';
-    
-            var snippetHtml = '';
-            snippetHtml += '<section class="keditor-ui keditor-snippet" data-snippet="#keditor-snippet-' + i + '" data-type="' + type + '" title="' + title + '" data-keditor-categories="' + categories + '">';
-            snippetHtml += '   <img class="keditor-ui keditor-snippet-preview" src="' + previewUrl + '" />';
-            snippetHtml += '</section>';
-            
-            categories = categories.split(options.snippetsCategoriesSeparator);
-            
-            if (type === 'container') {
-                snippetsContainerHtml += snippetHtml;
-                self.snippetsContainerCategories = self.snippetsContainerCategories.concat(categories);
-            } else if (type.indexOf('component') !== -1) {
-                snippetsComponentHtml += snippetHtml;
-                self.snippetsComponentCategories = self.snippetsComponentCategories.concat(categories);
+                });
             }
+        
+            iframeHead.append(styles);
+        
+            flog('Adding original content to iframe...');
+            if (!options.contentAreasWrapper) {
+                options.contentAreasWrapper = '<div class="keditor-ui keditor-content-areas-wrapper"></div>';
+            }
+        
+            let contentAreasWrapper = self.contentAreasWrapper = $(options.contentAreasWrapper);
+            contentAreasWrapper.html(originalContent);
+            iframeBody.append(contentAreasWrapper);
+        
+            self.body = iframeBody;
+        
+            if (typeof options.onInitFrame === 'function') {
+                options.onInitFrame.call(self, iframe, iframeHead, iframeBody);
+            }
+        
+            return contentAreasWrapper;
+        }
+    
+        initSnippetsModal() {
+            let self = this;
+            let options = self.options;
+        
+            let modal = self.modal = $(`
+            <div class="keditor-ui keditor-modal">
+               <div class="keditor-modal-header">
+                   <button type="button" class="keditor-modal-close">&times;</button>
+                   <h4 class="keditor-modal-title"></h4>
+               </div>
+               <div class="keditor-modal-body">
+                   <div class="keditor-snippets-wrapper keditor-snippets-wrapper-container">
+                       <div class="keditor-snippets keditor-snippet-container"></div>
+                   </div>
+                   <div class="keditor-snippets-wrapper keditor-snippets-wrapper-component">
+                       <div class="keditor-snippets keditor-snippet-component"></div>
+                   </div>
+               </div>
+               <div class="keditor-modal-footer">
+                   <button type="button" class="keditor-ui keditor-btn keditor-btn-default keditor-modal-close">Close</button>
+                   <button type="button" class="keditor-ui keditor-btn keditor-btn-primary keditor-modal-add">Add</button>
+               </div>
+            </div>
+        `);
+        
+            if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
+                flog(`Getting snippets form "${options.snippetsUrl}"...`);
             
-            var dataAttributes = self.getDataAttributes(snippet, ['data-preview', 'data-type', 'data-keditor-title', 'data-keditor-categories'], true);
-            snippetsContentHtml += '<script id="keditor-snippet-' + i + '" type="text/html" ' + dataAttributes.join(' ') + '>' + content + '</script>';
-        });
+                $.ajax({
+                    type: 'get',
+                    dataType: 'html',
+                    url: options.snippetsUrl,
+                    success: function (resp) {
+                        flog('Success in getting snippets');
+                    
+                        if (typeof options.onSnippetsLoaded === 'function') {
+                            resp = options.onSnippetsLoaded.call(self, resp) || resp;
+                        }
+                    
+                        self.renderSnippets(resp);
+                        self.initSnippets();
+                    
+                        if (options.snippetsFilterEnabled) {
+                            self.initSnippetsFilter('Container');
+                            self.initSnippetsFilter('Component');
+                        }
+                    },
+                    error: function (jqXHR) {
+                        flog('Error when getting snippets', jqXHR);
+                        if (typeof options.onSnippetsError === 'function') {
+                            options.onSnippetsError.call(self, jqXHR);
+                        }
+                    }
+                });
+            } else {
+                error('"snippetsUrl" must be not null!');
+            }
         
-        self.snippetsContainerCategories = self.beautifyCategories(self.snippetsContainerCategories);
-        self.snippetsComponentCategories = self.beautifyCategories(self.snippetsComponentCategories);
+            modal.appendTo(document.body);
+        }
+    
+        renderSnippets(resp) {
+            flog('renderSnippets');
         
-        body.find('#keditor-snippets-list').html(
-            '<ul id="keditor-snippets-type-switcher" class="keditor-ui keditor-tabs">' +
-            '    <li class="keditor-ui keditor-tab active"><a class="keditor-ui" href="#keditor-container-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabContainersTitle + '">' + options.tabContainersText + '</a></li>' +
-            '    <li class="keditor-ui keditor-tab"><a class="keditor-ui" href="#keditor-component-snippets-tab"' + (options.tabTooltipEnabled ? 'data-toggle="tooltip" data-placement="bottom"' : '') + ' title="' + options.tabComponentsTitle + '">' + options.tabComponentsText + '</a></li>' +
-            '</ul>' +
-            '<div id="keditor-snippets-container" class="keditor-ui keditor-tabs-content">' +
-            '   <div class="keditor-ui keditor-tab-content active" id="keditor-container-snippets-tab"><div class="keditor-ui keditor-tab-content-inner">' + snippetsContainerHtml + '</div></div>' +
-            '   <div class="keditor-ui keditor-tab-content" id="keditor-component-snippets-tab"><div class="keditor-ui keditor-tab-content-inner">' + snippetsComponentHtml + '</div></div>' +
-            '</div>'
-        ).addClass('loaded-snippets');
-        body.find('#keditor-snippets-content').html(snippetsContentHtml);
-    };
+            let self = this;
+            let options = self.options;
+        
+            let snippetsContainerHtml = '';
+            let snippetsComponentHtml = '';
+            let snippetsContentHtml = '';
+        
+            self.snippetsContainerCategories = [];
+            self.snippetsComponentCategories = [];
+        
+            $(resp).filter('div').each(function (i) {
+                let snippet = $(this);
+                let content = snippet.html().trim();
+                let previewUrl = snippet.attr('data-preview');
+                let type = snippet.attr('data-type');
+                let title = snippet.attr('data-keditor-title');
+                let categories = snippet.attr('data-keditor-categories') || '';
+            
+                let snippetHtml = `
+                <section
+                    class="keditor-ui keditor-snippet"
+                    data-snippet="#keditor-snippet-${i}"
+                    data-type="${type}"
+                    title="${title}"
+                    data-keditor-categories="${categories}">
+                    <img class="keditor-ui keditor-snippet-preview" src="${previewUrl}" />
+                </section>
+            `;
+            
+                categories = categories.split(options.snippetsCategoriesSeparator);
+            
+                if (type === 'container') {
+                    snippetsContainerHtml += snippetHtml;
+                    self.snippetsContainerCategories = self.snippetsContainerCategories.concat(categories);
+                } else if (type.indexOf('component') !== -1) {
+                    snippetsComponentHtml += snippetHtml;
+                    self.snippetsComponentCategories = self.snippetsComponentCategories.concat(categories);
+                }
+            
+                let dataAttributes = self.getDataAttributes(snippet, ['data-preview', 'data-type', 'data-keditor-title', 'data-keditor-categories'], true);
+                snippetsContentHtml += `<script id="keditor-snippet-${i}" type="text/html" ${dataAttributes.join(' ')}>${content}</script>`;
+            });
+        
+            self.snippetsContainerCategories = self.beautifyCategories(self.snippetsContainerCategories);
+            self.snippetsComponentCategories = self.beautifyCategories(self.snippetsComponentCategories);
+        
+            self.modal.find('.keditor-snippet-container').html(snippetsContainerHtml);
+            self.modal.find('.keditor-snippet-component').html(snippetsComponentHtml);
+            self.modal.find('.modal-body').append(snippetsContentHtml);
+        }
+    }
     
     KEditor.prototype.initSnippetsFilter = function (type) {
         flog('initSnippetsFilter for ' + type);
         
-        var self = this;
-        var options = self.options;
-        var body = self.body;
-        var lowerCaseType = type.toLowerCase();
-        var categories = self['snippets' + type + 'Categories'];
+        let self = this;
+        let options = self.options;
+        let body = self.body;
+        let lowerCaseType = type.toLowerCase();
+        let categories = self['snippets' + type + 'Categories'];
         
-        var filterHtml = '';
+        let filterHtml = '';
         filterHtml += '<div id="keditor-' + lowerCaseType + '-snippets-filter-wrapper" class="keditor-ui keditor-snippets-filter-wrapper">';
         filterHtml += '     <input type="text" id="keditor-' + lowerCaseType + '-snippets-search" class="keditor-ui keditor-snippets-search" value="" placeholder="Type to search..." />';
         filterHtml += '     <select id="keditor-' + lowerCaseType + '-snippets-filter" class="keditor-ui keditor-snippets-filter">';
         filterHtml += '         <option value="" selected="selected">All</option>';
         
-        for (var i = 0; i < categories.length; i++) {
+        for (let i = 0; i < categories.length; i++) {
             filterHtml += '     <option value="' + categories[i] + '">' + categories[i] + '</option>';
         }
         
         filterHtml += '     </select>';
         filterHtml += '</div>';
         
-        var tab = body.find('#keditor-' + lowerCaseType + '-snippets-tab');
-        var snippets = tab.find('.keditor-snippet');
+        let tab = body.find('#keditor-' + lowerCaseType + '-snippets-tab');
+        let snippets = tab.find('.keditor-snippet');
         tab.prepend(filterHtml);
         
         snippets.each(function () {
-            var snippet = $(this);
-            var categories = snippet.attr('data-keditor-categories') || '';
-            var filterCategories = categories.toLowerCase();
+            let snippet = $(this);
+            let categories = snippet.attr('data-keditor-categories') || '';
+            let filterCategories = categories.toLowerCase();
             categories = categories.split(options.snippetsCategoriesSeparator);
             filterCategories = filterCategories.split(options.snippetsCategoriesSeparator);
             
@@ -406,12 +379,12 @@
             snippet.data('categoriesFilter', filterCategories);
         });
         
-        var txtSearch = tab.find('.keditor-snippets-search');
-        var cbbFilter = tab.find('.keditor-snippets-filter');
+        let txtSearch = tab.find('.keditor-snippets-search');
+        let cbbFilter = tab.find('.keditor-snippets-filter');
         
-        var doFilter = function () {
-            var selectedCategory = (cbbFilter.val() || '').toLowerCase();
-            var searchText = (txtSearch.val() || '').toLowerCase();
+        let doFilter = function () {
+            let selectedCategory = (cbbFilter.val() || '').toLowerCase();
+            let searchText = (txtSearch.val() || '').toLowerCase();
             
             flog('Do filter with selected category is "' + selectedCategory + '" and search text is "' + searchText + '"');
             
@@ -419,10 +392,10 @@
                 flog('Filtering snippets');
                 
                 snippets.each(function () {
-                    var snippet = $(this);
-                    var dataCategories = snippet.data('categoriesFilter');
-                    var dataCategoriesString = dataCategories.join(';');
-                    var error = 0;
+                    let snippet = $(this);
+                    let dataCategories = snippet.data('categoriesFilter');
+                    let dataCategoriesString = dataCategories.join(';');
+                    let error = 0;
                     
                     if (selectedCategory) {
                         if ($.inArray(selectedCategory, dataCategories) === -1) {
@@ -431,7 +404,7 @@
                     }
                     
                     if (searchText) {
-                        var title = snippet.attr('title').toLowerCase();
+                        let title = snippet.attr('title').toLowerCase();
                         if (title.indexOf(searchText) === -1 && dataCategoriesString.indexOf(searchText) === -1) {
                             error++;
                         }
@@ -449,7 +422,7 @@
             doFilter();
         });
         
-        var timer;
+        let timer;
         txtSearch.on('keydown', function () {
             clearTimeout(timer);
             timer = setTimeout(function () {
@@ -459,9 +432,9 @@
     };
     
     KEditor.prototype.beautifyCategories = function (categories) {
-        var newArray = [];
-        for (var i = 0; i < categories.length; i++) {
-            var category = categories[i] || '';
+        let newArray = [];
+        for (let i = 0; i < categories.length; i++) {
+            let category = categories[i] || '';
             
             if (category !== '' && $.inArray(category, newArray) === -1) {
                 newArray.push(category);
@@ -472,11 +445,11 @@
     };
     
     KEditor.prototype.getConnectedForContainerSnippets = function () {
-        var self = this;
-        var options = self.options;
-        var body = self.body;
+        let self = this;
+        let options = self.options;
+        let body = self.body;
         
-        var selector = '.keditor-content-area';
+        let selector = '.keditor-content-area';
         if (options.nestedContainerEnabled) {
             selector += ',.keditor-container-content:not(.keditor-sub-container-content)';
         }
@@ -487,12 +460,12 @@
     KEditor.prototype.initSnippets = function () {
         flog('initSnippets');
         
-        var self = this;
-        var options = self.options;
-        var body = self.body;
-        var snippetsList = body.find('#keditor-snippets-list');
-        var containerSnippets = self.containerSnippets = snippetsList.find('.keditor-snippet[data-type=container]');
-        var componentSnippets = self.componentSnippets = snippetsList.find('.keditor-snippet[data-type^=component]');
+        let self = this;
+        let options = self.options;
+        let body = self.body;
+        let snippetsList = body.find('#keditor-snippets-list');
+        let containerSnippets = self.containerSnippets = snippetsList.find('.keditor-snippet[data-type=container]');
+        let componentSnippets = self.componentSnippets = snippetsList.find('.keditor-snippet[data-type^=component]');
         
         flog('Initialize $.fn.draggable for container snippets list');
         containerSnippets.draggable({
@@ -539,9 +512,9 @@
     KEditor.prototype.initSettingPanel = function () {
         flog('initSettingPanel');
         
-        var self = this;
-        var options = self.options;
-        var body = self.body;
+        let self = this;
+        let options = self.options;
+        let body = self.body;
         
         body.find('#keditor-setting-closer').on('click', function (e) {
             e.preventDefault();
@@ -549,7 +522,7 @@
             self.hideSettingPanel();
         });
         
-        var settingForms = body.find('#keditor-setting-forms');
+        let settingForms = body.find('#keditor-setting-forms');
         settingForms.on('submit', 'form', function (e) {
             e.preventDefault();
             return false;
@@ -558,7 +531,7 @@
         if (options.containerSettingEnabled === true) {
             if (typeof options.containerSettingInitFunction === 'function') {
                 
-                var form = $('<div id="keditor-container-setting" class="keditor-ui keditor-setting-form clearfix"></div>');
+                let form = $('<div id="keditor-container-setting" class="keditor-ui keditor-setting-form clearfix"></div>');
                 settingForms.append(form);
                 
                 flog('Initialize container setting panel');
@@ -572,11 +545,11 @@
     KEditor.prototype.setSettingContainer = function (container) {
         flog('setSettingContainer', container);
         
-        var self = this;
-        var body = self.body;
+        let self = this;
+        let body = self.body;
         
         if (container) {
-            var idSettingContainer = container.attr('id');
+            let idSettingContainer = container.attr('id');
             body.attr('data-setting-container', idSettingContainer);
         } else {
             body.removeAttr('data-setting-container');
@@ -586,9 +559,9 @@
     KEditor.prototype.getSettingContainer = function () {
         flog('getSettingContainer');
         
-        var self = this;
-        var body = self.body;
-        var idSettingContainer = body.attr('data-setting-container');
+        let self = this;
+        let body = self.body;
+        let idSettingContainer = body.attr('data-setting-container');
         
         return body.find('#' + idSettingContainer);
     };
@@ -596,11 +569,11 @@
     KEditor.prototype.setSettingComponent = function (component) {
         flog('setSettingComponent', component);
         
-        var self = this;
-        var body = self.body;
+        let self = this;
+        let body = self.body;
         
         if (component) {
-            var idSettingComponent = component.attr('id');
+            let idSettingComponent = component.attr('id');
             body.attr('data-setting-component', idSettingComponent);
         } else {
             body.removeAttr('data-setting-component');
@@ -610,9 +583,9 @@
     KEditor.prototype.getSettingComponent = function () {
         flog('getSettingComponent');
         
-        var self = this;
-        var body = self.body;
-        var idSettingComponent = body.attr('data-setting-component');
+        let self = this;
+        let body = self.body;
+        let idSettingComponent = body.attr('data-setting-component');
         
         return body.find('#' + idSettingComponent);
     };
@@ -620,36 +593,36 @@
     KEditor.prototype.showSettingPanel = function (target) {
         flog('showSettingPanel', target);
         
-        var self = this;
-        var options = self.options;
-        var body = self.body;
-        var isComponent = target.is('.keditor-component');
+        let self = this;
+        let options = self.options;
+        let body = self.body;
+        let isComponent = target.is('.keditor-component');
         
-        var activeForm = body.find('#keditor-setting-forms').children('.active');
+        let activeForm = body.find('#keditor-setting-forms').children('.active');
         activeForm.removeClass('active');
         
         if (isComponent) {
             self.setSettingComponent(target);
             self.setSettingContainer(null);
             
-            var componentType = self.getComponentType(target);
-            var componentData = KEditor.components[componentType];
+            let componentType = self.getComponentType(target);
+            let componentData = KEditor.components[componentType];
             body.find('#keditor-setting-title').html(componentData.settingTitle);
             
-            var settingForms = body.find('#keditor-setting-forms');
-            var settingForm = body.find('#keditor-setting-' + componentType);
+            let settingForms = body.find('#keditor-setting-forms');
+            let settingForm = body.find('#keditor-setting-' + componentType);
             
             if (settingForm.length === 0) {
-                var componentData = KEditor.components[componentType];
+                let componentData = KEditor.components[componentType];
                 if (typeof componentData.initSettingForm === 'function') {
                     settingForm = $('<div id="keditor-setting-' + componentType + '" data-type="' + componentType + '" class="keditor-ui keditor-setting-form clearfix active"></div>');
-                    var loadingText = $('<span />').html('Loading...');
+                    let loadingText = $('<span />').html('Loading...');
                     settingForms.append(settingForm);
                     settingForm.append(loadingText);
                     
                     flog('Initializing setting form for component type "' + componentType + '"');
                     
-                    var initFunction = componentData.initSettingForm.call(componentData, settingForm, self);
+                    let initFunction = componentData.initSettingForm.call(componentData, settingForm, self);
                     $.when(initFunction).done(function () {
                         flog('Initialized setting form for component type "' + componentType + '"');
                         
@@ -682,7 +655,7 @@
             
             body.find('#keditor-setting-title').html("Container Settings");
             
-            var settingForm = body.find('#keditor-container-setting');
+            let settingForm = body.find('#keditor-container-setting');
             if (typeof options.containerSettingShowFunction === 'function') {
                 flog('Show setting form of container');
                 options.containerSettingShowFunction.call(self, settingForm, target, self);
@@ -699,13 +672,13 @@
     KEditor.prototype.hideSettingPanel = function () {
         flog('hideSettingPanel');
         
-        var self = this;
-        var options = self.options;
-        var body = self.body;
+        let self = this;
+        let options = self.options;
+        let body = self.body;
         
         body.removeClass('opened-keditor-setting');
         
-        var activeForm = body.find('#keditor-setting-forms').children('.active');
+        let activeForm = body.find('#keditor-setting-forms').children('.active');
         if (activeForm.length > 0) {
             if (activeForm.is('#keditor-container-setting')) {
                 if (typeof options.containerSettingHideFunction === 'function') {
@@ -715,8 +688,8 @@
                     flog('"containerSettingHideFunction" does not exist');
                 }
             } else {
-                var activeType = activeForm.attr('data-type');
-                var componentData = KEditor.components[activeType];
+                let activeType = activeForm.attr('data-type');
+                let componentData = KEditor.components[activeType];
                 
                 if (typeof componentData.hideSettingForm === 'function') {
                     flog('Hide setting form of component type "' + activeType + '"');
@@ -737,9 +710,9 @@
     KEditor.prototype.getContentAreas = function (target) {
         flog('getContentAreas', target);
         
-        var self = this;
-        var options = self.options;
-        var contentAreas;
+        let self = this;
+        let options = self.options;
+        let contentAreas;
         if (options.contentAreasSelector) {
             contentAreas = target.find(options.contentAreasSelector);
         }
@@ -748,7 +721,7 @@
             flog('Do not find any content area. Creating default content area...');
             contentAreas = $('<div />');
             
-            var originalContent = target.html();
+            let originalContent = target.html();
             contentAreas.html(originalContent);
             target.empty().append(contentAreas);
         }
@@ -759,11 +732,11 @@
     KEditor.prototype.initContentAreas = function (target) {
         flog('initContentAreas', target);
         
-        var self = this;
-        var contentAreas = self.getContentAreas(target);
+        let self = this;
+        let contentAreas = self.getContentAreas(target);
         
         contentAreas.each(function () {
-            var contentArea = $(this);
+            let contentArea = $(this);
             if (!contentArea.attr('id')) {
                 contentArea.attr('id', self.generateId('content-area'));
             }
@@ -776,9 +749,9 @@
     KEditor.prototype.initContentArea = function (contentArea) {
         flog('initContentArea', contentArea);
         
-        var self = this;
-        var options = self.options;
-        var body = self.body;
+        let self = this;
+        let options = self.options;
+        let body = self.body;
         
         contentArea.addClass('keditor-content-area');
         
@@ -800,14 +773,14 @@
             receive: function (event, ui) {
                 flog('On received snippet', event, ui);
                 
-                var helper = ui.helper;
-                var item = ui.item;
+                let helper = ui.helper;
+                let item = ui.item;
                 
                 if (item.is('.keditor-snippet')) {
-                    var snippetContent = body.find(item.attr('data-snippet')).html();
+                    let snippetContent = body.find(item.attr('data-snippet')).html();
                     flog('Snippet content', snippetContent);
                     
-                    var container = $(
+                    let container = $(
                         '<section class="keditor-ui keditor-container">' +
                         '   <section class="keditor-ui keditor-container-inner">' + snippetContent + '</section>' +
                         '</section>'
@@ -865,7 +838,7 @@
         });
         
         if (typeof options.onInitContentArea === 'function') {
-            var contentData = options.onInitContentArea.call(self, contentArea);
+            let contentData = options.onInitContentArea.call(self, contentArea);
             if (contentData && contentData.length > 0) {
                 $.each(contentData, function () {
                     self.convertToContainer(contentArea, $(this));
@@ -877,9 +850,9 @@
     KEditor.prototype.convertToContainer = function (contentArea, target) {
         flog('convertToContainer', contentArea, target);
         
-        var self = this;
-        var isSection = target.is('section');
-        var container;
+        let self = this;
+        let isSection = target.is('section');
+        let container;
         
         if (isSection) {
             target.addClass('keditor-container');
@@ -894,9 +867,9 @@
     };
     
     KEditor.prototype.initContainer = function (contentArea, container) {
-        var self = this;
-        var options = self.options;
-        var isNested = options.nestedContainerEnabled && container.closest('[data-type="container-content"]').length > 0;
+        let self = this;
+        let options = self.options;
+        let isNested = options.nestedContainerEnabled && container.closest('[data-type="container-content"]').length > 0;
         
         flog('initContainer - isNested=' + isNested, contentArea, container);
         
@@ -911,7 +884,7 @@
                 container.addClass('keditor-sub-container');
             }
             
-            var settingBtn = '';
+            let settingBtn = '';
             if (options.containerSettingEnabled === true) {
                 settingBtn = '<a href="javascript:void(0);" class="keditor-ui btn-container-setting">' + options.btnSettingContainerText + '</a>';
             }
@@ -927,10 +900,10 @@
             
             container.attr('id', self.generateId(isNested ? 'sub-container' : 'container'));
             
-            var containerContents = container.find('[data-type="container-content"]');
+            let containerContents = container.find('[data-type="container-content"]');
             flog('Initialize ' + containerContents.length + ' container content(s)');
             containerContents.each(function () {
-                var containerContent = $(this);
+                let containerContent = $(this);
                 
                 if (options.nestedContainerEnabled) {
                     if (isNested) {
@@ -963,9 +936,9 @@
     KEditor.prototype.initContainerContent = function (contentArea, container, containerContent, isNested) {
         flog('initContainerContent - isNested=' + isNested, contentArea, container, containerContent);
         
-        var self = this;
-        var options = self.options;
-        var body = self.body;
+        let self = this;
+        let options = self.options;
+        let body = self.body;
         
         containerContent.addClass('keditor-container-content');
         if (isNested) {
@@ -986,20 +959,20 @@
             receive: function (event, ui) {
                 flog('On received snippet', event, ui);
                 
-                var helper = ui.helper;
-                var item = ui.item;
-                var container;
+                let helper = ui.helper;
+                let item = ui.item;
+                let container;
                 
                 if (item.is('.keditor-snippet')) {
-                    var snippetContentElement = body.find(item.attr('data-snippet'));
-                    var snippetContent = snippetContentElement.html();
-                    var snippetType = item.attr('data-type');
+                    let snippetContentElement = body.find(item.attr('data-snippet'));
+                    let snippetContent = snippetContentElement.html();
+                    let snippetType = item.attr('data-type');
                     flog('Snippet content', snippetContent);
                     
                     if (snippetType === 'container') {
                         flog('Add nested container into container content', containerContent);
                         
-                        var container = $(
+                        let container = $(
                             '<section class="keditor-ui keditor-container">' +
                             '   <section class="keditor-ui keditor-container-inner">' + snippetContent + '</section>' +
                             '</section>'
@@ -1018,8 +991,8 @@
                         self.initContainer(contentArea, container);
                     } else {
                         flog('Add component into container content', containerContent);
-                        var dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
-                        var component = $(
+                        let dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
+                        let component = $(
                             '<section class="keditor-ui keditor-component" data-type="' + snippetType + '" ' + dataAttributes.join(' ') + '>' +
                             '   <section class="keditor-ui keditor-component-content">' + snippetContent + '</section>' +
                             '</section>'
@@ -1080,7 +1053,7 @@
         
         flog('Initialize existing components inside container content');
         containerContent.children().each(function () {
-            var child = $(this);
+            let child = $(this);
             
             if (child.find('[data-type="container-content"]').length > 0) {
                 self.convertToContainer(contentArea, child);
@@ -1093,9 +1066,9 @@
     KEditor.prototype.convertToComponent = function (contentArea, container, target, isExisting) {
         flog('convertToComponent', contentArea, container, target, isExisting);
         
-        var self = this;
-        var isSection = target.is('section');
-        var component;
+        let self = this;
+        let isSection = target.is('section');
+        let component;
         
         if (isSection) {
             target.addClass('keditor-component');
@@ -1114,7 +1087,7 @@
     };
     
     KEditor.prototype.getDataAttributes = function (target, ignoreAttributes, isArray) {
-        var dataAttributes = isArray ? [] : {};
+        let dataAttributes = isArray ? [] : {};
         if (!ignoreAttributes) {
             ignoreAttributes = [];
         }
@@ -1135,11 +1108,11 @@
     KEditor.prototype.getComponentType = function (component) {
         flog('getComponentType', component);
         
-        var self = this;
-        var options = self.options;
+        let self = this;
+        let options = self.options;
         
-        var dataType = component.attr('data-type');
-        var componentType = dataType ? dataType.replace('component-', '') : '';
+        let dataType = component.attr('data-type');
+        let componentType = dataType ? dataType.replace('component-', '') : '';
         if (componentType && (componentType in KEditor.components)) {
             return componentType;
         } else {
@@ -1167,9 +1140,9 @@
     KEditor.prototype.initComponent = function (contentArea, container, component) {
         flog('initComponent', contentArea, container, component);
         
-        var self = this;
-        var options = self.options;
-        var body = self.body;
+        let self = this;
+        let options = self.options;
+        let body = self.body;
         
         if (!component.hasClass('keditor-initialized-component') || !component.hasClass('keditor-initializing-component')) {
             component.addClass('keditor-initializing-component');
@@ -1179,15 +1152,15 @@
                 options.onBeforeInitComponent.call(self, component, contentArea);
             }
             
-            var componentContent = component.children('.keditor-component-content');
+            let componentContent = component.children('.keditor-component-content');
             componentContent.attr('id', self.generateId('component-content'));
             
-            var componentType = self.getComponentType(component);
+            let componentType = self.getComponentType(component);
             flog('Component type: ' + componentType);
             
-            var componentData = KEditor.components[componentType];
-            var isSettingEnabled = componentData.settingEnabled;
-            var settingBtn = '';
+            let componentData = KEditor.components[componentType];
+            let isSettingEnabled = componentData.settingEnabled;
+            let settingBtn = '';
             if (isSettingEnabled) {
                 settingBtn = '<a href="javascript:void(0);" class="keditor-ui btn-component-setting">' + options.btnSettingComponentText + '</a>';
             }
@@ -1202,7 +1175,7 @@
             );
             
             component.find('[data-dynamic-href]').each(function () {
-                var dynamicElement = $(this);
+                let dynamicElement = $(this);
                 
                 self.initDynamicContent(dynamicElement);
             });
@@ -1230,8 +1203,8 @@
     };
     
     KEditor.prototype.getClickedElement = function (event, selector) {
-        var target = $(event.target);
-        var closest = target.closest(selector);
+        let target = $(event.target);
+        let closest = target.closest(selector);
         
         if (target.is(selector)) {
             return target;
@@ -1245,21 +1218,21 @@
     KEditor.prototype.initKEditorClicks = function () {
         flog('initKEditorClicks');
         
-        var self = this;
-        var options = self.options;
-        var body = self.body;
+        let self = this;
+        let options = self.options;
+        let body = self.body;
         
         body.on('click', function (e) {
-            var sidebar = self.getClickedElement(e, '#keditor-sidebar');
+            let sidebar = self.getClickedElement(e, '#keditor-sidebar');
             
-            var container = self.getClickedElement(e, '.keditor-container');
+            let container = self.getClickedElement(e, '.keditor-container');
             if (container) {
                 if (!container.hasClass('showed-keditor-toolbar')) {
                     body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                     body.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                     container.addClass('showed-keditor-toolbar');
                     
-                    var contentArea = container.parent();
+                    let contentArea = container.parent();
                     if (typeof options.onContainerSelected === 'function') {
                         options.onContainerSelected.call(self, e, container, contentArea);
                     }
@@ -1271,13 +1244,13 @@
                 }
             }
             
-            var component = self.getClickedElement(e, '.keditor-component');
+            let component = self.getClickedElement(e, '.keditor-component');
             if (component) {
                 if (!component.hasClass('showed-keditor-toolbar')) {
                     body.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                     component.addClass('showed-keditor-toolbar');
                     
-                    var contentArea = component.parent();
+                    let contentArea = component.parent();
                     if (typeof options.onComponentSelected === 'function') {
                         options.onComponentSelected.call(self, e, component, contentArea);
                     }
@@ -1292,10 +1265,10 @@
         body.on('click', '.btn-container-setting', function (e) {
             e.preventDefault();
             
-            var btn = $(this);
+            let btn = $(this);
             flog('Click on .btn-container-setting', btn);
             
-            var container = btn.closest('.keditor-container');
+            let container = btn.closest('.keditor-container');
             if (body.hasClass('opened-keditor-setting') && body.hasClass('opened-keditor-sidebar')) {
                 if (!container.is(self.getSettingContainer())) {
                     self.showSettingPanel(container);
@@ -1310,18 +1283,18 @@
         body.on('click', '.btn-container-duplicate', function (e) {
             e.preventDefault();
             
-            var btn = $(this);
+            let btn = $(this);
             flog('Click on .btn-container-duplicate', btn);
             
-            var container = btn.closest('.keditor-container');
-            var contentArea = container.parent();
-            var newContainer = $(self.getContainerContent(container, btn.parent().hasClass('keditor-toolbar-sub-container')));
+            let container = btn.closest('.keditor-container');
+            let contentArea = container.parent();
+            let newContainer = $(self.getContainerContent(container, btn.parent().hasClass('keditor-toolbar-sub-container')));
             container.after(newContainer);
             self.convertToContainer(contentArea, newContainer);
             
-            var snippetsList = body.find('#keditor-snippets-list');
-            var componentSnippets = snippetsList.find('.keditor-snippet[data-type^=component]');
-            var currentLinkedContainerContents = componentSnippets.draggable('option', 'connectToSortable');
+            let snippetsList = body.find('#keditor-snippets-list');
+            let componentSnippets = snippetsList.find('.keditor-snippet[data-type^=component]');
+            let currentLinkedContainerContents = componentSnippets.draggable('option', 'connectToSortable');
             componentSnippets.draggable('option', 'connectToSortable', currentLinkedContainerContents.add(newContainer.find('.keditor-container-content')));
             
             flog('Container is duplicated');
@@ -1338,21 +1311,21 @@
         body.on('click', '.btn-container-delete', function (e) {
             e.preventDefault();
             
-            var btn = $(this);
+            let btn = $(this);
             flog('Click on .btn-container-delete', btn);
             
             if (confirm('Are you sure that you want to delete this container? This action can not be undo!')) {
-                var container = btn.closest('.keditor-container');
-                var components = container.find('.keditor-component');
-                var contentArea = container.parent();
+                let container = btn.closest('.keditor-container');
+                let components = container.find('.keditor-component');
+                let contentArea = container.parent();
                 
                 if (typeof options.onBeforeContainerDeleted === 'function') {
                     options.onBeforeContainerDeleted.call(self, e, container, contentArea);
                 }
                 
-                var settingComponent = self.getSettingComponent();
+                let settingComponent = self.getSettingComponent();
                 if (settingComponent) {
-                    var settingComponentParent = settingComponent.closest('.keditor-container');
+                    let settingComponentParent = settingComponent.closest('.keditor-container');
                     if (settingComponentParent.is(container)) {
                         flog('Deleting container is container of setting container. Close setting panel for this setting component', settingComponent);
                         self.hideSettingPanel();
@@ -1383,10 +1356,10 @@
         body.on('click', '.btn-component-setting', function (e) {
             e.preventDefault();
             
-            var btn = $(this);
+            let btn = $(this);
             flog('Click on .btn-component-setting', btn);
             
-            var component = btn.closest('.keditor-component');
+            let component = btn.closest('.keditor-component');
             if (body.hasClass('opened-keditor-setting') && body.hasClass('opened-keditor-sidebar')) {
                 if (!component.is(self.getSettingComponent())) {
                     self.showSettingPanel(component);
@@ -1401,13 +1374,13 @@
         body.on('click', '.btn-component-duplicate', function (e) {
             e.preventDefault();
             
-            var btn = $(this);
+            let btn = $(this);
             flog('Click on .btn-component-duplicate', btn);
             
-            var component = btn.closest('.keditor-component');
-            var container = component.closest('.keditor-container');
-            var contentArea = container.parent();
-            var newComponent = $(self.getComponentContent(component));
+            let component = btn.closest('.keditor-component');
+            let container = component.closest('.keditor-container');
+            let contentArea = container.parent();
+            let newComponent = $(self.getComponentContent(component));
             
             component.after(newComponent);
             self.convertToComponent(contentArea, container, newComponent);
@@ -1430,13 +1403,13 @@
         body.on('click', '.btn-component-delete', function (e) {
             e.preventDefault();
             
-            var btn = $(this);
+            let btn = $(this);
             flog('Click on .btn-component-delete', btn);
             
             if (confirm('Are you sure that you want to delete this component? This action can not be undo!')) {
-                var component = btn.closest('.keditor-component');
-                var container = component.closest('.keditor-container');
-                var contentArea = component.closest('.keditor-content-area');
+                let component = btn.closest('.keditor-component');
+                let container = component.closest('.keditor-container');
+                let contentArea = component.closest('.keditor-content-area');
                 
                 if (typeof options.onBeforeComponentDeleted === 'function') {
                     options.onBeforeComponentDeleted.call(self, e, component, contentArea);
@@ -1466,10 +1439,10 @@
     KEditor.prototype.deleteComponent = function (component) {
         flog('deleteComponent', component);
         
-        var self = this;
+        let self = this;
         
-        var componentType = self.getComponentType(component);
-        var componentData = KEditor.components[componentType];
+        let componentType = self.getComponentType(component);
+        let componentData = KEditor.components[componentType];
         if (typeof componentData.destroy === 'function') {
             componentData.destroy.call(componentData, component, self);
         } else {
@@ -1482,10 +1455,10 @@
     KEditor.prototype.initDynamicContent = function (dynamicElement) {
         flog('initDynamicContent', dynamicElement);
         
-        var self = this;
-        var options = self.options;
-        var component = dynamicElement.closest('.keditor-component');
-        var contentArea = dynamicElement.closest('.keditor-content-area');
+        let self = this;
+        let options = self.options;
+        let component = dynamicElement.closest('.keditor-component');
+        let contentArea = dynamicElement.closest('.keditor-content-area');
         
         dynamicElement.attr('id', self.generateId('dynamic-element'));
         
@@ -1493,8 +1466,8 @@
             options.onBeforeDynamicContentLoad.call(self, dynamicElement, component, contentArea);
         }
         
-        var dynamicHref = dynamicElement.attr('data-dynamic-href');
-        var data = self.getDataAttributes(component, ['data-type', 'data-dynamic-href'], false);
+        let dynamicHref = dynamicElement.attr('data-dynamic-href');
+        let data = self.getDataAttributes(component, ['data-type', 'data-dynamic-href'], false);
         data = $.param(data);
         flog('Dynamic href: ' + dynamicHref, 'Data: ' + data);
         
@@ -1524,22 +1497,22 @@
     KEditor.prototype.getComponentContent = function (component) {
         flog('getComponentContent', component);
         
-        var self = this;
+        let self = this;
         component = component.clone();
-        var componentType = self.getComponentType(component);
-        var componentData = KEditor.components[componentType];
-        var dataAttributes = self.getDataAttributes(component, null, true);
-        var content;
+        let componentType = self.getComponentType(component);
+        let componentData = KEditor.components[componentType];
+        let dataAttributes = self.getDataAttributes(component, null, true);
+        let content;
         
         if (typeof componentData.getContent === 'function') {
             content = componentData.getContent.call(componentData, component, self);
         } else {
             flog('"getContent" function of component type "' + componentType + '" does not exist. Using default getContent method');
-            var componentContent = component.children('.keditor-component-content');
+            let componentContent = component.children('.keditor-component-content');
             content = componentContent.html();
         }
         
-        var tempDiv = $('<div />').html(content);
+        let tempDiv = $('<div />').html(content);
         tempDiv.find('[data-dynamic-href]').each(function () {
             $(this).html('');
         });
@@ -1551,15 +1524,15 @@
     KEditor.prototype.getContainerContent = function (container, isNested) {
         flog('getContainerContent - isNested=' + isNested, container);
         
-        var self = this;
-        var containerInner = container.children('.keditor-container-inner').clone();
+        let self = this;
+        let containerInner = container.children('.keditor-container-inner').clone();
         
         containerInner.find('[data-type=container-content]').not(isNested ? '' : '.keditor-sub-container-content').each(function () {
-            var containerContent = $(this);
+            let containerContent = $(this);
             containerContent.removeClass('keditor-container-content keditor-sub-container-content ui-droppable ui-sortable').removeAttr('id');
             
             containerContent.children().each(function () {
-                var child = $(this);
+                let child = $(this);
                 
                 if (child.is('.keditor-component')) {
                     child.replaceWith(self.getComponentContent(child));
@@ -1573,19 +1546,19 @@
     };
     
     KEditor.prototype.getContent = function (inArray) {
-        var self = this;
-        var options = self.options;
-        var result = [];
-        var target = options.iframeMode ? self.body : self.element;
+        let self = this;
+        let options = self.options;
+        let result = [];
+        let target = options.iframeMode ? self.body : self.element;
         
         if (target.is('textarea')) {
             target = $(target.attr('data-keditor-wrapper'));
         }
         
         target.find('.keditor-content-area').each(function () {
-            var html = '';
+            let html = '';
             $(this).children('.keditor-container').each(function () {
-                var container = $(this);
+                let container = $(this);
                 
                 html += self.getContainerContent(container);
             });
@@ -1597,10 +1570,10 @@
     };
     
     KEditor.prototype.setContent = function (content, contentArea) {
-        var self = this;
-        var options = self.options;
-        var body = self.body;
-        var target = options.iframeMode ? self.contentAreasWrapper : self.element;
+        let self = this;
+        let options = self.options;
+        let body = self.body;
+        let target = options.iframeMode ? self.contentAreasWrapper : self.element;
         
         if (target.is('textarea')) {
             target = $(target.attr('data-keditor-wrapper'));
@@ -1632,11 +1605,11 @@
     };
     
     KEditor.prototype.destroy = function (getLatestContent) {
-        var target = this.element;
-        var instanceId = target.attr('data-keditor-instance');
+        let target = this.element;
+        let instanceId = target.attr('data-keditor-instance');
         
         if (getLatestContent) {
-            var content = this.getContent(false);
+            let content = this.getContent(false);
             
             if (target.is('textarea')) {
                 target.val(content);
@@ -1654,8 +1627,8 @@
                 target.removeAttr('data-keditor-wrapper');
             }
             
-            var notIframeInstanceCount = 0;
-            for (var instanceId in KEditor.instances) {
+            let notIframeInstanceCount = 0;
+            for (let instanceId in KEditor.instances) {
                 if (!KEditor.instances[instanceId].options.iframeMode) {
                     notIframeInstanceCount++;
                 }
@@ -1675,10 +1648,10 @@
     
     // KEditor plugins
     $.fn.keditor = function (options) {
-        var element = $(this);
-        var instance = element.data('keditor');
+        let element = $(this);
+        let instance = element.data('keditor');
         
-        if (typeof options == 'string') {
+        if (typeof options === 'string') {
             if (instance && instance[options] && typeof instance[options] === 'function') {
                 return instance[options].apply(instance, Array.prototype.slice.call(arguments, 1));
             }
@@ -1693,6 +1666,22 @@
     };
     
     $.fn.keditor.constructor = KEditor;
+    
+    // KEditor instances
+    KEditor.instances = {};
+    
+    // Turn on/off debug mode
+    KEditor.debug = false;
+    
+    // Version of KEditor
+    KEditor.version = '@{version}';
+    
+    // Component types
+    KEditor.components = {
+        blank: {
+            settingEnabled: false
+        }
+    };
     
     // Export default configuration
     KEditor.DEFAULTS = DEFAULTS;

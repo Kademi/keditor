@@ -131,7 +131,7 @@ gulp.task('build-css', function () {
 // =========================================================================
 // Build JS
 // =========================================================================
-gulp.task('build-js-dev', function () {
+gulp.task('build-js', function () {
     return gulp.src(['./src/js/*.js'])
         .pipe(babel({
             presets: ['env'],
@@ -147,18 +147,16 @@ gulp.task('build-js-dev', function () {
 // =========================================================================
 gulp.task('watch', function () {
     gulp.watch(['./src/less/*.less'], ['build-css']);
-    gulp.watch(['./src/js/*.js'], ['build-js-dev']);
+    gulp.watch(['./src/js/*.js'], ['build-js']);
 });
 
 // =========================================================================
 // Main tasks
 // =========================================================================
-gulp.task('build-css-dist', gulpsync.sync(['build-css', 'clean-css-dist', 'copy-css', 'build-css-components', 'min-css', 'prepend-header-css']));
-gulp.task('build-js-dist', gulpsync.sync(['clean-js-dist', 'copy-js', 'build-js-components', 'min-js', 'prepend-header-js']));
+gulp.task('build-css-dist', gulpsync.sync(['clean-css-dist', 'build-css', 'copy-css', 'build-css-components', 'min-css', 'prepend-header-css']));
+gulp.task('build-js-dist', gulpsync.sync(['clean-js-dist', 'build-js', 'copy-js', 'build-js-components', 'min-js', 'prepend-header-js']));
 
 gulp.task('build', ['build-css-dist', 'build-js-dist', 'build-snippets-examples']);
 
-gulp.task('dev', ['build-css', 'build-js-dev', 'watch']);
+gulp.task('dev', ['build-css', 'build-js', 'watch']);
 
-// Gulp Default
-gulp.task('default', ['build', 'dev']);

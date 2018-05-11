@@ -105,20 +105,22 @@
     // KEditor class
     class KEditor {
         constructor(target, config) {
-            let instanceId = this.generateId('instance');
-            target.attr('data-keditor-instance', instanceId);
-            KEditor.instances[instanceId] = this;
+            let self = this;
             
-            let element = this.element = target;
-            let options = this.options = $.extend({}, DEFAULTS, config);
+            let instanceId = self.generateId('instance');
+            target.attr('data-keditor-instance', instanceId);
+            KEditor.instances[instanceId] = self;
+            
+            let element = self.element = target;
+            let options = self.options = $.extend({}, DEFAULTS, config);
             
             let contentAreasWrapper;
             
             if (options.iframeMode) {
                 contentAreasWrapper = self.initFrame();
             } else {
-                this.window = window;
-                this.body = $(document.body);
+                self.window = window;
+                self.body = $(document.body);
                 
                 if (element.is('textarea')) {
                     contentAreasWrapper = $(options.contentAreasWrapper || '<div />');
@@ -131,19 +133,21 @@
                     
                     contentAreasWrapper.html(element.val());
                     element.addClass('keditor-hidden-element');
+                } else {
+                    contentAreasWrapper = target;
                 }
             }
             
-            this.contentAreasWrapper = contentAreasWrapper;
-            this.initSnippetsModal();
-            this.initContentAreas();
+            self.contentAreasWrapper = contentAreasWrapper;
+            self.initSnippetsModal();
+            self.initContentAreas();
             
-            if (!body.hasClass('keditor-clicks-initialized')) {
-                this.initKEditorClicks();
+            if (!self.body.hasClass('keditor-clicks-initialized')) {
+                self.initKEditorClicks();
             }
             
             if (typeof options.onReady === 'function') {
-                options.onReady.call(this);
+                options.onReady.call(self);
             }
         }
         
@@ -268,7 +272,7 @@
             
             self.window = iframe[0].contentWindow ? iframe[0].contentWindow : iframe[0].contentDocument.defaultView;
             let iframeHead = self.iframeHead = iframeDoc.find('head');
-            let iframeBody = self.iframeBody = iframeDoc.find('body');
+            let iframeBody = self.iframeBody = self.body = iframeDoc.find('body');
             
             flog('Adding styles to iframe...');
             let styles = '';
@@ -305,11 +309,9 @@
                 options.contentAreasWrapper = '<div class="keditor-ui keditor-content-areas-wrapper"></div>';
             }
             
-            let contentAreasWrapper = self.contentAreasWrapper = $(options.contentAreasWrapper);
+            let contentAreasWrapper = $(options.contentAreasWrapper);
             contentAreasWrapper.html(originalContent);
             iframeBody.append(contentAreasWrapper);
-            
-            self.body = iframeBody;
             
             if (typeof options.onInitFrame === 'function') {
                 options.onInitFrame.call(self, iframe, iframeHead, iframeBody);
@@ -373,7 +375,7 @@
             
                 let container = btn.closest('.keditor-container');
                 if (body.hasClass('opened-keditor-setting') && body.hasClass('opened-keditor-sidebar')) {
-                    if (!container.is(self.getSettingContainer())) {
+                    if (!container.is(self.settingContainer)) {
                         self.showSettingPanel(container);
                     } else {
                         self.hideSettingPanel();
@@ -424,14 +426,14 @@
                         options.onBeforeContainerDeleted.call(self, e, container, contentArea);
                     }
                 
-                    let settingComponent = self.getSettingComponent();
+                    let settingComponent = self.settingComponent();
                     if (settingComponent) {
                         let settingComponentParent = settingComponent.closest('.keditor-container');
                         if (settingComponentParent.is(container)) {
                             flog('Deleting container is container of setting container. Close setting panel for this setting component', settingComponent);
                             self.hideSettingPanel();
                         }
-                    } else if (self.getSettingContainer().is(container)) {
+                    } else if (container.is(self.settingContainer)) {
                         flog('Deleting container is setting container. Close setting panel for this container', container);
                         self.hideSettingPanel();
                     }
@@ -462,7 +464,7 @@
             
                 let component = btn.closest('.keditor-component');
                 if (body.hasClass('opened-keditor-setting') && body.hasClass('opened-keditor-sidebar')) {
-                    if (!component.is(self.getSettingComponent())) {
+                    if (!component.is(self.settingComponent)) {
                         self.showSettingPanel(component);
                     } else {
                         self.hideSettingPanel();
@@ -516,7 +518,7 @@
                         options.onBeforeComponentDeleted.call(self, e, component, contentArea);
                     }
                 
-                    if (self.getSettingComponent().is(component)) {
+                    if (component.is(self.settingComponent)) {
                         self.hideSettingPanel();
                     }
                 
@@ -581,7 +583,6 @@
                         }
                         
                         self.renderSnippets(resp);
-                        self.initSnippets();
                         
                         if (options.snippetsFilterEnabled) {
                             self.initSnippetsFilter(true);
@@ -745,22 +746,23 @@
         // Content areas
         //--------------------------------->>>
         initContentAreas() {
-            flog('initContentAreas', target);
+            flog('initContentAreas');
             
             let self = this;
             let options = self.options;
+            let contentAreasWrapper = self.contentAreasWrapper;
             
             let contentAreas;
             if (options.contentAreasSelector) {
-                contentAreas = target.find(options.contentAreasSelector);
+                contentAreas = contentAreasWrapper.find(options.contentAreasSelector);
             }
             
             if (!contentAreas || contentAreas.length === 0) {
                 flog('Do not find any content area. Creating default content area...');
-                let originalContent = target.html();
+                let originalContent = contentAreasWrapper.html();
                 
                 contentAreas = $('<div />').html(originalContent);
-                target.empty().append(contentAreas);
+                contentAreasWrapper.empty().append(contentAreas);
             }
             
             contentAreas.each(function () {
@@ -1167,6 +1169,133 @@
             component.remove();
         }
         //---------------------------------<<<
+    
+        // Get content
+        //--------------------------------->>>
+        getComponentContent(component) {
+            flog('getComponentContent', component);
+        
+            let self = this;
+            let clonedComponent = component.clone();
+            let componentType = self.getComponentType(clonedComponent);
+            let componentData = KEditor.components[componentType];
+            let dataAttributes = self.getDataAttributes(clonedComponent, null, true);
+            let content;
+        
+            if (typeof componentData.getContent === 'function') {
+                content = componentData.getContent.call(componentData, clonedComponent, self);
+            } else {
+                content = clonedComponent.children('.keditor-component-content').html();
+            }
+        
+            clonedComponent.html(content).find('[data-dynamic-href]').each(function () {
+                this.innerHTML = '';
+            });
+        
+            return `<section ${dataAttributes.join(' ')}>${clonedComponent.html()}</section>`;
+        }
+    
+        getContainerContent(container, isNested) {
+            flog(`getContainerContent - isNested=${isNested}`, container);
+        
+            let self = this;
+            let containerInner = container.children('.keditor-container-inner').clone();
+        
+            containerInner.find('[data-type=container-content]').not(isNested ? '' : '.keditor-sub-container-content').each(function () {
+                let containerContent = $(this);
+                containerContent.removeClass('keditor-container-content keditor-sub-container-content keditor-ui ui-sortable').removeAttr('id');
+            
+                containerContent.children().each(function () {
+                    let child = $(this);
+                
+                    if (child.is('.keditor-component')) {
+                        child.replaceWith(self.getComponentContent(child));
+                    } else if (child.is('.keditor-sub-container')) {
+                        child.replaceWith(self.getContainerContent(child, true));
+                    }
+                });
+            });
+        
+            return `<section>${containerInner.html()}</section>`;
+        }
+    
+        getContent(inArray) {
+            let self = this;
+            let result = [];
+            let contentAreasWrapper = self.contentAreasWrapper;
+        
+            contentAreasWrapper.find('.keditor-content-area').each(function () {
+                let html = '';
+                $(this).children('.keditor-container').each(function () {
+                    let container = $(this);
+                
+                    html += self.getContainerContent(container);
+                });
+            
+                result.push(html);
+            });
+        
+            return inArray ? result : result.join('\n');
+        }
+        //---------------------------------<<<
+    
+        // Set content
+        //--------------------------------->>>
+        setContent(content, contentArea) {
+            let self = this;
+            let contentAreasWrapper = self.contentAreasWrapper;
+        
+            if (!contentArea) {
+                contentArea = contentAreasWrapper.children();
+            } else {
+                if (!contentArea.jquery) {
+                    contentArea = contentAreasWrapper.find(contentArea);
+                }
+            }
+        
+            if (contentArea.length === 0) {
+                error('Content area does not exist!');
+            }
+        
+            contentArea.html(content);
+            self.initContentArea(contentArea);
+        }
+        //---------------------------------<<<
+    
+        // Set content
+        //--------------------------------->>>
+        destroy(getLatestContent) {
+            let self = this;
+            let element = self.element;
+            let instanceId = element.attr('data-keditor-instance');
+        
+            if (getLatestContent) {
+                let content = self.getContent(false);
+            
+                if (element.is('textarea')) {
+                    element.val(content);
+                } else {
+                    element.html(content);
+                }
+            }
+        
+            if (self.options.iframeMode) {
+                $(element.attr('data-keditor-frame')).remove();
+                element.removeAttr('data-keditor-frame');
+            } else {
+                if (element.is('textarea')) {
+                    self.contentAreasWrapper.remove();
+                    element.removeAttr('data-keditor-wrapper');
+                }
+            }
+        
+            self.modal.remove();
+            element.removeAttr('data-keditor-instance');
+            element.removeClass('keditor-hidden-element');
+            element.data('keditor', null);
+            delete KEditor.instances[instanceId];
+        }
+        //---------------------------------<<<
         
     }
     
@@ -1320,148 +1449,7 @@
         self.setSettingContainer(null);
     };
     
-    KEditor.prototype.getComponentContent = function (component) {
-        flog('getComponentContent', component);
-        
-        let self = this;
-        component = component.clone();
-        let componentType = self.getComponentType(component);
-        let componentData = KEditor.components[componentType];
-        let dataAttributes = self.getDataAttributes(component, null, true);
-        let content;
-        
-        if (typeof componentData.getContent === 'function') {
-            content = componentData.getContent.call(componentData, component, self);
-        } else {
-            flog('"getContent" function of component type "' + componentType + '" does not exist. Using default getContent method');
-            let componentContent = component.children('.keditor-component-content');
-            content = componentContent.html();
-        }
-        
-        let tempDiv = $('<div />').html(content);
-        tempDiv.find('[data-dynamic-href]').each(function () {
-            $(this).html('');
-        });
-        content = tempDiv.html();
-        
-        return '<section ' + dataAttributes.join(' ') + '>' + content + '</section>';
-    };
     
-    KEditor.prototype.getContainerContent = function (container, isNested) {
-        flog('getContainerContent - isNested=' + isNested, container);
-        
-        let self = this;
-        let containerInner = container.children('.keditor-container-inner').clone();
-        
-        containerInner.find('[data-type=container-content]').not(isNested ? '' : '.keditor-sub-container-content').each(function () {
-            let containerContent = $(this);
-            containerContent.removeClass('keditor-container-content keditor-sub-container-content ui-droppable ui-sortable').removeAttr('id');
-            
-            containerContent.children().each(function () {
-                let child = $(this);
-                
-                if (child.is('.keditor-component')) {
-                    child.replaceWith(self.getComponentContent(child));
-                } else if (child.is('.keditor-sub-container')) {
-                    child.replaceWith(self.getContainerContent(child, true));
-                }
-            });
-        });
-        
-        return '<section>' + containerInner.html() + '</section>';
-    };
-    
-    KEditor.prototype.getContent = function (inArray) {
-        let self = this;
-        let options = self.options;
-        let result = [];
-        let target = options.iframeMode ? self.body : self.element;
-        
-        if (target.is('textarea')) {
-            target = $(target.attr('data-keditor-wrapper'));
-        }
-        
-        target.find('.keditor-content-area').each(function () {
-            let html = '';
-            $(this).children('.keditor-container').each(function () {
-                let container = $(this);
-                
-                html += self.getContainerContent(container);
-            });
-            
-            result.push(html);
-        });
-        
-        return inArray ? result : result.join('\n');
-    };
-    
-    KEditor.prototype.setContent = function (content, contentArea) {
-        let self = this;
-        let options = self.options;
-        let body = self.body;
-        let target = options.iframeMode ? self.contentAreasWrapper : self.element;
-        
-        if (target.is('textarea')) {
-            target = $(target.attr('data-keditor-wrapper'));
-        }
-        
-        if (!contentArea) {
-            contentArea = target.children();
-        } else {
-            if (!contentArea.jquery) {
-                contentArea = target.find(contentArea);
-            }
-        }
-        
-        if (contentArea.length === 0) {
-            error('Content area does not exist!');
-        }
-        
-        contentArea.html(content);
-        self.initContentArea(contentArea);
-    };
-    
-    KEditor.prototype.destroy = function (getLatestContent) {
-        let target = this.element;
-        let instanceId = target.attr('data-keditor-instance');
-        
-        if (getLatestContent) {
-            let content = this.getContent(false);
-            
-            if (target.is('textarea')) {
-                target.val(content);
-            } else {
-                target.html(content);
-            }
-        }
-        
-        if (this.options.iframeMode) {
-            $(target.attr('data-keditor-frame')).remove();
-            target.removeAttr('data-keditor-frame');
-        } else {
-            if (target.is('textarea')) {
-                $(target.attr('data-keditor-wrapper')).remove();
-                target.removeAttr('data-keditor-wrapper');
-            }
-            
-            let notIframeInstanceCount = 0;
-            for (let instanceId in KEditor.instances) {
-                if (!KEditor.instances[instanceId].options.iframeMode) {
-                    notIframeInstanceCount++;
-                }
-            }
-            
-            if (notIframeInstanceCount === 0) {
-                this.body.removeClass('initialized-snippets-list opened-keditor-sidebar');
-                this.body.find('#keditor-sidebar').remove();
-            }
-        }
-        
-        target.removeAttr('data-keditor-instance');
-        target.removeClass('keditor-hidden-element');
-        target.data('keditor', null);
-        delete KEditor.instances[instanceId];
-    };
     
     // KEditor plugins
     $.fn.keditor = function (options) {

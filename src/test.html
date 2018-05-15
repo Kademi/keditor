@@ -25,30 +25,95 @@
         <script src="js-dev/keditor-component-vimeo.js"></script>
         <script src="js-dev/keditor-component-youtube.js"></script>
         <script src="js-dev/keditor-component-form.js"></script>
-        
-        <style>
-            #keditor1,
-            #keditor2,
-            #keditor3 {
-                min-height: 200px;
-                margin: 20px 0;
-                border: 2px dashed #ddd;
-            }
-        </style>
     </head>
     
     <body>
         <div class="container-fluid">
-            <button id="btn-set-content" type="button">Set Content</button>
-            <button id="btn-set-content2" type="button">Set Content 2</button>
-            <button id="btn-set-content3" type="button">Set Content 3</button>
-            <button id="btn-init" type="button">Init</button>
-            <button id="btn-destroy" type="button">Destroy</button>
+            <div class="btn-group btn-group-sm">
+                <button id="btn-set-content" class="btn btn-default" type="button">Set Content 1</button>
+                <button id="btn-set-content2" class="btn btn-default" type="button">Set Content 2</button>
+                <button id="btn-set-content3" class="btn btn-default" type="button">Set Content 3</button>
+            </div>
+            <div class="btn-group btn-group-sm">
+                <button id="btn-destroy" class="btn btn-default" type="button">Destroy 1</button>
+                <button id="btn-destroy2" class="btn btn-default" type="button">Destroy 2</button>
+                <button id="btn-destroy3" class="btn btn-default" type="button">Destroy 3</button>
+            </div>
+            <hr />
             <div id="keditor1">
+                <section>
+                    <div class="row">
+                        <div class="col-sm-6" data-type="container-content">
+                            <section data-type="component-text">
+                                <div class="page-header">
+                                    <h1><b class="text-uppercase">Welcome to KEditor</b>
+                                    </h1>
+                                    
+                                    <p class="lead">
+                                        <em>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</em>
+                                    </p>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-sm-6" data-type="container-content">
+                            <section data-type="component-photo">
+                                <div class="photo-panel">
+                                    <img src="snippets/img/somewhere_bangladesh.jpg" style="display: inline-block;" height="" width="100%">
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
             </div>
-            <div id="keditor2">
-            </div>
+            <textarea id="keditor2">
+                <section>
+                    <div class="row">
+                        <div class="col-sm-6" data-type="container-content">
+                            <section data-type="component-text">
+                                <div class="page-header">
+                                    <h1><b class="text-uppercase">Welcome to KEditor</b>
+                                    </h1>
+                            
+                                    <p class="lead">
+                                        <em>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</em>
+                                    </p>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-sm-6" data-type="container-content">
+                            <section data-type="component-photo">
+                                <div class="photo-panel">
+                                    <img src="snippets/img/somewhere_bangladesh.jpg" style="display: inline-block;" height="" width="100%">
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+            </textarea>
             <div id="keditor3">
+                <section>
+                    <div class="row">
+                        <div class="col-sm-6" data-type="container-content">
+                            <section data-type="component-text">
+                                <div class="page-header">
+                                    <h1><b class="text-uppercase">Welcome to KEditor</b>
+                                    </h1>
+                                    
+                                    <p class="lead">
+                                        <em>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</em>
+                                    </p>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-sm-6" data-type="container-content">
+                            <section data-type="component-photo">
+                                <div class="photo-panel">
+                                    <img src="snippets/img/somewhere_bangladesh.jpg" style="display: inline-block;" height="" width="100%">
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
         
@@ -79,32 +144,22 @@
             KEditor.debug = true;
             
             $(function () {
-                $('#keditor1').keditor({
-                    niceScrollEnabled: false,
-                    tabTooltipEnabled: false,
-                    snippetsTooltipEnabled: false
-                });
-                
-                $('#btn-init').on('click', function (e) {
-                    $('#keditor1').keditor({
-                        niceScrollEnabled: false,
-                        tabTooltipEnabled: false,
-                        snippetsTooltipEnabled: false
-                    });
-                    $('#keditor2').keditor({
-                        niceScrollEnabled: false,
-                        tabTooltipEnabled: false,
-                        snippetsTooltipEnabled: false
-                    });
-                    $('#keditor3').keditor({
-                        niceScrollEnabled: false,
-                        tabTooltipEnabled: false,
-                        snippetsTooltipEnabled: false
-                    });
+                keditor1 = $('#keditor1').keditor({});
+                keditor2 = $('#keditor2').keditor({});
+                keditor3 = $('#keditor3').keditor({
+                    iframeMode: true
                 });
                 
                 $('#btn-destroy').on('click', function (e) {
                     $('#keditor1').keditor('destroy');
+                });
+                
+                $('#btn-destroy2').on('click', function (e) {
+                    $('#keditor2').keditor('destroy');
+                });
+                
+                $('#btn-destroy3').on('click', function (e) {
+                    $('#keditor3').keditor('destroy');
                 });
                 
                 $('#btn-set-content').on('click', function (e) {

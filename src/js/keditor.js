@@ -116,7 +116,7 @@
                 self.body = $(document.body);
                 
                 let originalContent = element.val() || element.html() || '';
-                let contentAreasWrapper = self.getContentAreasWrapper(originalContent);
+                let contentAreasWrapper = self.generateContentAreasWrapper(originalContent);
                 
                 if (element.is('textarea')) {
                     element.after(contentAreasWrapper);
@@ -135,8 +135,8 @@
                 self.initKEditorClicks();
             }
             
-            self.instanceId = self.generateId('instance');
-            KEditor.instances[self.instanceId] = self;
+            self.id = self.generateId();
+            KEditor.instances[self.id] = self;
     
             if (typeof options.onReady === 'function') {
                 options.onReady.call(self);
@@ -145,12 +145,12 @@
         
         // Utils
         //--------------------------------->>>
-        generateId(type) {
+        generateId(type = '') {
             let timestamp = (new Date()).getTime();
             return `keditor-${type}-${timestamp}`;
         }
         
-        getContentAreasWrapper(content) {
+        generateContentAreasWrapper(content) {
             let self = this;
             let options = self.options;
             
@@ -313,7 +313,7 @@
             iframeHead.append(styles);
             
             flog('Adding original content to iframe...');
-            let contentAreasWrapper = self.getContentAreasWrapper(originalContent);
+            let contentAreasWrapper = self.generateContentAreasWrapper(originalContent);
             iframeBody.append(contentAreasWrapper);
             self.contentAreasWrapper = contentAreasWrapper;
             
@@ -855,7 +855,6 @@
                 }
             }
         }
-        
         //---------------------------------<<<
         
         // Containers
@@ -904,7 +903,7 @@
                 flog('Render KEditor toolbar for container', container);
                 container.append(`
                     <div class="keditor-toolbar keditor-toolbar-container ${isNested ? 'keditor-toolbar-sub-container' : ''}">
-                        <a href="javascript:void(0);" class="keditor-ui btn-container-reposition">'${options.btnMoveContainerText}</a>
+                        <a href="javascript:void(0);" class="keditor-ui btn-container-reposition">${options.btnMoveContainerText}</a>
                         ${settingBtn}
                         <a href="javascript:void(0);" class="keditor-ui btn-container-duplicate">${options.btnDuplicateContainerText}</a>
                         <a href="javascript:void(0);" class="keditor-ui btn-container-delete">${options.btnDeleteContainerText}</a>
@@ -1273,7 +1272,7 @@
         destroy() {
             let self = this;
             let element = self.element;
-            let instanceId = self.instanceId;
+            let id = self.id;
             
             let content = self.getContent(false);
             
@@ -1291,7 +1290,7 @@
             
             element.removeClass('keditor-hidden-element');
             element.data('keditor', null);
-            delete KEditor.instances[instanceId];
+            delete KEditor.instances[id];
         }
         
         //---------------------------------<<<

@@ -30,12 +30,17 @@
     <body>
         <div class="container-fluid">
             <div class="btn-group btn-group-sm">
-                <button id="btn-set-content" class="btn btn-default" type="button">Set Content 1</button>
+                <button id="btn-set-content1" class="btn btn-default" type="button">Set Content 1</button>
                 <button id="btn-set-content2" class="btn btn-default" type="button">Set Content 2</button>
                 <button id="btn-set-content3" class="btn btn-default" type="button">Set Content 3</button>
             </div>
             <div class="btn-group btn-group-sm">
-                <button id="btn-destroy" class="btn btn-default" type="button">Destroy 1</button>
+                <button id="btn-get-content1" class="btn btn-default" type="button">Get Content 1</button>
+                <button id="btn-get-content2" class="btn btn-default" type="button">Get Content 2</button>
+                <button id="btn-get-content3" class="btn btn-default" type="button">Get Content 3</button>
+            </div>
+            <div class="btn-group btn-group-sm">
+                <button id="btn-destroy1" class="btn btn-default" type="button">Destroy 1</button>
                 <button id="btn-destroy2" class="btn btn-default" type="button">Destroy 2</button>
                 <button id="btn-destroy3" class="btn btn-default" type="button">Destroy 3</button>
             </div>
@@ -43,22 +48,30 @@
             <div id="keditor1">
                 <section>
                     <div class="row">
-                        <div class="col-sm-6" data-type="container-content">
-                            <section data-type="component-text">
-                                <div class="page-header">
-                                    <h1><b class="text-uppercase">Welcome to KEditor</b>
-                                    </h1>
-                                    
-                                    <p class="lead">
-                                        <em>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</em>
-                                    </p>
-                                </div>
-                            </section>
+                        <div class="col-sm-2" data-type="container-content">
                         </div>
-                        <div class="col-sm-6" data-type="container-content">
-                            <section data-type="component-photo">
-                                <div class="photo-panel">
-                                    <img src="snippets/img/somewhere_bangladesh.jpg" style="display: inline-block;" height="" width="100%">
+                        <div class="col-sm-10" data-type="container-content">
+                            <section>
+                                <div class="row">
+                                    <div class="col-sm-6" data-type="container-content">
+                                        <section data-type="component-text">
+                                            <div class="page-header">
+                                                <h1><b class="text-uppercase">Welcome to KEditor</b>
+                                                </h1>
+                                                
+                                                <p class="lead">
+                                                    <em>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</em>
+                                                </p>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div class="col-sm-6" data-type="container-content">
+                                        <section data-type="component-photo">
+                                            <div class="photo-panel">
+                                                <img src="snippets/img/somewhere_bangladesh.jpg" style="display: inline-block;" height="" width="100%">
+                                            </div>
+                                        </section>
+                                    </div>
                                 </div>
                             </section>
                         </div>
@@ -150,7 +163,7 @@
                     iframeMode: true
                 });
                 
-                $('#btn-destroy').on('click', function (e) {
+                $('#btn-destroy1').on('click', function (e) {
                     $('#keditor1').keditor('destroy');
                 });
                 
@@ -162,7 +175,7 @@
                     $('#keditor3').keditor('destroy');
                 });
                 
-                $('#btn-set-content').on('click', function (e) {
+                $('#btn-set-content1').on('click', function (e) {
                     e.preventDefault();
                     
                     $('#keditor1').keditor('setContent', newContent());
@@ -178,6 +191,24 @@
                     e.preventDefault();
                     
                     $('#keditor3').keditor('setContent', newContent());
+                });
+                
+                $('#btn-get-content1').on('click', function (e) {
+                    e.preventDefault();
+                    
+                    console.log($('#keditor1').keditor('getContent'));
+                });
+                
+                $('#btn-get-content2').on('click', function (e) {
+                    e.preventDefault();
+                    
+                    console.log($('#keditor2').keditor('getContent'));
+                });
+                
+                $('#btn-get-content3').on('click', function (e) {
+                    e.preventDefault();
+                    
+                    console.log($('#keditor3').keditor('getContent'));
                 });
             });
         </script>

@@ -18,6 +18,8 @@
     
     const DEFAULTS = {
         nestedContainerEnabled: true,
+        btnAddContainerText: '<i class="fa fa-plus"></i>',
+        btnAddComponentText: '<i class="fa fa-plus"></i>',
         btnMoveContainerText: '<i class="fa fa-sort"></i>',
         btnMoveComponentText: '<i class="fa fa-arrows"></i>',
         btnSettingContainerText: '<i class="fa fa-cog"></i>',
@@ -249,7 +251,6 @@
                 return null;
             }
         }
-        
         //---------------------------------<<<
         
         initFrame() {
@@ -743,7 +744,14 @@
                 timer = setTimeout(doFilter, 200);
             });
         }
-        
+
+        openModal(target) {
+            let self = this;
+            let modal = self.modal;
+
+            self.modalTarget = target;
+            modal.addClass('show');
+        }
         //---------------------------------<<<
         
         // Content areas
@@ -790,6 +798,18 @@
             if (typeof options.onBeforeInitContentArea === 'function') {
                 options.onBeforeInitContentArea.call(self, contentArea);
             }
+
+            let contentAreaToolbar = $(`
+                <div class="keditor-ui keditor-btn-group keditor-btn-group-one">
+                    <a href="javascript:void(0)" class="keditor-ui btn-add-container" title="Add container">${options.btnAddContainerText}</a>
+                </div>
+            `);
+            contentAreaToolbar.appendTo(contentArea);
+            contentAreaToolbar.children('.btn-add-container').on('click', function (e) {
+                e.preventDefault();
+
+                self.openModal(contentArea);
+            });
             
             flog('Initialize $.fn.sortable for content area');
             contentArea.sortable({
@@ -1023,7 +1043,6 @@
                 }
             });
         }
-        
         //---------------------------------<<<
         
         // Components
@@ -1172,7 +1191,6 @@
             
             component.remove();
         }
-        
         //---------------------------------<<<
         
         // Get content
@@ -1242,7 +1260,6 @@
             
             return inArray ? result : result.join('\n');
         }
-        
         //---------------------------------<<<
         
         // Set content
@@ -1267,7 +1284,7 @@
             self.initContentArea(contentArea);
         }
         
-        // Get content
+        // Destroy
         //--------------------------------->>>
         destroy() {
             let self = this;
@@ -1292,7 +1309,6 @@
             element.data('keditor', null);
             delete KEditor.instances[id];
         }
-        
         //---------------------------------<<<
     }
     

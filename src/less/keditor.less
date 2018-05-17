@@ -337,6 +337,46 @@ body.highlighted-container-content {
 }
 
 /* ==================================================================================
+   Modal
+   ================================================================================== */
+.keditor-modal {
+    display: none;
+}
+
+/* ==================================================================================
+   Btn group
+   ================================================================================== */
+.keditor-btn-group {
+    text-align: center;
+    margin: 10px 0;
+    letter-spacing: -1em;
+
+    > a {
+        display: inline-block;
+        padding: 4px 30px;
+        border: solid @border-color;
+        border-width: 1px 1px 1px 0;
+        border-radius: 0 @border-radius @border-radius 0;
+        color: @ui-color;
+        font-size: 12px;
+        line-height: 16px;
+        background: #fff;
+        letter-spacing: normal;
+
+        &:first-child {
+            border-radius: @border-radius 0 0 @border-radius;
+            border-width: 1px;
+        }
+    }
+
+    &.keditor-btn-group-one {
+        > a {
+            border-radius: @border-radius;
+        }
+    }
+}
+
+/* ==================================================================================
    Toolbar
    ================================================================================== */
 .keditor-toolbar {

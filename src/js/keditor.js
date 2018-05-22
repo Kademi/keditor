@@ -18,6 +18,8 @@
     
     const DEFAULTS = {
         nestedContainerEnabled: true,
+        btnAddContainerText: '<i class="fa fa-plus"></i>',
+        btnAddComponentText: '<i class="fa fa-plus"></i>',
         btnMoveContainerText: '<i class="fa fa-sort"></i>',
         btnMoveComponentText: '<i class="fa fa-arrows"></i>',
         btnSettingContainerText: '<i class="fa fa-cog"></i>',
@@ -102,6 +104,12 @@
         }
     };
     
+    const MODAL_ACTION = {
+        ADD_CONTAINER: 0,
+        ADD_SUBCONTAINER: 1,
+        ADD_COMPONENT: 2
+    };
+    
     // KEditor class
     class KEditor {
         constructor(target, config) {
@@ -137,7 +145,7 @@
             
             self.id = self.generateId();
             KEditor.instances[self.id] = self;
-    
+            
             if (typeof options.onReady === 'function') {
                 options.onReady.call(self);
             }
@@ -602,6 +610,19 @@
                 error('"snippetsUrl" must be not null!');
             }
             
+            modal.find('.keditor-modal-close').on('click', (e) => {
+                e.preventDefault();
+                
+                self.closeModal();
+            });
+            
+            let cssTransitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
+            modal.on(cssTransitionEnd, () => {
+                if (!modal.hasClass('showed')) {
+                    modal.css('display', 'none');
+                }
+            });
+            
             modal.appendTo(document.body);
         }
         
@@ -632,8 +653,9 @@
                         data-snippet="#keditor-snippet-${i}"
                         data-type="${type}"
                         title="${title}"
-                        data-keditor-categories="${categories}">
-                        <img class="keditor-ui keditor-snippet-preview" src="${previewUrl}" />
+                        data-keditor-categories="${categories}"
+                    >
+                        <span style="background-image: url('${previewUrl}')"></span>
                     </section>
                 `;
                 
@@ -677,11 +699,11 @@
             
             snippetsWrapper.prepend(`
                 <div class="keditor-ui keditor-snippets-filter-wrapper">
-                    <input type="text" class="keditor-ui keditor-snippets-search" value="" placeholder="Type to search..." />
                     <select class="keditor-ui keditor-snippets-filter">
                         <option value="" selected="selected">All</option>
                         ${categoriesOptions}
                     </select>
+                    <input type="text" class="keditor-ui keditor-snippets-search" value="" placeholder="Type to search..." />
                 </div>
             `);
             
@@ -744,6 +766,51 @@
             });
         }
         
+        closeModal() {
+            let self = this;
+            let modal = self.modal;
+            
+            self.modalTarget = null;
+            self.modalAction = null;
+            modal.find('.keditor-modal-title').html('');
+            modal.removeClass('showed');
+        }
+        
+        openModal(target, action) {
+            let self = this;
+            let modal = self.modal;
+            let modalTitle = '';
+            
+            switch (action) {
+                case MODAL_ACTION.ADD_CONTAINER:
+                    modalTitle = 'Add container';
+                    break;
+                
+                case MODAL_ACTION.ADD_SUBCONTAINER:
+                    modalTitle = 'Add sub-container';
+                    break;
+                
+                case MODAL_ACTION.ADD_COMPONENT:
+                    modalTitle = 'Add component';
+                    break;
+                
+                default:
+                // Do nothing
+            }
+            
+            modal.find('.keditor-modal-title').html(modalTitle);
+            modal.find('.keditor-snippets-wrapper').css('display', 'none');
+            modal.find(action === MODAL_ACTION.ADD_COMPONENT ? '.keditor-snippets-wrapper-component' : '.keditor-snippets-wrapper-container').css('display', 'block');
+            
+            self.modalTarget = target;
+            self.modalAction = action;
+            
+            modal.css('display', 'block');
+            setTimeout(() => {
+                modal.addClass('showed');
+            }, 0);
+        }
+        
         //---------------------------------<<<
         
         // Content areas
@@ -790,6 +857,18 @@
             if (typeof options.onBeforeInitContentArea === 'function') {
                 options.onBeforeInitContentArea.call(self, contentArea);
             }
+            
+            let contentAreaToolbar = $(`
+                <div class="keditor-ui keditor-btn-group keditor-btn-group-one">
+                    <a href="javascript:void(0)" class="keditor-ui btn-add-container" title="Add container">${options.btnAddContainerText}</a>
+                </div>
+            `);
+            contentAreaToolbar.appendTo(contentArea);
+            contentAreaToolbar.children('.btn-add-container').on('click', function (e) {
+                e.preventDefault();
+                
+                self.openModal(contentArea, MODAL_ACTION.ADD_CONTAINER);
+            });
             
             flog('Initialize $.fn.sortable for content area');
             contentArea.sortable({
@@ -855,6 +934,7 @@
                 }
             }
         }
+        
         //---------------------------------<<<
         
         // Containers
@@ -1267,7 +1347,7 @@
             self.initContentArea(contentArea);
         }
         
-        // Get content
+        // Destroy
         //--------------------------------->>>
         destroy() {
             let self = this;
@@ -1281,7 +1361,7 @@
             } else {
                 self.contentAreasWrapper.remove();
             }
-    
+            
             if (element.is('textarea')) {
                 element.val(content);
             } else {

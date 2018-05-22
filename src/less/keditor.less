@@ -186,57 +186,42 @@ body.highlighted-container-content {
 /* ==================================================================================
    Snippets
    ================================================================================== */
-#keditor-snippets-list {
+.keditor-snippets-wrapper {
+    display: none;
     height: 100%;
     
-    .keditor-snippet {
-        &:hover {
-            opacity: .6;
-            border-color: @snippet-border-color-hover;
+    .keditor-snippets-filter-wrapper {
+        padding: @modal-filter-wrapper-padding;
+        letter-spacing: -1em;
+        box-shadow: @modal-filter-wrapper-box-shadow;
+        position: relative;
+        z-index: 2;
+        
+        > * {
+            display: inline-block;
+            border: 1px solid @border-color;
+            height: @modal-filter-input-height;
+            line-height: @modal-filter-input-height;
+            padding: @modal-filter-input-padding;
+            letter-spacing: normal;
         }
         
-        &.not-matched {
-            display: none;;
+        .keditor-snippets-filter {
+            width: ~"calc(50% - 5px)";
+            margin-right: 10px;
+        }
+        
+        .keditor-snippets-search {
+            width: ~"calc(50% - 5px)";
         }
     }
-}
-
-#keditor-snippets-container {
-    height: ~"calc(100% - 42px)";
-    background: @snippet-bg;
-    padding: 10px 5px;
-    border: solid @border-color;
-    border-width: 0 1px 1px;
     
-    > .keditor-tab-content {
-        height: 100%;
-        
-        > .keditor-tab-content-inner {
-            height: 100%;
-            .clearfix();
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-        
-        > .keditor-snippets-filter-wrapper {
-            margin: 0 5px;
-            
-            .keditor-snippets-filter,
-            .keditor-snippets-search {
-                border: 1px solid @border-color;
-                height: 34px;
-                padding: 5px 10px;
-                font-size: 14px;
-                line-height: 1.42857143;
-                width: 100%;
-                display: block;
-                margin-bottom: 10px;
-            }
-            
-            + .keditor-tab-content-inner {
-                height: ~"calc(100% - 88px)";
-            }
-        }
+    .keditor-snippet-container {
+        position: relative;
+        z-index: 1;
+        height: ~"calc(100% - @{modal-filter-wrapper-height})";
+        overflow-y: scroll;
+        padding: @snippet-container-padding;
     }
 }
 
@@ -247,15 +232,20 @@ body.highlighted-container-content {
     .transition(all @animation-duration);
     float: left;
     background: @snippet-bg;
-    margin: 0 5px 10px;
     .user-select(none);
+    width: @snippet-width;
+    height: @snippet-height;
+    margin: @snippet-margin;
     
-    img {
+    span {
         display: block;
+        width: 100%;
+        height: 100%;
+        background: no-repeat 50% 50% / contain;
     }
     
-    &:last-child {
-        margin-bottom: 0;
+    &.not-matched {
+        display: none;
     }
 }
 
@@ -333,6 +323,140 @@ body.highlighted-container-content {
         &.active {
             display: block;
         }
+    }
+}
+
+/* ==================================================================================
+   Modal
+   ================================================================================== */
+.keditor-modal {
+    display: none;
+    position: fixed;
+    z-index: @modal-zindex;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: @modal-bg;
+    transition: all @animation-duration;
+    opacity: 0;
+    
+    &.showed {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+.keditor-modal-header {
+    background: @modal-bg;
+    border-bottom: 1px solid @border-color;
+    position: relative;
+    padding: @modal-header-padding;
+    z-index: 2;
+    
+    .keditor-modal-title {
+        font-size: @modal-header-title-font-size;
+        line-height: 1.4;
+        margin: 0;
+        color: @modal-header-title-color;
+        font-weight: 500;
+    }
+    
+    .keditor-modal-close {
+        border: 0;
+        background: 0;
+        position: absolute;
+        font-size: @modal-closer-font-size;
+        color: @modal-closer-color;
+        cursor: pointer;
+        right: 0;
+        top: 50%;
+        width: @modal-closer-size;
+        height: @modal-closer-size;
+        line-height: @modal-closer-size;
+        margin-top: unit(-@modal-closer-size/2, px);
+        padding: 0;
+        font-weight: bold;
+        
+        &:hover {
+            color: @modal-closer-hover-color;
+        }
+    }
+}
+
+.keditor-modal-body {
+    height: ~"calc(100% - @{modal-header-height} - @{modal-footer-height})";
+    position: relative;
+    z-index: 1;
+}
+
+.keditor-modal-footer {
+    background: @modal-bg;
+    border-top: 1px solid @border-color;
+    text-align: center;
+    padding: @modal-footer-padding;
+    
+    .keditor-btn {
+        margin: 0 5px;
+    }
+}
+
+/* ==================================================================================
+   Btn group
+   ================================================================================== */
+.keditor-btn-group {
+    text-align: center;
+    margin: 10px 0;
+    letter-spacing: -1em;
+    
+    > a {
+        display: inline-block;
+        padding: 4px 30px;
+        border: solid @border-color;
+        border-width: 1px 1px 1px 0;
+        border-radius: 0 @border-radius @border-radius 0;
+        color: @ui-color;
+        font-size: 12px;
+        line-height: 16px;
+        background: #fff;
+        letter-spacing: normal;
+        
+        &:first-child {
+            border-radius: @border-radius 0 0 @border-radius;
+            border-width: 1px;
+        }
+    }
+    
+    &.keditor-btn-group-one {
+        > a {
+            border-radius: @border-radius;
+        }
+    }
+}
+
+/* ==================================================================================
+   Btn
+   ================================================================================== */
+.keditor-btn {
+    border: 0;
+    background: none;
+    height: @btn-height;
+    line-height: unit(@btn-height - 1, px);
+    font-size: @btn-font-size;
+    padding: @btn-padding;
+    border-radius: @border-radius;
+    box-shadow: @btn-box-shadow;
+    
+    &.keditor-btn-default {
+        border: 1px solid @btn-default-border;
+        background: @btn-default-bg;
+        color: @btn-default-color;
+    }
+    
+    &.keditor-btn-primary {
+        border: 1px solid @btn-primary-border;
+        background: @btn-primary-bg;
+        color: @btn-primary-color;
     }
 }
 

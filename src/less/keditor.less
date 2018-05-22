@@ -21,13 +21,13 @@ body {
     padding: 0;
     border: 0;
     outline: none;
-    
+
     &,
     &:before,
     &:after {
         box-sizing: border-box;
     }
-    
+
     small,
     .small {
         font-size: 88%;
@@ -41,7 +41,7 @@ body.opened-keditor-sidebar {
     .keditor-content-area {
         margin-right: 260px;
     }
-    
+
     #keditor-sidebar {
         right: 0;
     }
@@ -53,7 +53,7 @@ body.opened-keditor-sidebar {
 body.highlighted-container-content {
     .keditor-container {
         margin: 30px 0 !important;
-        
+
         &:before {
             display: none !important;
         }
@@ -107,7 +107,7 @@ body.highlighted-container-content {
     .transition(all @animation-duration);
     font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: @ui-color;
-    
+
     &:hover {
         opacity: 1;
     }
@@ -127,7 +127,7 @@ body.highlighted-container-content {
     cursor: pointer;
     border-radius: @border-radius 0 0 @border-radius;
     color: @sidebar-color;
-    
+
     > i.fa {
         line-height: inherit;
     }
@@ -141,12 +141,12 @@ body.highlighted-container-content {
     padding: 0;
     margin: 0;
     width: 100%;
-    
+
     .keditor-tab {
         display: table-cell;
         width: 1%;
         position: relative;
-        
+
         a {
             display: block;
             border-radius: @border-radius @border-radius 0 0;
@@ -157,7 +157,7 @@ body.highlighted-container-content {
             border-bottom-color: @border-color;
             color: @tab-color;
         }
-        
+
         &.active {
             a {
                 font-weight: bold;
@@ -176,7 +176,7 @@ body.highlighted-container-content {
 .keditor-tabs-content {
     .keditor-tab-content {
         display: none;
-        
+
         &.active {
             display: block;
         }
@@ -186,57 +186,42 @@ body.highlighted-container-content {
 /* ==================================================================================
    Snippets
    ================================================================================== */
-#keditor-snippets-list {
+.keditor-snippets-wrapper {
+    display: none;
     height: 100%;
-    
-    .keditor-snippet {
-        &:hover {
-            opacity: .6;
-            border-color: @snippet-border-color-hover;
+
+    .keditor-snippets-filter-wrapper {
+        padding: @modal-filter-wrapper-padding;
+        letter-spacing: -1em;
+        box-shadow: @modal-filter-wrapper-box-shadow;
+        position: relative;
+        z-index: 2;
+
+        > * {
+            display: inline-block;
+            border: 1px solid @border-color;
+            height: @modal-filter-input-height;
+            line-height: @modal-filter-input-height;
+            padding: @modal-filter-input-padding;
+            letter-spacing: normal;
         }
-        
-        &.not-matched {
-            display: none;;
+
+        .keditor-snippets-filter {
+            width: ~"calc(50% - 5px)";
+            margin-right: 10px;
+        }
+
+        .keditor-snippets-search {
+            width: ~"calc(50% - 5px)";
         }
     }
-}
 
-#keditor-snippets-container {
-    height: ~"calc(100% - 42px)";
-    background: @snippet-bg;
-    padding: 10px 5px;
-    border: solid @border-color;
-    border-width: 0 1px 1px;
-    
-    > .keditor-tab-content {
-        height: 100%;
-        
-        > .keditor-tab-content-inner {
-            height: 100%;
-            .clearfix();
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-        
-        > .keditor-snippets-filter-wrapper {
-            margin: 0 5px;
-            
-            .keditor-snippets-filter,
-            .keditor-snippets-search {
-                border: 1px solid @border-color;
-                height: 34px;
-                padding: 5px 10px;
-                font-size: 14px;
-                line-height: 1.42857143;
-                width: 100%;
-                display: block;
-                margin-bottom: 10px;
-            }
-            
-            + .keditor-tab-content-inner {
-                height: ~"calc(100% - 88px)";
-            }
-        }
+    .keditor-snippet-container {
+        position: relative;
+        z-index: 1;
+        height: ~"calc(100% - @{modal-filter-input-height})";
+        overflow-y: scroll;
+        padding: @snippet-container-padding;
     }
 }
 
@@ -247,15 +232,20 @@ body.highlighted-container-content {
     .transition(all @animation-duration);
     float: left;
     background: @snippet-bg;
-    margin: 0 5px 10px;
     .user-select(none);
-    
-    img {
+    width: @snippet-width;
+    height: @snippet-height;
+    margin: @snippet-margin;
+
+    span {
         display: block;
+        width: 100%;
+        height: 100%;
+        background: no-repeat 50% 50% / contain;
     }
-    
-    &:last-child {
-        margin-bottom: 0;
+
+    &.not-matched {
+        display: none;
     }
 }
 
@@ -273,7 +263,7 @@ body.highlighted-container-content {
     border: 1px solid @border-color;
     border-radius: @border-radius;
     .transition(all @animation-duration);
-    
+
     .opened-keditor-setting & {
         right: 10px;
     }
@@ -305,7 +295,7 @@ body.highlighted-container-content {
     width: 21px;
     text-align: center;
     line-height: 21px;
-    
+
     &:hover {
         color: #666;
     }
@@ -324,12 +314,12 @@ body.highlighted-container-content {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    
+
     .keditor-setting-form {
         overflow: hidden;
         display: none;
         min-height: 100%;
-        
+
         &.active {
             display: block;
         }
@@ -341,6 +331,74 @@ body.highlighted-container-content {
    ================================================================================== */
 .keditor-modal {
     display: none;
+    position: fixed;
+    z-index: @modal-zindex;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: @modal-bg;
+    transition: all @animation-duration;
+    opacity: 0;
+
+    &.showed {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+.keditor-modal-header {
+    background: @modal-bg;
+    border-bottom: 1px solid @border-color;
+    position: relative;
+    padding: @modal-header-padding;
+    z-index: 2;
+
+    .keditor-modal-title {
+        font-size: @modal-header-title-font-size;
+        line-height: 1.4;
+        margin: 0;
+        color: @modal-header-title-color;
+        font-weight: 500;
+    }
+
+    .keditor-modal-close {
+        border: 0;
+        background: 0;
+        position: absolute;
+        font-size: @modal-closer-font-size;
+        color: @modal-closer-color;
+        cursor: pointer;
+        right: 0;
+        top: 50%;
+        width: @modal-closer-size;
+        height: @modal-closer-size;
+        line-height: @modal-closer-size;
+        margin-top: unit(-@modal-closer-size/2, px);
+        padding: 0;
+        font-weight: bold;
+
+        &:hover {
+            color: @modal-closer-hover-color;
+        }
+    }
+}
+
+.keditor-modal-body {
+    height: ~"calc(100% - @{modal-header-height} - @{modal-footer-height})";
+    position: relative;
+    z-index: 1;
+}
+
+.keditor-modal-footer {
+    background: @modal-bg;
+    border-top: 1px solid @border-color;
+    text-align: center;
+    padding: @modal-footer-padding;
+
+    .keditor-btn {
+        margin: 0 5px;
+    }
 }
 
 /* ==================================================================================
@@ -377,6 +435,32 @@ body.highlighted-container-content {
 }
 
 /* ==================================================================================
+   Btn
+   ================================================================================== */
+.keditor-btn {
+    border: 0;
+    background: none;
+    height: @btn-height;
+    line-height: unit(@btn-height - 1, px);
+    font-size: @btn-font-size;
+    padding: @btn-padding;
+    border-radius: @border-radius;
+    box-shadow: @btn-box-shadow;
+
+    &.keditor-btn-default {
+        border: 1px solid @btn-default-border;
+        background: @btn-default-bg;
+        color: @btn-default-color;
+    }
+
+    &.keditor-btn-primary {
+        border: 1px solid @btn-primary-border;
+        background: @btn-primary-bg;
+        color: @btn-primary-color;
+    }
+}
+
+/* ==================================================================================
    Toolbar
    ================================================================================== */
 .keditor-toolbar {
@@ -384,7 +468,7 @@ body.highlighted-container-content {
     display: none;
     z-index: 5;
     font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
-    
+
     > a {
         padding: 1px 3px;
         font-size: 12px;
@@ -393,12 +477,12 @@ body.highlighted-container-content {
         display: block;
         text-align: center;
         line-height: 20px;
-        
+
         .fa {
             line-height: inherit;
         }
     }
-    
+
     .btn-container-reposition,
     .btn-component-reposition {
         cursor: move;
@@ -410,7 +494,7 @@ body.highlighted-container-content {
    ================================================================================== */
 .keditor-container {
     position: relative;
-    
+
     &:before {
         position: absolute;
         top: -3px;
@@ -421,35 +505,35 @@ body.highlighted-container-content {
         content: " ";
         display: block;
     }
-    
+
     > .keditor-toolbar {
         top: -3px;
         left: -39px;
         border: 1px solid @container-toolbar-border-color;
         border-radius: @border-radius;
         overflow: hidden;
-        
+
         > a {
             background: @container-toolbar-button-bg;
             color: @container-toolbar-button-color;
-            
+
             &:hover {
                 background: @container-toolbar-button-bg-hover;
             }
         }
     }
-    
+
     &:hover {
         &:before {
             border-color: @container-outline-color-hover;
         }
     }
-    
+
     &.showed-keditor-toolbar {
         &:before {
             border-color: @container-outline-color-selected;
         }
-        
+
         > .keditor-toolbar {
             display: block;
         }
@@ -459,7 +543,7 @@ body.highlighted-container-content {
 .keditor-container-content {
     min-height: 50px !important;
     position: relative;
-    
+
     &:before {
         position: absolute;
         top: -1px;
@@ -469,7 +553,7 @@ body.highlighted-container-content {
         content: " ";
         display: block;
         border: 1px dashed @container-content-outline-color;
-        
+
     }
 }
 
@@ -478,7 +562,7 @@ body.highlighted-container-content {
    ================================================================================== */
 .keditor-component {
     position: relative;
-    
+
     &:before {
         position: absolute;
         top: -2px;
@@ -490,14 +574,14 @@ body.highlighted-container-content {
         display: none;
         z-index: 1;
     }
-    
+
     .keditor-toolbar {
         top: 0;
         left: 0;
         background-color: @container-content-toolbar-bg;
         padding: 0 2px 2px;
         text-align: left;
-        
+
         > a {
             border: 0;
             background: none;
@@ -507,34 +591,34 @@ body.highlighted-container-content {
             .box-shadow(none);
             .transition(all @animation-duration);
             display: inline-block;
-            
+
             &:hover {
                 background-color: @container-content-toolbar-button-bg-hover;
             }
         }
     }
-    
+
     .keditor-component-content {
         position: relative;
         z-index: 2;
     }
-    
+
     &:hover,
     &.showed-keditor-toolbar {
         &:before {
             display: block;
         }
     }
-    
+
     &.showed-keditor-toolbar {
         .keditor-component-content {
             outline: none !important;
         }
     }
-    
+
     &:hover {
         z-index: 2;
-        
+
         .keditor-toolbar {
             display: block;
         }
@@ -554,7 +638,7 @@ body.highlighted-container-content {
 .keditor-ui-dragging {
     display: block !important;
     opacity: 0.5 !important;
-    
+
     .keditor-toolbar {
         display: none !important;
     }
@@ -578,7 +662,7 @@ body.highlighted-container-content {
         outline: none !important;
         padding: 0 !important;
         opacity: 1 !important;
-        
+
         &:before,
         &:after {
             display: none !important;
@@ -590,13 +674,13 @@ body.highlighted-container-content {
     &.keditor-section {
         background: @snippet-bg !important;
     }
-    
+
     &.keditor-container {
         .keditor-toolbar.keditor-toolbar-container {
             display: block !important;
         }
     }
-    
+
     &.keditor-component {
         &:before,
         .keditor-toolbar {

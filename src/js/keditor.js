@@ -655,7 +655,7 @@
                         title="${title}"
                         data-keditor-categories="${categories}"
                     >
-                        <span style="background-image: url('${previewUrl}')"></span>    
+                        <span><span style="background-image: url('${previewUrl}')"></span></span>   
                     </section>
                 `;
 
@@ -679,6 +679,16 @@
             self.modal.find('.keditor-snippet-container').html(snippetsContainerHtml);
             self.modal.find('.keditor-snippet-component').html(snippetsComponentHtml);
             self.modal.find('.modal-body').append(snippetsContentHtml);
+
+            self.modal.on('click', '.keditor-snippet', function (e) {
+                e.preventDefault();
+
+                let snippet = $(this);
+                if (!snippet.hasClass('selected')) {
+                    snippet.parent().find('.selected').removeClass('selected');
+                    snippet.addClass('selected');
+                }
+            });
         }
 
         initSnippetsFilter(isContainer) {
@@ -704,7 +714,7 @@
                         ${categoriesOptions}
                     </select>
                     <input type="text" class="keditor-ui keditor-snippets-search" value="" placeholder="Type to search..." />
-                </div>
+                </div>                
             `);
 
             snippets.each(function () {

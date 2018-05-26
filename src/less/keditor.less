@@ -50,18 +50,8 @@ body.opened-keditor-sidebar {
 /* ==================================================================================
    highlighted-container-content
    ================================================================================== */
-body.highlighted-container-content {
-    .keditor-container {
-        margin: 30px 0 !important;
-
-        &:before {
-            display: none !important;
-        }
-    }
-}
-
 .keditor-highlighted-dropzone {
-    &.keditor-container-content {
+    &.keditor-container-content-inner {
         &:before {
             border-color: @container-content-outline-highlighted;
             border-width: 2px;
@@ -134,56 +124,6 @@ body.highlighted-container-content {
 }
 
 /* ==================================================================================
-   KEditor Tab
-   ================================================================================== */
-.keditor-tabs {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-
-    .keditor-tab {
-        display: table-cell;
-        width: 1%;
-        position: relative;
-
-        a {
-            display: block;
-            border-radius: @border-radius @border-radius 0 0;
-            height: 42px;
-            padding: 10px 5px;
-            text-align: center;
-            border: 1px solid transparent;
-            border-bottom-color: @border-color;
-            color: @tab-color;
-        }
-
-        &.active {
-            a {
-                font-weight: bold;
-                border-color: @border-color;
-                border-bottom-color: #fff;
-                background: #fff;
-                color: @tab-active-color;
-            }
-        }
-    }
-}
-
-/* ==================================================================================
-   KEditor Tab Contents
-   ================================================================================== */
-.keditor-tabs-content {
-    .keditor-tab-content {
-        display: none;
-
-        &.active {
-            display: block;
-        }
-    }
-}
-
-/* ==================================================================================
    Snippets
    ================================================================================== */
 .keditor-snippets-wrapper {
@@ -216,10 +156,10 @@ body.highlighted-container-content {
         }
     }
 
-    .keditor-snippet-container {
+    .keditor-snippets {
         position: relative;
         z-index: 1;
-        height: ~"calc(100% - @{modal-filter-input-height})";
+        height: ~"calc(100% - @{modal-filter-wrapper-height})";
         overflow-y: scroll;
         padding: @snippet-container-padding;
     }
@@ -232,7 +172,7 @@ body.highlighted-container-content {
     float: left;
     background: @snippet-bg;
     .user-select(none);
-    width: ~"calc(25% - 15px)";
+    width: @snippet-width-lg;
     margin: @snippet-margin;
 
     > span {
@@ -263,6 +203,30 @@ body.highlighted-container-content {
     &.selected {
         border-color: @snippet-border-color-selected;
         box-shadow: @snippet-box-shadow-selected;
+    }
+
+    @media (max-width: @screen-xs-max) {
+        width: @snippet-width-xs;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        width: @snippet-width-sm;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        width: @snippet-width-md;
+    }
+
+    @media (min-width: @screen-lg-min) and (max-width: @screen-lg-max) {
+        width: @snippet-width-lg;
+    }
+
+    @media (min-width: @screen-xl-min) and (max-width: @screen-xl-max) {
+        width: @snippet-width-xl;
+    }
+
+    @media (min-width: @screen-xxl-min) {
+        width: @snippet-width-xxl;
     }
 }
 
@@ -422,31 +386,16 @@ body.highlighted-container-content {
    Btn group
    ================================================================================== */
 .keditor-btn-group {
-    text-align: center;
-    margin: 10px 0;
     letter-spacing: -1em;
 
-    > a {
-        display: inline-block;
-        padding: 4px 30px;
-        border: solid @border-color;
-        border-width: 1px 1px 1px 0;
-        border-radius: 0 @border-radius @border-radius 0;
-        color: @ui-color;
-        font-size: 12px;
-        line-height: 16px;
-        background: #fff;
+    .keditor-btn {
         letter-spacing: normal;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
 
         &:first-child {
-            border-radius: @border-radius 0 0 @border-radius;
-            border-width: 1px;
-        }
-    }
-
-    &.keditor-btn-group-one {
-        > a {
-            border-radius: @border-radius;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
         }
     }
 }
@@ -463,23 +412,53 @@ body.highlighted-container-content {
     padding: @btn-padding;
     border-radius: @border-radius;
     box-shadow: @btn-box-shadow;
+    display: inline-block;
+    text-decoration: none !important;
 
     &.keditor-btn-default {
         border: 1px solid @btn-default-border;
         background: @btn-default-bg;
         color: @btn-default-color;
+
+        &:hover {
+            background: darken(@btn-default-bg, 5%);
+        }
+
+        &:focus,
+        &:active {
+            border-color: darken(@btn-default-border, 8%);
+            background: darken(@btn-default-bg, 8%);
+        }
     }
 
     &.keditor-btn-primary {
         border: 1px solid @btn-primary-border;
         background: @btn-primary-bg;
         color: @btn-primary-color;
+
+        &:hover {
+            background: darken(@btn-primary-bg, 5%);
+        }
+
+        &:focus,
+        &:active {
+            border-color: darken(@btn-primary-border, 8%);
+            background: darken(@btn-primary-bg, 8%);
+        }
     }
 }
 
 /* ==================================================================================
    Toolbar
    ================================================================================== */
+.keditor-content-area-toolbar,
+.keditor-container-content-toolbar {
+    text-align: center;
+    margin: 10px 0;
+    position: relative;
+    z-index: 2;
+}
+
 .keditor-toolbar {
     position: absolute;
     display: none;
@@ -557,7 +536,7 @@ body.highlighted-container-content {
     }
 }
 
-.keditor-container-content {
+.keditor-container-content-inner {
     min-height: 50px !important;
     position: relative;
 
@@ -570,7 +549,6 @@ body.highlighted-container-content {
         content: " ";
         display: block;
         border: 1px dashed @container-content-outline-color;
-
     }
 }
 

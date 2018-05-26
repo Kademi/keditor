@@ -18,8 +18,9 @@
 
     const DEFAULTS = {
         nestedContainerEnabled: true,
-        btnAddContainerText: '<i class="fa fa-plus"></i>',
-        btnAddComponentText: '<i class="fa fa-plus"></i>',
+        btnAddContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-columns"></i>',
+        btnAddSubContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-columns"></i>',
+        btnAddComponentText: '<i class="fa fa-plus"></i> <i class="fa fa-list-ul"></i>',
         btnMoveContainerText: '<i class="fa fa-sort"></i>',
         btnMoveComponentText: '<i class="fa fa-arrows"></i>',
         btnSettingContainerText: '<i class="fa fa-cog"></i>',
@@ -110,6 +111,15 @@
         ADD_COMPONENT: 2
     };
 
+    const TOOLBAR_TYPE = {
+        CONTENT_AREA: 0,
+        CONTAINER: 1,
+        SUB_CONTAINER: 2,
+        CONTAINER_CONTENT: 3,
+        SUB_CONTAINER_CONTENT: 4,
+        COMPONENT: 5
+    };
+
     // KEditor class
     class KEditor {
         constructor(target, config) {
@@ -152,7 +162,7 @@
         }
 
         // Utils
-        //--------------------------------->>>
+        //---------------------------------
         generateId(type = '') {
             let timestamp = (new Date()).getTime();
             return `keditor-${type}-${timestamp}`;
@@ -172,6 +182,81 @@
             contentAreasWrapper.html(content);
 
             return contentAreasWrapper;
+        }
+
+        generateToolbar(type, isComponentConfigurable) {
+            let self = this;
+            let options = self.options;
+            let settingBtn = '';
+
+            switch (type) {
+                case  TOOLBAR_TYPE.CONTENT_AREA:
+                    return (`                    
+                        <div class="keditor-ui keditor-content-area-toolbar">
+                            <a href="javascript:void(0)" class="keditor-ui keditor-btn keditor-btn-default btn-add-container" title="Add container">${options.btnAddContainerText}</a>
+                        </div>
+                    `);
+
+                case  TOOLBAR_TYPE.CONTAINER:
+                    if (options.containerSettingEnabled === true) {
+                        settingBtn = `<a href="javascript:void(0);" class="keditor-ui btn-container-setting">${options.btnSettingContainerText}</a>`;
+                    }
+
+                    return (`
+                        <div class="keditor-toolbar keditor-toolbar-container">
+                            <a href="javascript:void(0);" class="keditor-ui btn-container-reposition">${options.btnMoveContainerText}</a>
+                            ${settingBtn}
+                            <a href="javascript:void(0);" class="keditor-ui btn-container-duplicate">${options.btnDuplicateContainerText}</a>
+                            <a href="javascript:void(0);" class="keditor-ui btn-container-delete">${options.btnDeleteContainerText}</a>
+                        </div>
+                    `);
+
+                case  TOOLBAR_TYPE.SUB_CONTAINER:
+                    if (options.containerSettingEnabled === true) {
+                        settingBtn = `<a href="javascript:void(0);" class="keditor-ui btn-container-setting">${options.btnSettingContainerText}</a>`;
+                    }
+
+                    return (`
+                        <div class="keditor-toolbar keditor-toolbar-container keditor-toolbar-sub-container">
+                            <a href="javascript:void(0);" class="keditor-ui btn-container-reposition">${options.btnMoveContainerText}</a>
+                            ${settingBtn}
+                            <a href="javascript:void(0);" class="keditor-ui btn-container-duplicate">${options.btnDuplicateContainerText}</a>
+                            <a href="javascript:void(0);" class="keditor-ui btn-container-delete">${options.btnDeleteContainerText}</a>
+                        </div>
+                    `);
+
+                case  TOOLBAR_TYPE.CONTAINER_CONTENT:
+                    return (`          
+                        <div class="keditor-ui keditor-container-content-toolbar keditor-btn-group">
+                            <a href="javascript:void(0)" class="keditor-ui keditor-btn keditor-btn-default btn-add-container" title="Add sub-container">${options.btnAddSubContainerText}</a>
+                            <a href="javascript:void(0)" class="keditor-ui keditor-btn keditor-btn-default btn-add-component" title="Add component">${options.btnAddComponentText}</a>
+                        </div>
+                    `);
+
+                case  TOOLBAR_TYPE.SUB_CONTAINER_CONTENT:
+                    return (`
+                        <div class="keditor-ui keditor-container-content-toolbar">
+                            <a href="javascript:void(0)" class="keditor-ui keditor-btn keditor-btn-default btn-add-component" title="Add component">${options.btnAddComponentText}</a>
+                        </div>
+                    `);
+
+                case  TOOLBAR_TYPE.COMPONENT:
+                    if (isComponentConfigurable) {
+                        settingBtn = `<a href="javascript:void(0);" class="keditor-ui btn-component-setting">${options.btnSettingComponentText}</a>`;
+                    }
+
+                    return (`
+                        <div class="keditor-toolbar keditor-toolbar-component">
+                            <a href="javascript:void(0);" class="keditor-ui btn-component-reposition">${options.btnMoveComponentText}</a>
+                            ${settingBtn}
+                            <a href="javascript:void(0);" class="keditor-ui btn-component-duplicate">${options.btnDuplicateComponentText}</a>
+                            <a href="javascript:void(0);" class="keditor-ui btn-component-delete">${options.btnDeleteComponentText}</a>
+                        </div>
+                    `);
+
+                default:
+                    // Do nothing
+            }
         }
 
         beautifyCategories(categories) {
@@ -258,8 +343,8 @@
             }
         }
 
-        //---------------------------------<<<
-
+        // Iframe
+        //---------------------------------
         initFrame() {
             flog('initFrame');
 
@@ -330,6 +415,8 @@
             }
         }
 
+        // KEditor clicks
+        //---------------------------------
         initKEditorClicks() {
             flog('initKEditorClicks');
 
@@ -552,7 +639,7 @@
         }
 
         // Snippet modal
-        //--------------------------------->>>
+        //---------------------------------
         initSnippetsModal() {
             let self = this;
             let options = self.options;
@@ -680,6 +767,7 @@
             self.modal.find('.keditor-snippet-component').html(snippetsComponentHtml);
             self.modal.find('.modal-body').append(snippetsContentHtml);
 
+            // Action click for snippet
             self.modal.on('click', '.keditor-snippet', function (e) {
                 e.preventDefault();
 
@@ -783,6 +871,7 @@
             self.modalTarget = null;
             self.modalAction = null;
             modal.find('.keditor-modal-title').html('');
+            modal.find('.keditor-snippets-wrapper .selected').removeClass('selected');
             modal.removeClass('showed');
         }
 
@@ -821,10 +910,8 @@
             }, 0);
         }
 
-        //---------------------------------<<<
-
         // Content areas
-        //--------------------------------->>>
+        //---------------------------------
         initContentAreas() {
             flog('initContentAreas');
 
@@ -868,11 +955,7 @@
                 options.onBeforeInitContentArea.call(self, contentArea);
             }
 
-            let contentAreaToolbar = $(`
-                <div class="keditor-ui keditor-btn-group keditor-btn-group-one">
-                    <a href="javascript:void(0)" class="keditor-ui btn-add-container" title="Add container">${options.btnAddContainerText}</a>
-                </div>
-            `);
+            let contentAreaToolbar = $(self.generateToolbar(TOOLBAR_TYPE.CONTENT_AREA));
             contentAreaToolbar.appendTo(contentArea);
             contentAreaToolbar.children('.btn-add-container').on('click', function (e) {
                 e.preventDefault();
@@ -911,11 +994,9 @@
                     contentArea.removeClass('keditor-highlighted-dropzone');
                 },
                 start: function (e, ui) {
-                    body.addClass('highlighted-container-content');
                     ui.item.addClass('keditor-ui-dragging');
                 },
                 stop: function (e, ui) {
-                    body.removeClass('highlighted-container-content');
                     contentArea.removeClass('keditor-highlighted-dropzone');
                     if (ui.helper) {
                         ui.helper.remove();
@@ -945,10 +1026,8 @@
             }
         }
 
-        //---------------------------------<<<
-
         // Containers
-        //--------------------------------->>>
+        //---------------------------------
         convertToContainer(contentArea, target) {
             flog('convertToContainer', contentArea, target);
 
@@ -985,20 +1064,8 @@
                     container.addClass('keditor-sub-container');
                 }
 
-                let settingBtn = '';
-                if (options.containerSettingEnabled === true) {
-                    settingBtn = `<a href="javascript:void(0);" class="keditor-ui btn-container-setting">${options.btnSettingContainerText}</a>`;
-                }
-
                 flog('Render KEditor toolbar for container', container);
-                container.append(`
-                    <div class="keditor-toolbar keditor-toolbar-container ${isNested ? 'keditor-toolbar-sub-container' : ''}">
-                        <a href="javascript:void(0);" class="keditor-ui btn-container-reposition">${options.btnMoveContainerText}</a>
-                        ${settingBtn}
-                        <a href="javascript:void(0);" class="keditor-ui btn-container-duplicate">${options.btnDuplicateContainerText}</a>
-                        <a href="javascript:void(0);" class="keditor-ui btn-container-delete">${options.btnDeleteContainerText}</a>
-                    </div>
-                `);
+                container.append(self.generateToolbar(isNested ? TOOLBAR_TYPE.SUB_CONTAINER : TOOLBAR_TYPE.CONTAINER));
 
                 container.attr('id', self.generateId(isNested ? 'sub-container' : 'container'));
 
@@ -1043,12 +1110,32 @@
             }
             containerContent.attr('id', self.generateId('container-content'));
 
+            let containerContentInner = $('<div class="keditor-container-content-inner"></div>');
+            containerContentInner.html(containerContent.html());
+            containerContent.html(containerContentInner);
+
+            flog('Initialize toolbar for container content');
+            let containerContentToolbar = $(self.generateToolbar(isNested ? TOOLBAR_TYPE.SUB_CONTAINER_CONTENT : TOOLBAR_TYPE.CONTAINER_CONTENT));
+            containerContentToolbar.appendTo(containerContent);
+            if (!isNested) {
+                containerContentToolbar.children('.btn-add-container').on('click', function (e) {
+                    e.preventDefault();
+
+                    self.openModal(containerContent, MODAL_ACTION.ADD_SUBCONTAINER);
+                });
+            }
+            containerContentToolbar.children('.btn-add-component').on('click', function (e) {
+                e.preventDefault();
+
+                self.openModal(containerContent, MODAL_ACTION.ADD_COMPONENT);
+            });
+
             flog('Initialize $.fn.sortable for container content');
-            containerContent.sortable({
+            containerContentInner.sortable({
                 handle: '.btn-component-reposition, .btn-container-reposition',
                 helper: 'clone',
                 items: '> section',
-                connectWith: '.keditor-container-content',
+                connectWith: '.keditor-container-content-inner',
                 tolerance: 'pointer',
                 sort: function () {
                     $(this).removeClass('ui-state-default');
@@ -1082,12 +1169,10 @@
                     contentArea.removeClass('keditor-highlighted-dropzone');
                 },
                 start: function (e, ui) {
-                    body.addClass('highlighted-container-content');
                     ui.item.addClass('keditor-ui-dragging');
                 },
                 stop: function (e, ui) {
-                    body.removeClass('highlighted-container-content');
-                    containerContent.removeClass('keditor-highlighted-dropzone');
+                    containerContentInner.removeClass('keditor-highlighted-dropzone');
 
                     if (ui.helper) {
                         ui.helper.remove();
@@ -1095,15 +1180,15 @@
                     ui.item.removeClass('keditor-ui-dragging');
                 },
                 over: function () {
-                    containerContent.addClass('keditor-highlighted-dropzone');
+                    containerContentInner.addClass('keditor-highlighted-dropzone');
                 },
                 out: function () {
-                    containerContent.removeClass('keditor-highlighted-dropzone');
+                    containerContentInner.removeClass('keditor-highlighted-dropzone');
                 }
             });
 
             flog('Initialize existing components inside container content');
-            containerContent.children().each(function () {
+            containerContentInner.children().each(function () {
                 let child = $(this);
 
                 if (child.find('[data-type="container-content"]').length > 0) {
@@ -1114,12 +1199,14 @@
             });
         }
 
-        //---------------------------------<<<
-
         // Components
-        //--------------------------------->>>
+        //---------------------------------
         convertToComponent(contentArea, container, target, isExisting) {
             flog('convertToComponent', contentArea, container, target, isExisting);
+
+            if (target.is('.keditor-container-content-toolbar')) {
+                return;
+            }
 
             let self = this;
             let isSection = target.is('section');
@@ -1163,21 +1250,9 @@
                 flog(`Component type: ${componentType}`);
 
                 let componentData = KEditor.components[componentType];
-                let isSettingEnabled = componentData.settingEnabled;
-                let settingBtn = '';
-                if (isSettingEnabled) {
-                    settingBtn = `<a href="javascript:void(0);" class="keditor-ui btn-component-setting">${options.btnSettingComponentText}</a>`;
-                }
 
                 flog('Render KEditor toolbar for component', component);
-                component.append(`
-                    <div class="keditor-toolbar keditor-toolbar-component">
-                        <a href="javascript:void(0);" class="keditor-ui btn-component-reposition">${options.btnMoveComponentText}</a>
-                        ${settingBtn}
-                        <a href="javascript:void(0);" class="keditor-ui btn-component-duplicate">${options.btnDuplicateComponentText}</a>
-                        <a href="javascript:void(0);" class="keditor-ui btn-component-delete">${options.btnDeleteComponentText}</a>
-                    </div>
-                `);
+                component.append(self.generateToolbar(TOOLBAR_TYPE.COMPONENT, componentData.settingEnabled));
 
                 component.find('[data-dynamic-href]').each(function () {
                     let dynamicElement = $(this);
@@ -1188,7 +1263,6 @@
                 if (typeof componentData.init === 'function') {
                     componentData.init.call(componentData, contentArea, container, component, self);
                 } else {
-                    body.removeClass('highlighted-container-content');
                     flog(`"init" function of component type "${componentType}" does not exist`);
                 }
 
@@ -1263,10 +1337,8 @@
             component.remove();
         }
 
-        //---------------------------------<<<
-
         // Get content
-        //--------------------------------->>>
+        //---------------------------------
         getComponentContent(component) {
             flog('getComponentContent');
 
@@ -1299,9 +1371,11 @@
 
             containerInner.find('[data-type=container-content]').not(isNested ? '' : '.keditor-sub-container-content').each(function () {
                 let containerContent = $(this);
-                containerContent.removeClass('keditor-container-content keditor-sub-container-content ui-droppable ui-sortable').removeAttr('id');
+                containerContent.removeClass('keditor-container-content keditor-sub-container-content').removeAttr('id');
 
-                containerContent.children().each(function () {
+                let containerContentInner = containerContent.children();
+
+                containerContentInner.children().each(function () {
                     let child = $(this);
 
                     if (child.is('.keditor-component')) {
@@ -1333,10 +1407,8 @@
             return inArray ? result : result.join('\n');
         }
 
-        //---------------------------------<<<
-
         // Set content
-        //--------------------------------->>>
+        //---------------------------------
         setContent(content, contentArea) {
             let self = this;
             let contentAreasWrapper = self.contentAreasWrapper;
@@ -1358,7 +1430,7 @@
         }
 
         // Destroy
-        //--------------------------------->>>
+        //---------------------------------
         destroy() {
             let self = this;
             let element = self.element;
@@ -1382,8 +1454,6 @@
             element.data('keditor', null);
             delete KEditor.instances[id];
         }
-
-        //---------------------------------<<<
     }
 
     KEditor.prototype.initSettingPanel = function () {

@@ -15,6 +15,18 @@
 // Animation option
 @animation-duration                         : 0.3s;
 
+// Screen width
+@screen-xs-max                              : 575px;
+@screen-sm-min                              : 576px;
+@screen-sm-max                              : 767px;
+@screen-md-min                              : 768px;
+@screen-md-max                              : 991px;
+@screen-lg-min                              : 992px;
+@screen-lg-max                              : 1199px;
+@screen-xl-min                              : 1200px;
+@screen-xl-max                              : 1499px;
+@screen-xxl-min                             : 1500px;
+
 // Tabs
 @tab-color                                  : #aaa;
 @tab-active-color                           : @ui-color;
@@ -26,14 +38,20 @@
 
 // Snippet
 @snippet-container-padding                  : 15px 0 0 15px;
-@snippet-bg                                 : #fff;
+@snippet-bg                                 : #ffffff;
 @snippet-margin                             : 0 15px 15px 0;
+@snippet-width-xs                           : ~"calc(100% - 15px)";
+@snippet-width-sm                           : ~"calc(50% - 15px)";
+@snippet-width-md                           : ~"calc(100% / 3 - 15px)";
+@snippet-width-lg                           : ~"calc(25% - 15px)";
+@snippet-width-xl                           : ~"calc(20% - 15px)";
+@snippet-width-xxl                          : ~"calc(100% / 6 - 15px)";
 @snippet-border-color                       : #eee;
 @snippet-border-color-hover                 : #ccc;
 @snippet-box-shadow-hover                   : 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
 @snippet-placeholder-bg                     : #eee;
 @snippet-border-color-selected              : @blue;
-@snippet-box-shadow-selected                : 0 0 2px 1px rgba(0, 0, 0, 0.2);
+@snippet-box-shadow-selected                : 0 0 0 2px @blue inset;
 
 // Container
 @container-outline-color-hover              : @blueLight;

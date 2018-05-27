@@ -693,24 +693,51 @@
                         }
                     }
                 });
+    
+                // Close buttons
+                modal.find('.keditor-modal-close').on('click', function (e) {
+                    e.preventDefault();
+        
+                    self.closeModal();
+                });
+                
+                // Add button
+                modal.find('.keditor-modal-add').on('click', function (e) {
+                    e.preventDefault();
+                    
+                    let selectedSnippet = modal.find('.keditor-snippets-wrapper .selected');
+                    if (selectedSnippet.length === 0) {
+                        return;
+                    }
+    
+                    flog(self.modalAction, '=============================================');
+                    flog(self.modalTarget, '=============================================');
+    
+                    self.closeModal();
+                });
+    
+                // Action click for snippet
+                modal.on('click', '.keditor-snippet', function (e) {
+                    e.preventDefault();
+        
+                    let snippet = $(this);
+                    if (!snippet.hasClass('selected')) {
+                        snippet.parent().find('.selected').removeClass('selected');
+                        snippet.addClass('selected');
+                    }
+                });
+    
+                let cssTransitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
+                modal.on(cssTransitionEnd, () => {
+                    if (!modal.hasClass('showed')) {
+                        modal.css('display', 'none');
+                    }
+                });
+    
+                modal.appendTo(document.body);
             } else {
                 error('"snippetsUrl" must be not null!');
             }
-
-            modal.find('.keditor-modal-close').on('click', (e) => {
-                e.preventDefault();
-
-                self.closeModal();
-            });
-
-            let cssTransitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
-            modal.on(cssTransitionEnd, () => {
-                if (!modal.hasClass('showed')) {
-                    modal.css('display', 'none');
-                }
-            });
-
-            modal.appendTo(document.body);
         }
 
         renderSnippets(resp) {
@@ -766,17 +793,6 @@
             self.modal.find('.keditor-snippet-container').html(snippetsContainerHtml);
             self.modal.find('.keditor-snippet-component').html(snippetsComponentHtml);
             self.modal.find('.modal-body').append(snippetsContentHtml);
-
-            // Action click for snippet
-            self.modal.on('click', '.keditor-snippet', function (e) {
-                e.preventDefault();
-
-                let snippet = $(this);
-                if (!snippet.hasClass('selected')) {
-                    snippet.parent().find('.selected').removeClass('selected');
-                    snippet.addClass('selected');
-                }
-            });
         }
 
         initSnippetsFilter(isContainer) {
@@ -1121,13 +1137,13 @@
                 containerContentToolbar.children('.btn-add-container').on('click', function (e) {
                     e.preventDefault();
 
-                    self.openModal(containerContent, MODAL_ACTION.ADD_SUBCONTAINER);
+                    self.openModal(containerContentInner, MODAL_ACTION.ADD_SUBCONTAINER);
                 });
             }
             containerContentToolbar.children('.btn-add-component').on('click', function (e) {
                 e.preventDefault();
 
-                self.openModal(containerContent, MODAL_ACTION.ADD_COMPONENT);
+                self.openModal(containerContentInner, MODAL_ACTION.ADD_COMPONENT);
             });
 
             flog('Initialize $.fn.sortable for container content');
@@ -1374,16 +1390,19 @@
                 containerContent.removeClass('keditor-container-content keditor-sub-container-content').removeAttr('id');
 
                 let containerContentInner = containerContent.children();
+                let content = '';
 
                 containerContentInner.children().each(function () {
                     let child = $(this);
 
                     if (child.is('.keditor-component')) {
-                        child.replaceWith(self.getComponentContent(child));
+                        content += self.getComponentContent(child);
                     } else if (child.is('.keditor-sub-container')) {
-                        child.replaceWith(self.getContainerContent(child, true));
+                        content += self.getContainerContent(child, true);
                     }
                 });
+    
+                containerContent.html(content);
             });
 
             return `<section>${containerInner.html()}</section>`;

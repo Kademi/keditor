@@ -536,10 +536,9 @@ body.opened-keditor-sidebar {
     }
 }
 
-.keditor-container-content-inner {
-    min-height: 50px !important;
+.keditor-container-content {
     position: relative;
-
+    
     &:before {
         position: absolute;
         top: -1px;
@@ -550,6 +549,10 @@ body.opened-keditor-sidebar {
         display: block;
         border: 1px dashed @container-content-outline-color;
     }
+}
+
+.keditor-container-content-inner {
+    min-height: 50px !important;
 }
 
 /* ==================================================================================

@@ -12,7 +12,6 @@ var rimraf = require('gulp-rimraf');
 var replace = require('gulp-replace');
 var concat = require('gulp-concat-util');
 var header = require('gulp-header');
-var babel = require('gulp-babel');
 var fs = require('fs');
 
 // =========================================================================
@@ -28,6 +27,9 @@ gulp.task('clean-css-dist', function () {
 });
 gulp.task('clean-js-dist', function () {
     return clearFolder('./dist/js/*.*');
+});
+gulp.task('clean-css-src', function () {
+    return clearFolder('./src/css/*.*');
 });
 gulp.task('clean-snippets-examples', function () {
     return clearFolder('./examples/snippets');
@@ -54,11 +56,11 @@ gulp.task('build-js-components', function () {
 // Copy tasks
 // =========================================================================
 gulp.task('copy-css', function () {
-    return gulp.src(['./src/css/keditor.css', './src/css/keditor-bootstrap-form.css'])
+    return gulp.src('./src/css/*.css')
         .pipe(gulp.dest('./dist/css/'));
 });
 gulp.task('copy-js', function () {
-    return gulp.src('./src/js/keditor.js')
+    return gulp.src('./src/js/*.js')
         .pipe(replace('@{version}', pjson.version))
         .pipe(gulp.dest('./dist/js/'));
 });
@@ -121,42 +123,30 @@ gulp.task('build-snippets-examples', gulpsync.sync(['clean-snippets-examples', '
 // =========================================================================
 // Build CSS
 // =========================================================================
-gulp.task('build-css', function () {
+gulp.task('compile-less', function () {
     return gulp.src(['./src/less/*.less', '!./src/less/_*.less'])
         .pipe(plumber())
         .pipe(less())
         .pipe(gulp.dest('./src/css/')).on('error', gutil.log);
 });
-
-// =========================================================================
-// Build JS
-// =========================================================================
-gulp.task('build-js', function () {
-    return gulp.src(['./src/js/*.js'])
-        .pipe(babel({
-            presets: ['env'],
-            plugins: [
-                'transform-class-properties'
-            ]
-        }))
-        .pipe(gulp.dest('./src/js-dev/')).on('error', gutil.log);
-});
+gulp.task('build-css', gulpsync.sync(['clean-css-src', 'compile-less']));
 
 // =========================================================================
 // Watch
 // =========================================================================
 gulp.task('watch', function () {
     gulp.watch(['./src/less/*.less'], ['build-css']);
-    gulp.watch(['./src/js/*.js'], ['build-js']);
 });
 
 // =========================================================================
 // Main tasks
 // =========================================================================
-gulp.task('build-css-dist', gulpsync.sync(['clean-css-dist', 'build-css', 'copy-css', 'build-css-components', 'min-css', 'prepend-header-css']));
-gulp.task('build-js-dist', gulpsync.sync(['clean-js-dist', 'build-js', 'copy-js', 'build-js-components', 'min-js', 'prepend-header-js']));
+gulp.task('build-css-dist', gulpsync.sync(['build-css', 'clean-css-dist', 'copy-css', 'build-css-components', 'min-css', 'prepend-header-css']));
+gulp.task('build-js-dist', gulpsync.sync(['clean-js-dist', 'copy-js', 'build-js-components', 'min-js', 'prepend-header-js']));
 
 gulp.task('build', ['build-css-dist', 'build-js-dist', 'build-snippets-examples']);
 
-gulp.task('dev', ['build-css', 'build-js', 'watch']);
+gulp.task('dev', ['build-css', 'watch']);
 
+// Gulp Default
+gulp.task('default', ['build', 'dev']);

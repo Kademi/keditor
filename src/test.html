@@ -8,45 +8,6 @@
         <link rel="stylesheet" type="text/css" data-type="keditor-style" href="css/keditor.css" />
         <link rel="stylesheet" type="text/css" data-type="keditor-style" href="css/keditor-component-text.css" />
         <link rel="stylesheet" type="text/css" data-type="keditor-style" href="css/keditor-component-form.css" />
-    </head>
-    
-    <body>
-        <div class="container-fluid">
-            <div id="keditor1">
-                <section>
-                    <div class="row">
-                        <div class="col-sm-2" data-type="container-content">
-                        </div>
-                        <div class="col-sm-10" data-type="container-content">
-                            <section>
-                                <div class="row">
-                                    <div class="col-sm-6" data-type="container-content">
-                                        <section data-type="component-text">
-                                            <div class="page-header">
-                                                <h1><b class="text-uppercase">Welcome to KEditor</b>
-                                                </h1>
-                                                
-                                                <p class="lead">
-                                                    <em>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</em>
-                                                </p>
-                                            </div>
-                                        </section>
-                                    </div>
-                                    <div class="col-sm-6" data-type="container-content">
-                                        <section data-type="component-photo">
-                                            <div class="photo-panel">
-                                                <img src="snippets/img/somewhere_bangladesh.jpg" style="display: inline-block;" height="" width="100%">
-                                            </div>
-                                        </section>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-        
         <script src="../examples/plugins/jquery-1.11.3/jquery-1.11.3.min.js"></script>
         <script src="../examples/plugins/ckeditor-4.5.6/ckeditor.js"></script>
         <script src="../examples/plugins/ckeditor-4.5.6/adapters/jquery.js"></script>
@@ -55,21 +16,112 @@
         <script src="../examples/plugins/formBuilder-2.5.3/form-builder.min.js"></script>
         <script src="../examples/plugins/formBuilder-2.5.3/form-render.min.js"></script>
         <script src="../examples/plugins/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-        <script src="js-dev/keditor.js"></script>
-        <script src="js-dev/keditor-component-audio.js"></script>
-        <script src="js-dev/keditor-component-googlemap.js"></script>
-        <script src="js-dev/keditor-component-photo.js"></script>
-        <script src="js-dev/keditor-component-text.js"></script>
-        <script src="js-dev/keditor-component-video.js"></script>
-        <script src="js-dev/keditor-component-vimeo.js"></script>
-        <script src="js-dev/keditor-component-youtube.js"></script>
-        <script src="js-dev/keditor-component-form.js"></script>
+        <script src="js/keditor.js"></script>
+        <script src="js/keditor-component-audio.js"></script>
+        <script src="js/keditor-component-googlemap.js"></script>
+        <script src="js/keditor-component-photo.js"></script>
+        <script src="js/keditor-component-text.js"></script>
+        <script src="js/keditor-component-video.js"></script>
+        <script src="js/keditor-component-vimeo.js"></script>
+        <script src="js/keditor-component-youtube.js"></script>
+        <script src="js/keditor-component-form.js"></script>
+        
+        <style>
+            #keditor1,
+            #keditor2,
+            #keditor3 {
+                min-height: 200px;
+                margin: 20px 0;
+                border: 2px dashed #ddd;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div class="container-fluid">
+            <button id="btn-set-content" type="button">Set Content</button>
+            <button id="btn-set-content2" type="button">Set Content 2</button>
+            <button id="btn-set-content3" type="button">Set Content 3</button>
+            <button id="btn-init" type="button">Init</button>
+            <button id="btn-destroy" type="button">Destroy</button>
+            <div id="keditor1">
+            </div>
+            <div id="keditor2">
+            </div>
+            <div id="keditor3">
+            </div>
+        </div>
+        
         <script type="text/javascript">
-            
-            KEditor.debug = true;
+            function newContent() {
+                return (
+                    '<section>' +
+                    '    <div class="row">' +
+                    '        <div class="col-md-12" data-type="container-content">' +
+                    '            <section>' +
+                    '                <div class="row">' +
+                    '                    <div class="col-md-12" data-type="container-content">' +
+                    '                        <section data-type="component-video">' +
+                    '                            <video width="320" height="180" controls="" style="background: #222;">' +
+                    '                                <source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">' +
+                    '                                <source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">' +
+                    '                            </video>' +
+                    '                        </section>' +
+                    '                    </div>' +
+                    '                </div>' +
+                    '            </section>' +
+                    '        </div>' +
+                    '    </div>' +
+                    '</section>'
+                );
+            }
             
             $(function () {
-                keditor1 = $('#keditor1').keditor({});
+                $('#keditor1').keditor({
+                    niceScrollEnabled: false,
+                    tabTooltipEnabled: false,
+                    snippetsTooltipEnabled: false
+                });
+                
+                $('#btn-init').on('click', function (e) {
+                    $('#keditor1').keditor({
+                        niceScrollEnabled: false,
+                        tabTooltipEnabled: false,
+                        snippetsTooltipEnabled: false
+                    });
+                    $('#keditor2').keditor({
+                        niceScrollEnabled: false,
+                        tabTooltipEnabled: false,
+                        snippetsTooltipEnabled: false
+                    });
+                    $('#keditor3').keditor({
+                        niceScrollEnabled: false,
+                        tabTooltipEnabled: false,
+                        snippetsTooltipEnabled: false
+                    });
+                });
+                
+                $('#btn-destroy').on('click', function (e) {
+                    $('#keditor1').keditor('destroy');
+                });
+                
+                $('#btn-set-content').on('click', function (e) {
+                    e.preventDefault();
+                    
+                    $('#keditor1').keditor('setContent', newContent());
+                });
+                
+                $('#btn-set-content2').on('click', function (e) {
+                    e.preventDefault();
+                    
+                    $('#keditor2').keditor('setContent', newContent());
+                });
+                
+                $('#btn-set-content3').on('click', function (e) {
+                    e.preventDefault();
+                    
+                    $('#keditor3').keditor('setContent', newContent());
+                });
             });
         </script>
     </body>

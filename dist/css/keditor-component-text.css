@@ -1,0 +1,32 @@
+/**!
+ * KEditor - Kademi content editor
+ * @copyright: Kademi (http://kademi.co)
+ * @author: Kademi (http://kademi.co)
+ * @version: 1.1.6
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
+ */
+/* ==================================================================================
+   CKEditor
+   ================================================================================== */
+div.cke_float[id*="cke_keditor-component-content-"] {
+  padding: 0;
+}
+div.cke_float[id*="cke_keditor-component-content-"] .cke_top {
+  padding: 3px 3px 0;
+}
+div.cke_float[id*="cke_keditor-component-content-"] .cke_toolbox {
+  display: block !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+div.cke_float[id*="cke_keditor-component-content-"] .cke_toolbar {
+  float: none !important;
+  display: inline-block !important;
+  vertical-align: top !important;
+}
+div.cke_float[id*="cke_keditor-component-content-"] .cke_toolbar_break {
+  display: none !important;
+}
+body.opened-keditor-sidebar div.cke_float[id*="cke_keditor-component-content-"] {
+  right: 310px;
+}

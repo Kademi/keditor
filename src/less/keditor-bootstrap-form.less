@@ -1,0 +1,28 @@
+// ==================================================================================
+// Import
+// ==================================================================================
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+/* ==================================================================================
+   Bootstrap style for setting form controls
+   ================================================================================== */
+#keditor-setting-forms {
+    .keditor-setting-form {
+        * {
+            &,
+            &:before,
+            &:after {
+                box-sizing: border-box;
+            }
+        }
+        
+        @import "bootstrap/mixins";
+        @import "bootstrap/grid";
+        @import "bootstrap/forms";
+        @import "bootstrap/buttons";
+        @import "bootstrap/button-groups";
+        @import "bootstrap/utilities";
+    }
+}
+

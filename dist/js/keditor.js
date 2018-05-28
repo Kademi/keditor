@@ -1,3 +1,10 @@
+/**!
+ * KEditor - Kademi content editor
+ * @copyright: Kademi (http://kademi.co)
+ * @author: Kademi (http://kademi.co)
+ * @version: 1.1.6
+ * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
+ */
 (function ($) {
     // Log function will print log message
     var flog = function () {
@@ -39,7 +46,7 @@
     KEditor.debug = true;
     
     // Version of KEditor
-    KEditor.version = '@{version}';
+    KEditor.version = '1.1.6';
     
     // Default configuration of KEditor
     KEditor.DEFAULTS = {

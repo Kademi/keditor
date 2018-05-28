@@ -114,13 +114,13 @@
             var formData = component.find('.form-data');
             
             if (formData.length === 0) {
-                componentContent.append('<div class="form-data" style="display: none !important;"></div>')
+                componentContent.append('<div class="form-data" style="display: none !important;"></div>');
             }
             
             if (formContent.length === 0) {
-                componentContent.append('<form class="form-content" style="display: none !important;"></form>')
+                componentContent.append('<form class="form-content" style="display: none !important;"></form>');
             } else {
-                formContent.hide()
+                formContent.hide();
             }
             
             if (formBuilder.length === 0) {

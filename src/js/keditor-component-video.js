@@ -1,36 +1,36 @@
 (function ($) {
     var KEditor = $.keditor;
     var flog = KEditor.log;
-
+    
     KEditor.components['video'] = {
         init: function (contentArea, container, component, keditor) {
             flog('init "video" component', component);
-
+            
             var componentContent = component.children('.keditor-component-content');
             var video = componentContent.find('video');
-
+            
             if (!video.parent().is('.video-wrapper')) {
                 video.wrap('<div class="video-wrapper"></div>');
             }
         },
-
+        
         getContent: function (component, keditor) {
             flog('getContent "video" component', component);
-
+            
             var componentContent = component.children('.keditor-component-content');
             var video = componentContent.find('video');
             video.unwrap();
-
+            
             return componentContent.html();
         },
-
+        
         settingEnabled: true,
-
+        
         settingTitle: 'Video Settings',
-
+        
         initSettingForm: function (form, keditor) {
             flog('init "video" settings', form);
-
+            
             form.append(
                 '<form class="form-horizontal">' +
                 '    <div class="form-group">' +
@@ -78,26 +78,26 @@
                 '</form>'
             );
         },
-
+        
         showSettingForm: function (form, component, keditor) {
             flog('showSettingForm "video" settings', form, component);
-
+            
             var options = keditor.options;
             var video = component.find('video');
             var fileInput = form.find('#videoFileInput');
             var btnVideoFileInput = form.find('.btn-videoFileInput');
             btnVideoFileInput.on('click', function (e) {
                 e.preventDefault();
-
+                
                 fileInput.trigger('click');
             });
             fileInput.off('change').on('change', function () {
                 var file = this.files[0];
                 if (/video/.test(file.type)) {
                     // Todo: Upload to your server :)
-
+                    
                     video.attr('src', URL.createObjectURL(file));
-
+                    
                     video.load(function () {
                         keditor.showSettingPanel(component, options);
                     });
@@ -105,7 +105,7 @@
                     alert('Your selected file is not an video file!');
                 }
             });
-
+            
             var autoplayToggle = form.find('#video-autoplay');
             autoplayToggle.off('click').on('click', function (e) {
                 if (this.checked) {
@@ -114,7 +114,7 @@
                     video.removeProp('autoplay');
                 }
             });
-
+            
             var loopToggle = form.find('#video-loop');
             loopToggle.off('click').on('click', function (e) {
                 if (this.checked) {
@@ -123,13 +123,13 @@
                     video.removeProp('loop');
                 }
             });
-
+            
             var ratio = form.find('.video-ratio');
             ratio.off('click').on('click', function (e) {
                 if (this.checked) {
                     var currentWidth = video.css('width') || video.prop('width');
                     currentWidth = currentWidth.replace('px', '');
-
+                    
                     var currentRatio = this.value === '16/9' ? 16 / 9 : 4 / 3;
                     var height = currentWidth / currentRatio;
                     video.css('width', currentWidth + 'px');
@@ -138,7 +138,7 @@
                     video.removeProp('height');
                 }
             });
-
+            
             var showcontrolsToggle = form.find('#video-showcontrols');
             showcontrolsToggle.off('click').on('click', function (e) {
                 if (this.checked) {
@@ -147,7 +147,7 @@
                     video.removeAttr('controls');
                 }
             });
-
+            
             var videoWidth = form.find('#video-width');
             videoWidth.off('change').on('change', function () {
                 video.css('width', this.value + 'px');

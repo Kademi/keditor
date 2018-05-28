@@ -146,6 +146,7 @@
                 self.contentAreasWrapper = contentAreasWrapper;
             }
 
+            self.initSidebar();
             self.initSnippetsModal();
             self.initContentAreas();
 
@@ -353,15 +354,11 @@
             let options = self.options;
             let element = self.element;
             let originalContent = element.is('textarea') ? element.val() : element.html();
-            let iframe = self.iframe = $('<iframe />');
-            let iframeId = self.generateId('iframe');
+            let wrapper = self.iframeWrapper = $('<div class="keditor-ui keditor-iframe-wrapper"></div>');
+            let iframe = self.iframe = $('<iframe class="keditor-ui keditor-iframe"></iframe>');
 
-            element.after(iframe);
-            iframe.attr({
-                'id': iframeId,
-                'class': 'keditor-ui keditor-iframe'
-            });
-
+            element.after(wrapper);
+            wrapper.attr('id', self.generateId('iframe-wrapper')).append(iframe);
             element.addClass('keditor-hidden-element');
 
             let iframeDoc = self.iframeDoc = iframe.contents();
@@ -634,6 +631,21 @@
             });
 
             body.addClass('keditor-clicks-initialized')
+        }
+
+        // Sidebar
+        //---------------------------------
+        initSidebar() {
+            let self = this;
+            let options = self.options;
+
+            let sidebar = self.sidebar = $(`
+                <div class="keditor-ui keditor-sidebar">
+                    
+                </div>
+            `);
+
+            sidebar.appendTo(options.iframeMode ? self.iframeWrapper : self.body);
         }
 
         // Snippet modal
@@ -1503,7 +1515,7 @@
             let content = self.getContent(false);
 
             if (self.options.iframeMode) {
-                self.iframe.remove();
+                self.iframeWrapper.remove();
             } else {
                 self.contentAreasWrapper.remove();
             }

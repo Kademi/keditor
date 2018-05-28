@@ -65,10 +65,15 @@ body {
 /* ==================================================================================
    Iframe
    ================================================================================== */
+.keditor-iframe-wrapper {
+    border: 1px solid @border-color;
+    position: relative;
+}
+
 .keditor-iframe {
     width: 100%;
     height: 500px;
-    border: 1px solid @border-color;
+    border: 0;
 }
 
 /* ==================================================================================
@@ -537,7 +542,7 @@ body {
 
 .keditor-container-content {
     position: relative;
-    
+
     &:before {
         position: absolute;
         top: -1px;

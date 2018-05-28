@@ -51,7 +51,7 @@
 
         },
 
-        onInitFrame: function (frame, frameHead, frameBody) {
+        onInitIframe: function (iframe, iframeHead, iframeBody) {
         },
         onContentChanged: function (event, contentArea) {
         },
@@ -128,7 +128,7 @@
             let options = self.options = $.extend({}, DEFAULTS, config);
 
             if (options.iframeMode) {
-                self.initFrame();
+                self.initIframe();
             } else {
                 self.window = window;
                 self.body = $(document.body);
@@ -256,7 +256,7 @@
                     `);
 
                 default:
-                    // Do nothing
+                // Do nothing
             }
         }
 
@@ -346,20 +346,20 @@
 
         // Iframe
         //---------------------------------
-        initFrame() {
-            flog('initFrame');
+        initIframe() {
+            flog('initIframe');
 
             let self = this;
             let options = self.options;
             let element = self.element;
             let originalContent = element.is('textarea') ? element.val() : element.html();
             let iframe = self.iframe = $('<iframe />');
-            let iframeId = self.generateId('frame');
+            let iframeId = self.generateId('iframe');
 
             element.after(iframe);
             iframe.attr({
                 'id': iframeId,
-                'class': 'keditor-ui keditor-frame'
+                'class': 'keditor-ui keditor-iframe'
             });
 
             element.addClass('keditor-hidden-element');
@@ -411,8 +411,8 @@
             iframeBody.append(contentAreasWrapper);
             self.contentAreasWrapper = contentAreasWrapper;
 
-            if (typeof options.onInitFrame === 'function') {
-                options.onInitFrame.call(self, iframe, iframeHead, iframeBody);
+            if (typeof options.onInitIframe === 'function') {
+                options.onInitIframe.call(self, iframe, iframeHead, iframeBody);
             }
         }
 
@@ -691,18 +691,18 @@
                         }
                     }
                 });
-    
+
                 // Close buttons
                 modal.find('.keditor-modal-close').on('click', function (e) {
                     e.preventDefault();
-        
+
                     self.closeModal();
                 });
-                
+
                 // Add button
                 modal.find('.keditor-modal-add').on('click', function (e) {
                     e.preventDefault();
-                    
+
                     let selectedSnippet = modal.find('.keditor-snippets-wrapper .selected');
                     if (selectedSnippet.length === 0) {
                         return;
@@ -751,23 +751,23 @@
                             break;
 
                         default:
-                            // Do nothing
+                        // Do nothing
                     }
-    
+
                     self.closeModal();
                 });
-    
+
                 // Action click for snippet
                 modal.on('click', '.keditor-snippet', function (e) {
                     e.preventDefault();
-        
+
                     let snippet = $(this);
                     if (!snippet.hasClass('selected')) {
                         snippet.parent().find('.selected').removeClass('selected');
                         snippet.addClass('selected');
                     }
                 });
-    
+
                 let cssTransitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
                 modal.on(cssTransitionEnd, () => {
                     if (!modal.hasClass('showed')) {
@@ -775,7 +775,7 @@
                         $(document.body).removeClass('opened-modal');
                     }
                 });
-    
+
                 modal.appendTo(document.body);
             } else {
                 error('"snippetsUrl" must be not null!');
@@ -1003,7 +1003,7 @@
             });
         }
 
-        initContentArea(contentArea) {
+        initContentArea(contentArea, dontInitToolbar) {
             flog('initContentArea', contentArea);
 
             let self = this;
@@ -1015,13 +1015,15 @@
                 options.onBeforeInitContentArea.call(self, contentArea);
             }
 
-            let contentAreaToolbar = $(self.generateToolbar(TOOLBAR_TYPE.CONTENT_AREA));
-            contentArea.after(contentAreaToolbar);
-            contentAreaToolbar.children('.btn-add-container').on('click', function (e) {
-                e.preventDefault();
+            if (!dontInitToolbar) {
+                let contentAreaToolbar = $(self.generateToolbar(TOOLBAR_TYPE.CONTENT_AREA));
+                contentArea.after(contentAreaToolbar);
+                contentAreaToolbar.children('.btn-add-container').on('click', function (e) {
+                    e.preventDefault();
 
-                self.openModal(contentArea, MODAL_ACTION.ADD_CONTAINER);
-            });
+                    self.openModal(contentArea, MODAL_ACTION.ADD_CONTAINER);
+                });
+            }
 
             flog('Initialize $.fn.sortable for content area');
             contentArea.sortable({
@@ -1162,7 +1164,6 @@
 
             let self = this;
             let options = self.options;
-            let body = self.body;
 
             containerContent.addClass('keditor-container-content');
             if (isNested) {
@@ -1445,7 +1446,7 @@
                         content += self.getContainerContent(child, true);
                     }
                 });
-    
+
                 containerContent.html(content);
             });
 
@@ -1477,7 +1478,7 @@
             let contentAreasWrapper = self.contentAreasWrapper;
 
             if (!contentArea) {
-                contentArea = contentAreasWrapper.children();
+                contentArea = contentAreasWrapper.children('.keditor-content-area');
             } else {
                 if (!contentArea.jquery) {
                     contentArea = contentAreasWrapper.find(contentArea);
@@ -1489,7 +1490,7 @@
             }
 
             contentArea.html(content);
-            self.initContentArea(contentArea);
+            self.initContentArea(contentArea, true);
         }
 
         // Destroy

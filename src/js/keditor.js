@@ -75,7 +75,7 @@
         },
         onContainerSelected: function (event, selectedContainer, contentArea) {
         },
-        onContainerSnippetDropped: function (event, newContainer, droppedSnippet, contentArea) {
+        onContainerSnippetAdded: function (event, newContainer, selectedSnippet, contentArea) {
         },
 
         onComponentReady: function (component) {
@@ -94,7 +94,7 @@
         },
         onComponentSelected: function (event, selectedComponent, contentArea) {
         },
-        onComponentSnippetDropped: function (event, newComponent, droppedSnippet, contentArea) {
+        onComponentSnippetAdded: function (event, newComponent, selectedSnippet, contentArea) {
         },
 
         onBeforeDynamicContentLoad: function (dynamicElement, component, contentArea) {
@@ -107,7 +107,7 @@
 
     const MODAL_ACTION = {
         ADD_CONTAINER: 0,
-        ADD_SUBCONTAINER: 1,
+        ADD_SUB_CONTAINER: 1,
         ADD_COMPONENT: 2
     };
 
@@ -165,7 +165,8 @@
         //---------------------------------
         generateId(type = '') {
             let timestamp = (new Date()).getTime();
-            return `keditor-${type}-${timestamp}`;
+            let random = Math.round(Math.random() * 9876543210);
+            return `keditor-${type}-${timestamp}${random}`;
         }
 
         generateContentAreasWrapper(content) {
@@ -494,9 +495,6 @@
                 container.after(newContainer);
                 self.convertToContainer(contentArea, newContainer);
 
-                let snippetsList = body.find('#keditor-snippets-list');
-                let componentSnippets = snippetsList.find('.keditor-snippet[data-type^=component]');
-
                 flog('Container is duplicated');
 
                 if (typeof options.onContainerDuplicated === 'function') {
@@ -709,9 +707,52 @@
                     if (selectedSnippet.length === 0) {
                         return;
                     }
-    
-                    flog(self.modalAction, '=============================================');
-                    flog(self.modalTarget, '=============================================');
+
+                    let contentArea = self.modalTarget.closest('.keditor-content-area');
+                    let snippetType = selectedSnippet.attr('data-type');
+                    let snippetContentElement = modal.find(selectedSnippet.attr('data-snippet'));
+                    let snippetContent = snippetContentElement.html();
+
+                    switch (self.modalAction) {
+                        case MODAL_ACTION.ADD_COMPONENT:
+                            let dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
+                            let newComponent = $(`
+                                <section class="keditor-ui keditor-component" data-type="${snippetType}" ${dataAttributes.join(' ')}>
+                                    <section class="keditor-ui keditor-component-content">${snippetContent}</section>
+                                </section>
+                            `);
+
+                            self.modalTarget.append(newComponent);
+
+                            let container = self.modalTarget.closest('.keditor-container');
+                            if (typeof options.onComponentSnippetAdded === 'function') {
+                                options.onComponentSnippetAdded.call(self, e, newComponent, selectedSnippet, contentArea);
+                            }
+
+                            self.initComponent(contentArea, container, newComponent);
+                            break;
+
+                        case MODAL_ACTION.ADD_CONTAINER:
+                        case MODAL_ACTION.ADD_SUB_CONTAINER:
+                            let newContainer = $(`
+                                <section class="keditor-ui keditor-container showed-keditor-toolbar">
+                                    <section class="keditor-ui keditor-container-inner">${snippetContent}</section>
+                                </section>
+                            `);
+
+                            self.body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                            self.modalTarget.append(newContainer);
+
+                            if (typeof options.onContainerSnippetAdded === 'function') {
+                                options.onContainerSnippetAdded.call(self, event, newContainer, selectedSnippet, contentArea);
+                            }
+
+                            self.initContainer(contentArea, newContainer);
+                            break;
+
+                        default:
+                            // Do nothing
+                    }
     
                     self.closeModal();
                 });
@@ -731,6 +772,7 @@
                 modal.on(cssTransitionEnd, () => {
                     if (!modal.hasClass('showed')) {
                         modal.css('display', 'none');
+                        $(document.body).removeClass('opened-modal');
                     }
                 });
     
@@ -755,6 +797,7 @@
 
             $(resp).filter('div').each(function (i) {
                 let snippet = $(this);
+                let snippetId = self.generateId('snippet');
                 let content = snippet.html().trim();
                 let previewUrl = snippet.attr('data-preview');
                 let type = snippet.attr('data-type');
@@ -764,7 +807,7 @@
                 let snippetHtml = `
                     <section
                         class="keditor-ui keditor-snippet"
-                        data-snippet="#keditor-snippet-${i}"
+                        data-snippet="#${snippetId}"
                         data-type="${type}"
                         title="${title}"
                         data-keditor-categories="${categories}"
@@ -784,7 +827,7 @@
                 }
 
                 let dataAttributes = self.getDataAttributes(snippet, ['data-preview', 'data-type', 'data-keditor-title', 'data-keditor-categories'], true);
-                snippetsContentHtml += `<script id="keditor-snippet-${i}" type="text/html" ${dataAttributes.join(' ')}>${content}</script>`;
+                snippetsContentHtml += `<script id="${snippetId}" type="text/html" ${dataAttributes.join(' ')}>${content}</script>`;
             });
 
             self.snippetsContainerCategories = self.beautifyCategories(self.snippetsContainerCategories);
@@ -792,7 +835,7 @@
 
             self.modal.find('.keditor-snippet-container').html(snippetsContainerHtml);
             self.modal.find('.keditor-snippet-component').html(snippetsComponentHtml);
-            self.modal.find('.modal-body').append(snippetsContentHtml);
+            self.modal.find('.keditor-modal-body').append(snippetsContentHtml);
         }
 
         initSnippetsFilter(isContainer) {
@@ -901,7 +944,7 @@
                     modalTitle = 'Add container';
                     break;
 
-                case MODAL_ACTION.ADD_SUBCONTAINER:
+                case MODAL_ACTION.ADD_SUB_CONTAINER:
                     modalTitle = 'Add sub-container';
                     break;
 
@@ -921,6 +964,7 @@
             self.modalAction = action;
 
             modal.css('display', 'block');
+            $(document.body).addClass('opened-modal');
             setTimeout(() => {
                 modal.addClass('showed');
             }, 0);
@@ -963,7 +1007,6 @@
 
             let self = this;
             let options = self.options;
-            let body = self.body;
 
             contentArea.addClass('keditor-content-area');
 
@@ -972,7 +1015,7 @@
             }
 
             let contentAreaToolbar = $(self.generateToolbar(TOOLBAR_TYPE.CONTENT_AREA));
-            contentAreaToolbar.appendTo(contentArea);
+            contentArea.after(contentAreaToolbar);
             contentAreaToolbar.children('.btn-add-container').on('click', function (e) {
                 e.preventDefault();
 
@@ -1137,7 +1180,7 @@
                 containerContentToolbar.children('.btn-add-container').on('click', function (e) {
                     e.preventDefault();
 
-                    self.openModal(containerContentInner, MODAL_ACTION.ADD_SUBCONTAINER);
+                    self.openModal(containerContentInner, MODAL_ACTION.ADD_SUB_CONTAINER);
                 });
             }
             containerContentToolbar.children('.btn-add-component').on('click', function (e) {

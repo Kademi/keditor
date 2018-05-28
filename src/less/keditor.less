@@ -11,6 +11,21 @@
 body {
     margin: 0;
     overflow-y: scroll;
+
+    // Sidebar is opened
+    &.opened-keditor-sidebar {
+        .keditor-content-area {
+            margin-right: 260px;
+        }
+
+        .keditor-sidebar {
+            right: 0;
+        }
+    }
+
+    &.opened-modal {
+        overflow: hidden;
+    }
 }
 
 /* ==================================================================================
@@ -31,19 +46,6 @@ body {
     small,
     .small {
         font-size: 88%;
-    }
-}
-
-/* ==================================================================================
-   opened-keditor-sidebar
-   ================================================================================== */
-body.opened-keditor-sidebar {
-    .keditor-content-area {
-        margin-right: 260px;
-    }
-
-    #keditor-sidebar {
-        right: 0;
     }
 }
 
@@ -120,6 +122,80 @@ body.opened-keditor-sidebar {
 
     > i.fa {
         line-height: inherit;
+    }
+}
+
+#keditor-setting-panel {
+    background: #fff;
+    position: absolute;
+    z-index: 1001;
+    top: 10px;
+    width: ~"calc(100% - 20px)";
+    right: -100%;
+    bottom: 10px;
+    border: 1px solid @border-color;
+    border-radius: @border-radius;
+    .transition(all @animation-duration);
+
+    .opened-keditor-setting & {
+        right: 10px;
+    }
+}
+
+#keditor-setting-header {
+    height: 42px;
+    border-bottom: 1px solid @border-color;
+    .clearfix;
+    padding: 10px 30px 10px 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+#keditor-setting-title {
+    color: #666;
+    font-weight: bold;
+}
+
+#keditor-setting-closer {
+    text-decoration: none;
+    color: lighten(#666, 20%);
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    right: 10px;
+    width: 21px;
+    text-align: center;
+    line-height: 21px;
+
+    &:hover {
+        color: #666;
+    }
+}
+
+#keditor-setting-body {
+    position: absolute;
+    top: 42px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+}
+
+#keditor-setting-forms {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .keditor-setting-form {
+        overflow: hidden;
+        display: none;
+        min-height: 100%;
+
+        &.active {
+            display: block;
+        }
     }
 }
 
@@ -227,83 +303,6 @@ body.opened-keditor-sidebar {
 
     @media (min-width: @screen-xxl-min) {
         width: @snippet-width-xxl;
-    }
-}
-
-/* ==================================================================================
-   Settings panel
-   ================================================================================== */
-#keditor-setting-panel {
-    background: #fff;
-    position: absolute;
-    z-index: 1001;
-    top: 10px;
-    width: ~"calc(100% - 20px)";
-    right: -100%;
-    bottom: 10px;
-    border: 1px solid @border-color;
-    border-radius: @border-radius;
-    .transition(all @animation-duration);
-
-    .opened-keditor-setting & {
-        right: 10px;
-    }
-}
-
-#keditor-setting-header {
-    height: 42px;
-    border-bottom: 1px solid @border-color;
-    .clearfix;
-    padding: 10px 30px 10px 15px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-}
-
-#keditor-setting-title {
-    color: #666;
-    font-weight: bold;
-}
-
-#keditor-setting-closer {
-    text-decoration: none;
-    color: lighten(#666, 20%);
-    position: absolute;
-    top: 10px;
-    bottom: 10px;
-    right: 10px;
-    width: 21px;
-    text-align: center;
-    line-height: 21px;
-
-    &:hover {
-        color: #666;
-    }
-}
-
-#keditor-setting-body {
-    position: absolute;
-    top: 42px;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 10px;
-}
-
-#keditor-setting-forms {
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    .keditor-setting-form {
-        overflow: hidden;
-        display: none;
-        min-height: 100%;
-
-        &.active {
-            display: block;
-        }
     }
 }
 
@@ -560,6 +559,7 @@ body.opened-keditor-sidebar {
    ================================================================================== */
 .keditor-component {
     position: relative;
+    z-index: 1;
 
     &:before {
         position: absolute;
@@ -577,7 +577,7 @@ body.opened-keditor-sidebar {
         top: 0;
         left: 0;
         background-color: @container-content-toolbar-bg;
-        padding: 0 2px 2px;
+        padding: 0 2px 2px 0;
         text-align: left;
 
         > a {

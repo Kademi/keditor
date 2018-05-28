@@ -881,6 +881,7 @@
             let doFilter = function () {
                 let selectedCategory = (cbbFilter.val() || '').toLowerCase();
                 let searchText = (txtSearch.val() || '').toLowerCase();
+                snippets.filter('.selected').removeClass('selected');
 
                 if (selectedCategory || searchText) {
                     flog('Filtering snippets');

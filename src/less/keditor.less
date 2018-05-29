@@ -420,6 +420,16 @@ body {
     margin: 10px 0;
     position: relative;
     z-index: 2;
+
+    > * {
+        .transition(all @animation-duration);
+        opacity: 0.2;
+
+
+        &:hover {
+            opacity: 1;
+        }
+    }
 }
 
 .keditor-toolbar {

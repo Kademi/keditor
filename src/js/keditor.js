@@ -895,7 +895,7 @@
                             self.modalTarget.append(newContainer);
 
                             if (typeof options.onContainerSnippetAdded === 'function') {
-                                options.onContainerSnippetAdded.call(self, event, newContainer, selectedSnippet, contentArea);
+                                options.onContainerSnippetAdded.call(self, e, newContainer, selectedSnippet, contentArea);
                             }
 
                             self.initContainer(contentArea, newContainer);

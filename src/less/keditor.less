@@ -68,6 +68,7 @@ body {
 .keditor-iframe-wrapper {
     border: 1px solid @border-color;
     position: relative;
+    overflow: hidden;
 }
 
 .keditor-iframe {
@@ -89,114 +90,72 @@ body {
 /* ==================================================================================
    Sidebar
    ================================================================================== */
-#keditor-sidebar {
+.keditor-sidebar {
     position: fixed;
-    z-index: 1031;
+    z-index: @sidebar-zindex;
     top: 0;
-    right: -255px;
     bottom: 0;
+    right: -@sidebar-width;
+    width: @sidebar-width;
     background: @sidebar-bg;
-    opacity: .9;
     border-left: 1px solid @border-color;
-    width: 255px;
     box-shadow: -1px 0 5px @sidebar-shadow-color;
-    padding: 10px;
     .transition(all @animation-duration);
-    font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: @ui-color;
+    opacity: 0;
 
-    &:hover {
+    &.opened {
+        right: 0;
         opacity: 1;
     }
-}
 
-#keditor-sidebar-toggler {
-    position: absolute;
-    top: 100px;
-    width: 25px;
-    height: 30px;
-    left: -25px;
-    background: @sidebar-bg;
-    text-align: center;
-    line-height: 30px;
-    border: 1px solid @border-color;
-    border-right: 0;
-    cursor: pointer;
-    border-radius: @border-radius 0 0 @border-radius;
-    color: @sidebar-color;
-
-    > i.fa {
-        line-height: inherit;
+    .keditor-iframe-wrapper & {
+        position: absolute;
     }
 }
 
-#keditor-setting-panel {
-    background: #fff;
-    position: absolute;
-    z-index: 1001;
-    top: 10px;
-    width: ~"calc(100% - 20px)";
-    right: -100%;
-    bottom: 10px;
-    border: 1px solid @border-color;
-    border-radius: @border-radius;
-    .transition(all @animation-duration);
-
-    .opened-keditor-setting & {
-        right: 10px;
-    }
-}
-
-#keditor-setting-header {
-    height: 42px;
+.keditor-sidebar-header {
     border-bottom: 1px solid @border-color;
-    .clearfix;
     padding: 10px 30px 10px 15px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: relative;
 }
 
-#keditor-setting-title {
-    color: #666;
-    font-weight: bold;
-}
-
-#keditor-setting-closer {
-    text-decoration: none;
-    color: lighten(#666, 20%);
-    position: absolute;
-    top: 10px;
-    bottom: 10px;
-    right: 10px;
-    width: 21px;
+.keditor-sidebar-close {
+    text-decoration: none !important;
+    color: @closer-color;
     text-align: center;
-    line-height: 21px;
+    position: absolute;
+    top: 8px;
+    right: 5px;
+    width: @sidebar-close-size;
+    height: @sidebar-close-size;
+    line-height: unit(@sidebar-close-size - 1, px);
+    font-size: 19px;
+    font-weight: bold;
 
     &:hover {
-        color: #666;
+        color: @closer-hover-color;
     }
 }
 
-#keditor-setting-body {
-    position: absolute;
-    top: 42px;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 10px;
+.keditor-sidebar-title {
+    font-weight: bold;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
 }
 
-#keditor-setting-forms {
-    height: 100%;
+.keditor-sidebar-body {
+    height: ~"calc(100% - 41px)";
     overflow-x: hidden;
     overflow-y: auto;
+    padding: @sidebar-body-padding;
 
     .keditor-setting-form {
         overflow: hidden;
         display: none;
         min-height: 100%;
+        .clearfix;
 
         &.active {
             display: block;
@@ -352,9 +311,9 @@ body {
         background: 0;
         position: absolute;
         font-size: @modal-closer-font-size;
-        color: @modal-closer-color;
+        color: @closer-color;
         cursor: pointer;
-        right: 0;
+        right: 10px;
         top: 50%;
         width: @modal-closer-size;
         height: @modal-closer-size;
@@ -364,7 +323,7 @@ body {
         font-weight: bold;
 
         &:hover {
-            color: @modal-closer-hover-color;
+            color: @closer-hover-color;
         }
     }
 }

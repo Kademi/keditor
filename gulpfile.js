@@ -139,8 +139,8 @@ gulp.task('min-js', function () {
 // Watch
 // =========================================================================
 gulp.task('watch', function () {
-    gulp.watch(['./src/less/*.less'], ['build-css']);
-    gulp.watch(['./src/js/*.js'], ['build-js']);
+    gulp.watch(['./src/less/*.less'], ['build-css-dev']);
+    gulp.watch(['./src/js/*.js'], ['build-js-dev']);
 });
 
 // =========================================================================

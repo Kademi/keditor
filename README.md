@@ -28,8 +28,10 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
 ```javascript
 /**!
  * Configuration:
- * @option {Boolean} niceScrollEnabled Enable niceScroll or not
  * @option {Boolean} nestedContainerEnabled Enable nested container or not
+ * @option {String} btnAddContainerText Text content for add container button
+ * @option {String} btnAddSubContainerText Text content for add sub-container button
+ * @option {String} btnAddComponentText Text content for add component button
  * @option {String} btnMoveContainerText Text content for move button of container
  * @option {String} btnMoveComponentText Text content for move button of component
  * @option {String} btnSettingContainerText Text content for setting button of container
@@ -38,24 +40,8 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
  * @option {String} btnDuplicateComponentText Text content for duplicate button of component
  * @option {String} btnDeleteContainerText Text content for delete button of container
  * @option {String} btnDeleteComponentText Text content for delete button of component
- * @option {String} tabContainersText Text for Containers tab
- * @option {String} tabContainersTitle Title for Containers tab
- * @option {String} tabComponentsText Text for Components tab
- * @option {String} tabComponentsTitle Title for Components tab
- * @option {Boolean} tabTooltipEnabled Bootstrap Tooltip is enabled for Component and Container tab or not
- * @option {Object} extraTabs Extra tabs besides Containers and Components tabs in sidebar
- * Example: {
- *     tabName: {
- *         text: 'My Extra Tab #1',
- *         title: 'My Extra Tab #1',
- *         content: 'Here is content of My Extra Tab #1'
- *     }
- * }
  * @option {String|Function} defaultComponentType Default component type of component. If type of component does not exist in KEditor.components, will be used 'defaultComponentType' as type of this component. If is function, argument is component
- * @option {String|jQuery} sidebarContainer The place which sidebar will be appended to. If it's blank, will be appended to body 
  * @option {String} snippetsUrl Url to snippets file
- * @option {Boolean} snippetsTooltipEnabled Bootstrap tooltip is enable for snippet or not
- * @option {String} snippetsTooltipPosition Position of Bootstrap tooltip for snippet. Can be 'left', 'right', 'top' and 'bottom'
  * @option {Boolean} snippetsFilterEnabled Enable filtering snippets by categories and text searching or not
  * @option {String} snippetsCategoriesSeparator The separator character between each categories
  * @option {Boolean} iframeMode KEditor is created inside an iframe or not. KEditor is created inside an iframe or not. Keditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
@@ -74,35 +60,36 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
  * @option {Function} containerSettingShowFunction Method will be called when setting panel for container is showed
  * @option {Function} containerSettingHideFunction Method will be called when setting panel for container is hidden
  * @option {Function} onReady Callback will be called after keditor instance is ready
- * @option {Function} onInitFrame Callback will be called after iframe and content areas wrapper inside it are created. Arguments: frame, frameHead, frameBody
- * @option {Function} onSidebarToggled Callback will be called after toggled sidebar. Arguments: isOpened
- * @option {Function} onContentChanged Callback will be called when content is changed. Includes add, delete, duplicate container or component. Or content of a component is changed. Arguments: event, contentArea
- * @option {Function} onBeforeInitContentArea Callback will be called before initializing container. Arguments: contentArea
- * @option {Function} onInitContentArea Callback will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized. Arguments: contentArea
- * @option {Function} onBeforeInitContainer Callback will be called before initializing container. Arguments: container, contentArea
- * @option {Function} onInitContainer Callback will be called when initializing container. It can return array of jQuery objects which will be initialized as editable components in container content (NOTE: these objects MUST be under elements which have attribute data-type="container-content"). By default, all first level sections under container content will be initialized. Arguments: container, contentArea
- * @option {Function} onBeforeContainerDeleted Callback will be called before container is deleted. Arguments: event, selectedContainer, contentArea
- * @option {Function} onContainerDeleted Callback will be called after container and its components are already deleted. Arguments: event, selectedContainer, contentArea
- * @option {Function} onContainerChanged Callback will be called when content of container is changed. It can be when container received new component from snippet or from other container. Or content of any components are changed or any components are deleted or duplicated. Arguments: event, changedContainer, contentArea
- * @option {Function} onContainerDuplicated Callback will be called when a container is duplicated. Arguments: event, originalContainer, newContainer, contentArea
- * @option {Function} onContainerSelected Callback will be called when a container is selected. Arguments: event, selectedContainer, contentArea
- * @option {Function} onContainerSnippetDropped Callback will be called when a container snippet is dropped into content area. Arguments: event, newContainer, droppedSnippet, contentArea
+ * @option {Function} onInitIframe Callback will be called after iframe and content areas wrapper inside it are created
+ * @option {Function} onContentChanged Callback will be called when content is changed. Includes add, delete, duplicate container or component. Or content of a component is changed
+ * @option {Function} onBeforeInitContentArea Callback will be called before initializing container
+ * @option {Function} onInitContentArea Callback will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized
+ * @option {Function} onBeforeInitContainer Callback will be called before initializing container
+ * @option {Function} onInitContainer Callback will be called when initializing container. It can return array of jQuery objects which will be initialized as editable components in container content (NOTE: these objects MUST be under elements which have attribute data-type="container-content"). By default, all first level sections under container content will be initialized
+ * @option {Function} onBeforeContainerDeleted Callback will be called before container is deleted
+ * @option {Function} onContainerDeleted Callback will be called after container and its components are already deleted
+ * @option {Function} onContainerChanged Callback will be called when content of container is changed. It can be when container received new component from snippet or from other container. Or content of any components are changed or any components are deleted or duplicated
+ * @option {Function} onContainerDuplicated Callback will be called when a container is duplicated
+ * @option {Function} onContainerSelected Callback will be called when a container is selected
+ * @option {Function} onContainerSnippetAdded Callback will be called when a container snippet is added in a content area
  * @option {Function} onComponentReady Callback will be called after component is initialized. This callback is available or not is depend on component type handler.
- * @option {Function} onBeforeInitComponent Callback will be called before initializing component. Arguments: component, contentArea
- * @option {Function} onInitComponent Callback will be called when initializing component. Arguments: component, contentArea
- * @option {Function} onBeforeComponentDeleted Callback will be called before a component is deleted. Arguments: event, selectedComponent, contentArea
- * @option {Function} onComponentDeleted Callback will be called after a component is deleted. Arguments: event, selectedComponent, contentArea
- * @option {Function} onComponentChanged Callback will be called when content of a component is changed. Arguments: event, changedComponent, contentArea
- * @option {Function} onComponentDuplicated Callback will be called when a component is duplicated. Arguments: event, originalComponent, newComponent, contentArea
- * @option {Function} onComponentSelected Callback will be called when a component is selected. Arguments: event, selectedComponent, contentArea
- * @option {Function} onComponentSnippetDropped Callback will be called after a component snippet is dropped into a container. Arguments: event, newComponent, droppedSnippet, contentArea
- * @option {Function} onBeforeDynamicContentLoad Callback will be called before loading dynamic content. Arguments: dynamicElement, component, contentArea
- * @option {Function} onDynamicContentLoaded Callback will be called after dynamic content is loaded. Arguments: dynamicElement, response, status, xhr, contentArea
- * @option {Function} onDynamicContentError Callback will be called if loading dynamic content is error, abort or timeout. Arguments: dynamicElement, response, status, xhr, contentArea
+ * @option {Function} onBeforeInitComponent Callback will be called before initializing component
+ * @option {Function} onInitComponent Callback will be called when initializing component
+ * @option {Function} onBeforeComponentDeleted Callback will be called before a component is deleted
+ * @option {Function} onComponentDeleted Callback will be called after a component is deleted
+ * @option {Function} onComponentChanged Callback will be called when content of a component is changed
+ * @option {Function} onComponentDuplicated Callback will be called when a component is duplicated
+ * @option {Function} onComponentSelected Callback will be called when a component is selected
+ * @option {Function} onComponentSnippetAdded Callback will be called after a component snippet is added in a container
+ * @option {Function} onBeforeDynamicContentLoad Callback will be called before loading dynamic content
+ * @option {Function} onDynamicContentLoaded Callback will be called after dynamic content is loaded
+ * @option {Function} onDynamicContentError Callback will be called if loading dynamic content is error, abort or timeout
  */
 $.keditor.DEFAULTS = {
-    niceScrollEnabled: true,
     nestedContainerEnabled: true,
+    btnAddContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
+    btnAddSubContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
+    btnAddComponentText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-list-ul"></i>',
     btnMoveContainerText: '<i class="fa fa-sort"></i>',
     btnMoveComponentText: '<i class="fa fa-arrows"></i>',
     btnSettingContainerText: '<i class="fa fa-cog"></i>',
@@ -111,17 +98,8 @@ $.keditor.DEFAULTS = {
     btnDuplicateComponentText: '<i class="fa fa-files-o"></i>',
     btnDeleteContainerText: '<i class="fa fa-times"></i>',
     btnDeleteComponentText: '<i class="fa fa-times"></i>',
-    tabContainersText: 'Containers',
-    tabContainersTitle: 'Containers',
-    tabComponentsText: 'Components',
-    tabComponentsTitle: 'Components',
-    tabTooltipEnabled: true,
-    extraTabs: null,
     defaultComponentType: 'blank',
-    sidebarContainer: null,
     snippetsUrl: 'snippets/snippets.html',
-    snippetsTooltipEnabled: true,
-    snippetsTooltipPosition: 'left',
     snippetsFilterEnabled: true,
     snippetsCategoriesSeparator: ';',
     iframeMode: false,
@@ -134,13 +112,25 @@ $.keditor.DEFAULTS = {
     containerSettingHideFunction: null,
     onReady: function () {
     },
-    onInitFrame: function (frame, frameHead, frameBody) {
+
+    onSnippetsLoaded: function (modal) {
+
     },
-    onSidebarToggled: function (isOpened) {
+    onSnippetsError: function (modal, error) {
+
+    },
+
+    onInitIframe: function (iframe, iframeHead, iframeBody) {
+    },
+    onContentChanged: function (event, contentArea) {
+    },
+
+    onBeforeInitContentArea: function (contentArea) {
     },
     onInitContentArea: function (contentArea) {
     },
-    onContentChanged: function (event, contentArea) {
+
+    onBeforeInitContainer: function (container, contentArea) {
     },
     onInitContainer: function (container, contentArea) {
     },
@@ -154,9 +144,12 @@ $.keditor.DEFAULTS = {
     },
     onContainerSelected: function (event, selectedContainer, contentArea) {
     },
-    onContainerSnippetDropped: function (event, newContainer, droppedSnippet, contentArea) {
+    onContainerSnippetAdded: function (event, newContainer, selectedSnippet, contentArea) {
     },
+
     onComponentReady: function (component) {
+    },
+    onBeforeInitComponent: function (component, contentArea) {
     },
     onInitComponent: function (component, contentArea) {
     },
@@ -170,8 +163,9 @@ $.keditor.DEFAULTS = {
     },
     onComponentSelected: function (event, selectedComponent, contentArea) {
     },
-    onComponentSnippetDropped: function (event, newComponent, droppedSnippet, contentArea) {
+    onComponentSnippetAdded: function (event, newComponent, selectedSnippet, contentArea) {
     },
+
     onBeforeDynamicContentLoad: function (dynamicElement, component, contentArea) {
     },
     onDynamicContentLoaded: function (dynamicElement, response, status, xhr, contentArea) {

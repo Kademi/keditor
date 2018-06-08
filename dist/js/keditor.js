@@ -211,6 +211,9 @@
     
     KEditor.prototype.generateId = function (type) {
         var timestamp = (new Date()).getTime();
+        if (timestamp === this.generateId.last)
+            this.generateId(type);
+        this.generateId.last = timestamp;
         return 'keditor-' + type + '-' + timestamp;
     };
     

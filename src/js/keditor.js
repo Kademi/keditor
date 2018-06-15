@@ -18,29 +18,40 @@
 
     const DEFAULTS = {
         nestedContainerEnabled: true,
+
         btnAddContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
         btnAddSubContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
         btnAddComponentText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-list-ul"></i>',
+
         btnMoveContainerText: '<i class="fa fa-sort"></i>',
         btnMoveComponentText: '<i class="fa fa-arrows"></i>',
+
         btnSettingContainerText: '<i class="fa fa-cog"></i>',
         btnSettingComponentText: '<i class="fa fa-cog"></i>',
+
         btnDuplicateContainerText: '<i class="fa fa-files-o"></i>',
         btnDuplicateComponentText: '<i class="fa fa-files-o"></i>',
+
         btnDeleteContainerText: '<i class="fa fa-times"></i>',
         btnDeleteComponentText: '<i class="fa fa-times"></i>',
+
         defaultComponentType: 'blank',
+
         snippetsUrl: 'snippets/snippets.html',
         snippetsFilterEnabled: true,
         snippetsCategoriesSeparator: ';',
+
         iframeMode: false,
         contentStyles: [],
+
         contentAreasSelector: null,
         contentAreasWrapper: '<div class="keditor-ui keditor-content-areas-wrapper"></div>',
+
         containerSettingEnabled: false,
         containerSettingInitFunction: null,
         containerSettingShowFunction: null,
         containerSettingHideFunction: null,
+
         onReady: function () {
         },
 
@@ -53,6 +64,7 @@
 
         onInitIframe: function (iframe, iframeHead, iframeBody) {
         },
+
         onContentChanged: function (event, contentArea) {
         },
 
@@ -161,7 +173,6 @@
                 options.onReady.call(self);
             }
         }
-
         // Utils
         //---------------------------------
         generateId(type = '') {

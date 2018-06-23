@@ -29,6 +29,9 @@ https://rawgit.com/Kademi/keditor/master/examples/index.html
 /**!
  * Configuration:
  * @option {Boolean} nestedContainerEnabled Enable nested container or not
+ * @option {Boolean} explicitSnippetEnabled Enable explicit snippet or not. When disable, there is only one button for adding. If add button is in content area or container, you can add component or containers. If add button is in sub-container, you just can add only component. When you add component in content area, please make sure you config `containerForQuickAddComponent` option
+ * @option {String} containerForQuickAddComponent The container snippet which will be added automatically in content are when you adding a component. Note: component will be added in first container content of container
+ * @option {String} btnAddContentText Text content for add content button. This available only when `explicitSippetEnabled` is `false`
  * @option {String} btnAddContainerText Text content for add container button
  * @option {String} btnAddSubContainerText Text content for add sub-container button
  * @option {String} btnAddComponentText Text content for add component button

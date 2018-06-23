@@ -19,6 +19,14 @@
     const DEFAULTS = {
         nestedContainerEnabled: true,
 
+        explicitSnippetEnabled: false,
+        containerForQuickAddComponent: `
+            <div class="row">
+                <div class="col-sm-12" data-type="container-content">
+                </div>
+            </div>
+        `,
+        btnAddContentText: '<i class="fa fa-plus"></i>',
         btnAddContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
         btnAddSubContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
         btnAddComponentText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-list-ul"></i>',
@@ -132,6 +140,13 @@
         COMPONENT: 5
     };
 
+
+    const SNIPPET_TYPE = {
+        ALL: 0,
+        CONTAINER: 1,
+        COMPONENT: 2
+    };
+
     // KEditor class
     class KEditor {
         constructor(target, config) {
@@ -201,6 +216,30 @@
             let self = this;
             let options = self.options;
             let settingBtn = '';
+
+            if (!options.explicitSnippetEnabled) {
+                let toolbarClass = '';
+
+                switch (type) {
+                    case  TOOLBAR_TYPE.CONTENT_AREA:
+                        toolbarClass = 'keditor-content-area-toolbar';
+                        break;
+
+                    case  TOOLBAR_TYPE.CONTAINER_CONTENT:
+                    case  TOOLBAR_TYPE.SUB_CONTAINER_CONTENT:
+                        toolbarClass = 'keditor-container-content-toolbar';
+                        break;
+
+                    default:
+                        // Do nothing
+                }
+
+                return (`                    
+                    <div class="keditor-ui ${toolbarClass}">
+                        <a href="javascript:void(0)" class="keditor-ui keditor-btn keditor-btn-default btn-add-content" title="Add content">${options.btnAddContentText}</a>
+                    </div>
+                `);
+            }
 
             switch (type) {
                 case  TOOLBAR_TYPE.CONTENT_AREA:
@@ -803,25 +842,36 @@
             let self = this;
             let options = self.options;
             let modalId = self.generateId('modal');
+            let snippetsWrapperHtml = '';
+
+            if (options.explicitSnippetEnabled) {
+                snippetsWrapperHtml = `
+                    <div class="keditor-snippets-wrapper keditor-snippets-wrapper-container">
+                        <div class="keditor-snippets keditor-snippet-container"></div>
+                    </div>
+                    <div class="keditor-snippets-wrapper keditor-snippets-wrapper-component">
+                        <div class="keditor-snippets keditor-snippet-component"></div>
+                    </div>
+                `;
+            } else {
+                snippetsWrapperHtml = `
+                    <div class="keditor-snippets-wrapper keditor-snippets-wrapper-content">
+                        <div class="keditor-snippets keditor-snippet-content"></div>
+                    </div>
+                `;
+            }
 
             let modal = self.modal = $(`
                 <div class="keditor-ui keditor-modal" id="${modalId}">
-                   <div class="keditor-modal-header">
-                       <button type="button" class="keditor-modal-close">&times;</button>
-                       <h4 class="keditor-modal-title"></h4>
-                   </div>
-                   <div class="keditor-modal-body">
-                       <div class="keditor-snippets-wrapper keditor-snippets-wrapper-container">
-                           <div class="keditor-snippets keditor-snippet-container"></div>
-                       </div>
-                       <div class="keditor-snippets-wrapper keditor-snippets-wrapper-component">
-                           <div class="keditor-snippets keditor-snippet-component"></div>
-                       </div>
-                   </div>
-                   <div class="keditor-modal-footer">
-                       <button type="button" class="keditor-ui keditor-btn keditor-btn-default keditor-modal-close">Close</button>
-                       <button type="button" class="keditor-ui keditor-btn keditor-btn-primary keditor-modal-add">Add</button>
-                   </div>
+                    <div class="keditor-modal-header">
+                        <button type="button" class="keditor-modal-close">&times;</button>
+                        <h4 class="keditor-modal-title"></h4>
+                    </div>
+                    <div class="keditor-modal-body">${snippetsWrapperHtml}</div>
+                    <div class="keditor-modal-footer">
+                        <button type="button" class="keditor-ui keditor-btn keditor-btn-default keditor-modal-close">Close</button>
+                        <button type="button" class="keditor-ui keditor-btn keditor-btn-primary keditor-modal-add">Add</button>
+                    </div>
                 </div>
             `);
 

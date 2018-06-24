@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>KEditor - Kademi Content Editor</title>
+        <link rel="stylesheet" type="text/css" href="plugins/bootstrap-3.3.6/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="plugins/font-awesome-4.5.0/css/font-awesome.min.css" />
+        <!-- Start of KEditor styles -->
+        <link rel="stylesheet" type="text/css" href="../dist/css/keditor.min.css" />
+        <link rel="stylesheet" type="text/css" href="../dist/css/keditor-components.min.css" />
+        <!-- End of KEditor styles -->
+        <link rel="stylesheet" type="text/css" href="plugins/code-prettify/src/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="css/examples.css" />
+    </head>
+    
+    <body>
+        <div data-keditor="html">
+            <div id="content-area"></div>
+        </div>
+        
+        <script type="text/javascript" src="plugins/jquery-1.11.3/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="plugins/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="plugins/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="plugins/jquery.nicescroll-3.6.6/jquery.nicescroll.min.js"></script>
+        <script type="text/javascript" src="plugins/ckeditor-4.5.6/ckeditor.js"></script>
+        <script type="text/javascript" src="plugins/ckeditor-4.5.6/adapters/jquery.js"></script>
+        <script type="text/javascript" src="plugins/formBuilder-2.5.3/form-builder.min.js"></script>
+        <script type="text/javascript" src="plugins/formBuilder-2.5.3/form-render.min.js"></script>
+        <!-- Start of KEditor scripts -->
+        <script type="text/javascript" src="../dist/js/keditor.min.js"></script>
+        <script type="text/javascript" src="../dist/js/keditor-components.min.js"></script>
+        <!-- End of KEditor scripts -->
+        <script type="text/javascript" src="plugins/code-prettify/src/prettify.js"></script>
+        <script type="text/javascript" src="plugins/js-beautify-1.7.5/js/lib/beautify.js"></script>
+        <script type="text/javascript" src="plugins/js-beautify-1.7.5/js/lib/beautify-html.js"></script>
+        <script type="text/javascript" src="js/examples.js"></script>
+        <script type="text/javascript" data-keditor="script">
+            $(function () {
+                $('#content-area').keditor({
+                    explicitSnippetEnabled: false
+                });
+            });
+        </script>
+    </body>
+</html>

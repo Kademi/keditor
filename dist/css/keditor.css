@@ -382,6 +382,17 @@ body.opened-modal {
   position: relative;
   z-index: 2;
 }
+.keditor-content-area-toolbar > *,
+.keditor-container-content-toolbar > * {
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  opacity: 0.2;
+}
+.keditor-content-area-toolbar > *:hover,
+.keditor-container-content-toolbar > *:hover {
+  opacity: 1;
+}
 .keditor-toolbar {
   position: absolute;
   display: none;

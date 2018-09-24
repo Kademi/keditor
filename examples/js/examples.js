@@ -21,8 +21,8 @@
             'end_with_newline': true
         });
         htmlCode = htmlCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        modal.find('#html .prettyprint').html(htmlCode);
-        
+        modal.find('#html .prettyprint').html(PR.prettyPrintOne(htmlCode,"lang-html"));
+
         var jsCode = $('[data-keditor="script"]').html();
         jsCode = js_beautify(jsCode, {
             'indent_size': '4',
@@ -31,8 +31,7 @@
             'end_with_newline': true
         });
         jsCode = jsCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        modal.find('#js .prettyprint').html(jsCode);
-        prettyPrint();
+        modal.find('#js .prettyprint').html(PR.prettyPrintOne(jsCode,"lang-js"));
         $('#modal-source').modal('show');
         });
     }
@@ -53,10 +52,10 @@
             '                </ul>' +
             '                <div class="tab-content">' +
             '                    <div class="tab-pane active" id="html">' +
-            '                        <pre class="prettyprint"></pre>' +
+            '                        <pre class="prettyprint lang-html"></pre>' +
             '                    </div>' +
             '                    <div class="tab-pane" id="js">' +
-            '                        <pre class="prettyprint"></pre>' +
+            '                        <pre class="prettyprint lang-js"></pre>' +
             '                    </div>' +
             '                </div>' +
             '            </div>' +

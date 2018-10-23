@@ -603,17 +603,11 @@ body {
     }
 }
 
-.ui-draggable-dragging {
-    &.keditor-snippet {
-        .transition(none) !important;
-    }
-}
-
 .ui-sortable-placeholder {
     &.keditor-snippet,
     &.keditor-container,
     &.keditor-component {
-        background: @snippet-placeholder-bg !important;
+        background: @blueLight !important;
         visibility: visible !important;
         height: 20px !important;
         margin: 5px 0 !important;
@@ -621,6 +615,7 @@ body {
         outline: none !important;
         padding: 0 !important;
         opacity: 1 !important;
+        border: 2px solid @blue;
 
         &:before,
         &:after {

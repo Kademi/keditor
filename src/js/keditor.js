@@ -1596,7 +1596,7 @@
             var btn = $(this);
             flog('Click on .btn-component-delete', btn);
             
-            if (confirm('Are you sure that you want to delete this component? This action cannot be undone!!')) {
+            if (confirm('Are you sure that you want to delete this component? This action cannot be undone!')) {
                 var component = btn.closest('.keditor-component');
                 var container = component.closest('.keditor-container');
                 var contentArea = component.closest('.keditor-content-area');

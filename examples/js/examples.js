@@ -8,7 +8,31 @@
         var btn = $('<button type="button" class="view-source"><i class="fa fa-code"></i> View source</button>');
         btn.appendTo(document.body);
         btn.on('click', function () {
-            $('#modal-source').modal('show');
+	var modal = $('#modal-source');
+        var htmlCode = $('#content-area').keditor('getContent');
+//        var htmlCode = $('[data-keditor="html"]').html();
+        var htmlInclude = $('<div />').html($('[data-keditor="html-include"]').clone()).html();
+        htmlInclude = htmlInclude.replace('data-keditor="html-include"', '');
+        htmlCode += htmlInclude;
+        htmlCode = html_beautify(htmlCode, {
+            'indent_size': '4',
+            'indent_char': ' ',
+            'space_after_anon_function': true,
+            'end_with_newline': true
+        });
+        htmlCode = htmlCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        modal.find('#html .prettyprint').html(PR.prettyPrintOne(htmlCode,"lang-html"));
+
+        var jsCode = $('[data-keditor="script"]').html();
+        jsCode = js_beautify(jsCode, {
+            'indent_size': '4',
+            'indent_char': ' ',
+            'space_after_anon_function': true,
+            'end_with_newline': true
+        });
+        jsCode = jsCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        modal.find('#js .prettyprint').html(PR.prettyPrintOne(jsCode,"lang-js"));
+        $('#modal-source').modal('show');
         });
     }
     
@@ -28,10 +52,10 @@
             '                </ul>' +
             '                <div class="tab-content">' +
             '                    <div class="tab-pane active" id="html">' +
-            '                        <pre class="prettyprint"></pre>' +
+            '                        <pre class="prettyprint lang-html"></pre>' +
             '                    </div>' +
             '                    <div class="tab-pane" id="js">' +
-            '                        <pre class="prettyprint"></pre>' +
+            '                        <pre class="prettyprint lang-js"></pre>' +
             '                    </div>' +
             '                </div>' +
             '            </div>' +
@@ -42,33 +66,7 @@
             '    </div>' +
             '</div>'
         );
-        
-        var htmlCode = $('[data-keditor="html"]').html();
-        var htmlInclude = $('<div />').html($('[data-keditor="html-include"]').clone()).html();
-        htmlInclude = htmlInclude.replace('data-keditor="html-include"', '');
-        htmlCode += htmlInclude;
-        htmlCode = html_beautify(htmlCode, {
-            'indent_size': '4',
-            'indent_char': ' ',
-            'space_after_anon_function': true,
-            'end_with_newline': true
-        });
-        htmlCode = htmlCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        modal.find('#html .prettyprint').html(htmlCode);
-        
-        var jsCode = $('[data-keditor="script"]').html();
-        jsCode = js_beautify(jsCode, {
-            'indent_size': '4',
-            'indent_char': ' ',
-            'space_after_anon_function': true,
-            'end_with_newline': true
-        });
-        jsCode = jsCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        modal.find('#js .prettyprint').html(jsCode);
-        
         modal.appendTo(document.body);
-        
-        prettyPrint();
     }
     
 })(jQuery);

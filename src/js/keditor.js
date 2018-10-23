@@ -204,7 +204,8 @@
     
     KEditor.prototype.generateId = function (type) {
         var timestamp = (new Date()).getTime();
-        return 'keditor-' + type + '-' + timestamp;
+        var random = Math.round(Math.random() * 9876543210);
+        return 'keditor-' + type + '-' + timestamp + random;
     };
     
     KEditor.prototype.initNiceScroll = function (target) {

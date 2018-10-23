@@ -865,23 +865,23 @@
                     </div>
                 </div>
             `);
-            
+
             if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
                 flog(`Getting snippets form "${options.snippetsUrl}"...`);
-                
+
                 $.ajax({
                     type: 'get',
                     dataType: 'html',
                     url: options.snippetsUrl,
                     success: function (resp) {
                         flog('Success in getting snippets');
-                        
+
                         if (typeof options.onSnippetsLoaded === 'function') {
                             resp = options.onSnippetsLoaded.call(self, resp) || resp;
                         }
-                        
+
                         self.renderSnippets(resp);
-                        
+
                         if (options.snippetsFilterEnabled) {
                             if (options.explicitSnippetEnabled) {
                                 self.initSnippetsFilter(SNIPPET_TYPE.CONTAINER);
@@ -898,23 +898,23 @@
                         }
                     }
                 });
-                
+
                 // Close buttons
                 modal.find('.keditor-modal-close').on('click', function (e) {
                     e.preventDefault();
-                    
+
                     self.closeModal();
                 });
-                
+
                 // Add button
                 modal.find('.keditor-modal-add').on('click', function (e) {
                     e.preventDefault();
-                    
+
                     let selectedSnippet = modal.find('.keditor-snippets-wrapper .selected');
                     if (selectedSnippet.length === 0) {
                         return;
                     }
-                    
+
                     let contentArea = self.modalTarget.closest('.keditor-content-area');
                     let snippetType = selectedSnippet.attr('data-type');
                     let snippetContentElement = modal.find(selectedSnippet.attr('data-snippet'));
@@ -922,17 +922,17 @@
                     let isAddingContainer = false;
                     let isAddingComponent = false;
                     let isAddingComponentWithContainer = false;
-    
+
                     if (options.explicitSnippetEnabled) {
                         switch (self.modalSnippetType) {
                             case SNIPPET_TYPE.COMPONENT:
                                 isAddingComponent = true;
                                 break;
-                                
+
                             case SNIPPET_TYPE.CONTAINER:
                                 isAddingContainer = true;
                                 break;
-    
+
                             default:
                             // Do nothing
                         }
@@ -944,35 +944,35 @@
                                 case SNIPPET_TYPE.COMPONENT:
                                     isAddingComponent = true;
                                     break;
-                                    
+
                                 case SNIPPET_TYPE.ALL:
                                     if (self.modalTarget.is('.keditor-container-content-inner')) {
                                         isAddingComponent = true;
                                     } else {
                                         isAddingComponentWithContainer = true;
                                     }
-                                    
+
                                     break;
-    
+
                                 default:
                                 // Do nothing
                             }
                         }
                     }
-                    
+
                     let newContainer;
                     let newComponent;
-                    
+
                     if (isAddingContainer) {
                         self.body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-                        
+
                         newContainer = $(`
                             <section class="keditor-ui keditor-container showed-keditor-toolbar">
                                 <section class="keditor-ui keditor-container-inner">${snippetContent}</section>
                             </section>
                         `);
                         self.modalTarget.append(newContainer);
-    
+
                         if (typeof options.onContainerSnippetAdded === 'function') {
                             options.onContainerSnippetAdded.call(self, e, newContainer, selectedSnippet, contentArea);
                         }
@@ -980,10 +980,10 @@
                         if (typeof options.onContentChanged === 'function') {
                             options.onContentChanged.call(self, e, contentArea);
                         }
-    
+
                         self.initContainer(contentArea, newContainer);
                     }
-                    
+
                     if (isAddingComponent) {
                         let dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
                         newComponent = $(`
@@ -992,7 +992,7 @@
                             </section>
                         `);
                         self.modalTarget.append(newComponent);
-    
+
                         let container = self.modalTarget.closest('.keditor-container');
                         if (typeof options.onComponentSnippetAdded === 'function') {
                             options.onComponentSnippetAdded.call(self, e, newComponent, selectedSnippet, contentArea);
@@ -1001,13 +1001,13 @@
                         if (typeof options.onContentChanged === 'function') {
                             options.onContentChanged.call(self, e, contentArea);
                         }
-    
+
                         self.initComponent(contentArea, container, newComponent);
                     }
-                    
+
                     if (isAddingComponentWithContainer) {
                         self.body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-    
+
                         let dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
                         newContainer = $(`
                             <section class="keditor-ui keditor-container showed-keditor-toolbar">
@@ -1021,7 +1021,7 @@
                         `);
                         newContainer.find('[data-type="container-content"]').eq(0).html(newComponent);
                         self.modalTarget.append(newContainer);
-    
+
                         if (typeof options.onComponentSnippetAdded === 'function') {
                             options.onComponentSnippetAdded.call(self, e, newComponent, selectedSnippet, contentArea);
                         }
@@ -1029,24 +1029,24 @@
                         if (typeof options.onContentChanged === 'function') {
                             options.onContentChanged.call(self, e, contentArea);
                         }
-    
+
                         self.initContainer(contentArea, newContainer);
                     }
-                    
+
                     self.closeModal();
                 });
-                
+
                 // Action click for snippet
                 modal.on('click', '.keditor-snippet', function (e) {
                     e.preventDefault();
-                    
+
                     let snippet = $(this);
                     if (!snippet.hasClass('selected')) {
                         snippet.parent().find('.selected').removeClass('selected');
                         snippet.addClass('selected');
                     }
                 });
-                
+
                 let cssTransitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
                 modal.on(cssTransitionEnd, () => {
                     if (!modal.hasClass('showed')) {
@@ -1054,7 +1054,7 @@
                         $(document.body).removeClass('opened-modal');
                     }
                 });
-                
+
                 modal.appendTo(document.body);
             } else {
                 error('"snippetsUrl" must be not null!');
@@ -1366,23 +1366,15 @@
                     }
                     
                     item.addClass('keditor-ui-dragging');
-                    contentAreaInner.removeClass('keditor-highlighted-dropzone');
                 },
                 start: function (e, ui) {
                     ui.item.addClass('keditor-ui-dragging');
                 },
                 stop: function (e, ui) {
-                    contentAreaInner.removeClass('keditor-highlighted-dropzone');
                     if (ui.helper) {
                         ui.helper.remove();
                     }
                     ui.item.removeClass('keditor-ui-dragging');
-                },
-                over: function () {
-                    contentAreaInner.addClass('keditor-highlighted-dropzone');
-                },
-                out: function () {
-                    contentAreaInner.addClass('keditor-highlighted-dropzone');
                 }
             });
             
@@ -1553,24 +1545,15 @@
                     }
                     
                     item.removeClass('keditor-ui-dragging');
-                    contentArea.removeClass('keditor-highlighted-dropzone');
                 },
                 start: function (e, ui) {
                     ui.item.addClass('keditor-ui-dragging');
                 },
                 stop: function (e, ui) {
-                    containerContentInner.removeClass('keditor-highlighted-dropzone');
-                    
                     if (ui.helper) {
                         ui.helper.remove();
                     }
                     ui.item.removeClass('keditor-ui-dragging');
-                },
-                over: function () {
-                    containerContentInner.addClass('keditor-highlighted-dropzone');
-                },
-                out: function () {
-                    containerContentInner.removeClass('keditor-highlighted-dropzone');
                 }
             });
             
@@ -1758,7 +1741,7 @@
             
             containerInner.find('[data-type=container-content]').not(isNested ? '' : '.keditor-sub-container-content').each(function () {
                 let containerContent = $(this);
-                containerContent.removeClass('keditor-container-content keditor-sub-container-content ui-sortable keditor-highlighted-dropzone').removeAttr('id');
+                containerContent.removeClass('keditor-container-content keditor-sub-container-content ui-sortable').removeAttr('id');
 
                 let containerContentInner = containerContent.children();
                 let content = '';

@@ -923,7 +923,6 @@
                     let isAddingComponent = false;
                     let isAddingComponentWithContainer = false;
     
-    
                     if (options.explicitSnippetEnabled) {
                         switch (self.modalSnippetType) {
                             case SNIPPET_TYPE.COMPONENT:
@@ -977,6 +976,10 @@
                         if (typeof options.onContainerSnippetAdded === 'function') {
                             options.onContainerSnippetAdded.call(self, e, newContainer, selectedSnippet, contentArea);
                         }
+
+                        if (typeof options.onContentChanged === 'function') {
+                            options.onContentChanged.call(self, e, contentArea);
+                        }
     
                         self.initContainer(contentArea, newContainer);
                     }
@@ -993,6 +996,10 @@
                         let container = self.modalTarget.closest('.keditor-container');
                         if (typeof options.onComponentSnippetAdded === 'function') {
                             options.onComponentSnippetAdded.call(self, e, newComponent, selectedSnippet, contentArea);
+                        }
+
+                        if (typeof options.onContentChanged === 'function') {
+                            options.onContentChanged.call(self, e, contentArea);
                         }
     
                         self.initComponent(contentArea, container, newComponent);
@@ -1017,6 +1024,10 @@
     
                         if (typeof options.onComponentSnippetAdded === 'function') {
                             options.onComponentSnippetAdded.call(self, e, newComponent, selectedSnippet, contentArea);
+                        }
+
+                        if (typeof options.onContentChanged === 'function') {
+                            options.onContentChanged.call(self, e, contentArea);
                         }
     
                         self.initContainer(contentArea, newContainer);

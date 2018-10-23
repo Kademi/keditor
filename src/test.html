@@ -104,6 +104,9 @@
             $(function () {
                 keditor1 = $('#keditor1').keditor({
                     containerSettingEnabled: true,
+                    onContentChanged: function (e, contentArea) {
+                        console.log('================= onContentChanged', contentArea);
+                    },
                     containerSettingInitFunction: function (form, keditor) {
                         // Add control for settings form
                         form.append(

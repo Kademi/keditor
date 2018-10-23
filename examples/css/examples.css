@@ -19,14 +19,17 @@ body {
     border: 3px dashed #ccc;
 }
 
-.view-source {
+.toolbar {
     position: fixed;
     z-index: 50;
     bottom: 0;
     left: 0;
-    background: #fff;
     font-size: 12px;
     line-height: 14px;
+}
+
+.toolbar > * {
+    background: #fff;
     border: solid #ddd;
     border-width: 1px 1px 0 0;
     padding: 6px 12px;

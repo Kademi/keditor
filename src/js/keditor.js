@@ -125,13 +125,6 @@
         }
     };
     
-    const MODAL_ACTION = {
-        ADD_ALL: 0,
-        ADD_CONTAINER: 1,
-        ADD_SUB_CONTAINER: 2,
-        ADD_COMPONENT: 3
-    };
-    
     const TOOLBAR_TYPE = {
         CONTENT_AREA: 0,
         CONTAINER: 1,
@@ -1316,6 +1309,9 @@
             let options = self.options;
             
             contentArea.addClass('keditor-content-area');
+            let content = contentArea.html();
+            let contentAreaInner = $('<div class="keditor-content-area-inner"></div>').html(content);
+            contentArea.html(contentAreaInner);
             
             if (typeof options.onBeforeInitContentArea === 'function') {
                 options.onBeforeInitContentArea.call(self, contentArea);
@@ -1323,16 +1319,16 @@
             
             if (!dontInitToolbar) {
                 let contentAreaToolbar = $(self.generateToolbar(TOOLBAR_TYPE.CONTENT_AREA));
-                contentArea.after(contentAreaToolbar);
+                contentArea.append(contentAreaToolbar);
                 contentAreaToolbar.children(options.explicitSnippetEnabled ? '.btn-add-container' : '.btn-add-content').on('click', function (e) {
                     e.preventDefault();
         
-                    self.openModal(contentArea, options.explicitSnippetEnabled ? SNIPPET_TYPE.CONTAINER : SNIPPET_TYPE.ALL);
+                    self.openModal(contentAreaInner, options.explicitSnippetEnabled ? SNIPPET_TYPE.CONTAINER : SNIPPET_TYPE.ALL);
                 });
             }
             
             flog('Initialize $.fn.sortable for content area');
-            contentArea.sortable({
+            contentAreaInner.sortable({
                 handle: '.keditor-toolbar-container:not(.keditor-toolbar-sub-container) .btn-container-reposition',
                 items: '> section',
                 helper: 'clone',
@@ -1359,28 +1355,28 @@
                     }
                     
                     item.addClass('keditor-ui-dragging');
-                    contentArea.removeClass('keditor-highlighted-dropzone');
+                    contentAreaInner.removeClass('keditor-highlighted-dropzone');
                 },
                 start: function (e, ui) {
                     ui.item.addClass('keditor-ui-dragging');
                 },
                 stop: function (e, ui) {
-                    contentArea.removeClass('keditor-highlighted-dropzone');
+                    contentAreaInner.removeClass('keditor-highlighted-dropzone');
                     if (ui.helper) {
                         ui.helper.remove();
                     }
                     ui.item.removeClass('keditor-ui-dragging');
                 },
                 over: function () {
-                    contentArea.addClass('keditor-highlighted-dropzone');
+                    contentAreaInner.addClass('keditor-highlighted-dropzone');
                 },
                 out: function () {
-                    contentArea.addClass('keditor-highlighted-dropzone');
+                    contentAreaInner.addClass('keditor-highlighted-dropzone');
                 }
             });
             
             flog('Initialize existing containers in content area');
-            contentArea.children('section').each(function () {
+            contentAreaInner.children('section').each(function () {
                 self.convertToContainer(contentArea, $(this));
             });
             
@@ -1751,8 +1747,8 @@
             
             containerInner.find('[data-type=container-content]').not(isNested ? '' : '.keditor-sub-container-content').each(function () {
                 let containerContent = $(this);
-                containerContent.removeClass('keditor-container-content keditor-sub-container-content').removeAttr('id');
-                
+                containerContent.removeClass('keditor-container-content keditor-sub-container-content ui-sortable keditor-highlighted-dropzone').removeAttr('id');
+
                 let containerContentInner = containerContent.children();
                 let content = '';
                 
@@ -1776,7 +1772,7 @@
             let self = this;
             let result = [];
             
-            self.contentAreasWrapper.find('.keditor-content-area').each(function () {
+            self.contentAreasWrapper.find('.keditor-content-area-inner').each(function () {
                 let html = '';
                 $(this).children('.keditor-container').each(function () {
                     let container = $(this);

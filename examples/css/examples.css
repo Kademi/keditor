@@ -45,4 +45,9 @@ pre.prettyprint {
     border-color: #ddd;
     border-radius: 0;
     border-width: 0 1px 1px;
+    margin: 0;
+}
+
+#modal-content pre.prettyprint {
+    border-width: 1px;
 }

@@ -57,6 +57,8 @@
         tabContainersTitle: 'Containers',
         tabComponentsText: 'Components',
         tabComponentsTitle: 'Components',
+		confirmDeleteContainer: 'Are you sure that you want to delete this container? This action can not be undo!',
+		confirmDeleteComponent: 'Are you sure that you want to delete this component? This action can not be undo!',
         tabTooltipEnabled: true,
         extraTabs: null,
         defaultComponentType: 'blank',
@@ -1505,7 +1507,7 @@
             var btn = $(this);
             flog('Click on .btn-container-delete', btn);
             
-            if (confirm('Are you sure that you want to delete this container? This action cannot be undone!')) {
+            if (confirm(options.confirmDeleteContainer)) {
                 var container = btn.closest('.keditor-container');
                 var components = container.find('.keditor-component');
                 var contentArea = container.parent();
@@ -1597,7 +1599,7 @@
             var btn = $(this);
             flog('Click on .btn-component-delete', btn);
             
-            if (confirm('Are you sure that you want to delete this component? This action cannot be undone!')) {
+            if (confirm(options.confirmDeleteComponent)) {
                 var component = btn.closest('.keditor-component');
                 var container = component.closest('.keditor-container');
                 var contentArea = component.closest('.keditor-content-area');

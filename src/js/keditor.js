@@ -1708,7 +1708,6 @@
             }
         }
 
-
         if (typeof componentData.getContent === 'function') {
             content = componentData.getContent.call(componentData, component, self);
         } else {

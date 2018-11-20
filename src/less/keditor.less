@@ -21,13 +21,13 @@ body {
     padding: 0;
     border: 0;
     outline: none;
-    
+
     &,
     &:before,
     &:after {
         box-sizing: border-box;
     }
-    
+
     small,
     .small {
         font-size: 88%;
@@ -41,7 +41,7 @@ body.opened-keditor-sidebar {
     .keditor-content-area {
         margin-right: 260px;
     }
-    
+
     #keditor-sidebar {
         right: 0;
     }
@@ -53,7 +53,7 @@ body.opened-keditor-sidebar {
 body.highlighted-container-content {
     .keditor-container {
         margin: 30px 0 !important;
-        
+
         &:before {
             display: none !important;
         }
@@ -107,7 +107,7 @@ body.highlighted-container-content {
     .transition(all @animation-duration);
     font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: @ui-color;
-    
+
     &:hover {
         opacity: 1;
     }
@@ -127,7 +127,7 @@ body.highlighted-container-content {
     cursor: pointer;
     border-radius: @border-radius 0 0 @border-radius;
     color: @sidebar-color;
-    
+
     > i.fa {
         line-height: inherit;
     }
@@ -141,12 +141,12 @@ body.highlighted-container-content {
     padding: 0;
     margin: 0;
     width: 100%;
-    
+
     .keditor-tab {
         display: table-cell;
         width: 1%;
         position: relative;
-        
+
         a {
             display: block;
             border-radius: @border-radius @border-radius 0 0;
@@ -157,7 +157,7 @@ body.highlighted-container-content {
             border-bottom-color: @border-color;
             color: @tab-color;
         }
-        
+
         &.active {
             a {
                 font-weight: bold;
@@ -176,7 +176,7 @@ body.highlighted-container-content {
 .keditor-tabs-content {
     .keditor-tab-content {
         display: none;
-        
+
         &.active {
             display: block;
         }
@@ -188,13 +188,13 @@ body.highlighted-container-content {
    ================================================================================== */
 #keditor-snippets-list {
     height: 100%;
-    
+
     .keditor-snippet {
         &:hover {
             opacity: .6;
             border-color: @snippet-border-color-hover;
         }
-        
+
         &.not-matched {
             display: none;;
         }
@@ -207,20 +207,20 @@ body.highlighted-container-content {
     padding: 10px 5px;
     border: solid @border-color;
     border-width: 0 1px 1px;
-    
+
     > .keditor-tab-content {
         height: 100%;
-        
+
         > .keditor-tab-content-inner {
             height: 100%;
             .clearfix();
             overflow-y: auto;
             overflow-x: hidden;
         }
-        
+
         > .keditor-snippets-filter-wrapper {
             margin: 0 5px;
-            
+
             .keditor-snippets-filter,
             .keditor-snippets-search {
                 border: 1px solid @border-color;
@@ -232,7 +232,7 @@ body.highlighted-container-content {
                 display: block;
                 margin-bottom: 10px;
             }
-            
+
             + .keditor-tab-content-inner {
                 height: ~"calc(100% - 88px)";
             }
@@ -249,11 +249,11 @@ body.highlighted-container-content {
     background: @snippet-bg;
     margin: 0 5px 10px;
     .user-select(none);
-    
+
     img {
         display: block;
     }
-    
+
     &:last-child {
         margin-bottom: 0;
     }
@@ -273,7 +273,7 @@ body.highlighted-container-content {
     border: 1px solid @border-color;
     border-radius: @border-radius;
     .transition(all @animation-duration);
-    
+
     .opened-keditor-setting & {
         right: 10px;
     }
@@ -305,7 +305,7 @@ body.highlighted-container-content {
     width: 21px;
     text-align: center;
     line-height: 21px;
-    
+
     &:hover {
         color: #666;
     }
@@ -324,12 +324,12 @@ body.highlighted-container-content {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    
+
     .keditor-setting-form {
         overflow: hidden;
         display: none;
         min-height: 100%;
-        
+
         &.active {
             display: block;
         }
@@ -344,7 +344,7 @@ body.highlighted-container-content {
     display: none;
     z-index: 5;
     font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
-    
+
     > a {
         padding: 1px 3px;
         font-size: 12px;
@@ -353,12 +353,12 @@ body.highlighted-container-content {
         display: block;
         text-align: center;
         line-height: 20px;
-        
+
         .fa {
             line-height: inherit;
         }
     }
-    
+
     .btn-container-reposition,
     .btn-component-reposition {
         cursor: move;
@@ -370,7 +370,7 @@ body.highlighted-container-content {
    ================================================================================== */
 .keditor-container {
     position: relative;
-    
+
     &:before {
         position: absolute;
         top: -3px;
@@ -381,35 +381,35 @@ body.highlighted-container-content {
         content: " ";
         display: block;
     }
-    
+
     > .keditor-toolbar {
         top: -3px;
         left: -39px;
         border: 1px solid @container-toolbar-border-color;
         border-radius: @border-radius;
         overflow: hidden;
-        
+
         > a {
             background: @container-toolbar-button-bg;
             color: @container-toolbar-button-color;
-            
+
             &:hover {
                 background: @container-toolbar-button-bg-hover;
             }
         }
     }
-    
+
     &:hover {
         &:before {
             border-color: @container-outline-color-hover;
         }
     }
-    
+
     &.showed-keditor-toolbar {
         &:before {
             border-color: @container-outline-color-selected;
         }
-        
+
         > .keditor-toolbar {
             display: block;
         }
@@ -419,7 +419,7 @@ body.highlighted-container-content {
 .keditor-container-content {
     min-height: 50px !important;
     position: relative;
-    
+
     &:before {
         position: absolute;
         top: -1px;
@@ -429,7 +429,7 @@ body.highlighted-container-content {
         content: " ";
         display: block;
         border: 1px dashed @container-content-outline-color;
-        
+
     }
 }
 
@@ -438,7 +438,7 @@ body.highlighted-container-content {
    ================================================================================== */
 .keditor-component {
     position: relative;
-    
+
     &:before {
         position: absolute;
         top: -2px;
@@ -450,14 +450,14 @@ body.highlighted-container-content {
         display: none;
         z-index: 1;
     }
-    
+
     .keditor-toolbar {
         top: 0;
         left: 0;
         background-color: @container-content-toolbar-bg;
         padding: 0 2px 2px;
         text-align: left;
-        
+
         > a {
             border: 0;
             background: none;
@@ -467,36 +467,71 @@ body.highlighted-container-content {
             .box-shadow(none);
             .transition(all @animation-duration);
             display: inline-block;
-            
+
             &:hover {
                 background-color: @container-content-toolbar-button-bg-hover;
             }
         }
     }
-    
+
     .keditor-component-content {
         position: relative;
         z-index: 2;
     }
-    
+
     &:hover,
     &.showed-keditor-toolbar {
         &:before {
             display: block;
         }
     }
-    
+
     &.showed-keditor-toolbar {
         .keditor-component-content {
             outline: none !important;
         }
     }
-    
+
     &:hover {
         z-index: 2;
-        
+
         .keditor-toolbar {
             display: block;
+        }
+    }
+}
+
+/* ==================================================================================
+   Iframe cover stuffs
+   ================================================================================== */
+.keditor-iframe-wrapper {
+    position: relative;
+
+    iframe,
+    .keditor-iframe-cover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    iframe {
+        z-index: -1;
+    }
+
+    .keditor-iframe-cover {
+        z-index: 1;
+        background: rgba(0, 0, 0, .15);
+    }
+
+    &.hidden-cover {
+        iframe {
+            z-index: 0;
+        }
+
+        .keditor-iframe-cover {
+            display: none;
         }
     }
 }
@@ -514,7 +549,7 @@ body.highlighted-container-content {
 .keditor-ui-dragging {
     display: block !important;
     opacity: 0.5 !important;
-    
+
     .keditor-toolbar {
         display: none !important;
     }
@@ -538,7 +573,7 @@ body.highlighted-container-content {
         outline: none !important;
         padding: 0 !important;
         opacity: 1 !important;
-        
+
         &:before,
         &:after {
             display: none !important;
@@ -550,13 +585,13 @@ body.highlighted-container-content {
     &.keditor-section {
         background: @snippet-bg !important;
     }
-    
+
     &.keditor-container {
         .keditor-toolbar.keditor-toolbar-container {
             display: block !important;
         }
     }
-    
+
     &.keditor-component {
         &:before,
         .keditor-toolbar {

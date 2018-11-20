@@ -957,7 +957,6 @@
             helper: 'clone',
             connectWith: '.keditor-content-area',
             axis: 'y',
-            tolerance: 'pointer',
             sort: function () {
                 $(this).removeClass('ui-state-default');
             },
@@ -1143,7 +1142,6 @@
             helper: 'clone',
             items: '> section',
             connectWith: '.keditor-container-content',
-            tolerance: 'pointer',
             sort: function () {
                 $(this).removeClass('ui-state-default');
             },

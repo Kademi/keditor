@@ -3,13 +3,12 @@
     var flog = KEditor.log;
 
     KEditor.components['vimeo'] = {
-        getContent: function (component, keditor) {
-            flog('getContent "vimeo" component', component);
+        init: function (contentArea, container, component, keditor) {
+            flog('init "vimeo" component', component);
 
-            var componentContent = component.children('.keditor-component-content');
-            componentContent.find('.vimeo-cover').remove();
-
-            return componentContent.html();
+            var iframe = component.find('iframe');
+            var wrapper = iframe.parent();
+            keditor.initIframeCover(iframe, wrapper);
         },
 
         settingEnabled: true,

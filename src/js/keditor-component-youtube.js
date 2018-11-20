@@ -3,13 +3,12 @@
     var flog = KEditor.log;
 
     KEditor.components['youtube'] = {
-        getContent: function (component, keditor) {
-            flog('getContent "youtube" component', component);
+        init: function (contentArea, container, component, keditor) {
+            flog('init "youtube" component', component);
 
-            var componentContent = component.children('.keditor-component-content');
-            componentContent.find('.youtube-cover').remove();
-
-            return componentContent.html();
+            var iframe = component.find('iframe');
+            var wrapper = iframe.parent();
+            keditor.initIframeCover(iframe, wrapper);
         },
 
         settingEnabled: true,

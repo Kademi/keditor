@@ -1521,13 +1521,10 @@
                 }
                 
                 var settingComponent = self.getSettingComponent();
-                if (settingComponent) {
+                if (settingComponent.length > 0) {
                     var settingComponentParent = settingComponent.closest('.keditor-container');
                     if (settingComponentParent.is(container)) {
                         flog('Deleting container is container of setting container. Close setting panel for this setting component', settingComponent);
-                        self.hideSettingPanel();
-                    } else if (self.getSettingContainer().is(container)) {
-                        flog('Deleting container is setting container. Close setting panel for this container', container);
                         self.hideSettingPanel();
                     }
                 } else if (self.getSettingContainer().is(container)) {

@@ -1526,6 +1526,9 @@
                     if (settingComponentParent.is(container)) {
                         flog('Deleting container is container of setting container. Close setting panel for this setting component', settingComponent);
                         self.hideSettingPanel();
+                    } else if (self.getSettingContainer().is(container)) {
+                        flog('Deleting container is setting container. Close setting panel for this container', container);
+                        self.hideSettingPanel();
                     }
                 } else if (self.getSettingContainer().is(container)) {
                     flog('Deleting container is setting container. Close setting panel for this container', container);

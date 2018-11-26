@@ -2,7 +2,7 @@
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.6
+ * @version: 1.1.7
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
  */
 /* ==================================================================================
@@ -436,6 +436,47 @@ body.highlighted-container-content .keditor-container:before {
 }
 .keditor-component:hover .keditor-toolbar {
   display: block;
+}
+/* ==================================================================================
+   Iframe cover stuffs
+   ================================================================================== */
+.keditor-iframe-wrapper {
+  position: relative;
+}
+.keditor-iframe-wrapper iframe,
+.keditor-iframe-wrapper .keditor-iframe-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.keditor-iframe-wrapper iframe {
+  z-index: -1;
+}
+.keditor-iframe-wrapper .keditor-iframe-cover {
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.15);
+}
+.keditor-iframe-wrapper .keditor-iframe-cover:before {
+  display: block;
+  content: "Double-click to reveal content";
+  color: #fff;
+  font-size: 24px;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  text-shadow: 0 0 3px #000;
+}
+.keditor-iframe-wrapper.hidden-cover iframe {
+  z-index: 0;
+}
+.keditor-iframe-wrapper.hidden-cover .keditor-iframe-cover {
+  display: none;
 }
 /* ==================================================================================
    Hidden element

@@ -1,21 +1,21 @@
 (function ($) {
     $(function () {
-        initModalSource();
+        initModalConfig();
         initModalContent();
         initToolbar();
     });
 
     function initToolbar() {
         var toolbar = $('<div class="toolbar"></div>');
-        var btnViewSource = $('<button type="button" class="view-source"><i class="fa fa-code"></i> View source</button>');
+        var btnViewConfig = $('<button type="button" class="view-config"><i class="fa fa-code"></i> View config</button>');
         var btnViewContent = $('<button type="button" class="view-content"><i class="fa fa-file-text-o"></i> Get content</button>');
 
         toolbar.appendTo(document.body);
-        toolbar.append(btnViewSource);
+        toolbar.append(btnViewConfig);
         toolbar.append(btnViewContent);
 
-        btnViewSource.on('click', function () {
-            $('#modal-source').modal('show');
+        btnViewConfig.on('click', function () {
+            $('#modal-config').modal('show');
         });
 
         btnViewContent.on('click', function () {
@@ -53,26 +53,26 @@
         modal.appendTo(document.body);
     }
 
-    function initModalSource() {
+    function initModalConfig() {
         var modal = $(
-            '<div id="modal-source" class="modal fade" tabindex="-1">' +
+            '<div id="modal-config" class="modal fade" tabindex="-1">' +
             '    <div class="modal-dialog modal-lg">' +
             '        <div class="modal-content">' +
             '            <div class="modal-header">' +
             '                <button type="button" class="close" data-dismiss="modal">&times;</button>' +
-            '                <h4 class="modal-title">Source</h4>' +
+            '                <h4 class="modal-title">Config</h4>' +
             '            </div>' +
             '            <div class="modal-body">' +
             '                <ul class="nav nav-tabs">' +
-            '                    <li class="active"><a href="#source-html" data-toggle="tab"><i class="fa fa-html5"></i> HTML</a></li>' +
-            '                    <li ><a href="#source-js" data-toggle="tab"><i class="fa fa-code"></i> JavaScript</a></li>' +
+            '                    <li class="active"><a href="#config-html" data-toggle="tab"><i class="fa fa-html5"></i> HTML</a></li>' +
+            '                    <li ><a href="#config-js" data-toggle="tab"><i class="fa fa-code"></i> JavaScript</a></li>' +
             '                </ul>' +
             '                <div class="tab-content">' +
-            '                    <div class="tab-pane active" id="source-html">' +
-            '                        <pre class="prettyprint lang-html source-html"></pre>' +
+            '                    <div class="tab-pane active" id="config-html">' +
+            '                        <pre class="prettyprint lang-html config-html"></pre>' +
             '                    </div>' +
-            '                    <div class="tab-pane" id="source-js">' +
-            '                        <pre class="prettyprint lang-js source-js"></pre>' +
+            '                    <div class="tab-pane" id="config-js">' +
+            '                        <pre class="prettyprint lang-js config-js"></pre>' +
             '                    </div>' +
             '                </div>' +
             '            </div>' +
@@ -87,10 +87,10 @@
         var htmlCode = $('[data-keditor="html"]').html();
         var htmlInclude = $('<div />').html($('[data-keditor="html-include"]').clone()).html();
         htmlInclude = htmlInclude.replace('data-keditor="html-include"', '');
-        modal.find('.source-html').html(beautifyHtml(htmlCode + htmlInclude));
+        modal.find('.config-html').html(beautifyHtml(htmlCode + htmlInclude));
 
         var jsCode = $('[data-keditor="script"]').html();
-        modal.find('.source-js').html(beautifyJs(jsCode));
+        modal.find('.config-js').html(beautifyJs(jsCode));
 
         modal.appendTo(document.body);
     }

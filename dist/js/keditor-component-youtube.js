@@ -2,7 +2,7 @@
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: 1.1.6
+ * @version: 1.1.7
  * @dependencies: $, $.fn.draggable, $.fn.droppable, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
  */
 (function ($) {
@@ -10,13 +10,12 @@
     var flog = KEditor.log;
 
     KEditor.components['youtube'] = {
-        getContent: function (component, keditor) {
-            flog('getContent "youtube" component', component);
+        init: function (contentArea, container, component, keditor) {
+            flog('init "youtube" component', component);
 
-            var componentContent = component.children('.keditor-component-content');
-            componentContent.find('.youtube-cover').remove();
-
-            return componentContent.html();
+            var iframe = component.find('iframe');
+            var wrapper = iframe.parent();
+            keditor.initIframeCover(iframe, wrapper);
         },
 
         settingEnabled: true,

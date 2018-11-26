@@ -42,7 +42,7 @@ var buildComponents = function (typeType) {
     return gulp.src(['./src/' + typeType + '/keditor-component-*.' + typeType])
         .pipe(plumber())
         .pipe(concat('keditor-components.' + typeType + ''))
-        .pipe(gulp.dest('./dist/' + typeType + '/'))
+        .pipe(gulp.dest('./dist/' + typeType + '/'));
 };
 
 gulp.task('build-css-components', function () {
@@ -83,7 +83,7 @@ gulp.task('min-css', function () {
             suffix: '.min'
         }))
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('./dist/css/'))
+        .pipe(gulp.dest('./dist/css/'));
 });
 
 gulp.task('min-js', function () {
@@ -109,10 +109,10 @@ var prependHeader = function (fileType) {
 };
 
 gulp.task('prepend-header-css', function () {
-    return prependHeader('css')
+    return prependHeader('css');
 });
 gulp.task('prepend-header-js', function () {
-    return prependHeader('js')
+    return prependHeader('js');
 });
 
 // =========================================================================

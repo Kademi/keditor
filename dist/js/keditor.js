@@ -1522,7 +1522,7 @@
                 }
 
                 var settingComponent = self.getSettingComponent();
-                if (settingComponent) {
+                if (settingComponent && settingComponent.length > 0) {
                     var settingComponentParent = settingComponent.closest('.keditor-container');
                     if (settingComponentParent.is(container)) {
                         flog('Deleting container is container of setting container. Close setting panel for this setting component', settingComponent);

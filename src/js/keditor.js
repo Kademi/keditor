@@ -1484,7 +1484,6 @@
             let containerContentToolbar = $(self.generateToolbar(isNested ? TOOLBAR_TYPE.SUB_CONTAINER_CONTENT : TOOLBAR_TYPE.CONTAINER_CONTENT));
             containerContentToolbar.appendTo(containerContent);
 
-
             if (options.explicitSnippetEnabled) {
                 if (!isNested) {
                     if (options.explicitSnippetEnabled) {
@@ -1505,7 +1504,7 @@
                 containerContentToolbar.children('.btn-add-content').on('click', function (e) {
                     e.preventDefault();
 
-                    self.openModal(containerContentInner, isNested ? SNIPPET_TYPE.COMPONENT : SNIPPET_TYPE.ALL);
+                    self.openModal(containerContentInner, isNested ? SNIPPET_TYPE.COMPONENT : options.nestedContainerEnabled ? SNIPPET_TYPE.ALL : SNIPPET_TYPE.COMPONENT);
                 });
             }
 

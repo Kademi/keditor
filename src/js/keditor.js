@@ -42,6 +42,9 @@
 
         btnDeleteContainerText: '<i class="fa fa-times"></i>',
         btnDeleteComponentText: '<i class="fa fa-times"></i>',
+    
+        confirmDeleteContainerText: 'Are you sure that you want to delete this container? This action can not be undone!',
+        confirmDeleteComponentText: 'Are you sure that you want to delete this component? This action can not be undone!',
 
         defaultComponentType: 'blank',
 
@@ -552,7 +555,7 @@
                 let btn = $(this);
                 flog('Click on .btn-container-delete', btn);
 
-                if (confirm('Are you sure that you want to delete this container? This action cannot be undone!')) {
+                if (confirm(options.confirmDeleteContainerText)) {
                     let container = btn.closest('.keditor-container');
                     let components = container.find('.keditor-component');
                     let contentArea = container.parent();
@@ -644,7 +647,7 @@
                 let btn = $(this);
                 flog('Click on .btn-component-delete', btn);
 
-                if (confirm('Are you sure that you want to delete this component? This action cannot be undone!')) {
+                if (confirm(options.confirmDeleteComponentText)) {
                     let component = btn.closest('.keditor-component');
                     let container = component.closest('.keditor-container');
                     let contentArea = component.closest('.keditor-content-area');

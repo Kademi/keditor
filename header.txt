@@ -2,6 +2,6 @@
  * KEditor - Kademi content editor
  * @copyright: Kademi (http://kademi.co)
  * @author: Kademi (http://kademi.co)
- * @version: <%= pkg.version %>
+ * @version: <%= packageJson.version %>
  * @dependencies: $, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
  */

@@ -1,90 +1,107 @@
-var gulp = require('gulp');
-var gulpsync = require('gulp-sync')(gulp);
-var plumber = require('gulp-plumber');
-var less = require('gulp-less');
-var cssmin = require('gulp-cssmin');
-var uglify = require('gulp-uglify');
-var gutil = require('gulp-util');
-var rename = require('gulp-rename');
-var sourcemaps = require('gulp-sourcemaps');
-var pjson = require('./package.json');
-var rimraf = require('gulp-rimraf');
-var replace = require('gulp-replace');
-var concat = require('gulp-concat-util');
-var header = require('gulp-header');
-var babel = require('gulp-babel');
-var fs = require('fs');
+const gulp = require('gulp');
+const plumber = require('gulp-plumber');
+const less = require('gulp-less');
+const cssmin = require('gulp-cssmin');
+const uglify = require('gulp-uglify');
+const gutil = require('gulp-util');
+const rename = require('gulp-rename');
+const sourcemaps = require('gulp-sourcemaps');
+const packageJson = require('./package.json');
+const rimraf = require('gulp-rimraf');
+const concat = require('gulp-concat-util');
+const header = require('gulp-header');
+// const babel = require('gulp-babel');
+const fs = require('fs');
 
-// =========================================================================
+
 // Clean tasks
-// =========================================================================
-var clearFolder = function (src) {
-    return gulp.src(src)
-        .pipe(rimraf()).on('error', gutil.log);
-};
-
-gulp.task('clean-css-dist', function () {
-    return clearFolder('./dist/css/*.*');
-});
-gulp.task('clean-js-dist', function () {
-    return clearFolder('./dist/js/*.*');
-});
-gulp.task('clean-snippets-examples', function () {
-    return clearFolder('./examples/snippets');
+// ---------------------------------------------------------------
+gulp.task('clean-dev-folder', () => {
+    return gulp
+        .src([
+            './src/js/*.*',
+            './src/css/*.*'
+        ])
+        .pipe(rimraf());
 });
 
-// =========================================================================
+gulp.task('clean-build-folder', () => {
+    return gulp
+        .src([
+            './dist/js/*.*',
+            './dist/css/*.*',
+            './examples/snippets'
+        ])
+        .pipe(rimraf());
+});
+
+
 // Header tasks
-// =========================================================================
-var prependHeader = function (fileType) {
-    return gulp.src(['./dist/' + fileType + '/*.' + fileType])
-        .pipe(header(fs.readFileSync('./header.txt', 'utf8'), { pkg: pjson }))
-        .pipe(gulp.dest('./dist/' + fileType));
+// ---------------------------------------------------------------
+const prependHeader = (fileType) => {
+    return gulp
+        .src(`./dist/${fileType}/*.${fileType}`)
+        .pipe(
+            header(
+                fs.readFileSync('./header.txt', 'utf8'),
+                {packageJson}
+            )
+        )
+        .pipe(
+            gulp.dest(`./dist/${fileType}`)
+        );
 };
 
-gulp.task('prepend-header-css', function () {
-    return prependHeader('css')
-});
-gulp.task('prepend-header-js', function () {
-    return prependHeader('js')
-});
+gulp.task('add-header', gulp.series(
+    () => prependHeader('css'),
+    () => prependHeader('js')
+));
 
-// =========================================================================
+
 // Examples tasks
-// =========================================================================
-gulp.task('build-snippets-examples', gulpsync.sync(['clean-snippets-examples', 'copy-snippets-src-examples']));
+// ---------------------------------------------------------------
+gulp.task('build-snippets-examples',
+    () => gulp
+        .src('./src/snippets/**/*')
+        .pipe(
+            gulp.dest('./examples/snippets')
+        )
+);
 
-gulp.task('copy-snippets-src-examples', function () {
-    return gulp.src('./src/snippets/**/*')
-        .pipe(gulp.dest('./examples/snippets'));
-});
 
-// =========================================================================
 // Build CSS
-// =========================================================================
-gulp.task('build-css-dev', function () {
-    return gulp.src(['./src/less/*.less', '!./src/less/_*.less'])
+// ---------------------------------------------------------------
+gulp.task('build-css-dev',
+    () => gulp
+        .src([
+            './src/styles/*.less',
+            '!./src/styles/_*.less'
+        ])
         .pipe(plumber())
         .pipe(less())
-        .pipe(gulp.dest('./src/css/')).on('error', gutil.log);
-});
+        .pipe(gulp.dest('./src/css/'))
+);
 
-gulp.task('build-css-components', function () {
-    return gulp.src(['./src/css/keditor-component-*.css'])
+gulp.task('build-css-components',
+    () => gulp
+        .src('./src/css/keditor-component-*.css')
         .pipe(plumber())
         .pipe(concat('keditor-components.css'))
         .pipe(gulp.dest('./src/css/'))
-        .on('error', gutil.log);
-});
+);
 
-gulp.task('copy-css-dist', function () {
-    return gulp.src(['./src/css/keditor.css', './src/css/keditor-components.css'])
+gulp.task('copy-css-dist',
+    () => gulp
+        .src([
+            './src/css/keditor.css',
+            './src/css/keditor-components.css'
+        ])
         .pipe(gulp.dest('./dist/css/'))
-        .on('error', gutil.log);
-});
+);
 
-gulp.task('min-css', function () {
-    return gulp.src('./dist/css/*.css')
+gulp.task('min-css',
+    () => gulp
+        .src('./dist/css/*.css')
         .pipe(sourcemaps.init())
         .pipe(cssmin())
         .pipe(rename({
@@ -92,39 +109,38 @@ gulp.task('min-css', function () {
         }))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('./dist/css/'))
-});
+);
 
-// =========================================================================
+
 // Build JS
-// =========================================================================
-gulp.task('build-js-dev', function () {
-    return gulp.src(['./src/js/*.js'])
-        .pipe(babel({
-            presets: ['env'],
-            plugins: [
-                'transform-class-properties'
-            ]
-        }))
-        .pipe(gulp.dest('./src/js-dev/'))
-        .on('error', gutil.log);
-});
+// ---------------------------------------------------------------
+gulp.task('build-js-dev',
+    () => gulp
+        .src('./src/keditor/index.js')
+        .pipe(rename('keditor.js'))
+        .pipe(gulp.dest('./src/js/'))
+);
 
-gulp.task('build-js-components', function () {
-    return gulp.src(['./src/js/keditor-component-*.js'])
+gulp.task('build-js-components',
+    () => gulp
+        .src(['./src/components/*.js'])
         .pipe(plumber())
         .pipe(concat('keditor-components.js'))
-        .pipe(gulp.dest('./src/js-dev/'))
-        .on('error', gutil.log);
-});
+        .pipe(gulp.dest('./src/js/'))
+);
 
-gulp.task('copy-js-dist', function () {
-    return gulp.src(['./src/js-dev/keditor.js', './src/js-dev/keditor-components.js'])
+gulp.task('copy-js-dist',
+    () => gulp
+        .src([
+            './src/js/keditor.js',
+            './src/js/keditor-components.js'
+        ])
         .pipe(gulp.dest('./dist/js/'))
-        .on('error', gutil.log);
-});
+);
 
-gulp.task('min-js', function () {
-    return gulp.src(['./dist/js/*.js'])
+gulp.task('min-js',
+    () => gulp
+        .src('./dist/js/*.js')
         .pipe(sourcemaps.init())
         .pipe(uglify())
         .pipe(rename({
@@ -132,46 +148,45 @@ gulp.task('min-js', function () {
         }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./dist/js/'))
-        .on('error', gutil.log);
-});
+);
 
-// =========================================================================
-// Watch
-// =========================================================================
-gulp.task('watch', function () {
-    gulp.watch(['./src/less/*.less'], ['build-css-dev']);
-    gulp.watch(['./src/js/*.js'], ['build-js-dev']);
-});
 
-// =========================================================================
-// Main tasks
-// =========================================================================
-gulp.task('build-css-dist', gulpsync.sync([
-    'clean-css-dist',
-    'build-css-dev',
-    'build-css-components',
-    'copy-css-dist',
-    'min-css',
-    'prepend-header-css']));
-
-gulp.task('build-js-dist', gulpsync.sync([
-    'clean-js-dist',
-    'build-js-dev',
-    'build-js-components',
-    'copy-js-dist',
-    'min-js',
-    'prepend-header-js'
-]));
-
-gulp.task('build', [
-    'build-css-dist',
-    'build-js-dist',
-    'build-snippets-examples'
-]);
-
-gulp.task('dev', [
-    'build-css-dev',
-    'build-js-dev',
-    'watch'
-]);
-
+// // Watch
+// // ---------------------------------------------------------------
+// gulp.task('watch', gulp.series(
+//     gulp.watch(
+//         ['./src/styles/*.less'],
+//         gulp.series('build-css-dev')
+//     ),
+//     gulp.watch(
+//         ['./src/keditor/**/*.js', './src/components/*.js'],
+//         gulp.series('build-js-dev')
+//     )
+// ));
+//
+//
+// // Main tasks
+// // ---------------------------------------------------------------
+// gulp.task('build', gulp.series(
+//     'clean-build-folder',
+//
+//     'build-css-dev',
+//     'build-css-components',
+//     'copy-css-dist',
+//     'min-css',
+//
+//     'build-js-dev',
+//     'build-js-components',
+//     'copy-js-dist',
+//     'min-js',
+//
+//     'add-header',
+//
+//     'build-snippets-examples'
+// ));
+//
+// gulp.task('dev', gulp.series(
+//     'build-css-dev',
+//     'build-js-dev',
+//     'watch'
+// ));

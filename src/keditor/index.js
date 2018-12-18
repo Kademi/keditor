@@ -1,8 +1,11 @@
+import generateId from './utils/generateId';
+import log from './utils/log';
+
 (function (window, $) {
     // Log function will print log message
     const flog = (...args) => {
-        if (console && typeof console.log === 'function' && KEditor.debug === true) {
-            console.log.apply(console, ['[ KEditor ] ', ...args]);
+        if (KEditor.debug) {
+            log(...args);
         }
     };
 

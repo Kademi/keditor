@@ -5,20 +5,6 @@
  * @version: 2.0.0
  * @dependencies: $, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
  */
-/**!
- * KEditor - Kademi content editor
- * @copyright: Kademi (http://kademi.co)
- * @author: Kademi (http://kademi.co)
- * @version: 2.0.0
- * @dependencies: $, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
- */
-/**!
- * KEditor - Kademi content editor
- * @copyright: Kademi (http://kademi.co)
- * @author: Kademi (http://kademi.co)
- * @version: 2.0.0
- * @dependencies: $, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
- */
 /* ==================================================================================
    Icons
    ================================================================================== */
@@ -31,12 +17,12 @@
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
-  margin-right: .2em;
+  margin-right: 0.2em;
   text-align: center;
   font-variant: normal;
   text-transform: none;
   line-height: 1em;
-  margin-left: .2em;
+  margin-left: 0.2em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -179,7 +165,7 @@
   width: 16px;
   height: auto;
   margin-right: 10px;
-  margin-left: .2em;
+  margin-left: 0.2em;
   display: inline-block;
 }
 .frmb-control li .control-icon img,
@@ -252,7 +238,7 @@
 }
 .fb-mobile .form-actions button {
   width: 100%;
-  font-size: .85em !important;
+  font-size: 0.85em !important;
   display: block !important;
   border-radius: 0 !important;
   margin-top: -1px;
@@ -276,7 +262,7 @@
 .empty .frmb {
   border: 3px dashed #ccc;
   margin-right: 5px;
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: hsla(0, 0%, 100%, 0.25);
 }
 .stage-wrap {
   position: relative;
@@ -288,7 +274,7 @@
 }
 @media (max-width: 481px) {
   .stage-wrap {
-    width: calc(36%);
+    width: calc(100% - 64px);
   }
 }
 .stage-wrap.empty:after {
@@ -334,7 +320,7 @@
   transition: background-color 0.25s ease-in-out, margin-top 0.4s;
 }
 .frmb li.hidden-field {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: hsla(0, 0%, 100%, 0.6);
 }
 .frmb li:first-child {
   border-top-right-radius: 5px;
@@ -671,7 +657,7 @@
   width: 5%;
 }
 .frmb .sortable-options input[type=text] {
-  width: calc(27.5%);
+  width: calc(44.5% - 17px);
   margin: 0 1%;
   float: none;
 }
@@ -782,7 +768,7 @@
   float: none;
   margin-bottom: -3px;
   font-weight: 400;
-  width: calc(58.3333%);
+  width: calc(81.3333% - 23px);
 }
 .frmb .form-elements input.error {
   border: 1px solid #c10000;
@@ -913,7 +899,7 @@
   top: 2px;
   left: 2px;
   content: "";
-  width: calc(96%);
+  width: calc(100% - 4px);
   height: 18px;
   box-shadow: inset 0 0 1px 1px #b3b3b3;
   background-color: transparent;

@@ -10,7 +10,7 @@ const packageJson = require('./package.json');
 const rimraf = require('gulp-rimraf');
 const concat = require('gulp-concat-util');
 const header = require('gulp-header');
-// const babel = require('gulp-babel');
+const babel = require('gulp-babel');
 const fs = require('fs');
 
 
@@ -117,6 +117,9 @@ gulp.task('min-css',
 gulp.task('build-js-dev',
     () => gulp
         .src('./src/keditor/index.js')
+        .pipe(babel({
+            presets: ['@babel/env']
+        }))
         .pipe(rename('keditor.js'))
         .pipe(gulp.dest('./src/js/'))
 );
@@ -151,42 +154,42 @@ gulp.task('min-js',
 );
 
 
-// // Watch
-// // ---------------------------------------------------------------
-// gulp.task('watch', gulp.series(
-//     gulp.watch(
-//         ['./src/styles/*.less'],
-//         gulp.series('build-css-dev')
-//     ),
-//     gulp.watch(
-//         ['./src/keditor/**/*.js', './src/components/*.js'],
-//         gulp.series('build-js-dev')
-//     )
-// ));
-//
-//
-// // Main tasks
-// // ---------------------------------------------------------------
-// gulp.task('build', gulp.series(
-//     'clean-build-folder',
-//
-//     'build-css-dev',
-//     'build-css-components',
-//     'copy-css-dist',
-//     'min-css',
-//
-//     'build-js-dev',
-//     'build-js-components',
-//     'copy-js-dist',
-//     'min-js',
-//
-//     'add-header',
-//
-//     'build-snippets-examples'
-// ));
-//
-// gulp.task('dev', gulp.series(
-//     'build-css-dev',
-//     'build-js-dev',
-//     'watch'
-// ));
+// Watch
+// ---------------------------------------------------------------
+gulp.task('watch', gulp.parallel(
+    () => gulp.watch(
+        ['./src/styles/*.less'],
+        gulp.series('build-css-dev')
+    ),
+    () => gulp.watch(
+        ['./src/keditor/**/*.js', './src/components/*.js'],
+        gulp.series('build-js-dev')
+    )
+));
+
+
+// Main tasks
+// ---------------------------------------------------------------
+gulp.task('build', gulp.series(
+    'clean-build-folder',
+
+    'build-css-dev',
+    'build-css-components',
+    'copy-css-dist',
+    'min-css',
+
+    'build-js-dev',
+    'build-js-components',
+    'copy-js-dist',
+    'min-js',
+
+    'add-header',
+
+    'build-snippets-examples'
+));
+
+gulp.task('dev', gulp.series(
+    'build-css-dev',
+    'build-js-dev',
+    'watch'
+));

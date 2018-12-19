@@ -1,153 +1,49 @@
 import generateId from './utils/generateId';
 import log from './utils/log';
+import error from './utils/error';
+import DEFAULTS from './constants/defaults';
+import TOOLBAR_TYPE from './constants/toolbarType';
+import SNIPPET_TYPE from './constants/snippetType';
 
 (function (window, $) {
     // Log function will print log message
-    const flog = (...args) => {
-        if (KEditor.debug) {
-            log(...args);
-        }
-    };
-
-    // Throw error message
-    const error = (message) => {
-        throw new Error(`[ KEditor ] ${message}`);
-    };
+    const flog = (...args) => KEditor2.debug &&  log(...args);
 
     // Check dependencies
     if (!$.fn.sortable) {
         error('$.fn.sortable does not exist. Please import $.fn.sortable into your document for continue using KEditor.');
     }
-
-    const DEFAULTS = {
-        nestedContainerEnabled: true,
-
-        explicitSnippetEnabled: false,
-        containerForQuickAddComponent: `
-            <div class="row">
-                <div class="col-sm-12" data-type="container-content">
-                </div>
-            </div>
-        `,
-        btnAddContentText: '<i class="fa fa-plus"></i>',
-        btnAddContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
-        btnAddSubContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
-        btnAddComponentText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-list-ul"></i>',
-
-        btnMoveContainerText: '<i class="fa fa-sort"></i>',
-        btnMoveComponentText: '<i class="fa fa-arrows"></i>',
-
-        btnSettingContainerText: '<i class="fa fa-cog"></i>',
-        btnSettingComponentText: '<i class="fa fa-cog"></i>',
-
-        btnDuplicateContainerText: '<i class="fa fa-files-o"></i>',
-        btnDuplicateComponentText: '<i class="fa fa-files-o"></i>',
-
-        btnDeleteContainerText: '<i class="fa fa-times"></i>',
-        btnDeleteComponentText: '<i class="fa fa-times"></i>',
     
-        confirmDeleteContainerText: 'Are you sure that you want to delete this container? This action can not be undone!',
-        confirmDeleteComponentText: 'Are you sure that you want to delete this component? This action can not be undone!',
-
-        defaultComponentType: 'blank',
-
-        snippetsUrl: 'snippets/snippets.html',
-        snippetsFilterEnabled: true,
-        snippetsCategoriesSeparator: ';',
-
-        iframeMode: false,
-        contentStyles: [],
-
-        contentAreasSelector: null,
-        contentAreasWrapper: '<div class="keditor-ui keditor-content-areas-wrapper"></div>',
-
-        containerSettingEnabled: false,
-        containerSettingInitFunction: null,
-        containerSettingShowFunction: null,
-        containerSettingHideFunction: null,
-
-        onReady: function () {
+    const KEditor = {
+        DEFAULTS,
+        
+        debug: false,
+        version: '@{version}',
+        
+        instances: {},
+        components: {
+            blank: {
+                settingEnabled: false
+            }
         },
-
-        onSnippetsLoaded: function (modal) {
-
-        },
-        onSnippetsError: function (modal, error) {
-
-        },
-
-        onInitIframe: function (iframe, iframeHead, iframeBody) {
-        },
-
-        onContentChanged: function (event, contentArea) {
-        },
-
-        onBeforeInitContentArea: function (contentArea) {
-        },
-        onInitContentArea: function (contentArea) {
-        },
-
-        onBeforeInitContainer: function (container, contentArea) {
-        },
-        onInitContainer: function (container, contentArea) {
-        },
-        onBeforeContainerDeleted: function (event, selectedContainer, contentArea) {
-        },
-        onContainerDeleted: function (event, selectedContainer, contentArea) {
-        },
-        onContainerChanged: function (event, changedContainer, contentArea) {
-        },
-        onContainerDuplicated: function (event, originalContainer, newContainer, contentArea) {
-        },
-        onContainerSelected: function (event, selectedContainer, contentArea) {
-        },
-        onContainerSnippetAdded: function (event, newContainer, selectedSnippet, contentArea) {
-        },
-
-        onComponentReady: function (component) {
-        },
-        onBeforeInitComponent: function (component, contentArea) {
-        },
-        onInitComponent: function (component, contentArea) {
-        },
-        onBeforeComponentDeleted: function (event, selectedComponent, contentArea) {
-        },
-        onComponentDeleted: function (event, selectedComponent, contentArea) {
-        },
-        onComponentChanged: function (event, changedComponent, contentArea) {
-        },
-        onComponentDuplicated: function (event, originalComponent, newComponent, contentArea) {
-        },
-        onComponentSelected: function (event, selectedComponent, contentArea) {
-        },
-        onComponentSnippetAdded: function (event, newComponent, selectedSnippet, contentArea) {
-        },
-
-        onBeforeDynamicContentLoad: function (dynamicElement, component, contentArea) {
-        },
-        onDynamicContentLoaded: function (dynamicElement, response, status, xhr, contentArea) {
-        },
-        onDynamicContentError: function (dynamicElement, response, status, xhr, contentArea) {
+        
+        log: flog,
+        error
+    };
+    
+    KEditor.init = (target, config) => {
+        const instance = {};
+        const options = $.extend({}, DEFAULTS, config);
+        
+        if (options.iframe) {
+        
         }
-    };
-
-    const TOOLBAR_TYPE = {
-        CONTENT_AREA: 0,
-        CONTAINER: 1,
-        SUB_CONTAINER: 2,
-        CONTAINER_CONTENT: 3,
-        SUB_CONTAINER_CONTENT: 4,
-        COMPONENT: 5
-    };
-
-    const SNIPPET_TYPE = {
-        ALL: 0,
-        CONTAINER: 1,
-        COMPONENT: 2
+        
+        return instance;
     };
 
     // KEditor class
-    class KEditor {
+    class KEditor2 {
         constructor(target, config) {
             let self = this;
             let element = self.element = target;
@@ -181,7 +77,7 @@ import log from './utils/log';
             }
 
             self.id = self.generateId();
-            KEditor.instances[self.id] = self;
+            KEditor2.instances[self.id] = self;
 
             if (typeof options.onReady === 'function') {
                 options.onReady.call(self);
@@ -362,7 +258,7 @@ import log from './utils/log';
             let options = self.options;
 
             let componentType = (component.attr('data-type') || '').replace('component-', '');
-            if (componentType && (componentType in KEditor.components)) {
+            if (componentType && (componentType in KEditor2.components)) {
                 return componentType;
             } else {
                 if (typeof options.defaultComponentType === 'string') {
@@ -741,13 +637,13 @@ import log from './utils/log';
                 self.setSettingContainer(null);
 
                 let componentType = self.getComponentType(target);
-                let componentData = KEditor.components[componentType];
+                let componentData = KEditor2.components[componentType];
                 sidebarTitle.html(componentData.settingTitle);
 
                 let settingForm = sidebarBody.find(`.keditor-setting-${componentType}`);
 
                 if (settingForm.length === 0) {
-                    let componentData = KEditor.components[componentType];
+                    let componentData = KEditor2.components[componentType];
                     if (typeof componentData.initSettingForm === 'function') {
                         settingForm = $(`
                             <div 
@@ -808,7 +704,7 @@ import log from './utils/log';
                     }
                 } else {
                     let activeType = activeForm.attr('data-type');
-                    let componentData = KEditor.components[activeType];
+                    let componentData = KEditor2.components[activeType];
 
                     if (typeof componentData.hideSettingForm === 'function') {
                         componentData.hideSettingForm.call(componentData, activeForm, self);
@@ -1624,7 +1520,7 @@ import log from './utils/log';
                 let componentType = self.getComponentType(component);
                 flog(`Component type: ${componentType}`);
 
-                let componentData = KEditor.components[componentType];
+                let componentData = KEditor2.components[componentType];
 
                 flog('Render KEditor toolbar for component', component);
                 component.append(self.generateToolbar(TOOLBAR_TYPE.COMPONENT, componentData.settingEnabled));
@@ -1704,7 +1600,7 @@ import log from './utils/log';
             let self = this;
 
             let componentType = self.getComponentType(component);
-            let componentData = KEditor.components[componentType];
+            let componentData = KEditor2.components[componentType];
             if (typeof componentData.destroy === 'function') {
                 componentData.destroy.call(componentData, component, self);
             }
@@ -1742,7 +1638,7 @@ import log from './utils/log';
             let self = this;
             let clonedComponent = component.clone();
             let componentType = self.getComponentType(clonedComponent);
-            let componentData = KEditor.components[componentType];
+            let componentData = KEditor2.components[componentType];
             let dataAttributes = self.getDataAttributes(clonedComponent, null, true);
             let content;
 
@@ -1865,7 +1761,7 @@ import log from './utils/log';
 
             element.removeClass('keditor-hidden-element');
             element.data('keditor', null);
-            delete KEditor.instances[id];
+            delete KEditor2.instances[id];
         }
     }
 
@@ -1880,39 +1776,16 @@ import log from './utils/log';
             }
         } else {
             if (!instance) {
-                instance = new KEditor(element, options);
+                instance = new KEditor2(element, options);
                 element.data('keditor', instance);
             }
 
             return instance;
         }
     };
-    $.fn.keditor.constructor = KEditor;
-
-    // KEditor instances
-    KEditor.instances = {};
-
-    // Turn on/off debug mode
-    KEditor.debug = false;
-
-    // Version of KEditor
-    KEditor.version = '@{version}';
-
-    // Component types
-    KEditor.components = {
-        blank: {
-            settingEnabled: false
-        }
-    };
-
-    // Export default configuration
-    KEditor.DEFAULTS = DEFAULTS;
-
-    // Export log methods;
-    KEditor.log = flog;
-    KEditor.error = error;
+    $.fn.keditor.constructor = KEditor2;
 
     // Export KEditor
-    window.KEditor = $.keditor = KEditor;
+    window.KEditor = $.keditor = KEditor2;
 
 })(window, jQuery);

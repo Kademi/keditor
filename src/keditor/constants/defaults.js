@@ -1,13 +1,15 @@
-const DEFAULTS = {
+import CLASS_NAMES from './classNames';
+
+export default {
     nestedContainerEnabled: true,
     
     explicitSnippetEnabled: false,
     containerForQuickAddComponent: `
-            <div class="row">
-                <div class="col-sm-12" data-type="container-content">
-                </div>
+        <div class="row">
+            <div class="col-sm-12" data-type="container-content">
             </div>
-        `,
+        </div>
+    `,
     btnAddContentText: '<i class="fa fa-plus"></i>',
     btnAddContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
     btnAddSubContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
@@ -38,7 +40,7 @@ const DEFAULTS = {
     contentStyles: [],
     
     contentAreasSelector: null,
-    contentAreasWrapper: '<div class="keditor-ui keditor-content-areas-wrapper"></div>',
+    contentAreasWrapper: `<div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTENT_AREAS_WRAPPER}"></div>`,
     
     containerSettingEnabled: false,
     containerSettingInitFunction: null,
@@ -110,4 +112,3 @@ const DEFAULTS = {
     }
 };
 
-export default DEFAULTS;

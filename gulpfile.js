@@ -11,6 +11,7 @@ const rimraf = require('gulp-rimraf');
 const concat = require('gulp-concat-util');
 const header = require('gulp-header');
 const babel = require('gulp-babel');
+const order = require('gulp-order');
 const fs = require('fs');
 
 
@@ -116,11 +117,15 @@ gulp.task('min-css',
 // ---------------------------------------------------------------
 gulp.task('build-js-dev',
     () => gulp
-        .src('./src/keditor/index.js')
-        .pipe(babel({
-            presets: ['@babel/env']
-        }))
-        .pipe(rename('keditor.js'))
+        .src('./src/keditor/**/*.js')
+        .pipe(babel())
+        .pipe(order([
+            'constants/*.js',
+            'utils/log.js',
+            '!index.js',
+            'index.js'
+        ]))
+        .pipe(concat("keditor.js"))
         .pipe(gulp.dest('./src/js/'))
 );
 

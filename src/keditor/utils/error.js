@@ -1,5 +1,3 @@
-const error = (message) => {
+export default (message) => {
     throw new Error(`[ KEditor ] ${message}`);
 };
-
-export default error;

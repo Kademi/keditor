@@ -1,19 +1,16 @@
 const gulp = require('gulp');
-const plumber = require('gulp-plumber');
+const packageJson = require('./package.json');
 const less = require('gulp-less');
 const cssmin = require('gulp-cssmin');
 const uglify = require('gulp-uglify');
-const gutil = require('gulp-util');
 const rename = require('gulp-rename');
-const sourcemaps = require('gulp-sourcemaps');
-const packageJson = require('./package.json');
+const sourceMaps = require('gulp-sourcemaps');
 const rimraf = require('gulp-rimraf');
 const concat = require('gulp-concat-util');
 const header = require('gulp-header');
 const babel = require('gulp-babel');
 const order = require('gulp-order');
-const fs = require('fs');
-
+const replace = require('gulp-replace');
 
 // Clean tasks
 // ---------------------------------------------------------------
@@ -43,10 +40,7 @@ const prependHeader = (fileType) => {
     return gulp
         .src(`./dist/${fileType}/*.${fileType}`)
         .pipe(
-            header(
-                fs.readFileSync('./header.txt', 'utf8'),
-                {packageJson}
-            )
+            header(`/*! KEditor v${packageJson.version} | Copyright (c) 2016-present Kademi (http://kademi.co) */\n`)
         )
         .pipe(
             gulp.dest(`./dist/${fileType}`)
@@ -78,7 +72,6 @@ gulp.task('build-css-dev',
             './src/styles/*.less',
             '!./src/styles/_*.less'
         ])
-        .pipe(plumber())
         .pipe(less())
         .pipe(gulp.dest('./src/css/'))
 );
@@ -86,7 +79,6 @@ gulp.task('build-css-dev',
 gulp.task('build-css-components',
     () => gulp
         .src('./src/css/keditor-component-*.css')
-        .pipe(plumber())
         .pipe(concat('keditor-components.css'))
         .pipe(gulp.dest('./src/css/'))
 );
@@ -103,12 +95,12 @@ gulp.task('copy-css-dist',
 gulp.task('min-css',
     () => gulp
         .src('./dist/css/*.css')
-        .pipe(sourcemaps.init())
+        .pipe(sourceMaps.init())
         .pipe(cssmin())
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(sourcemaps.write('./'))
+        .pipe(sourceMaps.write('./'))
         .pipe(gulp.dest('./dist/css/'))
 );
 
@@ -119,6 +111,7 @@ gulp.task('build-js-dev',
     () => gulp
         .src('./src/keditor/**/*.js')
         .pipe(babel())
+        .pipe(replace(/\\n\s+/g, ''))
         .pipe(order([
             'constants/*.js',
             'utils/log.js',
@@ -132,7 +125,6 @@ gulp.task('build-js-dev',
 gulp.task('build-js-components',
     () => gulp
         .src(['./src/components/*.js'])
-        .pipe(plumber())
         .pipe(concat('keditor-components.js'))
         .pipe(gulp.dest('./src/js/'))
 );
@@ -149,12 +141,12 @@ gulp.task('copy-js-dist',
 gulp.task('min-js',
     () => gulp
         .src('./dist/js/*.js')
-        .pipe(sourcemaps.init())
+        .pipe(sourceMaps.init())
         .pipe(uglify())
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(sourcemaps.write('.'))
+        .pipe(sourceMaps.write('.'))
         .pipe(gulp.dest('./dist/js/'))
 );
 

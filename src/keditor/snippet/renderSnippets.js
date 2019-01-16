@@ -24,16 +24,16 @@ export default function (resp) {
         let categories = snippet.attr('data-keditor-categories') || '';
         
         let snippetHtml = `
-                    <section
-                        class="keditor-ui keditor-snippet"
-                        data-snippet="#${snippetId}"
-                        data-type="${type}"
-                        title="${title}"
-                        data-keditor-categories="${categories}"
-                    >
-                        <span><span style="background-image: url('${previewUrl}')"></span></span>
-                    </section>
-                `;
+            <section
+                class="keditor-ui keditor-snippet"
+                data-snippet="#${snippetId}"
+                data-type="${type}"
+                title="${title}"
+                data-keditor-categories="${categories}"
+            >
+                <span><span style="background-image: url('${previewUrl}')"></span></span>
+            </section>
+        `;
         
         categories = categories.split(options.snippetsCategoriesSeparator);
         

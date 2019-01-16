@@ -1,10 +1,4 @@
-/**!
- * KEditor - Kademi content editor
- * @copyright: Kademi (http://kademi.co)
- * @author: Kademi (http://kademi.co)
- * @version: 2.0.0
- * @dependencies: $, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
- */
+/*! KEditor v2.0.0 | Copyright (c) 2016-present Kademi (http://kademi.co) */
 (function ($) {
     var KEditor = $.keditor;
     var flog = KEditor.log;

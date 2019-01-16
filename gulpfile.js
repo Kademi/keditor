@@ -111,7 +111,7 @@ gulp.task('build-js-dev',
     () => gulp
         .src('./src/keditor/**/*.js')
         .pipe(babel())
-        .pipe(replace(/\\n\s+/g, ''))
+        .pipe(replace(/\\n\s+/g, ' '))
         .pipe(order([
             'constants/*.js',
             'utils/log.js',

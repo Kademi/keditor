@@ -1,10 +1,4 @@
-/**!
- * KEditor - Kademi content editor
- * @copyright: Kademi (http://kademi.co)
- * @author: Kademi (http://kademi.co)
- * @version: 2.0.0
- * @dependencies: $, $.fn.sortable, Bootstrap (optional), FontAwesome (optional)
- */
+/*! KEditor v2.0.0 | Copyright (c) 2016-present Kademi (http://kademi.co) */
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
     define(["exports"], factory);
@@ -59,7 +53,7 @@
   var _default = {
     nestedContainerEnabled: true,
     explicitSnippetEnabled: false,
-    containerForQuickAddComponent: "\n        <div class=\"row\">\n            <div class=\"col-sm-12\" data-type=\"container-content\">\n            </div>\n        </div>\n    ",
+    containerForQuickAddComponent: "<div class=\"row\"><div class=\"col-sm-12\" data-type=\"container-content\"></div></div>",
     btnAddContentText: '<i class="fa fa-plus"></i>',
     btnAddContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
     btnAddSubContainerText: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
@@ -1325,12 +1319,12 @@
     var snippetsWrapperHtml = '';
 
     if (options.explicitSnippetEnabled) {
-      snippetsWrapperHtml = "\n                    <div class=\"keditor-snippets-wrapper keditor-snippets-wrapper-container\">\n                        <div class=\"keditor-snippets keditor-snippets-container\"></div>\n                    </div>\n                    <div class=\"keditor-snippets-wrapper keditor-snippets-wrapper-component\">\n                        <div class=\"keditor-snippets keditor-snippets-component\"></div>\n                    </div>\n                ";
+      snippetsWrapperHtml = "<div class=\"keditor-snippets-wrapper keditor-snippets-wrapper-container\"><div class=\"keditor-snippets keditor-snippets-container\"></div></div><div class=\"keditor-snippets-wrapper keditor-snippets-wrapper-component\"><div class=\"keditor-snippets keditor-snippets-component\"></div></div>";
     } else {
-      snippetsWrapperHtml = "\n                    <div class=\"keditor-snippets-wrapper\">\n                        <div class=\"keditor-snippets\"></div>\n                    </div>\n                ";
+      snippetsWrapperHtml = "<div class=\"keditor-snippets-wrapper\"><div class=\"keditor-snippets\"></div></div>";
     }
 
-    var modal = self.modal = $("\n                <div class=\"keditor-ui keditor-modal\" id=\"".concat(modalId, "\">\n                    <div class=\"keditor-modal-header\">\n                        <button type=\"button\" class=\"keditor-modal-close\">&times;</button>\n                        <h4 class=\"keditor-modal-title\"></h4>\n                    </div>\n                    <div class=\"keditor-modal-body\">").concat(snippetsWrapperHtml, "</div>\n                    <div class=\"keditor-modal-footer\">\n                        <button type=\"button\" class=\"keditor-ui keditor-btn keditor-btn-default keditor-modal-close\">Close</button>\n                        <button type=\"button\" class=\"keditor-ui keditor-btn keditor-btn-primary keditor-modal-add\">Add</button>\n                    </div>\n                </div>\n            "));
+    var modal = self.modal = $("<div class=\"keditor-ui keditor-modal\" id=\"".concat(modalId, "\"><div class=\"keditor-modal-header\"><button type=\"button\" class=\"keditor-modal-close\">&times;</button><h4 class=\"keditor-modal-title\"></h4></div><div class=\"keditor-modal-body\">").concat(snippetsWrapperHtml, "</div><div class=\"keditor-modal-footer\"><button type=\"button\" class=\"keditor-ui keditor-btn keditor-btn-default keditor-modal-close\">Close</button><button type=\"button\" class=\"keditor-ui keditor-btn keditor-btn-primary keditor-modal-add\">Add</button></div></div>"));
 
     if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
       (0, _log.default)("Getting snippets form \"".concat(options.snippetsUrl, "\"..."));
@@ -1428,7 +1422,7 @@
 
         if (isAddingContainer) {
           self.body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-          newContainer = $("\n                            <section class=\"keditor-ui keditor-container showed-keditor-toolbar\">\n                                <section class=\"keditor-ui keditor-container-inner\">".concat(snippetContent, "</section>\n                            </section>\n                        "));
+          newContainer = $("<section class=\"keditor-ui keditor-container showed-keditor-toolbar\"><section class=\"keditor-ui keditor-container-inner\">".concat(snippetContent, "</section></section>"));
           self.modalTarget.append(newContainer);
 
           if (typeof options.onContainerSnippetAdded === 'function') {
@@ -1444,7 +1438,7 @@
 
         if (isAddingComponent) {
           var dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
-          newComponent = $("\n                            <section class=\"keditor-ui keditor-component\" data-type=\"".concat(snippetType, "\" ").concat(dataAttributes.join(' '), ">\n                                <section class=\"keditor-ui keditor-component-content\">").concat(snippetContent, "</section>\n                            </section>\n                        "));
+          newComponent = $("<section class=\"keditor-ui keditor-component\" data-type=\"".concat(snippetType, "\" ").concat(dataAttributes.join(' '), "><section class=\"keditor-ui keditor-component-content\">").concat(snippetContent, "</section></section>"));
           self.modalTarget.append(newComponent);
           var container = self.modalTarget.closest('.keditor-container');
 
@@ -1464,8 +1458,8 @@
 
           var _dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
 
-          newContainer = $("\n                            <section class=\"keditor-ui keditor-container showed-keditor-toolbar\">\n                                <section class=\"keditor-ui keditor-container-inner\">".concat(options.containerForQuickAddComponent, "</section>\n                            </section>\n                        "));
-          newComponent = $("\n                            <section class=\"keditor-ui keditor-component\" data-type=\"".concat(snippetType, "\" ").concat(_dataAttributes.join(' '), ">\n                                <section class=\"keditor-ui keditor-component-content\">").concat(snippetContent, "</section>\n                            </section>\n                        "));
+          newContainer = $("<section class=\"keditor-ui keditor-container showed-keditor-toolbar\"><section class=\"keditor-ui keditor-container-inner\">".concat(options.containerForQuickAddComponent, "</section></section>"));
+          newComponent = $("<section class=\"keditor-ui keditor-component\" data-type=\"".concat(snippetType, "\" ").concat(_dataAttributes.join(' '), "><section class=\"keditor-ui keditor-component-content\">").concat(snippetContent, "</section></section>"));
           newContainer.find('[data-type="container-content"]').eq(0).html(newComponent);
           self.modalTarget.append(newContainer);
 
@@ -1695,7 +1689,7 @@
     var self = this;
     var options = self.options;
     var sidebarId = self.generateId('sidebar');
-    var sidebar = self.sidebar = $("\n                <div class=\"keditor-ui keditor-sidebar\" id=\"".concat(sidebarId, "\">\n                    <div class=\"keditor-ui keditor-sidebar-header\">\n                        <span class=\"keditor-ui keditor-sidebar-title\"></span>\n                        <a href=\"javascript:void(0);\" class=\"keditor-ui keditor-sidebar-close\">&times;</a>\n                    </div>\n                    <div class=\"keditor-ui keditor-sidebar-body\"></div>\n                </div>\n            "));
+    var sidebar = self.sidebar = $("<div class=\"keditor-ui keditor-sidebar\" id=\"".concat(sidebarId, "\"><div class=\"keditor-ui keditor-sidebar-header\"><span class=\"keditor-ui keditor-sidebar-title\"></span><a href=\"javascript:void(0);\" class=\"keditor-ui keditor-sidebar-close\">&times;</a></div><div class=\"keditor-ui keditor-sidebar-body\"></div></div>"));
     sidebar.find('.keditor-sidebar-close').on('click', function (e) {
       e.preventDefault();
       self.closeSidebar();
@@ -1766,7 +1760,7 @@
         var _componentData = KEditor.components[componentType];
 
         if (typeof _componentData.initSettingForm === 'function') {
-          settingForm = $("\n                            <div\n                                data-type=\"".concat(componentType, "\"\n                                class=\"keditor-ui keditor-setting-form keditor-setting-").concat(componentType, " clearfix active\"\n                            >\n                            </div>\n                        "));
+          settingForm = $("<divdata-type=\"".concat(componentType, "\"class=\"keditor-ui keditor-setting-form keditor-setting-").concat(componentType, " clearfix active\"></div>"));
           var loadingText = $('<span />').html('Loading...');
           sidebarBody.append(settingForm);
           settingForm.append(loadingText);
@@ -1868,7 +1862,7 @@
     });
     var snippetsWrapper = modal.find(snippetsWrapperSelector);
     var snippets = snippetsWrapper.find('.keditor-snippets').children('.keditor-snippet');
-    snippetsWrapper.prepend("\n                <div class=\"keditor-ui keditor-snippets-filter-wrapper\">\n                    <select class=\"keditor-ui keditor-snippets-filter\">\n                        <option value=\"\" selected=\"selected\">All</option>\n                        ".concat(categoriesOptions, "\n                    </select>\n                    <input type=\"text\" class=\"keditor-ui keditor-snippets-search\" value=\"\" placeholder=\"Type to search...\" />\n                </div>\n            "));
+    snippetsWrapper.prepend("<div class=\"keditor-ui keditor-snippets-filter-wrapper\"><select class=\"keditor-ui keditor-snippets-filter\"><option value=\"\" selected=\"selected\">All</option>".concat(categoriesOptions, "</select><input type=\"text\" class=\"keditor-ui keditor-snippets-search\" value=\"\" placeholder=\"Type to search...\" /></div>"));
     snippets.each(function () {
       var snippet = $(this);
       var categories = snippet.attr('data-keditor-categories') || '';
@@ -1977,7 +1971,7 @@
       var type = snippet.attr('data-type');
       var title = snippet.attr('data-keditor-title');
       var categories = snippet.attr('data-keditor-categories') || '';
-      var snippetHtml = "\n                    <section\n                        class=\"keditor-ui keditor-snippet\"\n                        data-snippet=\"#".concat(snippetId, "\"\n                        data-type=\"").concat(type, "\"\n                        title=\"").concat(title, "\"\n                        data-keditor-categories=\"").concat(categories, "\"\n                    >\n                        <span><span style=\"background-image: url('").concat(previewUrl, "')\"></span></span>\n                    </section>\n                ");
+      var snippetHtml = "<sectionclass=\"keditor-ui keditor-snippet\"data-snippet=\"#".concat(snippetId, "\"data-type=\"").concat(type, "\"title=\"").concat(title, "\"data-keditor-categories=\"").concat(categories, "\"><span><span style=\"background-image: url('").concat(previewUrl, "')\"></span></span></section>");
       categories = categories.split(options.snippetsCategoriesSeparator);
 
       if (type === 'container') {
@@ -2172,7 +2166,7 @@
         case _toolbarType.default.CONTAINER_CONTENT:
         case _toolbarType.default.SUB_CONTAINER_CONTENT:
           toolbarClass = 'keditor-container-content-toolbar';
-          return "\n                    <div class=\"keditor-ui ".concat(toolbarClass, "\">\n                        <a href=\"javascript:void(0)\" class=\"keditor-ui keditor-btn keditor-btn-default btn-add-content\" title=\"Add content\">").concat(options.btnAddContentText, "</a>\n                    </div>\n                ");
+          return "<div class=\"keditor-ui ".concat(toolbarClass, "\"><a href=\"javascript:void(0)\" class=\"keditor-ui keditor-btn keditor-btn-default btn-add-content\" title=\"Add content\">").concat(options.btnAddContentText, "</a></div>");
 
         default: // Do nothing
 
@@ -2181,34 +2175,34 @@
 
     switch (type) {
       case _toolbarType.default.CONTENT_AREA:
-        return "\n                <div class=\"keditor-ui keditor-content-area-toolbar\">\n                    <a href=\"javascript:void(0)\" class=\"keditor-ui keditor-btn keditor-btn-default btn-add-container\" title=\"Add container\">".concat(options.btnAddContainerText, "</a>\n                </div>\n            ");
+        return "<div class=\"keditor-ui keditor-content-area-toolbar\"><a href=\"javascript:void(0)\" class=\"keditor-ui keditor-btn keditor-btn-default btn-add-container\" title=\"Add container\">".concat(options.btnAddContainerText, "</a></div>");
 
       case _toolbarType.default.CONTAINER:
         if (options.containerSettingEnabled === true) {
           settingBtn = "<a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-setting\">".concat(options.btnSettingContainerText, "</a>");
         }
 
-        return "\n                <div class=\"keditor-toolbar keditor-toolbar-container\">\n                    <a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-reposition\">".concat(options.btnMoveContainerText, "</a>\n                    ").concat(settingBtn, "\n                    <a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-duplicate\">").concat(options.btnDuplicateContainerText, "</a>\n                    <a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-delete\">").concat(options.btnDeleteContainerText, "</a>\n                </div>\n            ");
+        return "<div class=\"keditor-toolbar keditor-toolbar-container\"><a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-reposition\">".concat(options.btnMoveContainerText, "</a>").concat(settingBtn, "<a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-duplicate\">").concat(options.btnDuplicateContainerText, "</a><a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-delete\">").concat(options.btnDeleteContainerText, "</a></div>");
 
       case _toolbarType.default.SUB_CONTAINER:
         if (options.containerSettingEnabled === true) {
           settingBtn = "<a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-setting\">".concat(options.btnSettingContainerText, "</a>");
         }
 
-        return "\n                <div class=\"keditor-toolbar keditor-toolbar-container keditor-toolbar-sub-container\">\n                    <a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-reposition\">".concat(options.btnMoveContainerText, "</a>\n                    ").concat(settingBtn, "\n                    <a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-duplicate\">").concat(options.btnDuplicateContainerText, "</a>\n                    <a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-delete\">").concat(options.btnDeleteContainerText, "</a>\n                </div>\n            ");
+        return "<div class=\"keditor-toolbar keditor-toolbar-container keditor-toolbar-sub-container\"><a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-reposition\">".concat(options.btnMoveContainerText, "</a>").concat(settingBtn, "<a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-duplicate\">").concat(options.btnDuplicateContainerText, "</a><a href=\"javascript:void(0);\" class=\"keditor-ui btn-container-delete\">").concat(options.btnDeleteContainerText, "</a></div>");
 
       case _toolbarType.default.CONTAINER_CONTENT:
-        return "\n                <div class=\"keditor-ui keditor-container-content-toolbar keditor-btn-group\">\n                    <a href=\"javascript:void(0)\" class=\"keditor-ui keditor-btn keditor-btn-default btn-add-container\" title=\"Add sub-container\">".concat(options.btnAddSubContainerText, "</a>\n                    <a href=\"javascript:void(0)\" class=\"keditor-ui keditor-btn keditor-btn-default btn-add-component\" title=\"Add component\">").concat(options.btnAddComponentText, "</a>\n                </div>\n            ");
+        return "<div class=\"keditor-ui keditor-container-content-toolbar keditor-btn-group\"><a href=\"javascript:void(0)\" class=\"keditor-ui keditor-btn keditor-btn-default btn-add-container\" title=\"Add sub-container\">".concat(options.btnAddSubContainerText, "</a><a href=\"javascript:void(0)\" class=\"keditor-ui keditor-btn keditor-btn-default btn-add-component\" title=\"Add component\">").concat(options.btnAddComponentText, "</a></div>");
 
       case _toolbarType.default.SUB_CONTAINER_CONTENT:
-        return "\n                <div class=\"keditor-ui keditor-container-content-toolbar\">\n                    <a href=\"javascript:void(0)\" class=\"keditor-ui keditor-btn keditor-btn-default btn-add-component\" title=\"Add component\">".concat(options.btnAddComponentText, "</a>\n                </div>\n            ");
+        return "<div class=\"keditor-ui keditor-container-content-toolbar\"><a href=\"javascript:void(0)\" class=\"keditor-ui keditor-btn keditor-btn-default btn-add-component\" title=\"Add component\">".concat(options.btnAddComponentText, "</a></div>");
 
       case _toolbarType.default.COMPONENT:
         if (isComponentConfigurable) {
           settingBtn = "<a href=\"javascript:void(0);\" class=\"keditor-ui btn-component-setting\">".concat(options.btnSettingComponentText, "</a>");
         }
 
-        return "\n                <div class=\"keditor-toolbar keditor-toolbar-component\">\n                    <a href=\"javascript:void(0);\" class=\"keditor-ui btn-component-reposition\">".concat(options.btnMoveComponentText, "</a>\n                    ").concat(settingBtn, "\n                    <a href=\"javascript:void(0);\" class=\"keditor-ui btn-component-duplicate\">").concat(options.btnDuplicateComponentText, "</a>\n                    <a href=\"javascript:void(0);\" class=\"keditor-ui btn-component-delete\">").concat(options.btnDeleteComponentText, "</a>\n                </div>\n            ");
+        return "<div class=\"keditor-toolbar keditor-toolbar-component\"><a href=\"javascript:void(0);\" class=\"keditor-ui btn-component-reposition\">".concat(options.btnMoveComponentText, "</a>").concat(settingBtn, "<a href=\"javascript:void(0);\" class=\"keditor-ui btn-component-duplicate\">").concat(options.btnDuplicateComponentText, "</a><a href=\"javascript:void(0);\" class=\"keditor-ui btn-component-delete\">").concat(options.btnDeleteComponentText, "</a></div>");
 
       default: // Do nothing
 

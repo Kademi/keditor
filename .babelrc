@@ -3,22 +3,10 @@
         "node_modules/**/*"
     ],
     "presets": [
-        [
-            "@babel/env",
-            {
-                "modules": "umd"
-            }
-        ]
+        "@babel/env"
     ],
     "plugins": [
         "@babel/plugin-proposal-class-properties",
-        [
-            "@babel/plugin-transform-modules-umd",
-            {
-                "globals": {
-                    "jquery": "jQuery"
-                }
-            }
-        ]
+        "@babel/plugin-proposal-export-default-from"
     ]
 }

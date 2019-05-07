@@ -1,40 +1,46 @@
 {
-  "name": "keditor",
-  "version": "2.0.0",
-  "description": "KEditor is a jQuery plugin which provides a content editor with drag and drop snippets",
-  "main": "gulpfile.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Kademi/keditor.git"
-  },
-  "keywords": [
-    "editor",
-    "keditor",
-    "content editor"
-  ],
-  "author": "Kademi (http://kademi.co)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Kademi/keditor/issues"
-  },
-  "homepage": "https://github.com/Kademi/keditor#readme",
-  "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.2.1",
-    "@babel/plugin-transform-modules-umd": "^7.2.0",
-    "@babel/preset-env": "^7.2.0",
-    "gulp": "^4.0.0",
-    "gulp-babel": "^8.0.0",
-    "gulp-concat-util": "^0.5.5",
-    "gulp-cssmin": "^0.2.0",
-    "gulp-header": "^2.0.7",
-    "gulp-less": "^4.0.1",
-    "gulp-order": "^1.2.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-replace": "^1.0.0",
-    "gulp-rimraf": "^0.2.2",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-uglify": "^3.0.1",
-    "gulp-watch": "^5.0.1"
-  }
+    "name": "keditor",
+    "title": "KEditor",
+    "libraryName": "KEditor",
+    "version": "2.0.0",
+    "description": "KEditor is a jQuery plugin which provides a content editor with drag and drop snippets",
+    "scripts": {
+        "build": "webpack --prod",
+        "dev": "webpack --progress --color --watch"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Kademi/keditor.git"
+    },
+    "keywords": [
+        "editor",
+        "keditor",
+        "content editor"
+    ],
+    "author": "Kademi (http://kademi.co)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Kademi/keditor/issues"
+    },
+    "homepage": "https://github.com/Kademi/keditor#readme",
+    "devDependencies": {
+        "@babel/core": "^7.4.0",
+        "@babel/plugin-proposal-class-properties": "^7.4.0",
+        "@babel/plugin-proposal-export-default-from": "^7.2.0",
+        "@babel/preset-env": "^7.4.2",
+        "babel-loader": "^8.0.5",
+        "css-loader": "^2.1.1",
+        "file-loader": "^3.0.1",
+        "less": "^3.9.0",
+        "less-loader": "^4.1.0",
+        "mini-css-extract-plugin": "^0.6.0",
+        "node-sass": "^4.11.0",
+        "optimize-css-assets-webpack-plugin": "^5.0.1",
+        "sass-loader": "^7.1.0",
+        "string-replace-loader": "^2.1.1",
+        "webpack": "^4.29.6",
+        "webpack-cli": "^3.3.0",
+        "wrapper-webpack-plugin": "^2.1.0",
+        "yargs": "^13.2.2"
+    }
 }

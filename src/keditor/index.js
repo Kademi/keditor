@@ -46,6 +46,8 @@ import destroy from './destroy';
 import getContent from './getContent';
 import setContent from './setContent';
 
+import '../styles/keditor.less';
+
 // Check dependencies
 if (!$.fn.sortable) {
     error('$.fn.sortable does not exist. Please import $.fn.sortable into your document for continue using KEditor.');

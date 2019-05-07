@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import KEditor from 'keditor';
+
 const flog = KEditor.log;
 import CKEDITOR from 'ckeditor';
 
@@ -55,7 +56,7 @@ KEditor.components['text'] = {
             }
             
             if (typeof options.onContentChanged === 'function') {
-                options.onContentChanged.call(contentArea, e);
+                options.onContentChanged.call(keditor, e, contentArea);
             }
         });
         

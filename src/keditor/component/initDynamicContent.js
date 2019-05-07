@@ -24,19 +24,19 @@ export default function (dynamicElement) {
         data: data,
         type: 'GET',
         dataType: 'HTML',
-        success: function (response, status, xhr) {
-            log('Dynamic content is loaded', dynamicElement, response, status, xhr);
+        success: function (response, status, jqXHR) {
+            log('Dynamic content is loaded', dynamicElement, response, status, jqXHR);
             dynamicElement.html(response);
             
             if (typeof options.onDynamicContentLoaded === 'function') {
-                options.onDynamicContentLoaded.call(self, dynamicElement, response, status, xhr, contentArea);
+                options.onDynamicContentLoaded.call(self, dynamicElement, jqXHR, contentArea);
             }
         },
-        error: function (response, status, xhr) {
-            log('Error when loading dynamic content', dynamicElement, response, status, xhr);
+        error: function (jqXHR, textStatus, errorThrown ) {
+            log('Error when loading dynamic content', dynamicElement, jqXHR, textStatus, errorThrown );
             
             if (typeof options.onDynamicContentError === 'function') {
-                options.onDynamicContentError.call(self, dynamicElement, response, status, xhr, contentArea);
+                options.onDynamicContentError.call(self, dynamicElement, jqXHR, contentArea);
             }
         }
     });

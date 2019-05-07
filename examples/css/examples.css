@@ -34,6 +34,8 @@ body {
     border-width: 1px 1px 0 0;
     padding: 6px 12px;
     box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+    color: #333 !important;
+    text-decoration: none !important;
 }
 
 .toolbar > *:hover {

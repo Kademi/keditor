@@ -15,7 +15,7 @@ KEditor is a jQuery plugin which provides a content editor with drag and drop sn
 
 # Dependencies
  * jQuery: http://jquery.com/
- * jQuery UI: https://jqueryui.com/ (Requires only draggable, droppable and sortable)
+ * jQuery UI: https://jqueryui.com/ (Requires only sortable)
  * NiceScroll: http://areaaperta.com/nicescroll/ (Optional for scroll bar)
  * Bootstrap: http://getbootstrap.com/ (Optional for style)
  * FontAwesome: http://fontawesome.io/ (Optional for icons)

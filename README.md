@@ -1,5 +1,5 @@
 # KEditor
-KEditor is a jQuery plugin which provides a content editor with drag and drop snippets
+KEditor is a jQuery plugin which provides a content editor with drag and drop snippets ([http://kademi.github.io/keditor/](http://kademi.github.io/keditor/))
 
 ## Shortcuts
  * [Dependencies](#dependencies)

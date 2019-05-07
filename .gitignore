@@ -2,5 +2,3 @@ node_modules
 .idea
 *.iml
 package-lock.json
-/src/css
-/src/js

@@ -1,3 +1,5 @@
+import '../styles/keditor-component-form.less';
+
 import $ from 'jquery';
 import KEditor from 'keditor';
 const flog = KEditor.log;

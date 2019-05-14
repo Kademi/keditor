@@ -9,7 +9,7 @@
         var toolbar = $('<div class="toolbar"></div>');
         var btnViewSource = $('<button type="button" class="view-source"><i class="fa fa-code"></i> View source</button>');
         var btnViewContent = $('<button type="button" class="view-content"><i class="fa fa-file-text-o"></i> Get content</button>');
-        var btnBackToList = $('<a href="./" class="view-content"><i class="fa fa-file-text-o"></i> Examples list</a>');
+        var btnBackToList = $('<a href="./" class="view-content"><i class="fa fa-list"></i> Examples list</a>');
 
         toolbar.appendTo(document.body);
         toolbar.append(btnViewSource);

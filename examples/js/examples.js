@@ -24,7 +24,7 @@
             var modal = $('#modal-content');
             modal.find('.content-html').html(
                 beautifyHtml(
-                    $('#editor').keditor('getContent')
+                    $('#content-area').keditor('getContent')
                 )
             );
 

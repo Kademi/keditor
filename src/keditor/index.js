@@ -21,6 +21,7 @@ import closeSidebar from './sidebar/closeSidebar';
 
 import renderSnippets from './snippet/renderSnippets';
 import initSnippetsFilter from './snippet/initSnippetsFilter';
+import addSnippet from './snippet/addSnippet';
 
 import initSnippetsModal from './modal/initSnippetsModal';
 import openModal from './modal/openModal';
@@ -253,6 +254,12 @@ class KEditor {
     //---------------------------------
     destroy() {
         return destroy.apply(this);
+    }
+    
+    // Destroy
+    //---------------------------------
+    addSnippet(type, title, previewUrl, categories, content, dataAttributes) {
+        return addSnippet.apply(this, [type, title, previewUrl, categories, content, dataAttributes]);
     }
 }
 

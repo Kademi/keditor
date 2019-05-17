@@ -72,6 +72,7 @@ body {
     width: auto;
     margin: 0;
     padding: 80px 50px 30px;
+    position: relative;
 }
 
 /* ==================================================================================
@@ -404,9 +405,12 @@ body {
 .keditor-content-area-toolbar,
 .keditor-container-content-toolbar {
     text-align: center;
-    margin: 10px 0;
-    position: relative;
+    position: absolute;
     z-index: 2;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(50%);
 
     > * {
         .transition(all @animation-duration);

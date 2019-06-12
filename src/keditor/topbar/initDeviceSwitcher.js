@@ -5,7 +5,7 @@ export default function () {
     let topbarCenter = self.topbarCenter;
     let options = self.options;
     
-    let btnMobile = $(`<a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}"><i class="fa fa-fw fa-mobile"></i></a>`);
+    let btnMobile = $(`<a href="javascript:void(0);" title="View on mobile" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}"><i class="fa fa-fw fa-mobile"></i></a>`);
     btnMobile.on('click', function (e) {
         e.preventDefault();
         
@@ -14,7 +14,7 @@ export default function () {
         btnMobile.addClass(CLASS_NAMES.TOPBAR_BUTTON_ACTIVE);
     });
     
-    let btnTablet = $(`<a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}"><i class="fa fa-fw fa-tablet"></i></a>`);
+    let btnTablet = $(`<a href="javascript:void(0);" title="View on tablet" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}"><i class="fa fa-fw fa-tablet"></i></a>`);
     btnTablet.on('click', function (e) {
         e.preventDefault();
         
@@ -23,7 +23,7 @@ export default function () {
         btnTablet.addClass(CLASS_NAMES.TOPBAR_BUTTON_ACTIVE);
     });
     
-    let btnDesktop = $(`<a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON} ${CLASS_NAMES.TOPBAR_BUTTON_ACTIVE}"><i class="fa fa-fw fa-desktop"></i></a>`);
+    let btnDesktop = $(`<a href="javascript:void(0);" title="View on desktop" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON} ${CLASS_NAMES.TOPBAR_BUTTON_ACTIVE}"><i class="fa fa-fw fa-desktop"></i></a>`);
     btnDesktop.on('click', function (e) {
         e.preventDefault();
         

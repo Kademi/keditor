@@ -1,8 +1,4 @@
-import log from '../utils/log';
-
 export default function (component) {
-    log('getComponentContent');
-    
     let self = this;
     let clonedComponent = component.clone();
     let componentType = self.getComponentType(clonedComponent);

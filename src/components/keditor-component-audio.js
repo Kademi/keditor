@@ -4,8 +4,6 @@ const flog = KEditor.log;
 
 KEditor.components['audio'] = {
     getContent: function (component, keditor) {
-        flog('getContent "audio" component, component');
-        
         let componentContent = component.children('.keditor-component-content');
         let audio = componentContent.find('audio');
         audio.unwrap();
@@ -18,8 +16,6 @@ KEditor.components['audio'] = {
     settingTitle: 'Audio Settings',
     
     initSettingForm: function (form, keditor) {
-        flog('init "audio" settings', form);
-        
         form.append(
             '<form class="form-horizontal">' +
             '     <div class="form-group">' +
@@ -54,8 +50,6 @@ KEditor.components['audio'] = {
     },
     
     showSettingForm: function (form, component, keditor) {
-        flog('showSettingForm "audio" component', form, component);
-        
         let options = keditor.options;
         
         let audio = component.find('audio');

@@ -1,9 +1,6 @@
-import log from '../utils/log';
 import renderSnippetFilter from "./renderSnippetFilter";
 
 export default function (type) {
-    log('initSnippetsFilter');
-    
     let self = this;
     let options = self.options;
     let [categoriesOptions, snippetsWrapper] = renderSnippetFilter.call(this, type);
@@ -27,8 +24,6 @@ export default function (type) {
         snippets.filter('.selected').removeClass('selected');
         
         if (selectedCategory || searchText) {
-            log('Filtering snippets');
-            
             snippets.each(function () {
                 let snippet = $(this);
                 let dataCategoriesString = snippet.attr('data-keditor-categories').toLowerCase();
@@ -51,7 +46,6 @@ export default function (type) {
                 snippet[error === 0 ? 'removeClass' : 'addClass']('not-matched');
             });
         } else {
-            log('Show all snippets');
             snippets.removeClass('not-matched');
         }
     };

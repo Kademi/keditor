@@ -108,8 +108,6 @@ KEditor.components['form'] = {
     },
     
     init: function (contentArea, container, component, keditor) {
-        flog('init "form" component', component);
-        
         let componentContent = component.find('.keditor-component-content');
         let formBuilder = component.find('.form-builder-area');
         let formContent = component.find('.form-content');
@@ -134,8 +132,6 @@ KEditor.components['form'] = {
     },
     
     getContent: function (component, keditor) {
-        flog('getContent "form" component', component);
-        
         let self = this;
         let componentContent = component.find('.keditor-component-content');
         let formData = component.find('.form-data');
@@ -155,8 +151,6 @@ KEditor.components['form'] = {
     settingTitle: 'Form Settings',
     
     initSettingForm: function (form, keditor) {
-        flog('initSettingForm "form" component');
-        
         let self = this;
         
         form.html(
@@ -258,7 +252,6 @@ KEditor.components['form'] = {
     },
     
     showSettingForm: function (form, component, keditor) {
-        flog('showSettingForm "form" component', component);
         let formContent = component.find('.form-content');
         
         let layout = '';

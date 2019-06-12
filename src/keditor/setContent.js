@@ -1,8 +1,6 @@
-import error from "./utils/error";
-
 export default function (content, contentArea) {
     let self = this;
-    let contentAreasWrapper = self.contentAreasWrapper;
+    let contentAreasWrapper = self.wrapper;
     
     if (!contentArea) {
         contentArea = contentAreasWrapper.children('.keditor-content-area');
@@ -13,7 +11,7 @@ export default function (content, contentArea) {
     }
     
     if (contentArea.length === 0) {
-        error('Content area does not exist!');
+        self.error('Content area does not exist!');
     }
     
     contentArea.html(content);

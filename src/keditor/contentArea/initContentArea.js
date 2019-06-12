@@ -1,10 +1,7 @@
 import TOOLBAR_TYPE from "../constants/toolbarType";
 import SNIPPET_TYPE from "../constants/snippetType";
-import log from '../utils/log';
 
 export default function (contentArea, dontInitToolbar) {
-    log('initContentArea', contentArea);
-    
     let self = this;
     let options = self.options;
     
@@ -27,7 +24,6 @@ export default function (contentArea, dontInitToolbar) {
         });
     }
     
-    log('Initialize $.fn.sortable for content area');
     contentAreaInner.sortable({
         handle: '.keditor-toolbar-container:not(.keditor-toolbar-sub-container) .btn-container-reposition',
         items: '> section',
@@ -39,8 +35,6 @@ export default function (contentArea, dontInitToolbar) {
             $(this).removeClass('ui-state-default');
         },
         receive: function (event, ui) {
-            log('On received snippet', event, ui);
-            
             let helper = ui.helper;
             let item = ui.item;
             
@@ -67,7 +61,6 @@ export default function (contentArea, dontInitToolbar) {
         }
     });
     
-    log('Initialize existing containers in content area');
     contentAreaInner.children('section').each(function () {
         self.convertToContainer(contentArea, $(this));
     });

@@ -1,10 +1,7 @@
 import TOOLBAR_TYPE from "../constants/toolbarType";
 import SNIPPET_TYPE from "../constants/snippetType";
-import log from '../utils/log';
 
 export default function (contentArea, container, containerContent, isNested) {
-    log(`initContainerContent - isNested=${isNested}`, contentArea, container, containerContent);
-    
     let self = this;
     let options = self.options;
     
@@ -12,13 +9,12 @@ export default function (contentArea, container, containerContent, isNested) {
     if (isNested) {
         containerContent.addClass('keditor-sub-container-content');
     }
-    containerContent.attr('id', self.generateId('container-content'));
+    containerContent.attr('id', self.generateId());
     
     let containerContentInner = $('<div class="keditor-container-content-inner"></div>');
     containerContentInner.html(containerContent.html());
     containerContent.html(containerContentInner);
     
-    log('Initialize toolbar for container content');
     let containerContentToolbar = $(self.generateToolbar(isNested ? TOOLBAR_TYPE.SUB_CONTAINER_CONTENT : TOOLBAR_TYPE.CONTAINER_CONTENT));
     containerContentToolbar.appendTo(containerContent);
     
@@ -46,7 +42,6 @@ export default function (contentArea, container, containerContent, isNested) {
         });
     }
     
-    log('Initialize $.fn.sortable for container content');
     containerContentInner.sortable({
         handle: '.btn-component-reposition, .btn-container-reposition',
         helper: 'clone',
@@ -57,8 +52,6 @@ export default function (contentArea, container, containerContent, isNested) {
             $(this).removeClass('ui-state-default');
         },
         receive: function (event, ui) {
-            log('On received snippet', event, ui);
-            
             let helper = ui.helper;
             let item = ui.item;
             let container;
@@ -94,7 +87,6 @@ export default function (contentArea, container, containerContent, isNested) {
         }
     });
     
-    log('Initialize existing components inside container content');
     containerContentInner.children().each(function () {
         let child = $(this);
         

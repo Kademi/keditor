@@ -1,15 +1,15 @@
-import log from '../utils/log';
+import CLASS_NAMES from '../constants/classNames';
 
 export default function (target) {
     let self = this;
     let options = self.options;
     let sidebar = self.sidebar;
-    let sidebarTitle = sidebar.find('.keditor-sidebar-title');
-    let sidebarBody = sidebar.find('.keditor-sidebar-body');
-    let activeForm = sidebarBody.children('.active');
-    activeForm.removeClass('active');
+    let sidebarTitle = sidebar.find(`.${CLASS_NAMES.SIDEBAR_TITLE}`);
+    let sidebarBody = sidebar.find(`.${CLASS_NAMES.SIDEBAR_BODY}`);
+    let activeForm = sidebarBody.children(`.${CLASS_NAMES.SETTING_FORM_ACTIVE}`);
+    activeForm.removeClass(CLASS_NAMES.SETTING_FORM_ACTIVE);
     
-    if (target.is('.keditor-component')) {
+    if (target.is(`.${CLASS_NAMES.COMPONENT}`)) {
         self.setSettingComponent(target);
         self.setSettingContainer(null);
         
@@ -17,26 +17,25 @@ export default function (target) {
         let componentData = KEditor.components[componentType];
         sidebarTitle.html(componentData.settingTitle);
         
-        let settingForm = sidebarBody.find(`.keditor-setting-${componentType}`);
+        let settingFormClass = `${CLASS_NAMES.SETTING}-${componentType}`;
+        let settingForm = sidebarBody.find(`.${settingFormClass}`);
         
         if (settingForm.length === 0) {
             let componentData = KEditor.components[componentType];
             if (typeof componentData.initSettingForm === 'function') {
                 settingForm = $(`
-                            <div
-                                data-type="${componentType}"
-                                class="keditor-ui keditor-setting-form keditor-setting-${componentType} clearfix active"
-                            >
-                            </div>
-                        `);
+                    <div
+                        data-type="${componentType}"
+                        class="${CLASS_NAMES.UI} ${CLASS_NAMES.SETTING_FORM} ${settingFormClass} clearfix ${CLASS_NAMES.SETTING_FORM_ACTIVE}"
+                    >
+                    </div>
+                `);
                 let loadingText = $('<span />').html('Loading...');
                 sidebarBody.append(settingForm);
                 settingForm.append(loadingText);
                 
                 let initFunction = componentData.initSettingForm.call(componentData, settingForm, self);
                 $.when(initFunction).done(function () {
-                    log(`Initialized setting form for component type "${componentType}"`);
-                    
                     setTimeout(function () {
                         loadingText.remove();
                         
@@ -50,7 +49,7 @@ export default function (target) {
             if (typeof componentData.showSettingForm === 'function') {
                 componentData.showSettingForm.call(componentData, settingForm, target, self);
             }
-            settingForm.addClass('active');
+            settingForm.addClass(CLASS_NAMES.SETTING_FORM_ACTIVE);
         }
     } else {
         self.setSettingContainer(target);
@@ -58,12 +57,12 @@ export default function (target) {
         
         sidebarTitle.html('Container Settings');
         
-        let settingForm = sidebar.find('.keditor-container-setting');
+        let settingForm = sidebar.find(`.${CLASS_NAMES.SETTING_CONTAINER}`);
         if (typeof options.containerSettingShowFunction === 'function') {
             options.containerSettingShowFunction.call(self, settingForm, target, self);
         }
-        settingForm.addClass('active');
+        settingForm.addClass(CLASS_NAMES.SETTING_FORM_ACTIVE);
     }
     
-    sidebar.addClass('opened');
+    sidebar.addClass(CLASS_NAMES.SIDEBAR_OPENED);
 };

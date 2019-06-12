@@ -1,23 +1,23 @@
-import log from '../utils/log';
+import CLASS_NAMES from '../constants/classNames';
 
 export default function (iframe, wrapper) {
     if (!wrapper) {
-        iframe.wrap('<div class="keditor-iframe-wrapper-fake"></div>');
+        iframe.wrap(`<div class="${CLASS_NAMES.IFRAME_FAKER}"></div>`);
         wrapper = iframe.parent();
     }
     
-    wrapper.addClass('keditor-iframe-wrapper');
+    wrapper.addClass(`${CLASS_NAMES.IFRAME_COVER_WRAPPER}`);
     
-    let cover = $('<div class="keditor-iframe-cover"></div>');
+    let cover = $(`<div class="${CLASS_NAMES.IFRAME_COVER}"></div>`);
     wrapper.prepend(cover);
     
     wrapper.on('mouseleave', function () {
-        wrapper.removeClass('hidden-cover');
+        wrapper.removeClass(`${CLASS_NAMES.IFRAME_COVER_HIDDEN}`);
     });
     
     cover.on('dblclick', function (e) {
         e.preventDefault();
         
-        wrapper.addClass('hidden-cover');
+        wrapper.addClass(`${CLASS_NAMES.IFRAME_COVER_HIDDEN}`);
     });
 };

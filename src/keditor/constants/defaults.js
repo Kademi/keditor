@@ -74,6 +74,14 @@ export default {
     // @option {String}
     confirmDeleteComponentText: 'Are you sure that you want to delete this component? This action can not be undone!',
     
+    // Width of mobile device
+    // @option {Number}
+    widthMobile: 320,
+    
+    // Width of tablet device
+    // @option {Number}
+    widthTablet: 768,
+    
     // Default component type of component. If type of component does not exist in KEditor.components, will be used "defaultComponentType" as type of this component. If is function, argument is component
     // @option {String|Function}
     // @param {jQuery} component
@@ -91,11 +99,7 @@ export default {
     // @option {String}
     snippetsCategoriesSeparator: ';',
     
-    // KEditor is created inside an iframe or not. KEditor is created inside an iframe or not. KEditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
-    // @option {Boolean}
-    iframeMode: false,
-    
-    // Content styles for iframe mode
+    // Content styles for iframe mode. Beside of this option, KEditor will add all elements which have 'data-type=keditor-style' for iframe stylesheet. These elements can be 'link', 'style' or any tags. If these elements have 'href' attribute, will create link tag with href. If these elements do not have 'href' attribute, will create style tag with css rule is html code inside element
     // @option {Array<Object>}
     // @example:
     // [

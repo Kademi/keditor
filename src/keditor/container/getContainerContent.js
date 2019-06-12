@@ -1,8 +1,4 @@
-import log from '../utils/log';
-
 export default function (container, isNested) {
-    log(`getContainerContent - isNested=${isNested}`, container);
-    
     let self = this;
     let containerInner = container.children('.keditor-container-inner').clone();
     

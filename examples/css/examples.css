@@ -3,6 +3,10 @@ body {
     height: 100%;
 }
 
+[data-keditor="html"] {
+    height: 100%;
+}
+
 #content-area {
     min-height: 100%;
 }

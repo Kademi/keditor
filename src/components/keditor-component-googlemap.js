@@ -4,8 +4,6 @@ const flog = KEditor.log;
 
 KEditor.components['googlemap'] = {
     init: function (contentArea, container, component, keditor) {
-        flog('init "googlemap" component', component);
-        
         let iframe = component.find('iframe');
         let wrapper = iframe.parent();
         keditor.initIframeCover(iframe, wrapper);
@@ -16,8 +14,6 @@ KEditor.components['googlemap'] = {
     settingTitle: 'Google Map Settings',
     
     initSettingForm: function (form, keditor) {
-        flog('initSettingForm "googlemap" component');
-        
         form.append(
             '<form class="form-horizontal">' +
             '   <div class="form-group">' +

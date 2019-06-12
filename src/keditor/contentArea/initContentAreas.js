@@ -1,11 +1,7 @@
-import log from '../utils/log';
-
 export default function () {
-    log('initContentAreas');
-    
     let self = this;
-    let contentAreasWrapper = self.contentAreasWrapper;
     let options = self.options;
+    let contentAreasWrapper = self.contentAreasWrapper;
     
     let contentAreas;
     if (options.contentAreasSelector) {
@@ -13,7 +9,6 @@ export default function () {
     }
     
     if (!contentAreas || contentAreas.length === 0) {
-        log('Do not find any content area. Creating default content area...');
         let originalContent = contentAreasWrapper.html();
         
         contentAreas = $('<div />').html(originalContent);
@@ -23,7 +18,7 @@ export default function () {
     contentAreas.each(function () {
         let contentArea = $(this);
         if (!contentArea.attr('id')) {
-            contentArea.attr('id', self.generateId('content-area'));
+            contentArea.attr('id', self.generateId());
         }
         
         self.initContentArea(contentArea);

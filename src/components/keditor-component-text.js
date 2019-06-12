@@ -10,8 +10,6 @@ const instances = {};
 // ---------------------------------------------------------------------
 KEditor.components['text'] = {
     init: function (contentArea, container, component, keditor) {
-        flog('init "text" component', component);
-        
         let options = keditor.options;
         
         let componentContent = component.children('.keditor-component-content');
@@ -48,8 +46,6 @@ KEditor.components['text'] = {
                 }
             })
             .then(editor => {
-                flog('CKEditor is ready', component);
-                
                 instances[componentContent.attr('id')] = editor;
                 
                 if (typeof options.onComponentReady === 'function') {
@@ -62,8 +58,6 @@ KEditor.components['text'] = {
     },
     
     getContent: function (component, keditor) {
-        flog('getContent "text" component', component);
-        
         let componentContent = component.find('.keditor-component-content');
         let editor = instances[componentContent.attr('id')];
         if (editor) {
@@ -74,8 +68,6 @@ KEditor.components['text'] = {
     },
     
     destroy: function (component, keditor) {
-        flog('destroy "text" component', component);
-        
         let id = component.find('.keditor-component-content').attr('id');
         let editor = instances[id];
         if (editor) {

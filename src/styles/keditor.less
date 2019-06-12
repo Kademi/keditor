@@ -10,8 +10,7 @@
    ================================================================================== */
 body {
     margin: 0;
-    overflow-y: scroll;
-
+    
     // Sidebar is opened
     &.opened-keditor-sidebar {
         .keditor-content-area {
@@ -36,13 +35,13 @@ body {
     padding: 0;
     border: 0;
     outline: none;
-
+    
     &,
     &:before,
     &:after {
         box-sizing: border-box;
     }
-
+    
     small,
     .small {
         font-size: 88%;
@@ -50,38 +49,96 @@ body {
 }
 
 /* ==================================================================================
+   Wrapper
+   ================================================================================== */
+.keditor-wrapper {
+    height: 100%;
+    padding-top: @topbar-height;
+    background: @wrapper-bg;
+}
+
+/* ==================================================================================
    Iframe
    ================================================================================== */
 .keditor-iframe-wrapper {
-    border: 1px solid @border-color;
     position: relative;
-    overflow: hidden;
+    height: 100%;
+    margin: 0 auto;
 }
 
 .keditor-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 500px;
+    height: 100%;
     border: 0;
 }
 
 /* ==================================================================================
-   Content area
+   Topbar
    ================================================================================== */
-.keditor-content-area {
-    min-height: 100px;
-    width: auto;
-    margin: 0;
-    padding: 80px 50px 30px;
-    position: relative;
+.keditor-topbar {
+    .clearfix;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: @topbar-bg;
+}
+
+.keditor-topbar-left,
+.keditor-topbar-center,
+.keditor-topbar-right {
+    float: left;
+    height: @topbar-height;
+    word-spacing: -1em;
+    
+    > * {
+        word-spacing: normal;
+        display: inline-block;
+    }
+}
+
+.keditor-topbar-left,
+.keditor-topbar-right {
+    width: 33%;
+}
+
+.keditor-topbar-right {
+    text-align: right;
+}
+
+.keditor-topbar-center {
+    width: 34%;
+    text-align: center;
+}
+
+.keditor-topbar-btn {
+    height: @topbar-height;
+    line-height: @topbar-height;
+    color: @topbar-btn-color !important;
+    text-decoration: none;
+    width: @topbar-height;
+    text-align: center;
+    
+    &:hover,
+    &.active {
+        background: darken(@topbar-bg, 10%);
+    }
+    
+    i {
+        font-size: @topbar-btn-icon-size;
+    }
 }
 
 /* ==================================================================================
    Sidebar
    ================================================================================== */
 .keditor-sidebar {
-    position: fixed;
+    position: absolute;
     z-index: @sidebar-zindex;
-    top: 0;
+    top: @topbar-height;
     bottom: 0;
     right: -@sidebar-width;
     width: @sidebar-width;
@@ -107,7 +164,7 @@ body {
     position: relative;
 }
 
-.keditor-sidebar-close {
+.keditor-sidebar-closer {
     text-decoration: none !important;
     color: @closer-color;
     text-align: center;
@@ -149,6 +206,17 @@ body {
             display: block;
         }
     }
+}
+
+/* ==================================================================================
+   Content area
+   ================================================================================== */
+.keditor-content-area {
+    min-height: 100px;
+    width: auto;
+    margin: 0;
+    padding: 30px 50px;
+    position: relative;
 }
 
 /* ==================================================================================
@@ -365,6 +433,10 @@ body {
     box-shadow: @btn-box-shadow;
     display: inline-block;
     text-decoration: none !important;
+    
+    i {
+        line-height: unit(@btn-height - 1, px);
+    }
 
     &.keditor-btn-default {
         border: 1px solid @btn-default-border;
@@ -591,7 +663,7 @@ body {
 /* ==================================================================================
    Iframe cover stuffs
    ================================================================================== */
-.keditor-iframe-wrapper {
+.keditor-iframe-cover-wrapper {
     position: relative;
 
     iframe,

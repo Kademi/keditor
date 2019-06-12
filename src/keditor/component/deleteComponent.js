@@ -1,8 +1,4 @@
-import log from '../utils/log';
-
 export default function (component) {
-    log('deleteComponent', component);
-    
     let self = this;
     
     let componentType = self.getComponentType(component);

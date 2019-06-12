@@ -1,6 +1,3 @@
-import error from '../utils/error';
-import log from '../utils/log';
-
 export default function (component) {
     let self = this;
     let options = self.options;
@@ -16,10 +13,9 @@ export default function (component) {
         }
         
         if (!componentType) {
-            error('Component type is undefined!');
+            self.error('Component type is undefined!');
         }
         
-        log(`Fallback to defaultComponentType: ${componentType}`);
         return componentType;
     }
 };

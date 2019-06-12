@@ -4,8 +4,6 @@ const flog = KEditor.log;
 
 KEditor.components['photo'] = {
     init: function (contentArea, container, component, keditor) {
-        flog('init "photo" component', component);
-        
         let componentContent = component.children('.keditor-component-content');
         let img = componentContent.find('img');
         
@@ -17,8 +15,6 @@ KEditor.components['photo'] = {
     settingTitle: 'Photo Settings',
     
     initSettingForm: function (form, keditor) {
-        flog('initSettingForm "photo" component');
-        
         let self = this;
         let options = keditor.options;
         
@@ -163,8 +159,6 @@ KEditor.components['photo'] = {
     },
     
     showSettingForm: function (form, component, keditor) {
-        flog('showSettingForm "photo" component', component);
-        
         let self = this;
         let inputAlign = form.find('#photo-align');
         let inputResponsive = form.find('#photo-responsive');

@@ -1,8 +1,4 @@
-import log from '../utils/log';
-
 export default function (contentArea, container, target, isExisting) {
-    log('convertToComponent', contentArea, container, target, isExisting);
-    
     if (target.is('.keditor-container-content-toolbar')) {
         return;
     }

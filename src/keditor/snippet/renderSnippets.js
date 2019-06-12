@@ -1,9 +1,6 @@
-import log from '../utils/log';
 import renderSnippet from './renderSnippet';
 
 export default function (resp) {
-    log('renderSnippets');
-    
     let self = this;
     let options = self.options;
     

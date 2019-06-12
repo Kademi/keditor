@@ -1,21 +1,17 @@
-import log from '../utils/log';
-
 export default function () {
-    log('initKEditorClicks');
-    
     let self = this;
     let options = self.options;
-    let body = self.body;
+    let contentAreasWrapper = self.contentAreasWrapper;
     
-    body.on('click', function (e) {
+    contentAreasWrapper.on('click', function (e) {
         let sidebar = self.getClickedElement(e, '.keditor-sidebar');
         let modal = self.getClickedElement(e, '.keditor-modal');
         
         let container = self.getClickedElement(e, '.keditor-container');
         if (container) {
             if (!container.hasClass('showed-keditor-toolbar')) {
-                body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-                body.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                contentAreasWrapper.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                contentAreasWrapper.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                 container.addClass('showed-keditor-toolbar');
                 
                 let contentArea = container.parent();
@@ -25,15 +21,15 @@ export default function () {
             }
         } else {
             if (!sidebar && !modal) {
-                body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-                body.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                contentAreasWrapper.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                contentAreasWrapper.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
             }
         }
         
         let component = self.getClickedElement(e, '.keditor-component');
         if (component) {
             if (!component.hasClass('showed-keditor-toolbar')) {
-                body.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                contentAreasWrapper.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                 component.addClass('showed-keditor-toolbar');
                 
                 let contentArea = component.parent();
@@ -43,19 +39,17 @@ export default function () {
             }
         } else {
             if (!sidebar) {
-                body.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                contentAreasWrapper.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
             }
         }
     });
     
-    body.on('click', '.btn-container-setting', function (e) {
+    contentAreasWrapper.on('click', '.btn-container-setting', function (e) {
         e.preventDefault();
         
         let btn = $(this);
-        log('Click on .btn-container-setting', btn);
-        
         let container = btn.closest('.keditor-container');
-        if (body.hasClass('opened-keditor-setting') && body.hasClass('opened-keditor-sidebar')) {
+        if (contentAreasWrapper.hasClass('opened-keditor-setting') && contentAreasWrapper.hasClass('opened-keditor-sidebar')) {
             if (!container.is(self.settingContainer)) {
                 self.openSidebar(container);
             } else {
@@ -66,19 +60,15 @@ export default function () {
         }
     });
     
-    body.on('click', '.btn-container-duplicate', function (e) {
+    contentAreasWrapper.on('click', '.btn-container-duplicate', function (e) {
         e.preventDefault();
         
         let btn = $(this);
-        log('Click on .btn-container-duplicate', btn);
-        
         let container = btn.closest('.keditor-container');
         let contentArea = container.parent();
         let newContainer = $(self.getContainerContent(container, btn.parent().hasClass('keditor-toolbar-sub-container')));
         container.after(newContainer);
         self.convertToContainer(contentArea, newContainer);
-        
-        log('Container is duplicated');
         
         if (typeof options.onContainerDuplicated === 'function') {
             options.onContainerDuplicated.call(self, container, newContainer, contentArea);
@@ -89,11 +79,10 @@ export default function () {
         }
     });
     
-    body.on('click', '.btn-container-delete', function (e) {
+    contentAreasWrapper.on('click', '.btn-container-delete', function (e) {
         e.preventDefault();
         
         let btn = $(this);
-        log('Click on .btn-container-delete', btn);
         
         if (confirm(options.confirmDeleteContainerText)) {
             let container = btn.closest('.keditor-container');
@@ -108,11 +97,9 @@ export default function () {
             if (settingComponent) {
                 let settingComponentParent = settingComponent.closest('.keditor-container');
                 if (settingComponentParent.is(container)) {
-                    log('Deleting container is container of setting container. Close setting panel for this setting component', settingComponent);
                     self.closeSidebar();
                 }
             } else if (container.is(self.settingContainer)) {
-                log('Deleting container is setting container. Close setting panel for this container', container);
                 self.closeSidebar();
             }
             
@@ -134,14 +121,12 @@ export default function () {
         }
     });
     
-    body.on('click', '.btn-component-setting', function (e) {
+    contentAreasWrapper.on('click', '.btn-component-setting', function (e) {
         e.preventDefault();
         
         let btn = $(this);
-        log('Click on .btn-component-setting', btn);
-        
         let component = btn.closest('.keditor-component');
-        if (body.hasClass('opened-keditor-setting') && body.hasClass('opened-keditor-sidebar')) {
+        if (contentAreasWrapper.hasClass('opened-keditor-setting') && contentAreasWrapper.hasClass('opened-keditor-sidebar')) {
             if (!component.is(self.settingComponent())) {
                 self.openSidebar(component);
             } else {
@@ -152,12 +137,10 @@ export default function () {
         }
     });
     
-    body.on('click', '.btn-component-duplicate', function (e) {
+    contentAreasWrapper.on('click', '.btn-component-duplicate', function (e) {
         e.preventDefault();
         
         let btn = $(this);
-        log('Click on .btn-component-duplicate', btn);
-        
         let component = btn.closest('.keditor-component');
         let container = component.closest('.keditor-container');
         let contentArea = container.parent();
@@ -165,8 +148,6 @@ export default function () {
         
         component.after(newComponent);
         self.convertToComponent(contentArea, container, newComponent);
-        
-        log('Component is duplicated');
         
         if (typeof options.onComponentDuplicated === 'function') {
             options.onComponentDuplicated.call(self, component, newComponent, contentArea);
@@ -181,11 +162,10 @@ export default function () {
         }
     });
     
-    body.on('click', '.btn-component-delete', function (e) {
+    contentAreasWrapper.on('click', '.btn-component-delete', function (e) {
         e.preventDefault();
         
         let btn = $(this);
-        log('Click on .btn-component-delete', btn);
         
         if (confirm(options.confirmDeleteComponentText)) {
             let component = btn.closest('.keditor-component');
@@ -216,5 +196,5 @@ export default function () {
         }
     });
     
-    body.addClass('keditor-clicks-initialized');
+    contentAreasWrapper.addClass('keditor-clicks-initialized');
 };

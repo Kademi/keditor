@@ -5,8 +5,6 @@ const flog = KEditor.log;
 
 KEditor.components['video'] = {
     init: function (contentArea, container, component, keditor) {
-        flog('init "video" component', component);
-        
         let componentContent = component.children('.keditor-component-content');
         let video = componentContent.find('video');
         
@@ -16,8 +14,6 @@ KEditor.components['video'] = {
     },
     
     getContent: function (component, keditor) {
-        flog('getContent "video" component', component);
-        
         let componentContent = component.children('.keditor-component-content');
         let video = componentContent.find('video');
         video.unwrap();
@@ -30,8 +26,6 @@ KEditor.components['video'] = {
     settingTitle: 'Video Settings',
     
     initSettingForm: function (form, keditor) {
-        flog('init "video" settings', form);
-        
         form.append(`
             <form class="form-horizontal">
                 <div class="form-group">
@@ -136,8 +130,6 @@ KEditor.components['video'] = {
     },
     
     showSettingForm: function (form, component, keditor) {
-        flog('showSettingForm "video" settings', form, component);
-        
         let video = component.find('video');
         
         let autoplayToggle = form.find('.video-autoplay');

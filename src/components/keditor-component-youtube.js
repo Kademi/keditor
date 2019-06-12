@@ -4,8 +4,6 @@ const flog = KEditor.log;
 
 KEditor.components['youtube'] = {
     init: function (contentArea, container, component, keditor) {
-        flog('init "youtube" component', component);
-        
         let iframe = component.find('iframe');
         let wrapper = iframe.parent();
         keditor.initIframeCover(iframe, wrapper);
@@ -16,8 +14,6 @@ KEditor.components['youtube'] = {
     settingTitle: 'Youtube Settings',
     
     initSettingForm: function (form, keditor) {
-        flog('initSettingForm "youtube" component');
-        
         form.append(
             '<form class="form-horizontal">' +
             '   <div class="form-group">' +
@@ -74,15 +70,11 @@ KEditor.components['youtube'] = {
             let embedItem = keditor.getSettingComponent().find('.embed-responsive-item');
             let currentUrl = embedItem.attr('src');
             let newUrl = (currentUrl.replace(/(\?.+)+/, '')) + '?autoplay=' + (chkAutoplay.is(':checked') ? 1 : 0);
-            
-            flog('Current url: ' + currentUrl, 'New url: ' + newUrl);
             embedItem.attr('src', newUrl);
         });
     },
     
     showSettingForm: function (form, component, keditor) {
-        flog('showSettingForm "youtube" component', component);
-        
         let embedItem = component.find('.embed-responsive-item');
         let chkAutoplay = form.find('#youtube-autoplay');
         let src = embedItem.attr('src');

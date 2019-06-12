@@ -4,8 +4,6 @@ const flog = KEditor.log;
 
 KEditor.components['vimeo'] = {
     init: function (contentArea, container, component, keditor) {
-        flog('init "vimeo" component', component);
-        
         let iframe = component.find('iframe');
         let wrapper = iframe.parent();
         keditor.initIframeCover(iframe, wrapper);
@@ -16,8 +14,6 @@ KEditor.components['vimeo'] = {
     settingTitle: 'Vimeo Settings',
     
     initSettingForm: function (form, keditor) {
-        flog('initSettingForm "vimeo" component');
-        
         form.append(
             '<form class="form-horizontal">' +
             '   <div class="form-group">' +
@@ -74,15 +70,11 @@ KEditor.components['vimeo'] = {
             let embedItem = keditor.getSettingComponent().find('.embed-responsive-item');
             let currentUrl = embedItem.attr('src');
             let newUrl = (currentUrl.replace(/(\?.+)+/, '')) + '?byline=0&portrait=0&badge=0&autoplay=' + (chkAutoplay.is(':checked') ? 1 : 0);
-            
-            flog('Current url: ' + currentUrl, 'New url: ' + newUrl);
             embedItem.attr('src', newUrl);
         });
     },
     
     showSettingForm: function (form, component, keditor) {
-        flog('showSettingForm "vimeo" component', component);
-        
         let embedItem = component.find('.embed-responsive-item');
         let chkAutoplay = form.find('#vimeo-autoplay');
         let src = embedItem.attr('src');

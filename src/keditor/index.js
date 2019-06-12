@@ -2,18 +2,18 @@ import $ from 'jquery';
 
 import DEFAULTS from './constants/defaults';
 
-import log from './utils/log';
-import error from './utils/error';
 import generateId from './utils/generateId';
 import generateToolbar from './utils/generateToolbar';
-import generateContentAreasWrapper from './utils/generateContentAreasWrapper';
 import beautifyCategories from './utils/beautifyCategories';
 import getDataAttributes from './utils/getDataAttributes';
 import getClickedElement from './utils/getClickedElement';
-import initKEditorClicks from './utils/initKEditorClicks';
 
-import initIframe from './iframe/initIframe';
+import initIframeActions from './iframe/initIframeActions';
 import initIframeCover from './iframe/initIframeCover';
+
+import initTopbar from './topbar/initTopbar';
+import initTopbarModes from './topbar/initTopbarModes';
+import initDeviceSwitcher from './topbar/initDeviceSwitcher';
 
 import initSidebar from './sidebar/initSidebar';
 import openSidebar from './sidebar/openSidebar';
@@ -27,6 +27,7 @@ import initSnippetsModal from './modal/initSnippetsModal';
 import openModal from './modal/openModal';
 import closeModal from './modal/closeModal';
 
+import initContentAreaWrapper from './contentArea/initContentAreaWrapper';
 import initContentAreas from './contentArea/initContentAreas';
 import initContentArea from './contentArea/initContentArea';
 
@@ -67,11 +68,14 @@ class KEditor {
     };
     
     static log(...args) {
-        log(...args);
+        if (console && typeof console.log === 'function' && $.keditor.debug) {
+            console.log.apply(console, ['[ KEditor ] ', ...args]);
+            console.log(`"log" is DEPRECATED. Will be removed soon. Please use "console.log" instead!`);
+        }
     }
     
-    static error(...args) {
-        error(...args);
+    static error(message) {
+        throw new Error(`[ KEditor ] ${message}`);
     }
     
     static init(target, config) {
@@ -82,12 +86,8 @@ class KEditor {
         return init.apply(this, [target, config]);
     }
     
-    generateId(type) {
-        return generateId.apply(this, [type]);
-    }
-    
-    generateContentAreasWrapper(content) {
-        return generateContentAreasWrapper.apply(this, [content]);
+    generateId() {
+        return generateId();
     }
     
     generateToolbar(type, isComponentConfigurable) {
@@ -128,18 +128,28 @@ class KEditor {
     
     // Iframe
     //---------------------------------
-    initIframe() {
-        return initIframe.apply(this);
-    }
-    
     initIframeCover(iframe, wrapper) {
         return initIframeCover.apply(this, [iframe, wrapper]);
     }
     
     // KEditor clicks
     //---------------------------------
-    initKEditorClicks() {
-        return initKEditorClicks.apply(this);
+    initIframeActions() {
+        return initIframeActions.apply(this);
+    }
+    
+    // Topbar
+    //---------------------------------
+    initTopbar() {
+        return initTopbar.apply(this);
+    }
+    
+    initDeviceSwitcher() {
+        return initDeviceSwitcher.apply(this);
+    }
+    
+    initTopbarModes() {
+        return initTopbarModes.apply(this);
     }
     
     // Sidebar
@@ -190,6 +200,10 @@ class KEditor {
     
     // Content areas
     //---------------------------------
+    initContentAreaWrapper() {
+        return initContentAreaWrapper.apply(this);
+    }
+    
     initContentAreas() {
         return initContentAreas.apply(this);
     }

@@ -1,9 +1,6 @@
 import SNIPPET_TYPE from '../constants/snippetType';
-import log from '../utils/log';
 
 export default function (target, snippetType) {
-    log('openModal', target, snippetType);
-    
     let self = this;
     let modal = self.modal;
     let options = self.options;

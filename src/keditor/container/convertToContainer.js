@@ -1,8 +1,4 @@
-import log from '../utils/log';
-
 export default function (contentArea, target) {
-    log('convertToContainer', contentArea, target);
-    
     let self = this;
     let container;
     

@@ -4,12 +4,7 @@ export default function () {
     let id = self.id;
     
     let content = self.getContent(false);
-    
-    if (self.options.iframeMode) {
-        self.iframeWrapper.remove();
-    } else {
-        self.contentAreasWrapper.remove();
-    }
+    self.wrapper.remove();
     
     if (element.is('textarea')) {
         element.val(content);

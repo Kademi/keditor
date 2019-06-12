@@ -1,11 +1,9 @@
 import SNIPPET_TYPE from '../constants/snippetType';
-import error from '../utils/error';
-import log from '../utils/log';
 
 export default function () {
     let self = this;
     let options = self.options;
-    let modalId = self.generateId('modal');
+    let modalId = self.generateId();
     let snippetsWrapperHtml = '';
     
     if (options.explicitSnippetEnabled) {
@@ -40,15 +38,11 @@ export default function () {
             `);
     
     if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
-        log(`Getting snippets form "${options.snippetsUrl}"...`);
-        
         $.ajax({
             type: 'get',
             dataType: 'html',
             url: options.snippetsUrl,
             success: function (resp) {
-                log('Success in getting snippets');
-                
                 if (typeof options.onSnippetsLoaded === 'function') {
                     resp = options.onSnippetsLoaded.call(self, resp) || resp;
                 }
@@ -65,7 +59,6 @@ export default function () {
                 }
             },
             error: function (jqXHR) {
-                log('Error when getting snippets', jqXHR);
                 if (typeof options.onSnippetsError === 'function') {
                     options.onSnippetsError.call(self, jqXHR);
                 }
@@ -230,6 +223,6 @@ export default function () {
         
         modal.appendTo(document.body);
     } else {
-        error('"snippetsUrl" must be not null!');
+        self.error('"snippetsUrl" must be not null!');
     }
 };

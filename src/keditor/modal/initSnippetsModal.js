@@ -1,4 +1,5 @@
 import SNIPPET_TYPE from '../constants/snippetType';
+import log from '../utils/log';
 
 export default function () {
     let self = this;
@@ -135,10 +136,10 @@ export default function () {
                 self.body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                 
                 newContainer = $(`
-                            <section class="keditor-ui keditor-container showed-keditor-toolbar">
-                                <section class="keditor-ui keditor-container-inner">${snippetContent}</section>
-                            </section>
-                        `);
+                    <section class="keditor-ui keditor-container showed-keditor-toolbar">
+                        <section class="keditor-ui keditor-container-inner">${snippetContent}</section>
+                    </section>
+                `);
                 self.modalTarget.append(newContainer);
                 
                 if (typeof options.onContainerSnippetAdded === 'function') {

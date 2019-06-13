@@ -2,6 +2,7 @@ import $ from 'jquery';
 
 import DEFAULTS from './constants/defaults';
 
+import log from './utils/log';
 import generateId from './utils/generateId';
 import generateToolbar from './utils/generateToolbar';
 import beautifyCategories from './utils/beautifyCategories';
@@ -55,6 +56,8 @@ if (!$.fn.sortable) {
     error('$.fn.sortable does not exist. Please import $.fn.sortable into your document for continue using KEditor.');
 }
 
+window.KEDITOR_DEBUG = true;
+
 // KEditor class
 class KEditor {
     static DEFAULTS = DEFAULTS;
@@ -68,10 +71,7 @@ class KEditor {
     };
     
     static log(...args) {
-        if (console && typeof console.log === 'function' && $.keditor.debug) {
-            console.log.apply(console, ['[ KEditor ] ', ...args]);
-            console.log(`"log" is DEPRECATED. Will be removed soon. Please use "console.log" instead!`);
-        }
+        return log.apply(null, args);
     }
     
     static error(message) {

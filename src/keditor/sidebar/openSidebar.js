@@ -4,7 +4,7 @@ export default function (target) {
     let self = this;
     let options = self.options;
     let sidebar = self.sidebar;
-    // alert(self.sidebar);
+    alert(self.sidebar);
     let sidebarTitle = sidebar.find(`.${CLASS_NAMES.SIDEBAR_TITLE}`);
     let sidebarBody = sidebar.find(`.${CLASS_NAMES.SIDEBAR_BODY}`);
     let activeForm = sidebarBody.children(`.${CLASS_NAMES.SETTING_FORM_ACTIVE}`);

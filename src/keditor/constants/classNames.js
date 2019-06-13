@@ -35,6 +35,8 @@ const CLASS_NAMES = {
     IFRAME_COVER_HIDDEN: 'hidden-cover',
     
     COMPONENT: 'keditor-component',
+    
+    PREVIEW_AREA: 'keditor-preview-area',
 };
 
 export default CLASS_NAMES;

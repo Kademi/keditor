@@ -16,6 +16,7 @@ const CLASS_NAMES = {
     TOPBAR_CENTER: 'keditor-topbar-center',
     TOPBAR_BUTTON: 'keditor-topbar-btn',
     TOPBAR_BUTTON_ACTIVE: 'active',
+    TOPBAR_TITLE: 'keditor-topbar-title',
     
     SETTING: 'keditor-setting',
     SETTING_CONTAINER: 'keditor-setting-container',

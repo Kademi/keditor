@@ -87,6 +87,14 @@ body {
     left: 0;
     width: 100%;
     background: @topbar-bg;
+    padding: 0 15px;
+}
+
+.keditor-topbar-title {
+    color: @topbar-title-color;
+    line-height: @topbar-height;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .keditor-topbar-left,
@@ -126,7 +134,7 @@ body {
     
     &:hover,
     &.active {
-        background: darken(@topbar-bg, 10%);
+        background: @topbar-btn-hover;
     }
     
     i {

@@ -105,8 +105,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 /* harmony default export */ __webpack_exports__["default"] = (function (contentArea, container, target, isExisting) {
-  if (target.is('.keditor-container-content-toolbar')) {
+  if (target.is(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER_CONTENT_TOOLBAR))) {
     return;
   }
 
@@ -115,16 +117,16 @@ __webpack_require__.r(__webpack_exports__);
   var component;
 
   if (isSection) {
-    target.addClass('keditor-ui keditor-component');
-    target.wrapInner('<section class="keditor-ui keditor-component-content"></section>');
+    target.addClass("".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT));
+    target.wrapInner("<section class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT_CONTENT, "\"></section>"));
     component = target;
   } else {
-    target.wrap('<section class="keditor-ui keditor-component"><section class="keditor-ui keditor-component-content"></section></section>');
+    target.wrap("\n<section class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT, "\">\n<section class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT_CONTENT, "\"></section>\n</section>\n"));
     component = target.parent().parent();
   }
 
   if (isExisting) {
-    component.addClass('existing-component');
+    component.addClass("".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT_EXISTING));
   }
 
   self.initComponent(contentArea, container, component);
@@ -166,6 +168,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 /* harmony default export */ __webpack_exports__["default"] = (function (component) {
   var self = this;
   var clonedComponent = component.clone();
@@ -174,23 +178,23 @@ __webpack_require__.r(__webpack_exports__);
   var dataAttributes = self.getDataAttributes(clonedComponent, null, true);
   var content; // Handle iframe-wrapper
 
-  var iframeWrapper = component.find('.keditor-iframe-wrapper');
+  var iframeWrapper = clonedComponent.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].IFRAME_COVER_WRAPPER));
 
   if (iframeWrapper.length > 0) {
-    iframeWrapper.find('.keditor-iframe-cover').remove();
+    iframeWrapper.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].IFRAME_COVER)).remove();
     var iframe = iframeWrapper.children('iframe');
 
-    if (iframeWrapper.hasClass('keditor-iframe-wrapper-fake')) {
+    if (iframeWrapper.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].IFRAME_COVER_WRAPPER_FAKE)) {
       iframe.unwrap();
     } else {
-      iframeWrapper.removeClass('keditor-iframe-wrapper');
+      iframeWrapper.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].IFRAME_COVER_WRAPPER);
     }
   }
 
   if (typeof componentData.getContent === 'function') {
     content = componentData.getContent.call(componentData, clonedComponent, self);
   } else {
-    var componentContent = clonedComponent.children('.keditor-component-content');
+    var componentContent = clonedComponent.children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT_CONTENT));
     content = componentContent.html();
   }
 
@@ -247,20 +251,22 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_toolbarType__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/toolbarType */ "./src/keditor/constants/toolbarType.js");
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 
 /* harmony default export */ __webpack_exports__["default"] = (function (contentArea, container, component) {
   var self = this;
   var options = self.options;
 
-  if (!component.hasClass('keditor-initialized-component') || !component.hasClass('keditor-initializing-component')) {
-    component.addClass('keditor-initializing-component');
+  if (!component.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_INITIALIZED) || !component.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_INITIALIZING)) {
+    component.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_INITIALIZING);
     component.attr('id', self.generateId());
 
     if (typeof options.onBeforeInitComponent === 'function') {
       options.onBeforeInitComponent.call(self, component, contentArea);
     }
 
-    var componentContent = component.children('.keditor-component-content');
+    var componentContent = component.children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].COMPONENT_CONTENT));
     componentContent.attr('id', self.generateId());
     var componentType = self.getComponentType(component);
     var componentData = KEditor.components[componentType];
@@ -278,8 +284,8 @@ __webpack_require__.r(__webpack_exports__);
       options.onInitComponent.call(self, component, contentArea);
     }
 
-    component.addClass('keditor-initialized-component');
-    component.removeClass('keditor-initializing-component');
+    component.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_INITIALIZED);
+    component.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_INITIALIZING);
   }
 });
 ;
@@ -295,11 +301,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 /* harmony default export */ __webpack_exports__["default"] = (function (dynamicElement) {
   var self = this;
   var options = self.options;
   var component = dynamicElement.closest('[data-type^=component]');
-  var contentArea = dynamicElement.closest('.keditor-content-area');
+  var contentArea = dynamicElement.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTENT_AREA));
   dynamicElement.attr('id', self.generateId());
 
   if (typeof options.onBeforeDynamicContentLoad === 'function') {
@@ -343,35 +351,71 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 var CLASS_NAMES = {
   UI: 'keditor-ui',
+  UI_DRAGGING: 'keditor-ui-dragging',
+  SORTABLE: 'ui-sortable',
   WRAPPER: 'keditor-wrapper',
   HIDDEN_ELEMENT: 'keditor-hidden-element',
+  STATE_ACTIVE: 'active',
+  STATE_OPENED: 'opened',
+  STATE_SHOWED: 'showed',
+  STATE_SELECTED: 'selected',
+  STATE_INITIALIZED: 'initialized',
+  STATE_INITIALIZING: 'initializing',
+  STATE_TOOLBAR_SHOWED: 'showed-keditor-toolbar',
+  STATE_SETTING_OPENED: 'opened-keditor-setting',
+  STATE_SIDEBAR_OPENED: 'opened-keditor-sidebar',
+  ADD_CONTENT: 'btn-add-content',
+  ADD_COMPONENT: 'btn-add-component',
+  ADD_CONTAINER: 'btn-add-container',
   SIDEBAR: 'keditor-sidebar',
   SIDEBAR_HEADER: 'keditor-sidebar-header',
   SIDEBAR_BODY: 'keditor-sidebar-body',
   SIDEBAR_TITLE: 'keditor-sidebar-title',
   SIDEBAR_CLOSER: 'keditor-sidebar-closer',
-  SIDEBAR_OPENED: 'opened',
   TOPBAR: 'keditor-topbar',
   TOPBAR_LEFT: 'keditor-topbar-left',
-  TOPBAR_RIGHT: 'keditor-topbar-right',
   TOPBAR_CENTER: 'keditor-topbar-center',
+  TOPBAR_RIGHT: 'keditor-topbar-right',
   TOPBAR_BUTTON: 'keditor-topbar-btn',
-  TOPBAR_BUTTON_ACTIVE: 'active',
   TOPBAR_TITLE: 'keditor-topbar-title',
+  MODAL: 'keditor-modal',
+  MODAL_TITLE: 'keditor-modal-title',
+  SNIPPET: 'keditor-snippet',
+  SNIPPETS: 'keditor-snippets',
+  SNIPPETS_WRAPPER: 'keditor-snippets-wrapper',
   SETTING: 'keditor-setting',
-  SETTING_CONTAINER: 'keditor-setting-container',
   SETTING_FORM: 'keditor-setting-form',
-  SETTING_FORM_ACTIVE: 'active',
-  CONTENT_AREAS_WRAPPER: 'keditor-content-areas-wrapper',
-  CONTENT_AREAS: 'keditor-content-areas',
+  SETTING_CONTAINER: 'keditor-setting-container',
   CONTENT_AREA: 'keditor-content-area',
+  CONTENT_AREA_INNER: 'keditor-content-area-inner',
+  CONTENT_AREAS: 'keditor-content-areas',
+  CONTENT_AREAS_WRAPPER: 'keditor-content-areas-wrapper',
   IFRAME: 'keditor-iframe',
   IFRAME_WRAPPER: 'keditor-iframe-wrapper',
-  IFRAME_FAKER: 'keditor-iframe-faker',
   IFRAME_COVER_WRAPPER: 'keditor-iframe-cover-wrapper',
+  IFRAME_COVER_WRAPPER_FAKE: 'keditor-iframe-cover-wrapper-fake',
   IFRAME_COVER: 'keditor-iframe-cover',
   IFRAME_COVER_HIDDEN: 'hidden-cover',
   COMPONENT: 'keditor-component',
+  COMPONENT_REPOSITION: 'btn-component-reposition',
+  COMPONENT_SETTING: 'btn-component-setting',
+  COMPONENT_DUPLICATE: 'btn-component-duplicate',
+  COMPONENT_DELETE: 'btn-component-delete',
+  COMPONENT_CONTENT: 'keditor-component-content',
+  COMPONENT_EXISTING: 'existing-component',
+  CONTAINER: 'keditor-container',
+  CONTAINER_TOOLBAR: 'keditor-toolbar-container',
+  CONTAINER_REPOSITION: 'btn-container-reposition',
+  CONTAINER_DUPLICATE: 'btn-container-duplicate',
+  CONTAINER_DELETE: 'btn-container-delete',
+  CONTAINER_SETTING: 'btn-container-setting',
+  CONTAINER_INNER: 'keditor-container-inner',
+  CONTAINER_CONTENT: 'keditor-container-content',
+  CONTAINER_CONTENT_INNER: 'keditor-container-content-inner',
+  CONTAINER_CONTENT_TOOLBAR: 'keditor-container-content-toolbar',
+  SUB_CONTAINER: 'keditor-sub-container',
+  SUB_CONTAINER_CONTENT: 'keditor-sub-container-content',
+  SUB_CONTAINER_TOOLBAR: 'keditor-toolbar-sub-container',
   PREVIEW_AREA: 'keditor-preview-area'
 };
 /* harmony default export */ __webpack_exports__["default"] = (CLASS_NAMES);
@@ -616,16 +660,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 /* harmony default export */ __webpack_exports__["default"] = (function (contentArea, target) {
   var self = this;
   var container;
 
   if (target.is('section')) {
-    target.addClass('keditor-ui keditor-container');
-    target.wrapInner('<section class="keditor-ui keditor-container-inner"></section>');
+    target.addClass("".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER));
+    target.wrapInner("<section class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER_INNER, "\"></section>"));
     container = target;
   } else {
-    target.wrap('<section class="keditor-ui keditor-container"><section class="keditor-ui keditor-container-inner"></section></section>');
+    target.wrap("\n<section class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER, "\">\n<section class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER_INNER, "\"></section>\n</section>\n"));
     container = target.parent().parent();
   }
 
@@ -644,20 +690,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 /* harmony default export */ __webpack_exports__["default"] = (function (container, isNested) {
   var self = this;
-  var containerInner = container.children('.keditor-container-inner').clone();
-  containerInner.find('[data-type=container-content]').not(isNested ? '' : '.keditor-sub-container-content').each(function () {
+  var containerInner = container.children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER_INNER)).clone();
+  containerInner.find('[data-type=container-content]').not(isNested ? '' : ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SUB_CONTAINER_CONTENT)).each(function () {
     var containerContent = $(this);
-    containerContent.removeClass('keditor-container-content keditor-sub-container-content ui-sortable').removeAttr('id');
+    containerContent.removeClass("".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER_CONTENT, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SUB_CONTAINER_CONTENT, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SORTABLE)).removeAttr('id');
     var containerContentInner = containerContent.children();
     var content = '';
     containerContentInner.children().each(function () {
       var child = $(this);
 
-      if (child.is('.keditor-component')) {
+      if (child.is(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT))) {
         content += self.getComponentContent(child);
-      } else if (child.is('.keditor-sub-container')) {
+      } else if (child.is(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SUB_CONTAINER))) {
         content += self.getContainerContent(child, true);
       }
     });
@@ -678,21 +726,23 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_toolbarType__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/toolbarType */ "./src/keditor/constants/toolbarType.js");
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 
 /* harmony default export */ __webpack_exports__["default"] = (function (contentArea, container) {
   var self = this;
   var options = self.options;
   var isNested = options.nestedContainerEnabled && container.closest('[data-type="container-content"]').length > 0;
 
-  if (!container.hasClass('keditor-initialized-container') || !container.hasClass('keditor-initializing-container')) {
-    container.addClass('keditor-initializing-container');
+  if (!container.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_INITIALIZED) || !container.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_INITIALIZING)) {
+    container.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_INITIALIZING);
 
     if (typeof options.onBeforeInitContainer === 'function') {
       options.onBeforeInitContainer.call(self, container, contentArea);
     }
 
     if (isNested) {
-      container.addClass('keditor-sub-container');
+      container.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SUB_CONTAINER);
     }
 
     container.append(self.generateToolbar(isNested ? _constants_toolbarType__WEBPACK_IMPORTED_MODULE_0__["default"].SUB_CONTAINER : _constants_toolbarType__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER));
@@ -713,8 +763,8 @@ __webpack_require__.r(__webpack_exports__);
       options.onInitContainer.call(self, container, contentArea);
     }
 
-    container.addClass('keditor-initialized-container');
-    container.removeClass('keditor-initializing-container');
+    container.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_INITIALIZED);
+    container.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_INITIALIZING);
   }
 });
 ;
@@ -732,19 +782,18 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_toolbarType__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/toolbarType */ "./src/keditor/constants/toolbarType.js");
 /* harmony import */ var _constants_snippetType__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/snippetType */ "./src/keditor/constants/snippetType.js");
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (contentArea, container, containerContent, isNested) {
   var self = this;
   var options = self.options;
-  containerContent.addClass('keditor-container-content');
-
-  if (isNested) {
-    containerContent.addClass('keditor-sub-container-content');
-  }
-
+  var contentAreasWrapper = self.contentAreasWrapper;
+  containerContent.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].CONTAINER_CONTENT);
+  isNested && containerContent.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].SUB_CONTAINER_CONTENT);
   containerContent.attr('id', self.generateId());
-  var containerContentInner = $('<div class="keditor-container-content-inner"></div>');
+  var containerContentInner = $("<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].CONTAINER_CONTENT_INNER, "\"></div>"));
   containerContentInner.html(containerContent.html());
   containerContent.html(containerContentInner);
   var containerContentToolbar = $(self.generateToolbar(isNested ? _constants_toolbarType__WEBPACK_IMPORTED_MODULE_0__["default"].SUB_CONTAINER_CONTENT : _constants_toolbarType__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER_CONTENT));
@@ -753,33 +802,30 @@ __webpack_require__.r(__webpack_exports__);
   if (options.explicitSnippetEnabled) {
     if (!isNested) {
       if (options.explicitSnippetEnabled) {
-        containerContentToolbar.children('.btn-add-container').on('click', function (e) {
+        containerContentToolbar.children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].ADD_CONTAINER)).on('click', function (e) {
           e.preventDefault();
           self.openModal(containerContentInner, _constants_snippetType__WEBPACK_IMPORTED_MODULE_1__["default"].CONTAINER);
         });
       }
     }
 
-    containerContentToolbar.children('.btn-add-component').on('click', function (e) {
+    containerContentToolbar.children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].ADD_COMPONENT)).on('click', function (e) {
       e.preventDefault();
       self.openModal(containerContentInner, _constants_snippetType__WEBPACK_IMPORTED_MODULE_1__["default"].COMPONENT);
     });
   } else {
-    containerContentToolbar.children('.btn-add-content').on('click', function (e) {
+    containerContentToolbar.children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].ADD_CONTENT)).on('click', function (e) {
       e.preventDefault();
       self.openModal(containerContentInner, isNested ? _constants_snippetType__WEBPACK_IMPORTED_MODULE_1__["default"].COMPONENT : options.nestedContainerEnabled ? _constants_snippetType__WEBPACK_IMPORTED_MODULE_1__["default"].ALL : _constants_snippetType__WEBPACK_IMPORTED_MODULE_1__["default"].COMPONENT);
     });
   }
 
   containerContentInner.sortable({
-    handle: '.btn-component-reposition, .btn-container-reposition',
+    handle: ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].COMPONENT_REPOSITION, " .").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].CONTAINER_REPOSITION),
     helper: 'clone',
     items: '> section',
-    connectWith: '.keditor-container-content-inner',
+    connectWith: ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].CONTAINER_CONTENT_INNER),
     tolerance: 'pointer',
-    sort: function sort() {
-      $(this).removeClass('ui-state-default');
-    },
     receive: function receive(event, ui) {
       var helper = ui.helper;
       var item = ui.item;
@@ -789,11 +835,11 @@ __webpack_require__.r(__webpack_exports__);
         helper.remove();
       }
 
-      container = item.closest('.keditor-container');
+      container = item.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].CONTAINER));
 
-      if (!container.hasClass('showed-keditor-toolbar')) {
-        $('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-        container.addClass('showed-keditor-toolbar');
+      if (!container.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].STATE_TOOLBAR_SHOWED)) {
+        contentAreasWrapper.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].CONTAINER, ".").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].STATE_TOOLBAR_SHOWED)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].STATE_TOOLBAR_SHOWED);
+        container.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].STATE_TOOLBAR_SHOWED);
       }
 
       if (typeof options.onContainerChanged === 'function') {
@@ -804,17 +850,17 @@ __webpack_require__.r(__webpack_exports__);
         options.onContentChanged.call(self, event, contentArea);
       }
 
-      item.removeClass('keditor-ui-dragging');
+      item.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].UI_DRAGGING);
     },
     start: function start(e, ui) {
-      ui.item.addClass('keditor-ui-dragging');
+      ui.item.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].UI_DRAGGING);
     },
     stop: function stop(e, ui) {
       if (ui.helper) {
         ui.helper.remove();
       }
 
-      ui.item.removeClass('keditor-ui-dragging');
+      ui.item.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].UI_DRAGGING);
     }
   });
   containerContentInner.children().each(function () {
@@ -842,14 +888,16 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_toolbarType__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/toolbarType */ "./src/keditor/constants/toolbarType.js");
 /* harmony import */ var _constants_snippetType__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/snippetType */ "./src/keditor/constants/snippetType.js");
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (contentArea, dontInitToolbar) {
   var self = this;
   var options = self.options;
-  contentArea.addClass('keditor-content-area');
+  contentArea.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].CONTENT_AREA);
   var content = contentArea.html();
-  var contentAreaInner = $('<div class="keditor-content-area-inner"></div>').html(content);
+  var contentAreaInner = $("<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].CONTENT_AREA_INNER, "\"></div>")).html(content);
   contentArea.html(contentAreaInner);
 
   if (typeof options.onBeforeInitContentArea === 'function') {
@@ -859,22 +907,19 @@ __webpack_require__.r(__webpack_exports__);
   if (!dontInitToolbar) {
     var contentAreaToolbar = $(self.generateToolbar(_constants_toolbarType__WEBPACK_IMPORTED_MODULE_0__["default"].CONTENT_AREA));
     contentArea.append(contentAreaToolbar);
-    contentAreaToolbar.children(options.explicitSnippetEnabled ? '.btn-add-container' : '.btn-add-content').on('click', function (e) {
+    contentAreaToolbar.children(options.explicitSnippetEnabled ? ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].ADD_CONTAINER) : ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].ADD_CONTENT)).on('click', function (e) {
       e.preventDefault();
       self.openModal(contentAreaInner, options.explicitSnippetEnabled ? _constants_snippetType__WEBPACK_IMPORTED_MODULE_1__["default"].CONTAINER : _constants_snippetType__WEBPACK_IMPORTED_MODULE_1__["default"].ALL);
     });
   }
 
   contentAreaInner.sortable({
-    handle: '.keditor-toolbar-container:not(.keditor-toolbar-sub-container) .btn-container-reposition',
+    handle: ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].CONTAINER_TOOLBAR, ":not(.").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].SUB_CONTAINER_TOOLBAR, ") .").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].CONTAINER_REPOSITION),
     items: '> section',
     helper: 'clone',
-    connectWith: '.keditor-content-area',
+    connectWith: ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].CONTENT_AREA),
     axis: 'y',
     tolerance: 'pointer',
-    sort: function sort() {
-      $(this).removeClass('ui-state-default');
-    },
     receive: function receive(event, ui) {
       var helper = ui.helper;
       var item = ui.item;
@@ -889,17 +934,17 @@ __webpack_require__.r(__webpack_exports__);
         options.onContentChanged.call(self, event, contentArea);
       }
 
-      item.addClass('keditor-ui-dragging');
+      item.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].UI_DRAGGING);
     },
     start: function start(e, ui) {
-      ui.item.addClass('keditor-ui-dragging');
+      ui.item.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].UI_DRAGGING);
     },
     stop: function stop(e, ui) {
       if (ui.helper) {
         ui.helper.remove();
       }
 
-      ui.item.removeClass('keditor-ui-dragging');
+      ui.item.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_2__["default"].UI_DRAGGING);
     }
   });
   contentAreaInner.children('section').each(function () {
@@ -1100,20 +1145,21 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var self = this;
   var options = self.options;
   var contentAreasWrapper = self.contentAreasWrapper;
   contentAreasWrapper.on('click', function (e) {
-    var sidebar = self.getClickedElement(e, '.keditor-sidebar');
-    var modal = self.getClickedElement(e, '.keditor-modal');
-    var container = self.getClickedElement(e, '.keditor-container');
+    var sidebar = self.getClickedElement(e, ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SIDEBAR));
+    var modal = self.getClickedElement(e, ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL));
+    var container = self.getClickedElement(e, ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER));
 
     if (container) {
-      if (!container.hasClass('showed-keditor-toolbar')) {
-        contentAreasWrapper.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-        contentAreasWrapper.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-        container.addClass('showed-keditor-toolbar');
+      if (!container.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_TOOLBAR_SHOWED)) {
+        contentAreasWrapper.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_TOOLBAR_SHOWED)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_TOOLBAR_SHOWED);
+        container.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_TOOLBAR_SHOWED);
         var contentArea = container.parent();
 
         if (typeof options.onContainerSelected === 'function') {
@@ -1122,17 +1168,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     } else {
       if (!sidebar && !modal) {
-        contentAreasWrapper.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-        contentAreasWrapper.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+        contentAreasWrapper.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_TOOLBAR_SHOWED)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_TOOLBAR_SHOWED);
       }
     }
 
-    var component = self.getClickedElement(e, '.keditor-component');
+    var component = self.getClickedElement(e, ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT));
 
     if (component) {
-      if (!component.hasClass('showed-keditor-toolbar')) {
-        contentAreasWrapper.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-        component.addClass('showed-keditor-toolbar');
+      if (!component.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_TOOLBAR_SHOWED)) {
+        contentAreasWrapper.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT, ".").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_TOOLBAR_SHOWED)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_TOOLBAR_SHOWED);
+        component.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_TOOLBAR_SHOWED);
 
         var _contentArea = component.parent();
 
@@ -1142,16 +1187,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     } else {
       if (!sidebar) {
-        contentAreasWrapper.find('.keditor-component.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+        contentAreasWrapper.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT, ".").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_TOOLBAR_SHOWED)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_TOOLBAR_SHOWED);
       }
     }
   });
-  contentAreasWrapper.on('click', '.btn-container-setting', function (e) {
+  contentAreasWrapper.on('click', ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER_SETTING), function (e) {
     e.preventDefault();
     var btn = $(this);
-    var container = btn.closest('.keditor-container');
+    var container = btn.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER));
 
-    if (contentAreasWrapper.hasClass('opened-keditor-setting') && contentAreasWrapper.hasClass('opened-keditor-sidebar')) {
+    if (contentAreasWrapper.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_SETTING_OPENED) && contentAreasWrapper.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_SIDEBAR_OPENED)) {
       if (!container.is(self.settingContainer)) {
         self.openSidebar(container);
       } else {
@@ -1161,12 +1206,12 @@ __webpack_require__.r(__webpack_exports__);
       self.openSidebar(container);
     }
   });
-  contentAreasWrapper.on('click', '.btn-container-duplicate', function (e) {
+  contentAreasWrapper.on('click', ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER_DUPLICATE), function (e) {
     e.preventDefault();
     var btn = $(this);
-    var container = btn.closest('.keditor-container');
+    var container = btn.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER));
     var contentArea = container.parent();
-    var newContainer = $(self.getContainerContent(container, btn.parent().hasClass('keditor-toolbar-sub-container')));
+    var newContainer = $(self.getContainerContent(container, btn.parent().hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SUB_CONTAINER_TOOLBAR)));
     container.after(newContainer);
     self.convertToContainer(contentArea, newContainer);
 
@@ -1178,13 +1223,13 @@ __webpack_require__.r(__webpack_exports__);
       options.onContentChanged.call(self, e, contentArea);
     }
   });
-  contentAreasWrapper.on('click', '.btn-container-delete', function (e) {
+  contentAreasWrapper.on('click', ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER_DELETE), function (e) {
     e.preventDefault();
     var btn = $(this);
 
     if (confirm(options.confirmDeleteContainerText)) {
-      var container = btn.closest('.keditor-container');
-      var components = container.find('.keditor-component');
+      var container = btn.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER));
+      var components = container.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT));
       var contentArea = container.parent();
 
       if (typeof options.onBeforeContainerDeleted === 'function') {
@@ -1194,7 +1239,7 @@ __webpack_require__.r(__webpack_exports__);
       var settingComponent = self.settingComponent;
 
       if (settingComponent) {
-        var settingComponentParent = settingComponent.closest('.keditor-container');
+        var settingComponentParent = settingComponent.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER));
 
         if (settingComponentParent.is(container)) {
           self.closeSidebar();
@@ -1220,12 +1265,12 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   });
-  contentAreasWrapper.on('click', '.btn-component-setting', function (e) {
+  contentAreasWrapper.on('click', ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT_SETTING), function (e) {
     e.preventDefault();
     var btn = $(this);
-    var component = btn.closest('.keditor-component');
+    var component = btn.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT));
 
-    if (contentAreasWrapper.hasClass('opened-keditor-setting') && contentAreasWrapper.hasClass('opened-keditor-sidebar')) {
+    if (contentAreasWrapper.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_SETTING_OPENED) && contentAreasWrapper.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_SIDEBAR_OPENED)) {
       if (!component.is(self.settingComponent())) {
         self.openSidebar(component);
       } else {
@@ -1235,11 +1280,11 @@ __webpack_require__.r(__webpack_exports__);
       self.openSidebar(component);
     }
   });
-  contentAreasWrapper.on('click', '.btn-component-duplicate', function (e) {
+  contentAreasWrapper.on('click', ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT_DUPLICATE), function (e) {
     e.preventDefault();
     var btn = $(this);
-    var component = btn.closest('.keditor-component');
-    var container = component.closest('.keditor-container');
+    var component = btn.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT));
+    var container = component.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER));
     var contentArea = container.parent();
     var newComponent = $(self.getComponentContent(component));
     component.after(newComponent);
@@ -1257,14 +1302,14 @@ __webpack_require__.r(__webpack_exports__);
       options.onContentChanged.call(self, e, contentArea);
     }
   });
-  contentAreasWrapper.on('click', '.btn-component-delete', function (e) {
+  contentAreasWrapper.on('click', ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT_DELETE), function (e) {
     e.preventDefault();
     var btn = $(this);
 
     if (confirm(options.confirmDeleteComponentText)) {
-      var component = btn.closest('.keditor-component');
-      var container = component.closest('.keditor-container');
-      var contentArea = component.closest('.keditor-content-area');
+      var component = btn.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT));
+      var container = component.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER));
+      var contentArea = component.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTENT_AREA));
 
       if (typeof options.onBeforeComponentDeleted === 'function') {
         options.onBeforeComponentDeleted.call(self, e, component, contentArea);
@@ -1289,7 +1334,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   });
-  contentAreasWrapper.addClass('keditor-clicks-initialized');
 });
 ;
 
@@ -1308,7 +1352,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = (function (iframe, wrapper) {
   if (!wrapper) {
-    iframe.wrap("<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].IFRAME_FAKER, "\"></div>"));
+    iframe.wrap("<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].IFRAME_COVER_WRAPPER_FAKE, "\"></div>"));
     wrapper = iframe.parent();
   }
 
@@ -1775,14 +1819,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var self = this;
   var modal = self.modal;
   self.modalTarget = null;
   self.modalAction = null;
-  modal.find('.keditor-modal-title').html('');
-  modal.find('.keditor-snippets-wrapper .selected').removeClass('selected');
-  modal.removeClass('showed');
+  modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_TITLE)).html('');
+  modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPETS_WRAPPER, " .").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_SELECTED)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_SELECTED);
+  modal.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_SHOWED);
 });
 ;
 
@@ -1798,7 +1844,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_snippetType__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/snippetType */ "./src/keditor/constants/snippetType.js");
-/* harmony import */ var _utils_log__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/log */ "./src/keditor/utils/log.js");
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
@@ -1808,9 +1854,9 @@ __webpack_require__.r(__webpack_exports__);
   var snippetsWrapperHtml = '';
 
   if (options.explicitSnippetEnabled) {
-    snippetsWrapperHtml = "\n<div class=\"keditor-snippets-wrapper keditor-snippets-wrapper-container\">\n<div class=\"keditor-snippets keditor-snippets-container\"></div>\n</div>\n<div class=\"keditor-snippets-wrapper keditor-snippets-wrapper-component\">\n<div class=\"keditor-snippets keditor-snippets-component\"></div>\n</div>\n";
+    snippetsWrapperHtml = "\n<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER, " keditor-snippets-wrapper-container\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS, " keditor-snippets-container\"></div>\n</div>\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER, " keditor-snippets-wrapper-component\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS, " keditor-snippets-component\"></div>\n</div>\n");
   } else {
-    snippetsWrapperHtml = "\n<div class=\"keditor-snippets-wrapper\">\n<div class=\"keditor-snippets\"></div>\n</div>\n";
+    snippetsWrapperHtml = "\n<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER, "\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS, "\"></div>\n</div>\n");
   }
 
   var modal = self.modal = $("\n<div class=\"keditor-ui keditor-modal\" id=\"".concat(modalId, "\">\n<div class=\"keditor-modal-header\">\n<button type=\"button\" class=\"keditor-modal-close\">&times;</button>\n<h4 class=\"keditor-modal-title\"></h4>\n</div>\n<div class=\"keditor-modal-body\">").concat(snippetsWrapperHtml, "</div>\n<div class=\"keditor-modal-footer\">\n<button type=\"button\" class=\"keditor-ui keditor-btn keditor-btn-default keditor-modal-close\">Close</button>\n<button type=\"button\" class=\"keditor-ui keditor-btn keditor-btn-primary keditor-modal-add\">Add</button>\n</div>\n</div>\n"));
@@ -2084,7 +2130,7 @@ __webpack_require__.r(__webpack_exports__);
   var self = this;
   var options = self.options;
   var sidebar = self.sidebar;
-  var activeForm = sidebar.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SIDEBAR_BODY)).children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_FORM_ACTIVE));
+  var activeForm = sidebar.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SIDEBAR_BODY)).children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE));
 
   if (activeForm.length > 0) {
     if (activeForm.is(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_CONTAINER))) {
@@ -2100,12 +2146,12 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
 
-    activeForm.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_FORM_ACTIVE);
+    activeForm.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
   }
 
   self.setSettingComponent(null);
   self.setSettingContainer(null);
-  sidebar.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SIDEBAR_OPENED);
+  sidebar.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_OPENED);
 });
 
 /***/ }),
@@ -2170,8 +2216,8 @@ __webpack_require__.r(__webpack_exports__);
   alert(self.sidebar);
   var sidebarTitle = sidebar.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SIDEBAR_TITLE));
   var sidebarBody = sidebar.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SIDEBAR_BODY));
-  var activeForm = sidebarBody.children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_FORM_ACTIVE));
-  activeForm.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_FORM_ACTIVE);
+  var activeForm = sidebarBody.children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE));
+  activeForm.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
 
   if (target.is(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT))) {
     self.setSettingComponent(target);
@@ -2186,7 +2232,7 @@ __webpack_require__.r(__webpack_exports__);
       var _componentData = KEditor.components[componentType];
 
       if (typeof _componentData.initSettingForm === 'function') {
-        settingForm = $("\n<div\ndata-type=\"".concat(componentType, "\"\nclass=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_FORM, " ").concat(settingFormClass, " clearfix ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_FORM_ACTIVE, "\"\n>\n</div>\n"));
+        settingForm = $("\n<div\ndata-type=\"".concat(componentType, "\"\nclass=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_FORM, " ").concat(settingFormClass, " clearfix ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE, "\"\n>\n</div>\n"));
         var loadingText = $('<span />').html('Loading...');
         sidebarBody.append(settingForm);
         settingForm.append(loadingText);
@@ -2208,7 +2254,7 @@ __webpack_require__.r(__webpack_exports__);
         componentData.showSettingForm.call(componentData, settingForm, target, self);
       }
 
-      settingForm.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_FORM_ACTIVE);
+      settingForm.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
     }
   } else {
     self.setSettingContainer(target);
@@ -2221,10 +2267,10 @@ __webpack_require__.r(__webpack_exports__);
       options.containerSettingShowFunction.call(self, _settingForm, target, self);
     }
 
-    _settingForm.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_FORM_ACTIVE);
+    _settingForm.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
   }
 
-  sidebar.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SIDEBAR_OPENED);
+  sidebar.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_OPENED);
 });
 ;
 
@@ -2551,26 +2597,26 @@ __webpack_require__.r(__webpack_exports__);
   var self = this;
   var topbarCenter = self.topbarCenter;
   var options = self.options;
-  var btnMobile = $("<a href=\"javascript:void(0);\" title=\"View on mobile\" class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON, "\"><i class=\"fa fa-fw fa-mobile\"></i></a>"));
+  var btnMobile = $("\n<a href=\"javascript:void(0);\" title=\"View on mobile\" class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON, "\">\n<i class=\"fa fa-fw fa-mobile\"></i>\n</a>\n"));
   btnMobile.on('click', function (e) {
     e.preventDefault();
-    topbarCenter.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON_ACTIVE)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON_ACTIVE);
+    topbarCenter.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
     self.iframeWrapper.css('width', options.widthMobile);
-    btnMobile.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON_ACTIVE);
+    btnMobile.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
   });
-  var btnTablet = $("<a href=\"javascript:void(0);\" title=\"View on tablet\" class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON, "\"><i class=\"fa fa-fw fa-tablet\"></i></a>"));
+  var btnTablet = $("\n<a href=\"javascript:void(0);\" title=\"View on tablet\" class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON, "\">\n<i class=\"fa fa-fw fa-tablet\"></i>\n</a>\n"));
   btnTablet.on('click', function (e) {
     e.preventDefault();
-    topbarCenter.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON_ACTIVE)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON_ACTIVE);
+    topbarCenter.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
     self.iframeWrapper.css('width', options.widthTablet);
-    btnTablet.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON_ACTIVE);
+    btnTablet.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
   });
-  var btnDesktop = $("<a href=\"javascript:void(0);\" title=\"View on desktop\" class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON_ACTIVE, "\"><i class=\"fa fa-fw fa-desktop\"></i></a>"));
+  var btnDesktop = $("\n<a href=\"javascript:void(0);\" title=\"View on desktop\" class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE, "\">\n<i class=\"fa fa-fw fa-desktop\"></i>\n</a>\n"));
   btnDesktop.on('click', function (e) {
     e.preventDefault();
-    topbarCenter.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON_ACTIVE)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON_ACTIVE);
+    topbarCenter.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
     self.iframeWrapper.css('width', '');
-    btnDesktop.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON_ACTIVE);
+    btnDesktop.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
   });
   topbarCenter.append(btnMobile);
   topbarCenter.append(btnTablet);
@@ -2631,8 +2677,8 @@ __webpack_require__.r(__webpack_exports__);
   self.contentAreasWrapper.after(self.previewArea);
   btnPreview.on('click', function (e) {
     e.preventDefault();
-    var isPreviewOn = btnPreview.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON_ACTIVE);
-    btnPreview[isPreviewOn ? 'removeClass' : 'addClass'](_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON_ACTIVE);
+    var isPreviewOn = btnPreview.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
+    btnPreview[isPreviewOn ? 'removeClass' : 'addClass'](_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
     btnPreview.attr('title', isPreviewOn ? 'Preview OFF' : 'Preview ON');
     iconPreviewOff.css('display', isPreviewOn ? '' : 'none');
     iconPreviewOn.css('display', isPreviewOn ? 'none' : '');

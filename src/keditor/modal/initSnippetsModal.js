@@ -1,5 +1,5 @@
 import SNIPPET_TYPE from '../constants/snippetType';
-import log from '../utils/log';
+import CLASS_NAMES from '../constants/classNames';
 
 export default function () {
     let self = this;
@@ -9,17 +9,17 @@ export default function () {
     
     if (options.explicitSnippetEnabled) {
         snippetsWrapperHtml = `
-            <div class="keditor-snippets-wrapper keditor-snippets-wrapper-container">
-                <div class="keditor-snippets keditor-snippets-container"></div>
+            <div class="${CLASS_NAMES.SNIPPETS_WRAPPER} keditor-snippets-wrapper-container">
+                <div class="${CLASS_NAMES.SNIPPETS} keditor-snippets-container"></div>
             </div>
-            <div class="keditor-snippets-wrapper keditor-snippets-wrapper-component">
-                <div class="keditor-snippets keditor-snippets-component"></div>
+            <div class="${CLASS_NAMES.SNIPPETS_WRAPPER} keditor-snippets-wrapper-component">
+                <div class="${CLASS_NAMES.SNIPPETS} keditor-snippets-component"></div>
             </div>
         `;
     } else {
         snippetsWrapperHtml = `
-            <div class="keditor-snippets-wrapper">
-                <div class="keditor-snippets"></div>
+            <div class="${CLASS_NAMES.SNIPPETS_WRAPPER}">
+                <div class="${CLASS_NAMES.SNIPPETS}"></div>
             </div>
         `;
     }

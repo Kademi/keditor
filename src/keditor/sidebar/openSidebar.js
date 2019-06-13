@@ -7,8 +7,8 @@ export default function (target) {
     alert(self.sidebar);
     let sidebarTitle = sidebar.find(`.${CLASS_NAMES.SIDEBAR_TITLE}`);
     let sidebarBody = sidebar.find(`.${CLASS_NAMES.SIDEBAR_BODY}`);
-    let activeForm = sidebarBody.children(`.${CLASS_NAMES.SETTING_FORM_ACTIVE}`);
-    activeForm.removeClass(CLASS_NAMES.SETTING_FORM_ACTIVE);
+    let activeForm = sidebarBody.children(`.${CLASS_NAMES.STATE_ACTIVE}`);
+    activeForm.removeClass(CLASS_NAMES.STATE_ACTIVE);
     
     if (target.is(`.${CLASS_NAMES.COMPONENT}`)) {
         self.setSettingComponent(target);
@@ -27,7 +27,7 @@ export default function (target) {
                 settingForm = $(`
                     <div
                         data-type="${componentType}"
-                        class="${CLASS_NAMES.UI} ${CLASS_NAMES.SETTING_FORM} ${settingFormClass} clearfix ${CLASS_NAMES.SETTING_FORM_ACTIVE}"
+                        class="${CLASS_NAMES.UI} ${CLASS_NAMES.SETTING_FORM} ${settingFormClass} clearfix ${CLASS_NAMES.STATE_ACTIVE}"
                     >
                     </div>
                 `);
@@ -50,7 +50,7 @@ export default function (target) {
             if (typeof componentData.showSettingForm === 'function') {
                 componentData.showSettingForm.call(componentData, settingForm, target, self);
             }
-            settingForm.addClass(CLASS_NAMES.SETTING_FORM_ACTIVE);
+            settingForm.addClass(CLASS_NAMES.STATE_ACTIVE);
         }
     } else {
         self.setSettingContainer(target);
@@ -62,8 +62,8 @@ export default function (target) {
         if (typeof options.containerSettingShowFunction === 'function') {
             options.containerSettingShowFunction.call(self, settingForm, target, self);
         }
-        settingForm.addClass(CLASS_NAMES.SETTING_FORM_ACTIVE);
+        settingForm.addClass(CLASS_NAMES.STATE_ACTIVE);
     }
     
-    sidebar.addClass(CLASS_NAMES.SIDEBAR_OPENED);
+    sidebar.addClass(CLASS_NAMES.STATE_OPENED);
 };

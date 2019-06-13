@@ -1,10 +1,12 @@
+import CLASS_NAMES from '../constants/classNames';
+
 export default function (container, isNested) {
     let self = this;
-    let containerInner = container.children('.keditor-container-inner').clone();
+    let containerInner = container.children(`.${CLASS_NAMES.CONTAINER_INNER}`).clone();
     
-    containerInner.find('[data-type=container-content]').not(isNested ? '' : '.keditor-sub-container-content').each(function () {
+    containerInner.find('[data-type=container-content]').not(isNested ? '' : `.${CLASS_NAMES.SUB_CONTAINER_CONTENT}`).each(function () {
         let containerContent = $(this);
-        containerContent.removeClass('keditor-container-content keditor-sub-container-content ui-sortable').removeAttr('id');
+        containerContent.removeClass(`${CLASS_NAMES.CONTAINER_CONTENT} ${CLASS_NAMES.SUB_CONTAINER_CONTENT} ${CLASS_NAMES.SORTABLE}`).removeAttr('id');
         
         let containerContentInner = containerContent.children();
         let content = '';
@@ -12,9 +14,9 @@ export default function (container, isNested) {
         containerContentInner.children().each(function () {
             let child = $(this);
             
-            if (child.is('.keditor-component')) {
+            if (child.is(`.${CLASS_NAMES.COMPONENT}`)) {
                 content += self.getComponentContent(child);
-            } else if (child.is('.keditor-sub-container')) {
+            } else if (child.is(`.${CLASS_NAMES.SUB_CONTAINER}`)) {
                 content += self.getContainerContent(child, true);
             }
         });

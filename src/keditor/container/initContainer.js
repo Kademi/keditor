@@ -1,19 +1,20 @@
-import TOOLBAR_TYPE from "../constants/toolbarType";
+import TOOLBAR_TYPE from '../constants/toolbarType';
+import CLASS_NAMES from '../constants/classNames';
 
 export default function (contentArea, container) {
     let self = this;
     let options = self.options;
     let isNested = options.nestedContainerEnabled && container.closest('[data-type="container-content"]').length > 0;
     
-    if (!container.hasClass('keditor-initialized-container') || !container.hasClass('keditor-initializing-container')) {
-        container.addClass('keditor-initializing-container');
+    if (!container.hasClass(CLASS_NAMES.STATE_INITIALIZED) || !container.hasClass(CLASS_NAMES.STATE_INITIALIZING)) {
+        container.addClass(CLASS_NAMES.STATE_INITIALIZING);
         
         if (typeof options.onBeforeInitContainer === 'function') {
             options.onBeforeInitContainer.call(self, container, contentArea);
         }
         
         if (isNested) {
-            container.addClass('keditor-sub-container');
+            container.addClass(CLASS_NAMES.SUB_CONTAINER);
         }
         
         container.append(self.generateToolbar(isNested ? TOOLBAR_TYPE.SUB_CONTAINER : TOOLBAR_TYPE.CONTAINER));
@@ -36,7 +37,7 @@ export default function (contentArea, container) {
             options.onInitContainer.call(self, container, contentArea);
         }
         
-        container.addClass('keditor-initialized-container');
-        container.removeClass('keditor-initializing-container');
+        container.addClass(CLASS_NAMES.STATE_INITIALIZED);
+        container.removeClass(CLASS_NAMES.STATE_INITIALIZING);
     }
 };

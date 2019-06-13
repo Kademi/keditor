@@ -17,9 +17,9 @@ export default function () {
     btnPreview.on('click', function (e) {
         e.preventDefault();
         
-        let isPreviewOn = btnPreview.hasClass(CLASS_NAMES.TOPBAR_BUTTON_ACTIVE);
+        let isPreviewOn = btnPreview.hasClass(CLASS_NAMES.STATE_ACTIVE);
     
-        btnPreview[isPreviewOn ? 'removeClass' : 'addClass'](CLASS_NAMES.TOPBAR_BUTTON_ACTIVE);
+        btnPreview[isPreviewOn ? 'removeClass' : 'addClass'](CLASS_NAMES.STATE_ACTIVE);
         btnPreview.attr('title', isPreviewOn ? 'Preview OFF' : 'Preview ON');
         iconPreviewOff.css('display', isPreviewOn ? '' : 'none');
         iconPreviewOn.css('display', isPreviewOn ? 'none' : '');

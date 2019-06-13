@@ -1,18 +1,19 @@
-import TOOLBAR_TYPE from "../constants/toolbarType";
+import TOOLBAR_TYPE from '../constants/toolbarType';
+import CLASS_NAMES from '../constants/classNames';
 
 export default function (contentArea, container, component) {
     let self = this;
     let options = self.options;
     
-    if (!component.hasClass('keditor-initialized-component') || !component.hasClass('keditor-initializing-component')) {
-        component.addClass('keditor-initializing-component');
+    if (!component.hasClass(CLASS_NAMES.STATE_INITIALIZED) || !component.hasClass(CLASS_NAMES.STATE_INITIALIZING)) {
+        component.addClass(CLASS_NAMES.STATE_INITIALIZING);
         component.attr('id', self.generateId());
         
         if (typeof options.onBeforeInitComponent === 'function') {
             options.onBeforeInitComponent.call(self, component, contentArea);
         }
         
-        let componentContent = component.children('.keditor-component-content');
+        let componentContent = component.children(`.${CLASS_NAMES.COMPONENT_CONTENT}`);
         componentContent.attr('id', self.generateId());
         
         let componentType = self.getComponentType(component);
@@ -34,7 +35,7 @@ export default function (contentArea, container, component) {
             options.onInitComponent.call(self, component, contentArea);
         }
         
-        component.addClass('keditor-initialized-component');
-        component.removeClass('keditor-initializing-component');
+        component.addClass(CLASS_NAMES.STATE_INITIALIZED);
+        component.removeClass(CLASS_NAMES.STATE_INITIALIZING);
     }
 };

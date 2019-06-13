@@ -1,3 +1,5 @@
+import CLASS_NAMES from '../constants/classNames';
+
 export default function (component) {
     let self = this;
     let clonedComponent = component.clone();
@@ -7,22 +9,22 @@ export default function (component) {
     let content;
     
     // Handle iframe-wrapper
-    let iframeWrapper = component.find('.keditor-iframe-wrapper');
+    let iframeWrapper = clonedComponent.find(`.${CLASS_NAMES.IFRAME_COVER_WRAPPER}`);
     if (iframeWrapper.length > 0) {
-        iframeWrapper.find('.keditor-iframe-cover').remove();
+        iframeWrapper.find(`.${CLASS_NAMES.IFRAME_COVER}`).remove();
         
         let iframe = iframeWrapper.children('iframe');
-        if (iframeWrapper.hasClass('keditor-iframe-wrapper-fake')) {
+        if (iframeWrapper.hasClass(CLASS_NAMES.IFRAME_COVER_WRAPPER_FAKE)) {
             iframe.unwrap();
         } else {
-            iframeWrapper.removeClass('keditor-iframe-wrapper');
+            iframeWrapper.removeClass(CLASS_NAMES.IFRAME_COVER_WRAPPER);
         }
     }
     
     if (typeof componentData.getContent === 'function') {
         content = componentData.getContent.call(componentData, clonedComponent, self);
     } else {
-        let componentContent = clonedComponent.children('.keditor-component-content');
+        let componentContent = clonedComponent.children(`.${CLASS_NAMES.COMPONENT_CONTENT}`);
         content = componentContent.html();
     }
     

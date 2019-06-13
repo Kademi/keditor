@@ -1,8 +1,10 @@
+import CLASS_NAMES from '../constants/classNames';
+
 export default function (dynamicElement) {
     let self = this;
     let options = self.options;
     let component = dynamicElement.closest('[data-type^=component]');
-    let contentArea = dynamicElement.closest('.keditor-content-area');
+    let contentArea = dynamicElement.closest(`.${CLASS_NAMES.CONTENT_AREA}`);
     
     dynamicElement.attr('id', self.generateId());
     

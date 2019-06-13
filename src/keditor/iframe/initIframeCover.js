@@ -2,7 +2,7 @@ import CLASS_NAMES from '../constants/classNames';
 
 export default function (iframe, wrapper) {
     if (!wrapper) {
-        iframe.wrap(`<div class="${CLASS_NAMES.IFRAME_FAKER}"></div>`);
+        iframe.wrap(`<div class="${CLASS_NAMES.IFRAME_COVER_WRAPPER_FAKE}"></div>`);
         wrapper = iframe.parent();
     }
     

@@ -1,13 +1,14 @@
-import TOOLBAR_TYPE from "../constants/toolbarType";
-import SNIPPET_TYPE from "../constants/snippetType";
+import TOOLBAR_TYPE from '../constants/toolbarType';
+import SNIPPET_TYPE from '../constants/snippetType';
+import CLASS_NAMES from '../constants/classNames';
 
 export default function (contentArea, dontInitToolbar) {
     let self = this;
     let options = self.options;
     
-    contentArea.addClass('keditor-content-area');
+    contentArea.addClass(CLASS_NAMES.CONTENT_AREA);
     let content = contentArea.html();
-    let contentAreaInner = $('<div class="keditor-content-area-inner"></div>').html(content);
+    let contentAreaInner = $(`<div class="${CLASS_NAMES.CONTENT_AREA_INNER}"></div>`).html(content);
     contentArea.html(contentAreaInner);
     
     if (typeof options.onBeforeInitContentArea === 'function') {
@@ -17,7 +18,7 @@ export default function (contentArea, dontInitToolbar) {
     if (!dontInitToolbar) {
         let contentAreaToolbar = $(self.generateToolbar(TOOLBAR_TYPE.CONTENT_AREA));
         contentArea.append(contentAreaToolbar);
-        contentAreaToolbar.children(options.explicitSnippetEnabled ? '.btn-add-container' : '.btn-add-content').on('click', function (e) {
+        contentAreaToolbar.children(options.explicitSnippetEnabled ? `.${CLASS_NAMES.ADD_CONTAINER}` : `.${CLASS_NAMES.ADD_CONTENT}`).on('click', function (e) {
             e.preventDefault();
             
             self.openModal(contentAreaInner, options.explicitSnippetEnabled ? SNIPPET_TYPE.CONTAINER : SNIPPET_TYPE.ALL);
@@ -25,15 +26,12 @@ export default function (contentArea, dontInitToolbar) {
     }
     
     contentAreaInner.sortable({
-        handle: '.keditor-toolbar-container:not(.keditor-toolbar-sub-container) .btn-container-reposition',
+        handle: `.${CLASS_NAMES.CONTAINER_TOOLBAR}:not(.${CLASS_NAMES.SUB_CONTAINER_TOOLBAR}) .${CLASS_NAMES.CONTAINER_REPOSITION}`,
         items: '> section',
         helper: 'clone',
-        connectWith: '.keditor-content-area',
+        connectWith: `.${CLASS_NAMES.CONTENT_AREA}`,
         axis: 'y',
         tolerance: 'pointer',
-        sort: function () {
-            $(this).removeClass('ui-state-default');
-        },
         receive: function (event, ui) {
             let helper = ui.helper;
             let item = ui.item;
@@ -48,16 +46,16 @@ export default function (contentArea, dontInitToolbar) {
                 options.onContentChanged.call(self, event, contentArea);
             }
             
-            item.addClass('keditor-ui-dragging');
+            item.addClass(CLASS_NAMES.UI_DRAGGING);
         },
         start: function (e, ui) {
-            ui.item.addClass('keditor-ui-dragging');
+            ui.item.addClass(CLASS_NAMES.UI_DRAGGING);
         },
         stop: function (e, ui) {
             if (ui.helper) {
                 ui.helper.remove();
             }
-            ui.item.removeClass('keditor-ui-dragging');
+            ui.item.removeClass(CLASS_NAMES.UI_DRAGGING);
         }
     });
     

@@ -12,7 +12,7 @@ import initIframeActions from './iframe/initIframeActions';
 import initIframeCover from './iframe/initIframeCover';
 
 import initTopbar from './topbar/initTopbar';
-import initTopbarModes from './topbar/initTopbarModes';
+import initTopbarRightActions from './topbar/initTopbarRightActions';
 import initDeviceSwitcher from './topbar/initDeviceSwitcher';
 
 import initSidebar from './sidebar/initSidebar';
@@ -148,8 +148,8 @@ class KEditor {
         return initDeviceSwitcher.apply(this);
     }
     
-    initTopbarModes() {
-        return initTopbarModes.apply(this);
+    initTopbarRightActions() {
+        return initTopbarRightActions.apply(this);
     }
     
     // Sidebar
@@ -270,7 +270,7 @@ class KEditor {
         return destroy.apply(this);
     }
     
-    // Destroy
+    // Snippet
     //---------------------------------
     addSnippet(type, title, previewUrl, categories, content, dataAttributes) {
         return addSnippet.apply(this, [type, title, previewUrl, categories, content, dataAttributes]);

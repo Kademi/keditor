@@ -23,5 +23,5 @@ export default function () {
     self.topbar.appendTo(self.wrapper);
     
     self.initDeviceSwitcher();
-    self.initTopbarModes();
+    self.initTopbarRightActions();
 };

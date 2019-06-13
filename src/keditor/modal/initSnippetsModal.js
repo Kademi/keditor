@@ -83,7 +83,9 @@ export default function () {
             
             let contentArea = self.modalTarget.closest('.keditor-content-area');
             let snippetType = selectedSnippet.attr('data-type');
+    
             let snippetContentElement = modal.find(selectedSnippet.attr('data-snippet'));
+    
             let snippetContent = snippetContentElement.html();
             let isAddingContainer = false;
             let isAddingComponent = false;

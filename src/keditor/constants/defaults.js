@@ -217,6 +217,14 @@ export default {
     },
     
     /*
+     * Callback will be called after clicking on "Save" button in topbar
+     * @option {Function}
+     * @param {String} content
+     */
+    onSave: function (content) {
+    },
+    
+    /*
      * Callback will be called after snippets are loaded. If you want to modify snippets content, please return modified
      * @option {Function}
      * @param {String} resp
@@ -280,7 +288,7 @@ export default {
     },
     
     /*
-     * Callback will be called when initializing container. It can return array of jQuery objects which will be initialized as editable components in container content (NOTE: these objects MUST be under elements which have attribute data-type="container-content"). By default, all first level sections under container content will be initialized
+     * Callback will be called when initializing container. It can return array of jQuery objects which will be initialized as editable components in container content (NOTE: these objects MUST be under elements which have attribute data-type=`container-content"). By default, all first level sections under container content will be initialized
      * @option {Function}
      * @param {jQuery} container
      * @param {jQuery} contentArea

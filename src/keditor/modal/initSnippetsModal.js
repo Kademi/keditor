@@ -9,34 +9,34 @@ export default function () {
     
     if (options.explicitSnippetEnabled) {
         snippetsWrapperHtml = `
-                    <div class="keditor-snippets-wrapper keditor-snippets-wrapper-container">
-                        <div class="keditor-snippets keditor-snippets-container"></div>
-                    </div>
-                    <div class="keditor-snippets-wrapper keditor-snippets-wrapper-component">
-                        <div class="keditor-snippets keditor-snippets-component"></div>
-                    </div>
-                `;
+            <div class="keditor-snippets-wrapper keditor-snippets-wrapper-container">
+                <div class="keditor-snippets keditor-snippets-container"></div>
+            </div>
+            <div class="keditor-snippets-wrapper keditor-snippets-wrapper-component">
+                <div class="keditor-snippets keditor-snippets-component"></div>
+            </div>
+        `;
     } else {
         snippetsWrapperHtml = `
-                    <div class="keditor-snippets-wrapper">
-                        <div class="keditor-snippets"></div>
-                    </div>
-                `;
+            <div class="keditor-snippets-wrapper">
+                <div class="keditor-snippets"></div>
+            </div>
+        `;
     }
     
     let modal = self.modal = $(`
-                <div class="keditor-ui keditor-modal" id="${modalId}">
-                    <div class="keditor-modal-header">
-                        <button type="button" class="keditor-modal-close">&times;</button>
-                        <h4 class="keditor-modal-title"></h4>
-                    </div>
-                    <div class="keditor-modal-body">${snippetsWrapperHtml}</div>
-                    <div class="keditor-modal-footer">
-                        <button type="button" class="keditor-ui keditor-btn keditor-btn-default keditor-modal-close">Close</button>
-                        <button type="button" class="keditor-ui keditor-btn keditor-btn-primary keditor-modal-add">Add</button>
-                    </div>
-                </div>
-            `);
+        <div class="keditor-ui keditor-modal" id="${modalId}">
+            <div class="keditor-modal-header">
+                <button type="button" class="keditor-modal-close">&times;</button>
+                <h4 class="keditor-modal-title"></h4>
+            </div>
+            <div class="keditor-modal-body">${snippetsWrapperHtml}</div>
+            <div class="keditor-modal-footer">
+                <button type="button" class="keditor-ui keditor-btn keditor-btn-default keditor-modal-close">Close</button>
+                <button type="button" class="keditor-ui keditor-btn keditor-btn-primary keditor-modal-add">Add</button>
+            </div>
+        </div>
+    `);
     
     if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
         $.ajax({
@@ -84,9 +84,9 @@ export default function () {
             
             let contentArea = self.modalTarget.closest('.keditor-content-area');
             let snippetType = selectedSnippet.attr('data-type');
-    
+            
             let snippetContentElement = modal.find(selectedSnippet.attr('data-snippet'));
-    
+            
             let snippetContent = snippetContentElement.html();
             let isAddingContainer = false;
             let isAddingComponent = false;
@@ -133,7 +133,7 @@ export default function () {
             let newComponent;
             
             if (isAddingContainer) {
-                self.body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                self.contentAreasWrapper.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                 
                 newContainer = $(`
                     <section class="keditor-ui keditor-container showed-keditor-toolbar">
@@ -156,10 +156,10 @@ export default function () {
             if (isAddingComponent) {
                 let dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
                 newComponent = $(`
-                            <section class="keditor-ui keditor-component" data-type="${snippetType}" ${dataAttributes.join(' ')}>
-                                <section class="keditor-ui keditor-component-content">${snippetContent}</section>
-                            </section>
-                        `);
+                    <section class="keditor-ui keditor-component" data-type="${snippetType}" ${dataAttributes.join(' ')}>
+                        <section class="keditor-ui keditor-component-content">${snippetContent}</section>
+                    </section>
+                `);
                 self.modalTarget.append(newComponent);
                 
                 let container = self.modalTarget.closest('.keditor-container');
@@ -175,19 +175,19 @@ export default function () {
             }
             
             if (isAddingComponentWithContainer) {
-                self.body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+                self.contentAreasWrapper.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
                 
                 let dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
                 newContainer = $(`
-                            <section class="keditor-ui keditor-container showed-keditor-toolbar">
-                                <section class="keditor-ui keditor-container-inner">${options.containerForQuickAddComponent}</section>
-                            </section>
-                        `);
+                    <section class="keditor-ui keditor-container showed-keditor-toolbar">
+                        <section class="keditor-ui keditor-container-inner">${options.containerForQuickAddComponent}</section>
+                    </section>
+                `);
                 newComponent = $(`
-                            <section class="keditor-ui keditor-component" data-type="${snippetType}" ${dataAttributes.join(' ')}>
-                                <section class="keditor-ui keditor-component-content">${snippetContent}</section>
-                            </section>
-                        `);
+                    <section class="keditor-ui keditor-component" data-type="${snippetType}" ${dataAttributes.join(' ')}>
+                        <section class="keditor-ui keditor-component-content">${snippetContent}</section>
+                    </section>
+                `);
                 newContainer.find('[data-type="container-content"]').eq(0).html(newComponent);
                 self.modalTarget.append(newContainer);
                 

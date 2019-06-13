@@ -298,7 +298,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (function (dynamicElement) {
   var self = this;
   var options = self.options;
-  var component = dynamicElement.closest('.keditor-component');
+  var component = dynamicElement.closest('[data-type^=component]');
   var contentArea = dynamicElement.closest('.keditor-content-area');
   dynamicElement.attr('id', self.generateId());
 
@@ -558,13 +558,13 @@ __webpack_require__.r(__webpack_exports__);
   /** Callback will be called after a component snippet is added in a container* @option {Function}* @param {Event} event* @param {jQuery} newComponent* @param {jQuery} selectedSnippet* @param {jQuery} contentArea*/
   onComponentSnippetAdded: function onComponentSnippetAdded(event, newComponent, selectedSnippet, contentArea) {},
 
-  /** Callback will be called before loading dynamic content* @option {Function}* @param {jQuery} dynamicElement* @param {jQuery} component* @param {jQuery} contentArea*/
+  /** Callback will be called before loading dynamic content* @option {Function}* @param {jQuery} dynamicElement* @param {jQuery} component* @param {jQuery} contentArea Can be null if preview is ON*/
   onBeforeDynamicContentLoad: function onBeforeDynamicContentLoad(dynamicElement, component, contentArea) {},
 
-  /** Callback will be called after dynamic content is loaded* @option {Function}* @param {jQuery} dynamicElement* @param {jqXHR} , jqXHR* @param {jQuery} contentArea*/
+  /** Callback will be called after dynamic content is loaded* @option {Function}* @param {jQuery} dynamicElement* @param {jqXHR} , jqXHR* @param {jQuery} contentArea Can be null if preview is ON*/
   onDynamicContentLoaded: function onDynamicContentLoaded(dynamicElement, jqXHR, contentArea) {},
 
-  /** Callback will be called if loading dynamic content is error, abort or timeout* @option {Function}* @param {jQuery} dynamicElement* @param {jqXHR} , jqXHR* @param {jQuery} contentArea*/
+  /** Callback will be called if loading dynamic content is error, abort or timeout* @option {Function}* @param {jQuery} dynamicElement* @param {jqXHR} , jqXHR* @param {jQuery} contentArea Can be null if preview is ON*/
   onDynamicContentError: function onDynamicContentError(dynamicElement, jqXHR, contentArea) {}
 });
 
@@ -1905,7 +1905,7 @@ __webpack_require__.r(__webpack_exports__);
       var newComponent;
 
       if (isAddingContainer) {
-        self.body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+        self.contentAreasWrapper.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
         newContainer = $("\n<section class=\"keditor-ui keditor-container showed-keditor-toolbar\">\n<section class=\"keditor-ui keditor-container-inner\">".concat(snippetContent, "</section>\n</section>\n"));
         self.modalTarget.append(newContainer);
 
@@ -1938,7 +1938,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (isAddingComponentWithContainer) {
-        self.body.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+        self.contentAreasWrapper.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
 
         var _dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
 
@@ -2641,7 +2641,11 @@ __webpack_require__.r(__webpack_exports__);
 
     if (!isPreviewOn) {
       var content = self.getContent();
-      self.previewArea.html(content);
+      self.previewArea.html(content).find('[data-dynamic-href]').each(function () {
+        var dynamicElement = $(this);
+        dynamicElement.html('Loading...');
+        self.initDynamicContent(dynamicElement);
+      });
     }
   });
   var btnSave = $("<a href=\"javascript:void(0);\" title=\"Save\" class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].TOPBAR_BUTTON, "\"><i class=\"fa fa-fw fa-save\"></i></a>"));

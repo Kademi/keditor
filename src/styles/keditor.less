@@ -54,9 +54,13 @@ body {
 .keditor-wrapper {
     height: 100%;
     padding-top: @topbar-height;
-    background: @wrapper-bg;
+    background: @wrapper-bg url(@wrapper-bg-image) repeat;
     position: relative;
     overflow: hidden;
+    
+    &.small {
+        background-image: url(@wrapper-bg-image2);
+    }
 }
 
 /* ==================================================================================
@@ -66,6 +70,7 @@ body {
     position: relative;
     height: 100%;
     margin: 0 auto;
+    box-shadow: @iframe-wrapper-shadow;
 }
 
 .keditor-iframe {

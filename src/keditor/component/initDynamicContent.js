@@ -1,7 +1,7 @@
 export default function (dynamicElement) {
     let self = this;
     let options = self.options;
-    let component = dynamicElement.closest('.keditor-component');
+    let component = dynamicElement.closest('[data-type^=component]');
     let contentArea = dynamicElement.closest('.keditor-content-area');
     
     dynamicElement.attr('id', self.generateId());

@@ -28,7 +28,11 @@ export default function () {
         
         if (!isPreviewOn) {
             let content = self.getContent();
-            self.previewArea.html(content);
+            self.previewArea.html(content).find('[data-dynamic-href]').each(function () {
+                let dynamicElement = $(this);
+                dynamicElement.html('Loading...');
+                self.initDynamicContent(dynamicElement);
+            });
         }
     });
     

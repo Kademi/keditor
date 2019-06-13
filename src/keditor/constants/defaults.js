@@ -451,7 +451,7 @@ export default {
      * @option {Function}
      * @param {jQuery} dynamicElement
      * @param {jQuery} component
-     * @param {jQuery} contentArea
+     * @param {jQuery} contentArea Can be null if preview is ON
      */
     onBeforeDynamicContentLoad: function (dynamicElement, component, contentArea) {
     },
@@ -461,7 +461,7 @@ export default {
      * @option {Function}
      * @param {jQuery} dynamicElement
      * @param {jqXHR} , jqXHR
-     * @param {jQuery} contentArea
+     * @param {jQuery} contentArea Can be null if preview is ON
      */
     onDynamicContentLoaded: function (dynamicElement, jqXHR, contentArea) {
     },
@@ -471,7 +471,7 @@ export default {
      * @option {Function}
      * @param {jQuery} dynamicElement
      * @param {jqXHR} , jqXHR
-     * @param {jQuery} contentArea
+     * @param {jQuery} contentArea Can be null if preview is ON
      */
     onDynamicContentError: function (dynamicElement, jqXHR, contentArea) {
     }

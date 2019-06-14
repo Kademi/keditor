@@ -1,6 +1,7 @@
-import renderSnippet from "./renderSnippet";
-import renderSnippetFilter from "./renderSnippetFilter";
-import SNIPPET_TYPE from "../constants/snippetType";
+import renderSnippet from './renderSnippet';
+import renderSnippetFilter from './renderSnippetFilter';
+import SNIPPET_TYPE from '../constants/snippetType';
+import CLASS_NAMES from '../constants/classNames';
 
 export default function (type, title, previewUrl, categories, content, extraData) {
     let self = this;
@@ -16,14 +17,14 @@ export default function (type, title, previewUrl, categories, content, extraData
     
     if (options.explicitSnippetEnabled) {
         if (type === 'container') {
-            self.modal.find('.keditor-snippets-container').append(snippetPreviewHtml);
+            self.modal.find(`.${CLASS_NAMES.SNIPPETS_CONTAINER}`).append(snippetPreviewHtml);
         } else if (type.indexOf('component') !== -1) {
-            self.modal.find('.keditor-snippets-component').append(snippetPreviewHtml);
+            self.modal.find(`.${CLASS_NAMES.SNIPPETS_COMPONENT}`).append(snippetPreviewHtml);
         }
     } else {
-        self.modal.find('.keditor-snippets').append(snippetPreviewHtml)
+        self.modal.find(`.${CLASS_NAMES.SNIPPETS}`).append(snippetPreviewHtml)
     }
-    self.modal.find('.keditor-modal-body').append(snippetContentHtml);
+    self.modal.find(`.${CLASS_NAMES.MODAL_BODY}`).append(snippetContentHtml);
     
     let filterType;
     if (options.snippetsFilterEnabled) {
@@ -35,5 +36,5 @@ export default function (type, title, previewUrl, categories, content, extraData
     }
     
     let [categoriesOptions, snippetsWrapper] = renderSnippetFilter.call(this, filterType);
-    snippetsWrapper.find('.keditor-snippets-filter').html(categoriesOptions).trigger('change');
+    snippetsWrapper.find(`.${CLASS_NAMES.SNIPPETS_FILTER}`).html(categoriesOptions).trigger('change');
 };

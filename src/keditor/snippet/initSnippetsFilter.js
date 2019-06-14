@@ -1,4 +1,5 @@
-import renderSnippetFilter from "./renderSnippetFilter";
+import renderSnippetFilter from './renderSnippetFilter';
+import CLASS_NAMES from '../constants/classNames';
 
 export default function (type) {
     let self = this;
@@ -6,16 +7,16 @@ export default function (type) {
     let [categoriesOptions, snippetsWrapper] = renderSnippetFilter.call(this, type);
     
     snippetsWrapper.prepend(`
-        <div class="keditor-ui keditor-snippets-filter-wrapper">
-            <select class="keditor-ui keditor-snippets-filter">
+        <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER_WRAPPER}">
+            <select class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER}">
                 ${categoriesOptions}
             </select>
-            <input type="text" class="keditor-ui keditor-snippets-search" value="" placeholder="Type to search..." />
+            <input type="text" class="${CLASS_NAMES.UI} keditor-snippets-search" value="" placeholder="Type to search..." />
         </div>
     `);
     
-    let txtSearch = snippetsWrapper.find('.keditor-snippets-search');
-    let cbbFilter = snippetsWrapper.find('.keditor-snippets-filter');
+    let txtSearch = snippetsWrapper.find(`.${CLASS_NAMES.SNIPPETS_SEARCH}`);
+    let cbbFilter = snippetsWrapper.find(`.${CLASS_NAMES.SNIPPETS_FILTER}`);
     
     let doFilter = function () {
         let selectedCategory = (cbbFilter.val() || '').toLowerCase();

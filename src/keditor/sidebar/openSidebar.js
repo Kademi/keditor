@@ -27,7 +27,7 @@ export default function (target) {
                 settingForm = $(`
                     <div
                         data-type="${componentType}"
-                        class="${CLASS_NAMES.UI} ${CLASS_NAMES.SETTING_FORM} ${settingFormClass} clearfix ${CLASS_NAMES.STATE_ACTIVE}"
+                        class="${CLASS_NAMES.UI} ${CLASS_NAMES.SETTING_FORM} ${settingFormClass} ${CLASS_NAMES.STATE_ACTIVE}"
                     >
                     </div>
                 `);

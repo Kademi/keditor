@@ -393,6 +393,9 @@ var CLASS_NAMES = {
   MODAL_CLOSE: 'keditor-modal-close',
   MODAL_ADD: 'keditor-modal-add',
   SNIPPET: 'keditor-snippet',
+  SNIPPET_INNER: 'keditor-snippet-inner',
+  SNIPPET_TITLE: 'keditor-snippet-title',
+  SNIPPET_PREVIEW: 'keditor-snippet-preview',
   SNIPPET_CONTAINER: 'keditor-snippet-container',
   SNIPPET_COMPONENT: 'keditor-snippet-component',
   SNIPPETS: 'keditor-snippets',
@@ -402,11 +405,8 @@ var CLASS_NAMES = {
   SNIPPETS_FILTER_LABEL: 'keditor-snippets-filter-label',
   SNIPPETS_SEARCH: 'keditor-snippets-search',
   SNIPPETS_FILTER_WRAPPER: 'keditor-snippets-filter-wrapper',
-  SNIPPETS_CONTAINER: 'keditor-snippets-container',
   SNIPPETS_COMPONENT: 'keditor-snippets-component',
   SNIPPETS_WRAPPER: 'keditor-snippets-wrapper',
-  SNIPPETS_WRAPPER_CONTAINER: 'keditor-snippets-wrapper-container',
-  SNIPPETS_WRAPPER_COMPONENT: 'keditor-snippets-wrapper-component',
   SETTING: 'keditor-setting',
   SETTING_FORM: 'keditor-setting-form',
   SETTING_EXTRA: 'keditor-setting-extra',
@@ -2393,7 +2393,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         }
 
         if (searchText) {
-          var title = snippet.attr('title').toLowerCase();
+          var title = snippet.attr('data-keditor-title').toLowerCase();
 
           if (title.indexOf(searchText) === -1 && dataCategoriesString.indexOf(searchText) === -1) {
             error++;
@@ -2435,7 +2435,7 @@ __webpack_require__.r(__webpack_exports__);
   var self = this;
   var options = self.options;
   var snippetId = self.generateId();
-  var snippetPreviewHtml = "\n<section\nclass=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET, " ").concat(type === 'container' ? _constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_CONTAINER : _constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_COMPONENT, "\"\ndata-snippet=\"#").concat(snippetId, "\"\ndata-type=\"").concat(type, "\"\ntitle=\"").concat(title, "\"\ndata-keditor-categories=\"").concat(categories, "\"\n>\n<span><span style=\"background-image: url('").concat(previewUrl, "')\"></span></span>\n</section>\n");
+  var snippetPreviewHtml = "\n<section\nclass=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET, " ").concat(type === 'container' ? _constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_CONTAINER : _constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_COMPONENT, "\"\ndata-snippet=\"#").concat(snippetId, "\"\ndata-type=\"").concat(type, "\"\ndata-keditor-title=\"").concat(title, "\"\ndata-keditor-categories=\"").concat(categories, "\"\n>\n<span class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_INNER, "\">\n<span class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_PREVIEW, "\" style=\"background-image: url('").concat(previewUrl, "')\"></span>\n<span class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_TITLE, "\" title=\"").concat(title, "\">").concat(title, "</span>\n</span>\n</section>\n");
   var snippetContentHtml = "<script id=\"".concat(snippetId, "\" type=\"text/html\" ").concat(extraData.join(' '), ">").concat(content, "</script>");
   categories = categories.split(options.snippetsCategoriesSeparator);
 

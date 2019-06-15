@@ -39,7 +39,7 @@ export default function () {
                 }
                 
                 if (searchText) {
-                    let title = snippet.attr('title').toLowerCase();
+                    let title = snippet.attr('data-keditor-title').toLowerCase();
                     if (title.indexOf(searchText) === -1 && dataCategoriesString.indexOf(searchText) === -1) {
                         error++;
                     }

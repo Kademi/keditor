@@ -51,6 +51,9 @@ const CLASS_NAMES = {
     MODAL_ADD: 'keditor-modal-add',
     
     SNIPPET: 'keditor-snippet',
+    SNIPPET_INNER: 'keditor-snippet-inner',
+    SNIPPET_TITLE: 'keditor-snippet-title',
+    SNIPPET_PREVIEW: 'keditor-snippet-preview',
     SNIPPET_CONTAINER: 'keditor-snippet-container',
     SNIPPET_COMPONENT: 'keditor-snippet-component',
     SNIPPETS: 'keditor-snippets',

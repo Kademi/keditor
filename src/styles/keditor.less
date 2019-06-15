@@ -260,20 +260,34 @@ body {
     width: @snippet-width-lg;
     margin: @snippet-margin;
     
-    > span {
+    .keditor-snippet-inner {
         display: block;
         padding-bottom: 100%;
         position: relative;
-        
-        span {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            bottom: 15px;
-            right: 15px;
-            display: block;
-            background: no-repeat 50% 50% / contain;
-        }
+    }
+    
+    .keditor-snippet-preview {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        bottom: @snippet-title-height;
+        right: 15px;
+        background: no-repeat 50% 50% / contain;
+    }
+    
+    .keditor-snippet-title {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        font-size: @snippet-title-size;
+        height: @snippet-title-height;
+        line-height: @snippet-title-height;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+        padding: 0 10px;
+        white-space: nowrap;
     }
     
     &.not-matched {

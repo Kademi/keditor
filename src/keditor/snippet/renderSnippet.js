@@ -9,10 +9,13 @@ export default function (type, title, previewUrl, categories, content, extraData
             class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPET} ${type === 'container' ? CLASS_NAMES.SNIPPET_CONTAINER : CLASS_NAMES.SNIPPET_COMPONENT}"
             data-snippet="#${snippetId}"
             data-type="${type}"
-            title="${title}"
+            data-keditor-title="${title}"
             data-keditor-categories="${categories}"
         >
-            <span><span style="background-image: url('${previewUrl}')"></span></span>
+            <span class="${CLASS_NAMES.SNIPPET_INNER}">
+                <span class="${CLASS_NAMES.SNIPPET_PREVIEW}" style="background-image: url('${previewUrl}')"></span>
+                <span class="${CLASS_NAMES.SNIPPET_TITLE}" title="${title}">${title}</span>
+            </span>
         </section>
     `;
     let snippetContentHtml = `<script id="${snippetId}" type="text/html" ${extraData.join(' ')}>${content}</script>`;

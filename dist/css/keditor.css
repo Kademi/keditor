@@ -239,19 +239,32 @@ body.opened-modal {
   width: calc(25% - 15px);
   margin: 0 15px 15px 0;
 }
-.keditor-snippet > span {
+.keditor-snippet .keditor-snippet-inner {
   display: block;
   padding-bottom: 100%;
   position: relative;
 }
-.keditor-snippet > span span {
+.keditor-snippet .keditor-snippet-preview {
   position: absolute;
   top: 15px;
   left: 15px;
-  bottom: 15px;
+  bottom: 30px;
   right: 15px;
-  display: block;
   background: no-repeat 50% 50% / contain;
+}
+.keditor-snippet .keditor-snippet-title {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  font-size: 12px;
+  height: 30px;
+  line-height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  padding: 0 10px;
+  white-space: nowrap;
 }
 .keditor-snippet.not-matched {
   display: none !important;
@@ -262,7 +275,7 @@ body.opened-modal {
 }
 .keditor-snippet.selected {
   border-color: #2eb2e4;
-  box-shadow: 0 0 0 2px #2eb2e4 inset;
+  box-shadow: 0 0 0 2px #2eb2e4;
 }
 @media (max-width: 575px) {
   .keditor-snippet {

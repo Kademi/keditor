@@ -3,13 +3,9 @@ import CLASS_NAMES from '../constants/classNames';
 
 export default function (resp) {
     let self = this;
-    let options = self.options;
-    
-    let snippetsContainerHtml = '';
-    let snippetsComponentHtml = '';
     let snippetsContentHtml = '';
+    let snippetsHtml = '';
     
-    self.snippetsCategories = [];
     self.snippetsContainerCategories = [];
     self.snippetsComponentCategories = [];
     
@@ -25,25 +21,14 @@ export default function (resp) {
             snippetPreviewHtml,
             snippetContentHtml
         ] = renderSnippet.call(self, type, title, previewUrl, categories, content, dataAttributes);
-        
-        if (type === 'container') {
-            snippetsContainerHtml += snippetPreviewHtml;
-        } else if (type.indexOf('component') !== -1) {
-            snippetsComponentHtml += snippetPreviewHtml;
-        }
-        
+    
+        snippetsHtml += snippetPreviewHtml;
         snippetsContentHtml += snippetContentHtml;
     });
     
     self.snippetsContainerCategories = self.beautifyCategories(self.snippetsContainerCategories);
     self.snippetsComponentCategories = self.beautifyCategories(self.snippetsComponentCategories);
-    self.snippetsCategories = self.beautifyCategories([...self.snippetsContainerCategories, ...self.snippetsComponentCategories]);
     
-    if (options.explicitSnippetEnabled) {
-        self.modal.find(`.${CLASS_NAMES.SNIPPETS_CONTAINER}`).html(snippetsContainerHtml);
-        self.modal.find(`.${CLASS_NAMES.SNIPPETS_COMPONENT}`).html(snippetsComponentHtml);
-    } else {
-        self.modal.find(`.${CLASS_NAMES.SNIPPETS}`).html(snippetsContainerHtml + snippetsComponentHtml)
-    }
+    self.modal.find(`.${CLASS_NAMES.SNIPPETS}`).html(snippetsHtml);
     self.modal.find(`.${CLASS_NAMES.MODAL_BODY}`).append(snippetsContentHtml);
 };

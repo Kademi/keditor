@@ -1,5 +1,4 @@
 import TOOLBAR_TYPE from '../constants/toolbarType';
-import SNIPPET_TYPE from '../constants/snippetType';
 import CLASS_NAMES from '../constants/classNames';
 
 export default function (contentArea, dontInitToolbar) {
@@ -21,7 +20,7 @@ export default function (contentArea, dontInitToolbar) {
         contentAreaToolbar.children(options.explicitSnippetEnabled ? `.${CLASS_NAMES.ADD_CONTAINER}` : `.${CLASS_NAMES.ADD_CONTENT}`).on('click', function (e) {
             e.preventDefault();
             
-            self.openModal(contentAreaInner, options.explicitSnippetEnabled ? SNIPPET_TYPE.CONTAINER : SNIPPET_TYPE.ALL);
+            self.openModal(contentAreaInner, !options.explicitSnippetEnabled, true);
         });
     }
     

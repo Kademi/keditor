@@ -1,5 +1,4 @@
 import TOOLBAR_TYPE from '../constants/toolbarType';
-import SNIPPET_TYPE from '../constants/snippetType';
 import CLASS_NAMES from '../constants/classNames';
 
 export default function (contentArea, container, containerContent, isNested) {
@@ -24,7 +23,7 @@ export default function (contentArea, container, containerContent, isNested) {
                 containerContentToolbar.children(`.${CLASS_NAMES.ADD_CONTAINER}`).on('click', function (e) {
                     e.preventDefault();
                     
-                    self.openModal(containerContentInner, SNIPPET_TYPE.CONTAINER);
+                    self.openModal(containerContentInner, false, true);
                 });
             }
         }
@@ -32,13 +31,13 @@ export default function (contentArea, container, containerContent, isNested) {
         containerContentToolbar.children(`.${CLASS_NAMES.ADD_COMPONENT}`).on('click', function (e) {
             e.preventDefault();
             
-            self.openModal(containerContentInner, SNIPPET_TYPE.COMPONENT);
+            self.openModal(containerContentInner, true, false);
         });
     } else {
         containerContentToolbar.children(`.${CLASS_NAMES.ADD_CONTENT}`).on('click', function (e) {
             e.preventDefault();
             
-            self.openModal(containerContentInner, isNested ? SNIPPET_TYPE.COMPONENT : options.nestedContainerEnabled ? SNIPPET_TYPE.ALL : SNIPPET_TYPE.COMPONENT);
+            self.openModal(containerContentInner, true,  !isNested && options.nestedContainerEnabled);
         });
     }
     

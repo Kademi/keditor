@@ -182,12 +182,6 @@ export default {
     snippetsUrl: 'snippets/snippets.html',
     
     /*
-     * Enable filtering snippets by categories and text searching or not
-     * @option {Boolean}
-     */
-    snippetsFilterEnabled: true,
-    
-    /*
      * The separator character between each categories
      * @option {String}
      */

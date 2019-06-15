@@ -7,7 +7,6 @@ const CLASS_NAMES = {
     
     WRAPPER: 'keditor-wrapper',
     
-    
     BTN: 'keditor-btn',
     BTN_PRIMARY: 'keditor-btn-primary',
     BTN_DEFAULT: 'keditor-btn-default',
@@ -16,6 +15,7 @@ const CLASS_NAMES = {
     STATE_OPENED: 'opened',
     STATE_SHOWED: 'showed',
     STATE_SELECTED: 'selected',
+    STATE_DUPLICATED: 'duplicated',
     STATE_INITIALIZED: 'initialized',
     STATE_INITIALIZING: 'initializing',
     STATE_TOOLBAR_SHOWED: 'showed-keditor-toolbar',
@@ -42,16 +42,22 @@ const CLASS_NAMES = {
     TOPBAR_TITLE: 'keditor-topbar-title',
     
     MODAL: 'keditor-modal',
+    MODAL_COMPONENT: 'keditor-modal-component',
+    MODAL_CONTAINER: 'keditor-modal-container',
     MODAL_HEADER: 'keditor-modal-header',
     MODAL_BODY: 'keditor-modal-body',
     MODAL_FOOTER: 'keditor-modal-footer',
     MODAL_CLOSE: 'keditor-modal-close',
     MODAL_ADD: 'keditor-modal-add',
-    MODAL_TITLE: 'keditor-modal-title',
     
     SNIPPET: 'keditor-snippet',
+    SNIPPET_CONTAINER: 'keditor-snippet-container',
+    SNIPPET_COMPONENT: 'keditor-snippet-component',
     SNIPPETS: 'keditor-snippets',
     SNIPPETS_FILTER: 'keditor-snippets-filter',
+    SNIPPETS_FILTER_COMPONENT: 'keditor-snippets-filter-component',
+    SNIPPETS_FILTER_CONTAINER: 'keditor-snippets-filter-container',
+    SNIPPETS_FILTER_LABEL: 'keditor-snippets-filter-label',
     SNIPPETS_SEARCH: 'keditor-snippets-search',
     SNIPPETS_FILTER_WRAPPER: 'keditor-snippets-filter-wrapper',
     SNIPPETS_CONTAINER: 'keditor-snippets-container',

@@ -1,13 +1,14 @@
 import renderSnippetFilter from './renderSnippetFilter';
 import CLASS_NAMES from '../constants/classNames';
 
-export default function (type) {
+export default function () {
     let self = this;
     let options = self.options;
-    let [categoriesOptions, snippetsWrapper] = renderSnippetFilter.call(this, type);
+    let [categoriesOptions, snippetsWrapper] = renderSnippetFilter.call(this);
     
     snippetsWrapper.prepend(`
         <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER_WRAPPER}">
+            <label class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER_LABEL}">Category:</label>
             <select class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER}">
                 ${categoriesOptions}
             </select>
@@ -21,7 +22,7 @@ export default function (type) {
     let doFilter = function () {
         let selectedCategory = (cbbFilter.val() || '').toLowerCase();
         let searchText = (txtSearch.val() || '').toLowerCase();
-        let snippets = snippetsWrapper.find(`.${CLASS_NAMES.SNIPPETS}`).children(`.${CLASS_NAMES.SNIPPET}`);
+        let snippets = self.modal.find(`.${CLASS_NAMES.SNIPPET}`);
         snippets.filter(`.${CLASS_NAMES.STATE_SELECTED}`).removeClass(CLASS_NAMES.STATE_SELECTED);
         
         if (selectedCategory || searchText) {

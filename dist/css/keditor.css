@@ -21,6 +21,9 @@ body.opened-modal {
   padding: 0;
   border: 0;
   outline: none;
+  font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
 }
 .keditor-ui,
 .keditor-ui:before,
@@ -214,35 +217,10 @@ body.opened-modal {
    Snippets
    ================================================================================== */
 .keditor-snippets-wrapper {
-  display: none;
   height: 100%;
 }
-.keditor-snippets-wrapper .keditor-snippets-filter-wrapper {
-  padding: 10px 15px;
-  letter-spacing: -1em;
-  box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.1);
-  position: relative;
-  z-index: 2;
-}
-.keditor-snippets-wrapper .keditor-snippets-filter-wrapper > * {
-  display: inline-block;
-  border: 1px solid #dfeaf1;
-  height: 30px;
-  line-height: 30px;
-  padding: 0 5px;
-  letter-spacing: normal;
-}
-.keditor-snippets-wrapper .keditor-snippets-filter-wrapper .keditor-snippets-filter {
-  width: calc(50% - 5px);
-  margin-right: 10px;
-}
-.keditor-snippets-wrapper .keditor-snippets-filter-wrapper .keditor-snippets-search {
-  width: calc(50% - 5px);
-}
 .keditor-snippets-wrapper .keditor-snippets {
-  position: relative;
-  z-index: 1;
-  height: calc(100% - 50px);
+  height: 100%;
   overflow-y: scroll;
   padding: 15px 0 0 15px;
 }
@@ -335,12 +313,38 @@ body.opened-modal {
   top: 0;
   opacity: 1;
 }
+.keditor-modal .keditor-snippet {
+  display: none;
+}
+.keditor-modal.keditor-modal-component .keditor-snippet-component {
+  display: block;
+}
+.keditor-modal.keditor-modal-component .keditor-snippets-filter-component {
+  display: block;
+}
+.keditor-modal.keditor-modal-container .keditor-snippet-container {
+  display: block;
+}
+.keditor-modal.keditor-modal-container .keditor-snippets-filter-container {
+  display: block;
+}
+.keditor-modal.keditor-modal-component.keditor-modal-container .keditor-snippets-filter-container.duplicated {
+  display: none;
+}
 .keditor-modal-header {
   background: #fff;
   border-bottom: 1px solid #dfeaf1;
   position: relative;
   padding: 15px;
   z-index: 2;
+}
+.keditor-modal-header:before,
+.keditor-modal-header:after {
+  content: " ";
+  display: table;
+}
+.keditor-modal-header:after {
+  clear: both;
 }
 .keditor-modal-header .keditor-modal-title {
   font-size: 18px;
@@ -367,6 +371,23 @@ body.opened-modal {
 }
 .keditor-modal-header .keditor-modal-close:hover {
   color: #aaa;
+}
+.keditor-modal-header .keditor-snippets-filter-label {
+  display: inline-block;
+}
+.keditor-modal-header .keditor-snippets-filter {
+  margin-right: 15px;
+}
+.keditor-modal-header .keditor-snippets-filter-component,
+.keditor-modal-header .keditor-snippets-filter-container {
+  display: none;
+}
+.keditor-modal-header .keditor-snippets-filter-label,
+.keditor-modal-header .keditor-snippets-filter,
+.keditor-modal-header .keditor-snippets-search {
+  height: 20px;
+  line-height: 20px;
+  background: none;
 }
 .keditor-modal-body {
   height: calc(100% - 56px - 61px);

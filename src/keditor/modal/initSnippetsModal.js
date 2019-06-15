@@ -1,36 +1,20 @@
-import SNIPPET_TYPE from '../constants/snippetType';
 import CLASS_NAMES from '../constants/classNames';
 
 export default function () {
     let self = this;
     let options = self.options;
     let modalId = self.generateId();
-    let snippetsWrapperHtml = '';
-    
-    if (options.explicitSnippetEnabled) {
-        snippetsWrapperHtml = `
-            <div class="${CLASS_NAMES.SNIPPETS_WRAPPER} ${CLASS_NAMES.SNIPPETS_WRAPPER_CONTAINER}">
-                <div class="${CLASS_NAMES.SNIPPETS} ${CLASS_NAMES.SNIPPETS_CONTAINER}"></div>
-            </div>
-            <div class="${CLASS_NAMES.SNIPPETS_WRAPPER} ${CLASS_NAMES.SNIPPETS_WRAPPER_COMPONENT}">
-                <div class="${CLASS_NAMES.SNIPPETS} ${CLASS_NAMES.SNIPPETS_COMPONENT}"></div>
-            </div>
-        `;
-    } else {
-        snippetsWrapperHtml = `
-            <div class="${CLASS_NAMES.SNIPPETS_WRAPPER}">
-                <div class="${CLASS_NAMES.SNIPPETS}"></div>
-            </div>
-        `;
-    }
     
     let modal = self.modal = $(`
         <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.MODAL}" id="${modalId}">
             <div class="${CLASS_NAMES.MODAL_HEADER}">
                 <button type="button" class="${CLASS_NAMES.MODAL_CLOSE}">&times;</button>
-                <h4 class="${CLASS_NAMES.MODAL_TITLE}"></h4>
             </div>
-            <div class="${CLASS_NAMES.MODAL_BODY}">${snippetsWrapperHtml}</div>
+            <div class="${CLASS_NAMES.MODAL_BODY}">
+                <div class="${CLASS_NAMES.SNIPPETS_WRAPPER}">
+                    <div class="${CLASS_NAMES.SNIPPETS}"></div>
+                </div>
+            </div>
             <div class="${CLASS_NAMES.MODAL_FOOTER}">
                 <button type="button" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.MODAL_CLOSE}">Close</button>
                 <button type="button" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_PRIMARY} ${CLASS_NAMES.MODAL_ADD}">Add</button>
@@ -49,15 +33,7 @@ export default function () {
                 }
                 
                 self.renderSnippets(resp);
-                
-                if (options.snippetsFilterEnabled) {
-                    if (options.explicitSnippetEnabled) {
-                        self.initSnippetsFilter(SNIPPET_TYPE.CONTAINER);
-                        self.initSnippetsFilter(SNIPPET_TYPE.COMPONENT);
-                    } else {
-                        self.initSnippetsFilter(SNIPPET_TYPE.ALL);
-                    }
-                }
+                self.initSnippetsFilter();
             },
             error: function (jqXHR) {
                 if (typeof options.onSnippetsError === 'function') {
@@ -88,43 +64,29 @@ export default function () {
             let snippetContentElement = modal.find(selectedSnippet.attr('data-snippet'));
             
             let snippetContent = snippetContentElement.html();
+            let isModalComponent = modal.hasClass(CLASS_NAMES.MODAL_COMPONENT);
+            let isModalContainer = modal.hasClass(CLASS_NAMES.MODAL_CONTAINER);
             let isAddingContainer = false;
             let isAddingComponent = false;
             let isAddingComponentWithContainer = false;
             
             if (options.explicitSnippetEnabled) {
-                switch (self.modalSnippetType) {
-                    case SNIPPET_TYPE.COMPONENT:
-                        isAddingComponent = true;
-                        break;
-                    
-                    case SNIPPET_TYPE.CONTAINER:
-                        isAddingContainer = true;
-                        break;
-                    
-                    default:
-                    // Do nothing
-                }
+                isAddingComponent = isModalComponent;
+                isAddingContainer = isModalContainer;
             } else {
                 if (snippetType === 'container') {
                     isAddingContainer = true;
                 } else {
-                    switch (self.modalSnippetType) {
-                        case SNIPPET_TYPE.COMPONENT:
+                    if (isModalComponent && !isModalContainer) {
+                        isAddingComponent = true;
+                    }
+                    
+                    if (isModalComponent && isModalContainer) {
+                        if (self.modalTarget.is(`.${CLASS_NAMES.CONTAINER_CONTENT_INNER}`)) {
                             isAddingComponent = true;
-                            break;
-                        
-                        case SNIPPET_TYPE.ALL:
-                            if (self.modalTarget.is(`.${CLASS_NAMES.CONTAINER_CONTENT_INNER}`)) {
-                                isAddingComponent = true;
-                            } else {
-                                isAddingComponentWithContainer = true;
-                            }
-                            
-                            break;
-                        
-                        default:
-                        // Do nothing
+                        } else {
+                            isAddingComponentWithContainer = true;
+                        }
                     }
                 }
             }

@@ -191,12 +191,12 @@ class KEditor {
         return renderSnippets.apply(this, [resp]);
     }
     
-    initSnippetsFilter(type) {
-        return initSnippetsFilter.apply(this, [type]);
+    initSnippetsFilter() {
+        return initSnippetsFilter.apply(this);
     }
     
-    openModal(target, snippetType) {
-        return openModal.apply(this, [target, snippetType]);
+    openModal(target, showComponent, showContainer) {
+        return openModal.apply(this, [target, showComponent, showContainer]);
     }
     
     closeModal() {

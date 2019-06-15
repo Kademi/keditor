@@ -16,12 +16,12 @@ body {
         .keditor-content-area {
             margin-right: 260px;
         }
-
+        
         .keditor-sidebar {
             right: 0;
         }
     }
-
+    
     &.opened-modal {
         overflow: hidden;
     }
@@ -35,6 +35,9 @@ body {
     padding: 0;
     border: 0;
     outline: none;
+    font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
     
     &,
     &:before,
@@ -162,12 +165,12 @@ body {
     box-shadow: -1px 0 5px @sidebar-shadow-color;
     .transition(all @animation-duration);
     opacity: 0;
-
+    
     &.opened {
         right: 0;
         opacity: 1;
     }
-
+    
     .keditor-iframe-wrapper & {
         position: absolute;
     }
@@ -191,7 +194,7 @@ body {
     line-height: unit(@sidebar-close-size - 1, px);
     font-size: 19px;
     font-weight: bold;
-
+    
     &:hover {
         color: @closer-hover-color;
     }
@@ -210,13 +213,13 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     padding: @sidebar-body-padding;
-
+    
     .keditor-setting-form {
         overflow: hidden;
         display: none;
         min-height: 100%;
         .clearfix;
-
+        
         &.active {
             display: block;
         }
@@ -238,39 +241,10 @@ body {
    Snippets
    ================================================================================== */
 .keditor-snippets-wrapper {
-    display: none;
     height: 100%;
-
-    .keditor-snippets-filter-wrapper {
-        padding: @modal-filter-wrapper-padding;
-        letter-spacing: -1em;
-        box-shadow: @modal-filter-wrapper-box-shadow;
-        position: relative;
-        z-index: 2;
-
-        > * {
-            display: inline-block;
-            border: 1px solid @border-color;
-            height: @modal-filter-input-height;
-            line-height: @modal-filter-input-height;
-            padding: @modal-filter-input-padding;
-            letter-spacing: normal;
-        }
-
-        .keditor-snippets-filter {
-            width: ~"calc(50% - 5px)";
-            margin-right: 10px;
-        }
-
-        .keditor-snippets-search {
-            width: ~"calc(50% - 5px)";
-        }
-    }
-
+    
     .keditor-snippets {
-        position: relative;
-        z-index: 1;
-        height: ~"calc(100% - @{modal-filter-wrapper-height})";
+        height: 100%;
         overflow-y: scroll;
         padding: @snippet-container-padding;
     }
@@ -285,12 +259,12 @@ body {
     .user-select(none);
     width: @snippet-width-lg;
     margin: @snippet-margin;
-
+    
     > span {
         display: block;
         padding-bottom: 100%;
         position: relative;
-
+        
         span {
             position: absolute;
             top: 15px;
@@ -301,41 +275,41 @@ body {
             background: no-repeat 50% 50% / contain;
         }
     }
-
+    
     &.not-matched {
         display: none !important;
     }
-
+    
     &:hover {
         border-color: @snippet-border-color-hover;
         box-shadow: @snippet-box-shadow-hover;
     }
-
+    
     &.selected {
         border-color: @snippet-border-color-selected;
         box-shadow: @snippet-box-shadow-selected;
     }
-
+    
     @media (max-width: @screen-xs-max) {
         width: @snippet-width-xs;
     }
-
+    
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
         width: @snippet-width-sm;
     }
-
+    
     @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
         width: @snippet-width-md;
     }
-
+    
     @media (min-width: @screen-lg-min) and (max-width: @screen-lg-max) {
         width: @snippet-width-lg;
     }
-
+    
     @media (min-width: @screen-xl-min) and (max-width: @screen-xl-max) {
         width: @snippet-width-xl;
     }
-
+    
     @media (min-width: @screen-xxl-min) {
         width: @snippet-width-xxl;
     }
@@ -355,11 +329,42 @@ body {
     background: @modal-bg;
     transition: all @animation-duration;
     opacity: 0;
-
+    
     &.showed {
         top: 0;
         opacity: 1;
     }
+    
+    .keditor-snippet {
+        display: none;
+    }
+    
+    &.keditor-modal-component {
+        .keditor-snippet-component {
+            display: block;
+        }
+
+        .keditor-snippets-filter-component {
+            display: block;
+        }
+    }
+    
+    &.keditor-modal-container {
+        .keditor-snippet-container {
+            display: block;
+        }
+    
+        .keditor-snippets-filter-container {
+            display: block;
+        }
+    }
+    
+    &.keditor-modal-component.keditor-modal-container {
+        .keditor-snippets-filter-container.duplicated {
+            display: none;
+        }
+    }
+    
 }
 
 .keditor-modal-header {
@@ -368,7 +373,8 @@ body {
     position: relative;
     padding: @modal-header-padding;
     z-index: 2;
-
+    .clearfix;
+    
     .keditor-modal-title {
         font-size: @modal-header-title-font-size;
         line-height: 1.4;
@@ -376,7 +382,7 @@ body {
         color: @modal-header-title-color;
         font-weight: 500;
     }
-
+    
     .keditor-modal-close {
         border: 0;
         background: 0;
@@ -392,10 +398,31 @@ body {
         margin-top: unit(-@modal-closer-size/2, px);
         padding: 0;
         font-weight: bold;
-
+        
         &:hover {
             color: @closer-hover-color;
         }
+    }
+    
+    .keditor-snippets-filter-label {
+        display: inline-block;
+    }
+    
+    .keditor-snippets-filter {
+        margin-right: 15px;
+    }
+    
+    .keditor-snippets-filter-component,
+    .keditor-snippets-filter-container {
+        display: none;
+    }
+    
+    .keditor-snippets-filter-label,
+    .keditor-snippets-filter,
+    .keditor-snippets-search {
+        height: 20px;
+        line-height: 20px;
+        background: none;
     }
 }
 
@@ -410,7 +437,7 @@ body {
     border-top: 1px solid @border-color;
     text-align: center;
     padding: @modal-footer-padding;
-
+    
     .keditor-btn {
         margin: 0 5px;
     }
@@ -421,12 +448,12 @@ body {
    ================================================================================== */
 .keditor-btn-group {
     letter-spacing: -1em;
-
+    
     .keditor-btn {
         letter-spacing: normal;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
-
+        
         &:first-child {
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
@@ -452,32 +479,32 @@ body {
     i {
         line-height: unit(@btn-height - 1, px);
     }
-
+    
     &.keditor-btn-default {
         border: 1px solid @btn-default-border;
         background: @btn-default-bg;
         color: @btn-default-color;
-
+        
         &:hover {
             background: darken(@btn-default-bg, 5%);
         }
-
+        
         &:focus,
         &:active {
             border-color: darken(@btn-default-border, 8%);
             background: darken(@btn-default-bg, 8%);
         }
     }
-
+    
     &.keditor-btn-primary {
         border: 1px solid @btn-primary-border;
         background: @btn-primary-bg;
         color: @btn-primary-color;
-
+        
         &:hover {
             background: darken(@btn-primary-bg, 5%);
         }
-
+        
         &:focus,
         &:active {
             border-color: darken(@btn-primary-border, 8%);
@@ -498,12 +525,12 @@ body {
     left: 0;
     right: 0;
     transform: translateY(50%);
-
+    
     > * {
         .transition(all @animation-duration);
         opacity: 0.2;
-
-
+        
+        
         &:hover {
             opacity: 1;
         }
@@ -515,7 +542,7 @@ body {
     display: none;
     z-index: 5;
     font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
-
+    
     > a {
         padding: 1px 3px;
         font-size: 12px;
@@ -524,12 +551,12 @@ body {
         display: block;
         text-align: center;
         line-height: 20px;
-
+        
         .fa {
             line-height: inherit;
         }
     }
-
+    
     .btn-container-reposition,
     .btn-component-reposition {
         cursor: move;
@@ -541,7 +568,7 @@ body {
    ================================================================================== */
 .keditor-container {
     position: relative;
-
+    
     &:before {
         position: absolute;
         top: -3px;
@@ -552,35 +579,35 @@ body {
         content: " ";
         display: block;
     }
-
+    
     > .keditor-toolbar {
         top: -3px;
         left: -39px;
         border: 1px solid @container-toolbar-border-color;
         border-radius: @border-radius;
         overflow: hidden;
-
+        
         > a {
             background: @container-toolbar-button-bg;
             color: @container-toolbar-button-color;
-
+            
             &:hover {
                 background: @container-toolbar-button-bg-hover;
             }
         }
     }
-
+    
     &:hover {
         &:before {
             border-color: @container-outline-color-hover;
         }
     }
-
+    
     &.showed-keditor-toolbar {
         &:before {
             border-color: @container-outline-color-selected;
         }
-
+        
         > .keditor-toolbar {
             display: block;
         }
@@ -589,7 +616,7 @@ body {
 
 .keditor-container-content {
     position: relative;
-
+    
     &:before {
         position: absolute;
         top: -1px;
@@ -612,7 +639,7 @@ body {
 .keditor-component {
     position: relative;
     z-index: 1;
-
+    
     &:before {
         position: absolute;
         top: -2px;
@@ -624,14 +651,14 @@ body {
         display: none;
         z-index: 1;
     }
-
+    
     .keditor-toolbar {
         top: 0;
         left: 0;
         background-color: @container-content-toolbar-bg;
         padding: 0 2px 2px 0;
         text-align: left;
-
+        
         > a {
             border: 0;
             background: none;
@@ -641,34 +668,34 @@ body {
             .box-shadow(none);
             .transition(all @animation-duration);
             display: inline-block;
-
+            
             &:hover {
                 background-color: @container-content-toolbar-button-bg-hover;
             }
         }
     }
-
+    
     .keditor-component-content {
         position: relative;
         z-index: 2;
     }
-
+    
     &:hover,
     &.showed-keditor-toolbar {
         &:before {
             display: block;
         }
     }
-
+    
     &.showed-keditor-toolbar {
         .keditor-component-content {
             outline: none !important;
         }
     }
-
+    
     &:hover {
         z-index: 2;
-
+        
         .keditor-toolbar {
             display: block;
         }
@@ -680,7 +707,7 @@ body {
    ================================================================================== */
 .keditor-iframe-cover-wrapper {
     position: relative;
-
+    
     iframe,
     .keditor-iframe-cover {
         position: absolute;
@@ -689,15 +716,15 @@ body {
         width: 100%;
         height: 100%;
     }
-
+    
     iframe {
         z-index: -1;
     }
-
+    
     .keditor-iframe-cover {
         z-index: 1;
         background: rgba(0, 0, 0, .15);
-
+        
         &:before {
             display: block;
             content: "Double-click to reveal content";
@@ -713,12 +740,12 @@ body {
             text-shadow: 0 0 3px #000;
         }
     }
-
+    
     &.hidden-cover {
         iframe {
             z-index: 0;
         }
-
+        
         .keditor-iframe-cover {
             display: none;
         }
@@ -738,7 +765,7 @@ body {
 .keditor-ui-dragging {
     display: block !important;
     opacity: 0.5 !important;
-
+    
     .keditor-toolbar {
         display: none !important;
     }
@@ -757,7 +784,7 @@ body {
         padding: 0 !important;
         opacity: 1 !important;
         border: 2px solid @blue;
-
+        
         &:before,
         &:after {
             display: none !important;
@@ -769,13 +796,13 @@ body {
     &.keditor-section {
         background: @snippet-bg !important;
     }
-
+    
     &.keditor-container {
         .keditor-toolbar.keditor-toolbar-container {
             display: block !important;
         }
     }
-
+    
     &.keditor-component {
         &:before,
         .keditor-toolbar {

@@ -6,7 +6,7 @@ export default function (type, title, previewUrl, categories, content, extraData
     let snippetId = self.generateId();
     let snippetPreviewHtml = `
         <section
-            class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPET}"
+            class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPET} ${type === 'container' ? CLASS_NAMES.SNIPPET_CONTAINER : CLASS_NAMES.SNIPPET_COMPONENT}"
             data-snippet="#${snippetId}"
             data-type="${type}"
             title="${title}"

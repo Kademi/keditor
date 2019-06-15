@@ -1,3 +1,5 @@
+import CLASS_NAMES from './constants/classNames';
+
 export default function () {
     let self = this;
     let element = self.element;
@@ -12,7 +14,7 @@ export default function () {
         element.html(content);
     }
     
-    element.removeClass('keditor-hidden-element');
+    element.removeClass(CLASS_NAMES.UI_HIDDEN);
     element.data('keditor', null);
     delete KEditor.instances[id];
 };

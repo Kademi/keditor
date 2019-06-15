@@ -1,10 +1,12 @@
+import CLASS_NAMES from '../constants/classNames';
+
 export default function (type, title, previewUrl, categories, content, extraData) {
     let self = this;
     let options = self.options;
     let snippetId = self.generateId();
     let snippetPreviewHtml = `
         <section
-            class="keditor-ui keditor-snippet"
+            class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPET}"
             data-snippet="#${snippetId}"
             data-type="${type}"
             title="${title}"

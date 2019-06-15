@@ -9,7 +9,7 @@ export default function () {
     let iframe = self.iframe = $(`<iframe class="${CLASS_NAMES.UI} ${CLASS_NAMES.IFRAME}"></iframe>`);
     
     element.after(wrapper);
-    element.addClass(CLASS_NAMES.HIDDEN_ELEMENT);
+    element.addClass(CLASS_NAMES.UI_HIDDEN);
     
     iframeWrapper.html(iframe);
     wrapper.attr('id', self.generateId()).append(iframeWrapper);

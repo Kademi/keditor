@@ -1,10 +1,12 @@
+import CLASS_NAMES from './constants/classNames';
+
 export default function (inArray) {
     let self = this;
     let result = [];
     
-    self.contentAreasWrapper.find('.keditor-content-area-inner').each(function () {
+    self.contentAreasWrapper.find(`.${CLASS_NAMES.CONTENT_AREA_INNER}`).each(function () {
         let html = '';
-        $(this).children('.keditor-container').each(function () {
+        $(this).children(`.${CLASS_NAMES.CONTAINER}`).each(function () {
             let container = $(this);
             
             html += self.getContainerContent(container);

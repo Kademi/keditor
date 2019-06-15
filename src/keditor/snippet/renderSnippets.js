@@ -1,4 +1,5 @@
 import renderSnippet from './renderSnippet';
+import CLASS_NAMES from '../constants/classNames';
 
 export default function (resp) {
     let self = this;
@@ -39,10 +40,10 @@ export default function (resp) {
     self.snippetsCategories = self.beautifyCategories([...self.snippetsContainerCategories, ...self.snippetsComponentCategories]);
     
     if (options.explicitSnippetEnabled) {
-        self.modal.find('.keditor-snippets-container').html(snippetsContainerHtml);
-        self.modal.find('.keditor-snippets-component').html(snippetsComponentHtml);
+        self.modal.find(`.${CLASS_NAMES.SNIPPETS_CONTAINER}`).html(snippetsContainerHtml);
+        self.modal.find(`.${CLASS_NAMES.SNIPPETS_COMPONENT}`).html(snippetsComponentHtml);
     } else {
-        self.modal.find('.keditor-snippets').html(snippetsContainerHtml + snippetsComponentHtml)
+        self.modal.find(`.${CLASS_NAMES.SNIPPETS}`).html(snippetsContainerHtml + snippetsComponentHtml)
     }
-    self.modal.find('.keditor-modal-body').append(snippetsContentHtml);
+    self.modal.find(`.${CLASS_NAMES.MODAL_BODY}`).append(snippetsContentHtml);
 };

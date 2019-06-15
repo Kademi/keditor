@@ -1,4 +1,5 @@
-import SNIPPET_TYPE from "../constants/snippetType";
+import SNIPPET_TYPE from '../constants/snippetType';
+import CLASS_NAMES from '../constants/classNames';
 
 export default function (type) {
     let self = this;
@@ -9,24 +10,24 @@ export default function (type) {
     switch (type) {
         case SNIPPET_TYPE.ALL:
             categories = self.snippetsCategories;
-            snippetsWrapperSelector = '.keditor-snippets-wrapper';
+            snippetsWrapperSelector = `.${CLASS_NAMES.SNIPPETS_WRAPPER}`;
             break;
         
         case SNIPPET_TYPE.CONTAINER:
             categories = self.snippetsContainerCategories;
-            snippetsWrapperSelector = '.keditor-snippets-wrapper-container';
+            snippetsWrapperSelector = `.${CLASS_NAMES.SNIPPETS_WRAPPER_CONTAINER}`;
             break;
         
         case SNIPPET_TYPE.COMPONENT:
             categories = self.snippetsComponentCategories;
-            snippetsWrapperSelector = '.keditor-snippets-wrapper-component';
+            snippetsWrapperSelector = `.${CLASS_NAMES.SNIPPETS_WRAPPER_COMPONENT}`;
             break;
         
         default:
         // Do nothing
     }
     
-    let categoriesOptions = '<option value="" selected="selected">All</option>';
+    let categoriesOptions = `<option value="" selected="selected">All</option>`;
     $.each(categories, function (i, category) {
         categoriesOptions += `<option value="${category}">${category}</option>`;
     });

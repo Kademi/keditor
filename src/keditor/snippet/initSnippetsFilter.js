@@ -11,7 +11,7 @@ export default function (type) {
             <select class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER}">
                 ${categoriesOptions}
             </select>
-            <input type="text" class="${CLASS_NAMES.UI} keditor-snippets-search" value="" placeholder="Type to search..." />
+            <input type="text" class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_SEARCH}" value="" placeholder="Type to search..." />
         </div>
     `);
     
@@ -21,8 +21,8 @@ export default function (type) {
     let doFilter = function () {
         let selectedCategory = (cbbFilter.val() || '').toLowerCase();
         let searchText = (txtSearch.val() || '').toLowerCase();
-        let snippets = snippetsWrapper.find('.keditor-snippets').children('.keditor-snippet');
-        snippets.filter('.selected').removeClass('selected');
+        let snippets = snippetsWrapper.find(`.${CLASS_NAMES.SNIPPETS}`).children(`.${CLASS_NAMES.SNIPPET}`);
+        snippets.filter(`.${CLASS_NAMES.STATE_SELECTED}`).removeClass(CLASS_NAMES.STATE_SELECTED);
         
         if (selectedCategory || searchText) {
             snippets.each(function () {
@@ -44,10 +44,10 @@ export default function (type) {
                     }
                 }
                 
-                snippet[error === 0 ? 'removeClass' : 'addClass']('not-matched');
+                snippet[error === 0 ? 'removeClass' : 'addClass'](CLASS_NAMES.STATE_NOT_MATCHED);
             });
         } else {
-            snippets.removeClass('not-matched');
+            snippets.removeClass(CLASS_NAMES.STATE_NOT_MATCHED);
         }
     };
     

@@ -1,12 +1,12 @@
 const CLASS_NAMES = {
     UI: 'keditor-ui',
     UI_DRAGGING: 'keditor-ui-dragging',
+    UI_HIDDEN: 'keditor-ui-hidden',
     
     SORTABLE: 'ui-sortable',
     
     WRAPPER: 'keditor-wrapper',
     
-    HIDDEN_ELEMENT: 'keditor-hidden-element',
     
     BTN: 'keditor-btn',
     BTN_PRIMARY: 'keditor-btn-primary',
@@ -22,6 +22,7 @@ const CLASS_NAMES = {
     STATE_SETTING_OPENED: 'opened-keditor-setting',
     STATE_SIDEBAR_OPENED: 'opened-keditor-sidebar',
     STATE_MODAL_OPENED: 'opened-modal',
+    STATE_NOT_MATCHED: 'not-matched',
     
     ADD_CONTENT: 'btn-add-content',
     ADD_COMPONENT: 'btn-add-component',

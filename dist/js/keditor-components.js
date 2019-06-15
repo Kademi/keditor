@@ -133,14 +133,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! keditor */ "keditor");
-/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(keditor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! keditor */ "keditor");
+/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(keditor__WEBPACK_IMPORTED_MODULE_0__);
 
-
-var flog = keditor__WEBPACK_IMPORTED_MODULE_1___default.a.log;
-keditor__WEBPACK_IMPORTED_MODULE_1___default.a.components['audio'] = {
+keditor__WEBPACK_IMPORTED_MODULE_0___default.a.components['audio'] = {
   getContent: function getContent(component, keditor) {
     var componentContent = component.children('.keditor-component-content');
     var audio = componentContent.find('audio');
@@ -217,7 +213,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var flog = keditor__WEBPACK_IMPORTED_MODULE_2___default.a.log;
 keditor__WEBPACK_IMPORTED_MODULE_2___default.a.components['form'] = {
   initFormBuilder: function initFormBuilder(component) {
     var self = this;
@@ -408,7 +403,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(keditor__WEBPACK_IMPORTED_MODULE_1__);
 
 
-var flog = keditor__WEBPACK_IMPORTED_MODULE_1___default.a.log;
 keditor__WEBPACK_IMPORTED_MODULE_1___default.a.components['googlemap'] = {
   init: function init(contentArea, container, component, keditor) {
     var iframe = component.find('iframe');
@@ -462,7 +456,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(keditor__WEBPACK_IMPORTED_MODULE_1__);
 
 
-var flog = keditor__WEBPACK_IMPORTED_MODULE_1___default.a.log;
 keditor__WEBPACK_IMPORTED_MODULE_1___default.a.components['photo'] = {
   init: function init(contentArea, container, component, keditor) {
     var componentContent = component.children('.keditor-component-content');
@@ -606,20 +599,16 @@ keditor__WEBPACK_IMPORTED_MODULE_1___default.a.components['photo'] = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! keditor */ "keditor");
-/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(keditor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var InlineEditor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! InlineEditor */ "InlineEditor");
-/* harmony import */ var InlineEditor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(InlineEditor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! keditor */ "keditor");
+/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(keditor__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var InlineEditor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! InlineEditor */ "InlineEditor");
+/* harmony import */ var InlineEditor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(InlineEditor__WEBPACK_IMPORTED_MODULE_1__);
 
-
-var flog = keditor__WEBPACK_IMPORTED_MODULE_1___default.a.log;
 
 var instances = {}; // Text component
 // ---------------------------------------------------------------------
 
-keditor__WEBPACK_IMPORTED_MODULE_1___default.a.components['text'] = {
+keditor__WEBPACK_IMPORTED_MODULE_0___default.a.components['text'] = {
   init: function init(contentArea, container, component, keditor) {
     var options = keditor.options;
     var componentContent = component.children('.keditor-component-content');
@@ -637,7 +626,7 @@ keditor__WEBPACK_IMPORTED_MODULE_1___default.a.components['text'] = {
         options.onContentChanged.call(keditor, e, contentArea);
       }
     });
-    InlineEditor__WEBPACK_IMPORTED_MODULE_2___default.a.create(componentContent.get(0), {
+    InlineEditor__WEBPACK_IMPORTED_MODULE_1___default.a.create(componentContent.get(0), {
       fontFamily: {
         options: ['default', 'Arial, Helvetica, sans-serif', 'Courier New, Courier, monospace', 'Georgia, serif', 'Lucida Sans Unicode, Lucida Grande, sans-serif', 'Tahoma, Geneva, sans-serif', 'Times New Roman, Times, serif', 'Trebuchet MS, Helvetica, sans-serif', 'Verdana, Geneva, sans-serif']
       }
@@ -683,14 +672,10 @@ keditor__WEBPACK_IMPORTED_MODULE_1___default.a.components['text'] = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! keditor */ "keditor");
-/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(keditor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! keditor */ "keditor");
+/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(keditor__WEBPACK_IMPORTED_MODULE_0__);
 
-
-var flog = keditor__WEBPACK_IMPORTED_MODULE_1___default.a.log;
-keditor__WEBPACK_IMPORTED_MODULE_1___default.a.components['video'] = {
+keditor__WEBPACK_IMPORTED_MODULE_0___default.a.components['video'] = {
   init: function init(contentArea, container, component, keditor) {
     var componentContent = component.children('.keditor-component-content');
     var video = componentContent.find('video');
@@ -781,14 +766,10 @@ keditor__WEBPACK_IMPORTED_MODULE_1___default.a.components['video'] = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! keditor */ "keditor");
-/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(keditor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! keditor */ "keditor");
+/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(keditor__WEBPACK_IMPORTED_MODULE_0__);
 
-
-var flog = keditor__WEBPACK_IMPORTED_MODULE_1___default.a.log;
-keditor__WEBPACK_IMPORTED_MODULE_1___default.a.components['vimeo'] = {
+keditor__WEBPACK_IMPORTED_MODULE_0___default.a.components['vimeo'] = {
   init: function init(contentArea, container, component, keditor) {
     var iframe = component.find('iframe');
     var wrapper = iframe.parent();
@@ -848,14 +829,10 @@ keditor__WEBPACK_IMPORTED_MODULE_1___default.a.components['vimeo'] = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! keditor */ "keditor");
-/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(keditor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! keditor */ "keditor");
+/* harmony import */ var keditor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(keditor__WEBPACK_IMPORTED_MODULE_0__);
 
-
-var flog = keditor__WEBPACK_IMPORTED_MODULE_1___default.a.log;
-keditor__WEBPACK_IMPORTED_MODULE_1___default.a.components['youtube'] = {
+keditor__WEBPACK_IMPORTED_MODULE_0___default.a.components['youtube'] = {
   init: function init(contentArea, container, component, keditor) {
     var iframe = component.find('iframe');
     var wrapper = iframe.parent();

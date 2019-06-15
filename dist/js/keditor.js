@@ -352,9 +352,12 @@ __webpack_require__.r(__webpack_exports__);
 var CLASS_NAMES = {
   UI: 'keditor-ui',
   UI_DRAGGING: 'keditor-ui-dragging',
+  UI_HIDDEN: 'keditor-ui-hidden',
   SORTABLE: 'ui-sortable',
   WRAPPER: 'keditor-wrapper',
-  HIDDEN_ELEMENT: 'keditor-hidden-element',
+  BTN: 'keditor-btn',
+  BTN_PRIMARY: 'keditor-btn-primary',
+  BTN_DEFAULT: 'keditor-btn-default',
   STATE_ACTIVE: 'active',
   STATE_OPENED: 'opened',
   STATE_SHOWED: 'showed',
@@ -364,6 +367,8 @@ var CLASS_NAMES = {
   STATE_TOOLBAR_SHOWED: 'showed-keditor-toolbar',
   STATE_SETTING_OPENED: 'opened-keditor-setting',
   STATE_SIDEBAR_OPENED: 'opened-keditor-sidebar',
+  STATE_MODAL_OPENED: 'opened-modal',
+  STATE_NOT_MATCHED: 'not-matched',
   ADD_CONTENT: 'btn-add-content',
   ADD_COMPONENT: 'btn-add-component',
   ADD_CONTAINER: 'btn-add-container',
@@ -379,10 +384,22 @@ var CLASS_NAMES = {
   TOPBAR_BUTTON: 'keditor-topbar-btn',
   TOPBAR_TITLE: 'keditor-topbar-title',
   MODAL: 'keditor-modal',
+  MODAL_HEADER: 'keditor-modal-header',
+  MODAL_BODY: 'keditor-modal-body',
+  MODAL_FOOTER: 'keditor-modal-footer',
+  MODAL_CLOSE: 'keditor-modal-close',
+  MODAL_ADD: 'keditor-modal-add',
   MODAL_TITLE: 'keditor-modal-title',
   SNIPPET: 'keditor-snippet',
   SNIPPETS: 'keditor-snippets',
+  SNIPPETS_FILTER: 'keditor-snippets-filter',
+  SNIPPETS_SEARCH: 'keditor-snippets-search',
+  SNIPPETS_FILTER_WRAPPER: 'keditor-snippets-filter-wrapper',
+  SNIPPETS_CONTAINER: 'keditor-snippets-container',
+  SNIPPETS_COMPONENT: 'keditor-snippets-component',
   SNIPPETS_WRAPPER: 'keditor-snippets-wrapper',
+  SNIPPETS_WRAPPER_CONTAINER: 'keditor-snippets-wrapper-container',
+  SNIPPETS_WRAPPER_COMPONENT: 'keditor-snippets-wrapper-component',
   SETTING: 'keditor-setting',
   SETTING_FORM: 'keditor-setting-form',
   SETTING_CONTAINER: 'keditor-setting-container',
@@ -984,7 +1001,7 @@ __webpack_require__.r(__webpack_exports__);
   var iframeWrapper = self.iframeWrapper = $("<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].IFRAME_WRAPPER, "\"></div>"));
   var iframe = self.iframe = $("<iframe class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].IFRAME, "\"></iframe>"));
   element.after(wrapper);
-  element.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].HIDDEN_ELEMENT);
+  element.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI_HIDDEN);
   iframeWrapper.html(iframe);
   wrapper.attr('id', self.generateId()).append(iframeWrapper);
   self.iframeDoc = iframe.contents(); // Fix issue Firefox can't render content inside iframe
@@ -1089,6 +1106,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/classNames */ "./src/keditor/constants/classNames.js");
+
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var self = this;
   var element = self.element;
@@ -1102,7 +1121,7 @@ __webpack_require__.r(__webpack_exports__);
     element.html(content);
   }
 
-  element.removeClass('keditor-hidden-element');
+  element.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI_HIDDEN);
   element.data('keditor', null);
   delete KEditor.instances[id];
 });
@@ -1119,12 +1138,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/classNames */ "./src/keditor/constants/classNames.js");
+
 /* harmony default export */ __webpack_exports__["default"] = (function (inArray) {
   var self = this;
   var result = [];
-  self.contentAreasWrapper.find('.keditor-content-area-inner').each(function () {
+  self.contentAreasWrapper.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTENT_AREA_INNER)).each(function () {
     var html = '';
-    $(this).children('.keditor-container').each(function () {
+    $(this).children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER)).each(function () {
       var container = $(this);
       html += self.getContainerContent(container);
     });
@@ -1854,12 +1875,12 @@ __webpack_require__.r(__webpack_exports__);
   var snippetsWrapperHtml = '';
 
   if (options.explicitSnippetEnabled) {
-    snippetsWrapperHtml = "\n<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER, " keditor-snippets-wrapper-container\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS, " keditor-snippets-container\"></div>\n</div>\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER, " keditor-snippets-wrapper-component\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS, " keditor-snippets-component\"></div>\n</div>\n");
+    snippetsWrapperHtml = "\n<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER_CONTAINER, "\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_CONTAINER, "\"></div>\n</div>\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER_COMPONENT, "\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_COMPONENT, "\"></div>\n</div>\n");
   } else {
     snippetsWrapperHtml = "\n<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER, "\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS, "\"></div>\n</div>\n");
   }
 
-  var modal = self.modal = $("\n<div class=\"keditor-ui keditor-modal\" id=\"".concat(modalId, "\">\n<div class=\"keditor-modal-header\">\n<button type=\"button\" class=\"keditor-modal-close\">&times;</button>\n<h4 class=\"keditor-modal-title\"></h4>\n</div>\n<div class=\"keditor-modal-body\">").concat(snippetsWrapperHtml, "</div>\n<div class=\"keditor-modal-footer\">\n<button type=\"button\" class=\"keditor-ui keditor-btn keditor-btn-default keditor-modal-close\">Close</button>\n<button type=\"button\" class=\"keditor-ui keditor-btn keditor-btn-primary keditor-modal-add\">Add</button>\n</div>\n</div>\n"));
+  var modal = self.modal = $("\n<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].MODAL, "\" id=\"").concat(modalId, "\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].MODAL_HEADER, "\">\n<button type=\"button\" class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].MODAL_CLOSE, "\">&times;</button>\n<h4 class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].MODAL_TITLE, "\"></h4>\n</div>\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].MODAL_BODY, "\">").concat(snippetsWrapperHtml, "</div>\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].MODAL_FOOTER, "\">\n<button type=\"button\" class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].BTN, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].BTN_DEFAULT, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].MODAL_CLOSE, "\">Close</button>\n<button type=\"button\" class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].BTN, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].BTN_PRIMARY, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].MODAL_ADD, "\">Add</button>\n</div>\n</div>\n"));
 
   if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
     $.ajax({
@@ -1889,20 +1910,20 @@ __webpack_require__.r(__webpack_exports__);
       }
     }); // Close buttons
 
-    modal.find('.keditor-modal-close').on('click', function (e) {
+    modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].MODAL_CLOSE)).on('click', function (e) {
       e.preventDefault();
       self.closeModal();
     }); // Add button
 
-    modal.find('.keditor-modal-add').on('click', function (e) {
+    modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].MODAL_ADD)).on('click', function (e) {
       e.preventDefault();
-      var selectedSnippet = modal.find('.keditor-snippets-wrapper .selected');
+      var selectedSnippet = modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER, " .").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_SELECTED));
 
       if (selectedSnippet.length === 0) {
         return;
       }
 
-      var contentArea = self.modalTarget.closest('.keditor-content-area');
+      var contentArea = self.modalTarget.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].CONTENT_AREA));
       var snippetType = selectedSnippet.attr('data-type');
       var snippetContentElement = modal.find(selectedSnippet.attr('data-snippet'));
       var snippetContent = snippetContentElement.html();
@@ -1933,7 +1954,7 @@ __webpack_require__.r(__webpack_exports__);
               break;
 
             case _constants_snippetType__WEBPACK_IMPORTED_MODULE_0__["default"].ALL:
-              if (self.modalTarget.is('.keditor-container-content-inner')) {
+              if (self.modalTarget.is(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].CONTAINER_CONTENT_INNER))) {
                 isAddingComponent = true;
               } else {
                 isAddingComponentWithContainer = true;
@@ -1951,8 +1972,8 @@ __webpack_require__.r(__webpack_exports__);
       var newComponent;
 
       if (isAddingContainer) {
-        self.contentAreasWrapper.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
-        newContainer = $("\n<section class=\"keditor-ui keditor-container showed-keditor-toolbar\">\n<section class=\"keditor-ui keditor-container-inner\">".concat(snippetContent, "</section>\n</section>\n"));
+        self.contentAreasWrapper.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].CONTAINER, ".").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_TOOLBAR_SHOWED)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_TOOLBAR_SHOWED);
+        newContainer = $("\n<section class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].CONTAINER, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_TOOLBAR_SHOWED, "\">\n<section class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].CONTAINER_INNER, "\">").concat(snippetContent, "</section>\n</section>\n"));
         self.modalTarget.append(newContainer);
 
         if (typeof options.onContainerSnippetAdded === 'function') {
@@ -1968,9 +1989,9 @@ __webpack_require__.r(__webpack_exports__);
 
       if (isAddingComponent) {
         var dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
-        newComponent = $("\n<section class=\"keditor-ui keditor-component\" data-type=\"".concat(snippetType, "\" ").concat(dataAttributes.join(' '), ">\n<section class=\"keditor-ui keditor-component-content\">").concat(snippetContent, "</section>\n</section>\n"));
+        newComponent = $("\n<section class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].COMPONENT, "\" data-type=\"").concat(snippetType, "\" ").concat(dataAttributes.join(' '), ">\n<section class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].COMPONENT_CONTENT, "\">").concat(snippetContent, "</section>\n</section>\n"));
         self.modalTarget.append(newComponent);
-        var container = self.modalTarget.closest('.keditor-container');
+        var container = self.modalTarget.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].CONTAINER));
 
         if (typeof options.onComponentSnippetAdded === 'function') {
           options.onComponentSnippetAdded.call(self, e, newComponent, selectedSnippet, contentArea);
@@ -1984,12 +2005,12 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (isAddingComponentWithContainer) {
-        self.contentAreasWrapper.find('.keditor-container.showed-keditor-toolbar').removeClass('showed-keditor-toolbar');
+        self.contentAreasWrapper.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].CONTAINER, ".").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_TOOLBAR_SHOWED)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_TOOLBAR_SHOWED);
 
         var _dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
 
-        newContainer = $("\n<section class=\"keditor-ui keditor-container showed-keditor-toolbar\">\n<section class=\"keditor-ui keditor-container-inner\">".concat(options.containerForQuickAddComponent, "</section>\n</section>\n"));
-        newComponent = $("\n<section class=\"keditor-ui keditor-component\" data-type=\"".concat(snippetType, "\" ").concat(_dataAttributes.join(' '), ">\n<section class=\"keditor-ui keditor-component-content\">").concat(snippetContent, "</section>\n</section>\n"));
+        newContainer = $("\n<section class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].CONTAINER, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_TOOLBAR_SHOWED, "\">\n<section class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].CONTAINER_INNER, "\">").concat(options.containerForQuickAddComponent, "</section>\n</section>\n"));
+        newComponent = $("\n<section class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].COMPONENT, "\" data-type=\"").concat(snippetType, "\" ").concat(_dataAttributes.join(' '), ">\n<section class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].COMPONENT_CONTENT, "\">").concat(snippetContent, "</section>\n</section>\n"));
         newContainer.find('[data-type="container-content"]').eq(0).html(newComponent);
         self.modalTarget.append(newContainer);
 
@@ -2007,20 +2028,20 @@ __webpack_require__.r(__webpack_exports__);
       self.closeModal();
     }); // Action click for snippet
 
-    modal.on('click', '.keditor-snippet', function (e) {
+    modal.on('click', ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPET), function (e) {
       e.preventDefault();
       var snippet = $(this);
 
-      if (!snippet.hasClass('selected')) {
-        snippet.parent().find('.selected').removeClass('selected');
-        snippet.addClass('selected');
+      if (!snippet.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_SELECTED)) {
+        snippet.parent().find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_SELECTED)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_SELECTED);
+        snippet.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_SELECTED);
       }
     });
     var cssTransitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
     modal.on(cssTransitionEnd, function () {
-      if (!modal.hasClass('showed')) {
+      if (!modal.hasClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_SHOWED)) {
         modal.css('display', 'none');
-        $(document.body).removeClass('opened-modal');
+        $(document.body).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_MODAL_OPENED);
       }
     });
     modal.appendTo(document.body);
@@ -2042,6 +2063,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_snippetType__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/snippetType */ "./src/keditor/constants/snippetType.js");
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 
 /* harmony default export */ __webpack_exports__["default"] = (function (target, snippetType) {
   var self = this;
@@ -2063,20 +2086,20 @@ __webpack_require__.r(__webpack_exports__);
   }
 
   if (options.explicitSnippetEnabled) {
-    modal.find('.keditor-snippets-wrapper').css('display', 'none');
-    modal.find(snippetType === _constants_snippetType__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT ? '.keditor-snippets-wrapper-component' : '.keditor-snippets-wrapper-container').css('display', 'block');
+    modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER)).css('display', 'none');
+    modal.find(snippetType === _constants_snippetType__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT ? ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER_COMPONENT) : ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER_CONTAINER)).css('display', 'block');
   } else {
-    modal.find('.keditor-snippets-wrapper').css('display', 'block').find('.keditor-snippet[data-type=container]').css('display', snippetType === _constants_snippetType__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT ? 'none' : 'block');
+    modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER)).css('display', 'block').find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPET, "[data-type=container]")).css('display', snippetType === _constants_snippetType__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT ? 'none' : 'block');
     modalTitle = 'Add content';
   }
 
-  modal.find('.keditor-modal-title').html(modalTitle);
+  modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].MODAL_TITLE)).html(modalTitle);
   self.modalTarget = target;
   self.modalSnippetType = snippetType;
   modal.css('display', 'block');
-  $(document.body).addClass('opened-modal');
+  $(document.body).addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_MODAL_OPENED);
   setTimeout(function () {
-    modal.addClass('showed');
+    modal.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_SHOWED);
   }, 0);
 });
 ;
@@ -2092,12 +2115,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/classNames */ "./src/keditor/constants/classNames.js");
+
 /* harmony default export */ __webpack_exports__["default"] = (function (content, contentArea) {
   var self = this;
   var contentAreasWrapper = self.wrapper;
 
   if (!contentArea) {
-    contentArea = contentAreasWrapper.children('.keditor-content-area');
+    contentArea = contentAreasWrapper.children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTENT_AREA));
   } else {
     if (!contentArea.jquery) {
       contentArea = contentAreasWrapper.find(contentArea);
@@ -2232,7 +2257,7 @@ __webpack_require__.r(__webpack_exports__);
       var _componentData = KEditor.components[componentType];
 
       if (typeof _componentData.initSettingForm === 'function') {
-        settingForm = $("\n<div\ndata-type=\"".concat(componentType, "\"\nclass=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_FORM, " ").concat(settingFormClass, " clearfix ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE, "\"\n>\n</div>\n"));
+        settingForm = $("\n<div\ndata-type=\"".concat(componentType, "\"\nclass=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_FORM, " ").concat(settingFormClass, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE, "\"\n>\n</div>\n"));
         var loadingText = $('<span />').html('Loading...');
         sidebarBody.append(settingForm);
         settingForm.append(loadingText);
@@ -2288,6 +2313,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _renderSnippet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./renderSnippet */ "./src/keditor/snippet/renderSnippet.js");
 /* harmony import */ var _renderSnippetFilter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./renderSnippetFilter */ "./src/keditor/snippet/renderSnippetFilter.js");
 /* harmony import */ var _constants_snippetType__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants/snippetType */ "./src/keditor/constants/snippetType.js");
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -2307,6 +2333,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = (function (type, title, previewUrl, categories, content, extraData) {
   var self = this;
   var options = self.options;
@@ -2322,15 +2349,15 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
   if (options.explicitSnippetEnabled) {
     if (type === 'container') {
-      self.modal.find('.keditor-snippets-container').append(snippetPreviewHtml);
+      self.modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_3__["default"].SNIPPETS_CONTAINER)).append(snippetPreviewHtml);
     } else if (type.indexOf('component') !== -1) {
-      self.modal.find('.keditor-snippets-component').append(snippetPreviewHtml);
+      self.modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_3__["default"].SNIPPETS_COMPONENT)).append(snippetPreviewHtml);
     }
   } else {
-    self.modal.find('.keditor-snippets').append(snippetPreviewHtml);
+    self.modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_3__["default"].SNIPPETS)).append(snippetPreviewHtml);
   }
 
-  self.modal.find('.keditor-modal-body').append(snippetContentHtml);
+  self.modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_3__["default"].MODAL_BODY)).append(snippetContentHtml);
   var filterType;
 
   if (options.snippetsFilterEnabled) {
@@ -2346,7 +2373,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       categoriesOptions = _renderSnippetFilter$2[0],
       snippetsWrapper = _renderSnippetFilter$2[1];
 
-  snippetsWrapper.find('.keditor-snippets-filter').html(categoriesOptions).trigger('change');
+  snippetsWrapper.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_3__["default"].SNIPPETS_FILTER)).html(categoriesOptions).trigger('change');
 });
 ;
 
@@ -2362,6 +2389,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _renderSnippetFilter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./renderSnippetFilter */ "./src/keditor/snippet/renderSnippetFilter.js");
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -2369,6 +2397,7 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (type) {
@@ -2380,15 +2409,15 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       categoriesOptions = _renderSnippetFilter$2[0],
       snippetsWrapper = _renderSnippetFilter$2[1];
 
-  snippetsWrapper.prepend("\n<div class=\"keditor-ui keditor-snippets-filter-wrapper\">\n<select class=\"keditor-ui keditor-snippets-filter\">\n".concat(categoriesOptions, "\n</select>\n<input type=\"text\" class=\"keditor-ui keditor-snippets-search\" value=\"\" placeholder=\"Type to search...\" />\n</div>\n"));
-  var txtSearch = snippetsWrapper.find('.keditor-snippets-search');
-  var cbbFilter = snippetsWrapper.find('.keditor-snippets-filter');
+  snippetsWrapper.prepend("\n<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_FILTER_WRAPPER, "\">\n<select class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_FILTER, "\">\n").concat(categoriesOptions, "\n</select>\n<input type=\"text\" class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_SEARCH, "\" value=\"\" placeholder=\"Type to search...\" />\n</div>\n"));
+  var txtSearch = snippetsWrapper.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_SEARCH));
+  var cbbFilter = snippetsWrapper.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_FILTER));
 
   var doFilter = function doFilter() {
     var selectedCategory = (cbbFilter.val() || '').toLowerCase();
     var searchText = (txtSearch.val() || '').toLowerCase();
-    var snippets = snippetsWrapper.find('.keditor-snippets').children('.keditor-snippet');
-    snippets.filter('.selected').removeClass('selected');
+    var snippets = snippetsWrapper.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS)).children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPET));
+    snippets.filter(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_SELECTED)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_SELECTED);
 
     if (selectedCategory || searchText) {
       snippets.each(function () {
@@ -2411,10 +2440,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           }
         }
 
-        snippet[error === 0 ? 'removeClass' : 'addClass']('not-matched');
+        snippet[error === 0 ? 'removeClass' : 'addClass'](_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_NOT_MATCHED);
       });
     } else {
-      snippets.removeClass('not-matched');
+      snippets.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].STATE_NOT_MATCHED);
     }
   };
 
@@ -2440,11 +2469,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 /* harmony default export */ __webpack_exports__["default"] = (function (type, title, previewUrl, categories, content, extraData) {
   var self = this;
   var options = self.options;
   var snippetId = self.generateId();
-  var snippetPreviewHtml = "\n<section\nclass=\"keditor-ui keditor-snippet\"\ndata-snippet=\"#".concat(snippetId, "\"\ndata-type=\"").concat(type, "\"\ntitle=\"").concat(title, "\"\ndata-keditor-categories=\"").concat(categories, "\"\n>\n<span><span style=\"background-image: url('").concat(previewUrl, "')\"></span></span>\n</section>\n");
+  var snippetPreviewHtml = "\n<section\nclass=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET, "\"\ndata-snippet=\"#").concat(snippetId, "\"\ndata-type=\"").concat(type, "\"\ntitle=\"").concat(title, "\"\ndata-keditor-categories=\"").concat(categories, "\"\n>\n<span><span style=\"background-image: url('").concat(previewUrl, "')\"></span></span>\n</section>\n");
   var snippetContentHtml = "<script id=\"".concat(snippetId, "\" type=\"text/html\" ").concat(extraData.join(' '), ">").concat(content, "</script>");
   categories = categories.split(options.snippetsCategoriesSeparator);
 
@@ -2470,6 +2501,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_snippetType__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/snippetType */ "./src/keditor/constants/snippetType.js");
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
 
 /* harmony default export */ __webpack_exports__["default"] = (function (type) {
   var self = this;
@@ -2480,24 +2513,24 @@ __webpack_require__.r(__webpack_exports__);
   switch (type) {
     case _constants_snippetType__WEBPACK_IMPORTED_MODULE_0__["default"].ALL:
       categories = self.snippetsCategories;
-      snippetsWrapperSelector = '.keditor-snippets-wrapper';
+      snippetsWrapperSelector = ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER);
       break;
 
     case _constants_snippetType__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER:
       categories = self.snippetsContainerCategories;
-      snippetsWrapperSelector = '.keditor-snippets-wrapper-container';
+      snippetsWrapperSelector = ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER_CONTAINER);
       break;
 
     case _constants_snippetType__WEBPACK_IMPORTED_MODULE_0__["default"].COMPONENT:
       categories = self.snippetsComponentCategories;
-      snippetsWrapperSelector = '.keditor-snippets-wrapper-component';
+      snippetsWrapperSelector = ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_WRAPPER_COMPONENT);
       break;
 
     default: // Do nothing
 
   }
 
-  var categoriesOptions = '<option value="" selected="selected">All</option>';
+  var categoriesOptions = "<option value=\"\" selected=\"selected\">All</option>";
   $.each(categories, function (i, category) {
     categoriesOptions += "<option value=\"".concat(category, "\">").concat(category, "</option>");
   });
@@ -2517,6 +2550,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _renderSnippet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./renderSnippet */ "./src/keditor/snippet/renderSnippet.js");
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -2532,6 +2566,7 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (resp) {
@@ -2570,13 +2605,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   self.snippetsCategories = self.beautifyCategories([].concat(_toConsumableArray(self.snippetsContainerCategories), _toConsumableArray(self.snippetsComponentCategories)));
 
   if (options.explicitSnippetEnabled) {
-    self.modal.find('.keditor-snippets-container').html(snippetsContainerHtml);
-    self.modal.find('.keditor-snippets-component').html(snippetsComponentHtml);
+    self.modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_CONTAINER)).html(snippetsContainerHtml);
+    self.modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS_COMPONENT)).html(snippetsComponentHtml);
   } else {
-    self.modal.find('.keditor-snippets').html(snippetsContainerHtml + snippetsComponentHtml);
+    self.modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].SNIPPETS)).html(snippetsContainerHtml + snippetsComponentHtml);
   }
 
-  self.modal.find('.keditor-modal-body').append(snippetsContentHtml);
+  self.modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_1__["default"].MODAL_BODY)).append(snippetsContentHtml);
 });
 ;
 

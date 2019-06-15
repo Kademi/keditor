@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import KEditor from 'keditor';
-const flog = KEditor.log;
 
 KEditor.components['photo'] = {
     init: function (contentArea, container, component, keditor) {

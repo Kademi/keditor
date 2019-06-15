@@ -1,6 +1,4 @@
-import $ from 'jquery';
 import KEditor from 'keditor';
-const flog = KEditor.log;
 
 KEditor.components['vimeo'] = {
     init: function (contentArea, container, component, keditor) {

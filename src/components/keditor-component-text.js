@@ -1,7 +1,4 @@
-import $ from 'jquery';
 import KEditor from 'keditor';
-
-const flog = KEditor.log;
 import InlineEditor from 'InlineEditor';
 
 const instances = {};

@@ -1,6 +1,4 @@
-import $ from 'jquery';
 import KEditor from 'keditor';
-const flog = KEditor.log;
 
 KEditor.components['audio'] = {
     getContent: function (component, keditor) {

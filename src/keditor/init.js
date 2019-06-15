@@ -9,6 +9,7 @@ export default function (target, config) {
     self.initTopbar();
     self.initSidebar();
     self.initSnippetsModal();
+    self.initExtraSettings();
     
     self.id = self.generateId();
     KEditor.instances[self.id] = self;

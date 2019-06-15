@@ -402,6 +402,7 @@ var CLASS_NAMES = {
   SNIPPETS_WRAPPER_COMPONENT: 'keditor-snippets-wrapper-component',
   SETTING: 'keditor-setting',
   SETTING_FORM: 'keditor-setting-form',
+  SETTING_EXTRA: 'keditor-setting-extra',
   SETTING_CONTAINER: 'keditor-setting-container',
   CONTENT_AREA: 'keditor-content-area',
   CONTENT_AREA_INNER: 'keditor-content-area-inner',
@@ -462,6 +463,9 @@ __webpack_require__.r(__webpack_exports__);
 
   /** containerForQuickAddComponent The container snippet which will be added automatically in content are when you adding a component. Note: component will be added in first container content of container* @option {String}*/
   containerForQuickAddComponent: "\n<div class=\"row\">\n<div class=\"col-sm-12\" data-type=\"container-content\">\n</div>\n</div>\n",
+
+  /** Extra settings in sidebar* @option {Object<String, Object>}* @format:* {*     settingName: {*         title,*         content,*         trigger*         settingShowFunction*     }* }* @settingName.option {String} title* @settingName.option {String} content* @settingName.option {jQuery|Function} trigger If pass as function, argument will be current extra setting. This function must return a jQuery object* @settingName.option {Function} settingShowFunction Same arguments with "containerSettingShowFunction"* @example:* {*     settingName1: {*         title: 'Page Settings',*         content: '<div>This is content of page settings</div>',*         trigger: $('.btn-page-setting'),*         settingShowFunction: function (form, container, keditor) {*             // Do something*         }*     },*     settingName2: {*         title: 'Page Settings 2',*         content: '<div>This is content of page settings 2</div>',*         triggerSelector: '.btn-page-settings',*         trigger: function (extraSetting) {*             return $(extraSetting.triggerSelector);*         },*         settingShowFunction: function (form, container, keditor) {*             // Do something*         }*     }* }*/
+  extraSettings: null,
 
   /** Text content for add content button. This available only when "explicitSippetEnabled" is "false"* @option {String}*/
   btnAddContentText: '<i class="fa fa-plus"></i>',
@@ -1418,31 +1422,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _sidebar_initSidebar__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./sidebar/initSidebar */ "./src/keditor/sidebar/initSidebar.js");
 /* harmony import */ var _sidebar_openSidebar__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./sidebar/openSidebar */ "./src/keditor/sidebar/openSidebar.js");
 /* harmony import */ var _sidebar_closeSidebar__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./sidebar/closeSidebar */ "./src/keditor/sidebar/closeSidebar.js");
-/* harmony import */ var _snippet_renderSnippets__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./snippet/renderSnippets */ "./src/keditor/snippet/renderSnippets.js");
-/* harmony import */ var _snippet_initSnippetsFilter__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./snippet/initSnippetsFilter */ "./src/keditor/snippet/initSnippetsFilter.js");
-/* harmony import */ var _snippet_addSnippet__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./snippet/addSnippet */ "./src/keditor/snippet/addSnippet.js");
-/* harmony import */ var _modal_initSnippetsModal__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./modal/initSnippetsModal */ "./src/keditor/modal/initSnippetsModal.js");
-/* harmony import */ var _modal_openModal__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./modal/openModal */ "./src/keditor/modal/openModal.js");
-/* harmony import */ var _modal_closeModal__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./modal/closeModal */ "./src/keditor/modal/closeModal.js");
-/* harmony import */ var _contentArea_initContentAreaWrapper__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./contentArea/initContentAreaWrapper */ "./src/keditor/contentArea/initContentAreaWrapper.js");
-/* harmony import */ var _contentArea_initContentAreas__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./contentArea/initContentAreas */ "./src/keditor/contentArea/initContentAreas.js");
-/* harmony import */ var _contentArea_initContentArea__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./contentArea/initContentArea */ "./src/keditor/contentArea/initContentArea.js");
-/* harmony import */ var _container_convertToContainer__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./container/convertToContainer */ "./src/keditor/container/convertToContainer.js");
-/* harmony import */ var _container_initContainer__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./container/initContainer */ "./src/keditor/container/initContainer.js");
-/* harmony import */ var _container_initContainerContent__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./container/initContainerContent */ "./src/keditor/container/initContainerContent.js");
-/* harmony import */ var _container_getContainerContent__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./container/getContainerContent */ "./src/keditor/container/getContainerContent.js");
-/* harmony import */ var _component_getComponentType__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./component/getComponentType */ "./src/keditor/component/getComponentType.js");
-/* harmony import */ var _component_convertToComponent__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./component/convertToComponent */ "./src/keditor/component/convertToComponent.js");
-/* harmony import */ var _component_initComponent__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./component/initComponent */ "./src/keditor/component/initComponent.js");
-/* harmony import */ var _component_initDynamicContent__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./component/initDynamicContent */ "./src/keditor/component/initDynamicContent.js");
-/* harmony import */ var _component_deleteComponent__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./component/deleteComponent */ "./src/keditor/component/deleteComponent.js");
-/* harmony import */ var _component_getComponentContent__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./component/getComponentContent */ "./src/keditor/component/getComponentContent.js");
-/* harmony import */ var _init__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./init */ "./src/keditor/init.js");
-/* harmony import */ var _destroy__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./destroy */ "./src/keditor/destroy.js");
-/* harmony import */ var _getContent__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./getContent */ "./src/keditor/getContent.js");
-/* harmony import */ var _setContent__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./setContent */ "./src/keditor/setContent.js");
-/* harmony import */ var _styles_keditor_less__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../styles/keditor.less */ "./src/styles/keditor.less");
-/* harmony import */ var _styles_keditor_less__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_styles_keditor_less__WEBPACK_IMPORTED_MODULE_39__);
+/* harmony import */ var _sidebar_initExtraSettings__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./sidebar/initExtraSettings */ "./src/keditor/sidebar/initExtraSettings.js");
+/* harmony import */ var _snippet_renderSnippets__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./snippet/renderSnippets */ "./src/keditor/snippet/renderSnippets.js");
+/* harmony import */ var _snippet_initSnippetsFilter__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./snippet/initSnippetsFilter */ "./src/keditor/snippet/initSnippetsFilter.js");
+/* harmony import */ var _snippet_addSnippet__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./snippet/addSnippet */ "./src/keditor/snippet/addSnippet.js");
+/* harmony import */ var _modal_initSnippetsModal__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./modal/initSnippetsModal */ "./src/keditor/modal/initSnippetsModal.js");
+/* harmony import */ var _modal_openModal__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./modal/openModal */ "./src/keditor/modal/openModal.js");
+/* harmony import */ var _modal_closeModal__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./modal/closeModal */ "./src/keditor/modal/closeModal.js");
+/* harmony import */ var _contentArea_initContentAreaWrapper__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./contentArea/initContentAreaWrapper */ "./src/keditor/contentArea/initContentAreaWrapper.js");
+/* harmony import */ var _contentArea_initContentAreas__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./contentArea/initContentAreas */ "./src/keditor/contentArea/initContentAreas.js");
+/* harmony import */ var _contentArea_initContentArea__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./contentArea/initContentArea */ "./src/keditor/contentArea/initContentArea.js");
+/* harmony import */ var _container_convertToContainer__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./container/convertToContainer */ "./src/keditor/container/convertToContainer.js");
+/* harmony import */ var _container_initContainer__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./container/initContainer */ "./src/keditor/container/initContainer.js");
+/* harmony import */ var _container_initContainerContent__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./container/initContainerContent */ "./src/keditor/container/initContainerContent.js");
+/* harmony import */ var _container_getContainerContent__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./container/getContainerContent */ "./src/keditor/container/getContainerContent.js");
+/* harmony import */ var _component_getComponentType__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./component/getComponentType */ "./src/keditor/component/getComponentType.js");
+/* harmony import */ var _component_convertToComponent__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./component/convertToComponent */ "./src/keditor/component/convertToComponent.js");
+/* harmony import */ var _component_initComponent__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./component/initComponent */ "./src/keditor/component/initComponent.js");
+/* harmony import */ var _component_initDynamicContent__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./component/initDynamicContent */ "./src/keditor/component/initDynamicContent.js");
+/* harmony import */ var _component_deleteComponent__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./component/deleteComponent */ "./src/keditor/component/deleteComponent.js");
+/* harmony import */ var _component_getComponentContent__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./component/getComponentContent */ "./src/keditor/component/getComponentContent.js");
+/* harmony import */ var _init__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./init */ "./src/keditor/init.js");
+/* harmony import */ var _destroy__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./destroy */ "./src/keditor/destroy.js");
+/* harmony import */ var _getContent__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./getContent */ "./src/keditor/getContent.js");
+/* harmony import */ var _setContent__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./setContent */ "./src/keditor/setContent.js");
+/* harmony import */ var _styles_keditor_less__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../styles/keditor.less */ "./src/styles/keditor.less");
+/* harmony import */ var _styles_keditor_less__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(_styles_keditor_less__WEBPACK_IMPORTED_MODULE_40__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1450,6 +1455,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -1525,7 +1531,7 @@ function () {
   function KEditor(target, config) {
     _classCallCheck(this, KEditor);
 
-    return _init__WEBPACK_IMPORTED_MODULE_35__["default"].apply(this, [target, config]);
+    return _init__WEBPACK_IMPORTED_MODULE_36__["default"].apply(this, [target, config]);
   }
 
   _createClass(KEditor, [{
@@ -1571,7 +1577,7 @@ function () {
   }, {
     key: "getComponentType",
     value: function getComponentType(component) {
-      return _component_getComponentType__WEBPACK_IMPORTED_MODULE_29__["default"].apply(this, [component]);
+      return _component_getComponentType__WEBPACK_IMPORTED_MODULE_30__["default"].apply(this, [component]);
     }
   }, {
     key: "getClickedElement",
@@ -1625,6 +1631,11 @@ function () {
     key: "closeSidebar",
     value: function closeSidebar() {
       return _sidebar_closeSidebar__WEBPACK_IMPORTED_MODULE_15__["default"].apply(this);
+    }
+  }, {
+    key: "initExtraSettings",
+    value: function initExtraSettings() {
+      return _sidebar_initExtraSettings__WEBPACK_IMPORTED_MODULE_16__["default"].apply(this);
     } // Legacy methods. DEPRECATED
     //---------------------------------
 
@@ -1643,121 +1654,121 @@ function () {
   }, {
     key: "initSnippetsModal",
     value: function initSnippetsModal() {
-      return _modal_initSnippetsModal__WEBPACK_IMPORTED_MODULE_19__["default"].apply(this);
+      return _modal_initSnippetsModal__WEBPACK_IMPORTED_MODULE_20__["default"].apply(this);
     }
   }, {
     key: "renderSnippets",
     value: function renderSnippets(resp) {
-      return _snippet_renderSnippets__WEBPACK_IMPORTED_MODULE_16__["default"].apply(this, [resp]);
+      return _snippet_renderSnippets__WEBPACK_IMPORTED_MODULE_17__["default"].apply(this, [resp]);
     }
   }, {
     key: "initSnippetsFilter",
     value: function initSnippetsFilter(type) {
-      return _snippet_initSnippetsFilter__WEBPACK_IMPORTED_MODULE_17__["default"].apply(this, [type]);
+      return _snippet_initSnippetsFilter__WEBPACK_IMPORTED_MODULE_18__["default"].apply(this, [type]);
     }
   }, {
     key: "openModal",
     value: function openModal(target, snippetType) {
-      return _modal_openModal__WEBPACK_IMPORTED_MODULE_20__["default"].apply(this, [target, snippetType]);
+      return _modal_openModal__WEBPACK_IMPORTED_MODULE_21__["default"].apply(this, [target, snippetType]);
     }
   }, {
     key: "closeModal",
     value: function closeModal() {
-      return _modal_closeModal__WEBPACK_IMPORTED_MODULE_21__["default"].apply(this);
+      return _modal_closeModal__WEBPACK_IMPORTED_MODULE_22__["default"].apply(this);
     } // Content areas
     //---------------------------------
 
   }, {
     key: "initContentAreaWrapper",
     value: function initContentAreaWrapper() {
-      return _contentArea_initContentAreaWrapper__WEBPACK_IMPORTED_MODULE_22__["default"].apply(this);
+      return _contentArea_initContentAreaWrapper__WEBPACK_IMPORTED_MODULE_23__["default"].apply(this);
     }
   }, {
     key: "initContentAreas",
     value: function initContentAreas() {
-      return _contentArea_initContentAreas__WEBPACK_IMPORTED_MODULE_23__["default"].apply(this);
+      return _contentArea_initContentAreas__WEBPACK_IMPORTED_MODULE_24__["default"].apply(this);
     }
   }, {
     key: "initContentArea",
     value: function initContentArea(contentArea, dontInitToolbar) {
-      return _contentArea_initContentArea__WEBPACK_IMPORTED_MODULE_24__["default"].apply(this, [contentArea, dontInitToolbar]);
+      return _contentArea_initContentArea__WEBPACK_IMPORTED_MODULE_25__["default"].apply(this, [contentArea, dontInitToolbar]);
     } // Containers
     //---------------------------------
 
   }, {
     key: "convertToContainer",
     value: function convertToContainer(contentArea, target) {
-      return _container_convertToContainer__WEBPACK_IMPORTED_MODULE_25__["default"].apply(this, [contentArea, target]);
+      return _container_convertToContainer__WEBPACK_IMPORTED_MODULE_26__["default"].apply(this, [contentArea, target]);
     }
   }, {
     key: "initContainer",
     value: function initContainer(contentArea, container) {
-      return _container_initContainer__WEBPACK_IMPORTED_MODULE_26__["default"].apply(this, [contentArea, container]);
+      return _container_initContainer__WEBPACK_IMPORTED_MODULE_27__["default"].apply(this, [contentArea, container]);
     }
   }, {
     key: "initContainerContent",
     value: function initContainerContent(contentArea, container, containerContent, isNested) {
-      return _container_initContainerContent__WEBPACK_IMPORTED_MODULE_27__["default"].apply(this, [contentArea, container, containerContent, isNested]);
+      return _container_initContainerContent__WEBPACK_IMPORTED_MODULE_28__["default"].apply(this, [contentArea, container, containerContent, isNested]);
     } // Components
     //---------------------------------
 
   }, {
     key: "convertToComponent",
     value: function convertToComponent(contentArea, container, target, isExisting) {
-      return _component_convertToComponent__WEBPACK_IMPORTED_MODULE_30__["default"].apply(this, [contentArea, container, target, isExisting]);
+      return _component_convertToComponent__WEBPACK_IMPORTED_MODULE_31__["default"].apply(this, [contentArea, container, target, isExisting]);
     }
   }, {
     key: "initComponent",
     value: function initComponent(contentArea, container, component) {
-      return _component_initComponent__WEBPACK_IMPORTED_MODULE_31__["default"].apply(this, [contentArea, container, component]);
+      return _component_initComponent__WEBPACK_IMPORTED_MODULE_32__["default"].apply(this, [contentArea, container, component]);
     }
   }, {
     key: "initDynamicContent",
     value: function initDynamicContent(dynamicElement) {
-      return _component_initDynamicContent__WEBPACK_IMPORTED_MODULE_32__["default"].apply(this, [dynamicElement]);
+      return _component_initDynamicContent__WEBPACK_IMPORTED_MODULE_33__["default"].apply(this, [dynamicElement]);
     }
   }, {
     key: "deleteComponent",
     value: function deleteComponent(component) {
-      return _component_deleteComponent__WEBPACK_IMPORTED_MODULE_33__["default"].apply(this, [component]);
+      return _component_deleteComponent__WEBPACK_IMPORTED_MODULE_34__["default"].apply(this, [component]);
     } // Get content
     //---------------------------------
 
   }, {
     key: "getComponentContent",
     value: function getComponentContent(component) {
-      return _component_getComponentContent__WEBPACK_IMPORTED_MODULE_34__["default"].apply(this, [component]);
+      return _component_getComponentContent__WEBPACK_IMPORTED_MODULE_35__["default"].apply(this, [component]);
     }
   }, {
     key: "getContainerContent",
     value: function getContainerContent(container, isNested) {
-      return _container_getContainerContent__WEBPACK_IMPORTED_MODULE_28__["default"].apply(this, [container, isNested]);
+      return _container_getContainerContent__WEBPACK_IMPORTED_MODULE_29__["default"].apply(this, [container, isNested]);
     }
   }, {
     key: "getContent",
     value: function getContent(inArray) {
-      return _getContent__WEBPACK_IMPORTED_MODULE_37__["default"].apply(this, [inArray]);
+      return _getContent__WEBPACK_IMPORTED_MODULE_38__["default"].apply(this, [inArray]);
     } // Set content
     //---------------------------------
 
   }, {
     key: "setContent",
     value: function setContent(content, contentArea) {
-      return _setContent__WEBPACK_IMPORTED_MODULE_38__["default"].apply(this, [content, contentArea]);
+      return _setContent__WEBPACK_IMPORTED_MODULE_39__["default"].apply(this, [content, contentArea]);
     } // Destroy
     //---------------------------------
 
   }, {
     key: "destroy",
     value: function destroy() {
-      return _destroy__WEBPACK_IMPORTED_MODULE_36__["default"].apply(this);
+      return _destroy__WEBPACK_IMPORTED_MODULE_37__["default"].apply(this);
     } // Snippet
     //---------------------------------
 
   }, {
     key: "addSnippet",
     value: function addSnippet(type, title, previewUrl, categories, content, dataAttributes) {
-      return _snippet_addSnippet__WEBPACK_IMPORTED_MODULE_18__["default"].apply(this, [type, title, previewUrl, categories, content, dataAttributes]);
+      return _snippet_addSnippet__WEBPACK_IMPORTED_MODULE_19__["default"].apply(this, [type, title, previewUrl, categories, content, dataAttributes]);
     }
   }]);
 
@@ -1820,6 +1831,7 @@ __webpack_require__.r(__webpack_exports__);
   self.initTopbar();
   self.initSidebar();
   self.initSnippetsModal();
+  self.initExtraSettings();
   self.id = self.generateId();
   KEditor.instances[self.id] = self;
 
@@ -2162,13 +2174,14 @@ __webpack_require__.r(__webpack_exports__);
       if (typeof options.containerSettingHideFunction === 'function') {
         options.containerSettingHideFunction.call(self, activeForm, self);
       }
-    } else {
+    } else if (activeForm.is('[data-type]')) {
       var activeType = activeForm.attr('data-type');
       var componentData = KEditor.components[activeType];
 
       if (typeof componentData.hideSettingForm === 'function') {
         componentData.hideSettingForm.call(componentData, activeForm, self);
       }
+    } else if (activeForm.is('[data-extra-setting]')) {// TODO: Will add method when hiding setting for Extra setting
     }
 
     activeForm.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
@@ -2178,6 +2191,46 @@ __webpack_require__.r(__webpack_exports__);
   self.setSettingContainer(null);
   sidebar.removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_OPENED);
 });
+
+/***/ }),
+
+/***/ "./src/keditor/sidebar/initExtraSettings.js":
+/*!**************************************************!*\
+  !*** ./src/keditor/sidebar/initExtraSettings.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_classNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/classNames */ "./src/keditor/constants/classNames.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var _this = this;
+
+  var self = this;
+  var options = self.options;
+  var sidebarBody = self.sidebar.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SIDEBAR_BODY));
+
+  if ($.isPlainObject(options.extraSettings)) {
+    var _loop = function _loop(key) {
+      var extraSetting = options.extraSettings[key];
+      var form = $("<div data-extra-setting=\"".concat(key, "\" class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_FORM, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_EXTRA, "\"></div>"));
+      form.html(extraSetting.content);
+      sidebarBody.append(form);
+      var trigger = typeof extraSetting.trigger === 'function' ? extraSetting.trigger.call(_this, extraSetting) : extraSetting.trigger;
+      trigger.on('click', function (e) {
+        e.preventDefault();
+        self.openSidebar(trigger);
+      });
+    };
+
+    for (var key in options.extraSettings) {
+      _loop(key);
+    }
+  }
+});
+;
 
 /***/ }),
 
@@ -2238,7 +2291,6 @@ __webpack_require__.r(__webpack_exports__);
   var self = this;
   var options = self.options;
   var sidebar = self.sidebar;
-  alert(self.sidebar);
   var sidebarTitle = sidebar.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SIDEBAR_TITLE));
   var sidebarBody = sidebar.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SIDEBAR_BODY));
   var activeForm = sidebarBody.children(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE));
@@ -2281,7 +2333,7 @@ __webpack_require__.r(__webpack_exports__);
 
       settingForm.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
     }
-  } else {
+  } else if (target.is("".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTAINER))) {
     self.setSettingContainer(target);
     self.setSettingComponent(null);
     sidebarTitle.html('Container Settings');
@@ -2293,6 +2345,17 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     _settingForm.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
+  } else {
+    // should be extra tabs
+    var extraKey = target.attr('data-extra-setting');
+    var extraTabData = options.extraSettings[extraKey];
+    sidebarTitle.html(extraTabData.title);
+
+    var _settingForm2 = sidebar.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SETTING_EXTRA, "[data-extra-setting=").concat(extraKey, "]"));
+
+    typeof extraTabData.settingShowFunction === 'function' && extraTabData.settingShowFunction.call(self, _settingForm2, target, self);
+
+    _settingForm2.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_ACTIVE);
   }
 
   sidebar.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_OPENED);

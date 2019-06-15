@@ -19,6 +19,7 @@ import initDeviceSwitcher from './topbar/initDeviceSwitcher';
 import initSidebar from './sidebar/initSidebar';
 import openSidebar from './sidebar/openSidebar';
 import closeSidebar from './sidebar/closeSidebar';
+import initExtraSettings from './sidebar/initExtraSettings';
 
 import renderSnippets from './snippet/renderSnippets';
 import initSnippetsFilter from './snippet/initSnippetsFilter';
@@ -164,6 +165,10 @@ class KEditor {
     
     closeSidebar() {
         return closeSidebar.apply(this);
+    }
+    
+    initExtraSettings() {
+        return initExtraSettings.apply(this);
     }
     
     // Legacy methods. DEPRECATED

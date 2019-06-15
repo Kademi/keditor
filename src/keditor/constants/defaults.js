@@ -32,6 +32,47 @@ export default {
     `,
     
     /*
+     * Extra settings in sidebar
+     * @option {Object<String, Object>}
+     * @format:
+     * {
+     *     settingName: {
+     *         title,
+     *         content,
+     *         trigger
+     *         settingShowFunction
+     *     }
+     * }
+     * @settingName.option {String} title
+     * @settingName.option {String} content
+     * @settingName.option {jQuery|Function} trigger If pass as function, argument will be current extra setting. This function must return a jQuery object
+     * @settingName.option {Function} settingShowFunction Same arguments with "containerSettingShowFunction"
+     * @example:
+     * {
+     *     settingName1: {
+     *         title: 'Page Settings',
+     *         content: '<div>This is content of page settings</div>',
+     *         trigger: $('.btn-page-setting'),
+     *         settingShowFunction: function (form, container, keditor) {
+     *             // Do something
+     *         }
+     *     },
+     *     settingName2: {
+     *         title: 'Page Settings 2',
+     *         content: '<div>This is content of page settings 2</div>',
+     *         triggerSelector: '.btn-page-settings',
+     *         trigger: function (extraSetting) {
+     *             return $(extraSetting.triggerSelector);
+     *         },
+     *         settingShowFunction: function (form, container, keditor) {
+     *             // Do something
+     *         }
+     *     }
+     * }
+     */
+    extraSettings: null,
+    
+    /*
      * Text content for add content button. This available only when "explicitSippetEnabled" is "false"
      * @option {String}
      */

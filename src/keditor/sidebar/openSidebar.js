@@ -4,7 +4,6 @@ export default function (target) {
     let self = this;
     let options = self.options;
     let sidebar = self.sidebar;
-    alert(self.sidebar);
     let sidebarTitle = sidebar.find(`.${CLASS_NAMES.SIDEBAR_TITLE}`);
     let sidebarBody = sidebar.find(`.${CLASS_NAMES.SIDEBAR_BODY}`);
     let activeForm = sidebarBody.children(`.${CLASS_NAMES.STATE_ACTIVE}`);
@@ -52,7 +51,7 @@ export default function (target) {
             }
             settingForm.addClass(CLASS_NAMES.STATE_ACTIVE);
         }
-    } else {
+    } else if (target.is(`${CLASS_NAMES.CONTAINER}`)) {
         self.setSettingContainer(target);
         self.setSettingComponent(null);
         
@@ -62,6 +61,16 @@ export default function (target) {
         if (typeof options.containerSettingShowFunction === 'function') {
             options.containerSettingShowFunction.call(self, settingForm, target, self);
         }
+        settingForm.addClass(CLASS_NAMES.STATE_ACTIVE);
+    } else {
+        // should be extra tabs
+        let extraKey = target.attr('data-extra-setting');
+        let extraTabData = options.extraSettings[extraKey];
+        
+        sidebarTitle.html(extraTabData.title);
+        
+        let settingForm = sidebar.find(`.${CLASS_NAMES.SETTING_EXTRA}[data-extra-setting=${extraKey}]`);
+        typeof extraTabData.settingShowFunction === 'function' && extraTabData.settingShowFunction.call(self, settingForm, target, self);
         settingForm.addClass(CLASS_NAMES.STATE_ACTIVE);
     }
     

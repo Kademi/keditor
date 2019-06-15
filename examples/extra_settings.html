@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>KEditor - Kademi Content Editor</title>
+        <link rel="stylesheet" type="text/css" href="plugins/bootstrap-3.3.6/css/bootstrap.min.css" data-type="keditor-style" />
+        <link rel="stylesheet" type="text/css" href="plugins/font-awesome-4.5.0/css/font-awesome.min.css" data-type="keditor-style" />
+        <!-- Start of KEditor styles -->
+        <link rel="stylesheet" type="text/css" href="../dist/css/keditor.css" data-type="keditor-style" />
+        <link rel="stylesheet" type="text/css" href="../dist/css/keditor-components.css" data-type="keditor-style" />
+        <!-- End of KEditor styles -->
+        <link rel="stylesheet" type="text/css" href="plugins/code-prettify/src/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="css/examples.css" />
+    </head>
+    
+    <body>
+        <div data-keditor="html">
+            <div id="content-area">
+                <section>
+                    <div class="row">
+                        <div class="col-sm-6" data-type="container-content">
+                            <section data-type="component-text">
+                                <div class="page-header">
+                                    <h1><b class="text-uppercase">Welcome to KEditor</b>
+                                    </h1>
+                                    
+                                    <p class="lead">
+                                        <em>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</em>
+                                    </p>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-sm-6" data-type="container-content">
+                            <section data-type="component-photo">
+                                <div class="photo-panel">
+                                    <img src="snippets/img/somewhere_bangladesh.jpg" style="display: inline-block;" height="" width="100%">
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        
+        <script type="text/javascript" src="plugins/jquery-1.11.3/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="plugins/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="plugins/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="plugins/jquery.nicescroll-3.6.6/jquery.nicescroll.min.js"></script>
+        <script type="text/javascript" src="plugins/ckeditor5-build-inline-custom/ckeditor.js"></script>
+        <script type="text/javascript" src="plugins/formBuilder-2.5.3/form-builder.min.js"></script>
+        <script type="text/javascript" src="plugins/formBuilder-2.5.3/form-render.min.js"></script>
+        <!-- Start of KEditor scripts -->
+        <script type="text/javascript" src="../dist/js/keditor.js"></script>
+        <script type="text/javascript" src="../dist/js/keditor-components.js"></script>
+        <!-- End of KEditor scripts -->
+        <script type="text/javascript" src="plugins/code-prettify/src/prettify.js"></script>
+        <script type="text/javascript" src="plugins/js-beautify-1.7.5/js/lib/beautify.js"></script>
+        <script type="text/javascript" src="plugins/js-beautify-1.7.5/js/lib/beautify-html.js"></script>
+        <script type="text/javascript" src="js/examples.js"></script>
+        <script type="text/javascript" data-keditor="script">
+            $(function () {
+                $('#content-area').keditor({
+                    extraSettings: {
+                        pageSetting: {
+                            title: 'Page Settings',
+                            content: '<div>This is content of page settings.</div><hr />',
+                            trigger: function (extraSetting) {
+                                var btnPageSetting = $('<a href="javascript:void(0);" class="keditor-ui keditor-topbar-btn btn-page-setting" data-extra-setting="pageSetting"><i class="fa fa-fw fa-cog"></i></a>');
+                                this.topbarRight.append(btnPageSetting);
+                                
+                                return btnPageSetting;
+                            },
+                            settingShowFunction: function (form, container, keditor) {
+                                form.append('<p>This content is added when showing setting</p><br />');
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

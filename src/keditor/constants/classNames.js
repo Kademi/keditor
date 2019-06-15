@@ -60,11 +60,8 @@ const CLASS_NAMES = {
     SNIPPETS_FILTER_LABEL: 'keditor-snippets-filter-label',
     SNIPPETS_SEARCH: 'keditor-snippets-search',
     SNIPPETS_FILTER_WRAPPER: 'keditor-snippets-filter-wrapper',
-    SNIPPETS_CONTAINER: 'keditor-snippets-container',
     SNIPPETS_COMPONENT: 'keditor-snippets-component',
     SNIPPETS_WRAPPER: 'keditor-snippets-wrapper',
-    SNIPPETS_WRAPPER_CONTAINER: 'keditor-snippets-wrapper-container',
-    SNIPPETS_WRAPPER_COMPONENT: 'keditor-snippets-wrapper-component',
     
     SETTING: 'keditor-setting',
     SETTING_FORM: 'keditor-setting-form',

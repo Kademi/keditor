@@ -9,11 +9,11 @@ export default function (type, isComponentConfigurable) {
         let toolbarClass = '';
         
         switch (type) {
-            case  TOOLBAR_TYPE.CONTENT_AREA:
+            case TOOLBAR_TYPE.CONTENT_AREA:
                 toolbarClass = 'keditor-content-area-toolbar';
             
-            case  TOOLBAR_TYPE.CONTAINER_CONTENT:
-            case  TOOLBAR_TYPE.SUB_CONTAINER_CONTENT:
+            case TOOLBAR_TYPE.CONTAINER_CONTENT:
+            case TOOLBAR_TYPE.SUB_CONTAINER_CONTENT:
                 toolbarClass = 'keditor-container-content-toolbar';
                 
                 return (`

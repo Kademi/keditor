@@ -8,6 +8,7 @@ const CLASS_NAMES = {
     WRAPPER: 'keditor-wrapper',
     
     BTN: 'keditor-btn',
+    BTN_GROUP: 'keditor-btn-group',
     BTN_PRIMARY: 'keditor-btn-primary',
     BTN_DEFAULT: 'keditor-btn-default',
     
@@ -66,6 +67,11 @@ const CLASS_NAMES = {
     SNIPPETS_COMPONENT: 'keditor-snippets-component',
     SNIPPETS_WRAPPER: 'keditor-snippets-wrapper',
     
+    TOOLBAR: 'keditor-toolbar',
+    TOOLBAR_CONTAINER: 'keditor-toolbar-container',
+    TOOLBAR_SUB_CONTAINER: ' keditor-toolbar-sub-container',
+    TOOLBAR_COMPONENT: 'keditor-toolbar-component',
+    
     SETTING: 'keditor-setting',
     SETTING_FORM: 'keditor-setting-form',
     SETTING_EXTRA: 'keditor-setting-extra',
@@ -73,6 +79,7 @@ const CLASS_NAMES = {
     
     CONTENT_AREA: 'keditor-content-area',
     CONTENT_AREA_INNER: 'keditor-content-area-inner',
+    CONTENT_AREA_TOOLBAR: 'keditor-content-area-toolbar',
     CONTENT_AREAS: 'keditor-content-areas',
     CONTENT_AREAS_WRAPPER: 'keditor-content-areas-wrapper',
     

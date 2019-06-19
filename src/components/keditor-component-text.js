@@ -1,12 +1,41 @@
 import KEditor from 'keditor';
-import InlineEditor from 'InlineEditor';
+import CKEDITOR from 'ckeditor';
 
-const instances = {};
+import '../styles/keditor-component-text.less';
+
+CKEDITOR.disableAutoInline = true;
 
 // Text component
 // ---------------------------------------------------------------------
 KEditor.components['text'] = {
+    options: {
+        toolbarGroups: [
+            {name: 'document', groups: ['mode', 'document', 'doctools']},
+            {name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing']},
+            {name: 'forms', groups: ['forms']},
+            {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
+            {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
+            {name: 'links', groups: ['links']},
+            {name: 'insert', groups: ['insert']},
+            '/',
+            {name: 'clipboard', groups: ['clipboard', 'undo']},
+            {name: 'styles', groups: ['styles']},
+            {name: 'colors', groups: ['colors']},
+        ],
+        title: false,
+        allowedContent: true, // DISABLES Advanced Content Filter. This is so templates with classes: allowed through
+        bodyId: 'editor',
+        templates_replaceContent: false,
+        enterMode: 'P',
+        forceEnterMode: true,
+        format_tags: 'p;h1;h2;h3;h4;h5;h6',
+        removePlugins: 'table,magicline,tableselection,tabletools',
+        removeButtons: 'Save,NewPage,Preview,Print,Templates,PasteText,PasteFromWord,Find,Replace,SelectAll,Scayt,Form,HiddenField,ImageButton,Button,Select,Textarea,TextField,Radio,Checkbox,Outdent,Indent,Blockquote,CreateDiv,Language,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Styles,BGColor,Maximize,About,ShowBlocks,BidiLtr,BidiRtl,Flash,Image,Subscript,Superscript,Anchor',
+        minimumChangeMilliseconds: 100
+    },
+    
     init: function (contentArea, container, component, keditor) {
+        let self = this;
         let options = keditor.options;
         
         let componentContent = component.children('.keditor-component-content');
@@ -26,37 +55,18 @@ KEditor.components['text'] = {
             }
         });
         
-        InlineEditor
-            .create(componentContent.get(0), {
-                fontFamily: {
-                    options: [
-                        'default',
-                        'Arial, Helvetica, sans-serif',
-                        'Courier New, Courier, monospace',
-                        'Georgia, serif',
-                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                        'Tahoma, Geneva, sans-serif',
-                        'Times New Roman, Times, serif',
-                        'Trebuchet MS, Helvetica, sans-serif',
-                        'Verdana, Geneva, sans-serif'
-                    ]
-                }
-            })
-            .then(editor => {
-                instances[componentContent.attr('id')] = editor;
-                
-                if (typeof options.onComponentReady === 'function') {
-                    options.onComponentReady.call(keditor, component, editor);
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        let editor = componentContent.ckeditor(self.options).editor;
+        editor.on('instanceReady', function () {
+            if (typeof options.onComponentReady === 'function') {
+                options.onComponentReady.call(contentArea, component, editor);
+            }
+        });
     },
     
     getContent: function (component, keditor) {
         let componentContent = component.find('.keditor-component-content');
-        let editor = instances[componentContent.attr('id')];
+        let id = componentContent.attr('id');
+        let editor = CKEDITOR.instances[id];
         if (editor) {
             return editor.getData();
         } else {
@@ -66,10 +76,6 @@ KEditor.components['text'] = {
     
     destroy: function (component, keditor) {
         let id = component.find('.keditor-component-content').attr('id');
-        let editor = instances[id];
-        if (editor) {
-            editor.destroy();
-            delete instances[id];
-        }
+        CKEDITOR.instances[id] && CKEDITOR.instances[id].destroy();
     }
 };

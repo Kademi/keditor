@@ -107,7 +107,7 @@ module.exports = {
     externals: {
         jquery: 'jQuery',
         keditor: 'KEditor',
-        InlineEditor: 'InlineEditor'
+        ckeditor: 'CKEDITOR'
     },
     resolve: {
         modules: [path.resolve('./node_modules'), path.resolve('./src')],

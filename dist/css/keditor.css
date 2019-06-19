@@ -237,6 +237,10 @@ body.opened-modal {
   height: 100%;
   overflow-y: scroll;
   padding: 15px 0 0 15px;
+  display: flex;
+  justify-content: space-evenly;
+  align-content: flex-start;
+  flex-flow: wrap;
 }
 .keditor-snippets-wrapper .keditor-snippets::-webkit-scrollbar {
   width: 10px;
@@ -255,14 +259,15 @@ body.opened-modal {
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
-  float: left;
+  display: block;
   background: #ffffff;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  width: calc(25% - 15px);
-  margin: 0 15px 15px 0;
+  width: 200px;
+  margin: 0 7.5px 15px;
+  flex: none;
 }
 .keditor-snippet .keditor-snippet-inner {
   display: block;
@@ -314,31 +319,6 @@ body.opened-modal {
 @media (max-width: 575px) {
   .keditor-snippet {
     width: calc(100% - 15px);
-  }
-}
-@media (min-width: 576px) and (max-width: 767px) {
-  .keditor-snippet {
-    width: calc(50% - 15px);
-  }
-}
-@media (min-width: 768px) and (max-width: 991px) {
-  .keditor-snippet {
-    width: calc(100% / 3 - 15px);
-  }
-}
-@media (min-width: 992px) and (max-width: 1199px) {
-  .keditor-snippet {
-    width: calc(25% - 15px);
-  }
-}
-@media (min-width: 1200px) and (max-width: 1499px) {
-  .keditor-snippet {
-    width: calc(20% - 15px);
-  }
-}
-@media (min-width: 1500px) {
-  .keditor-snippet {
-    width: calc(100% / 6 - 15px);
   }
 }
 /* ==================================================================================

@@ -240,6 +240,10 @@ body {
         height: 100%;
         overflow-y: scroll;
         padding: @snippet-container-padding;
+        display: flex;
+        justify-content: space-evenly;
+        align-content: flex-start;
+        flex-flow: wrap;
     }
 }
 
@@ -247,11 +251,12 @@ body {
     border: 1px solid @snippet-border-color;
     cursor: pointer;
     .transition(all @animation-duration);
-    float: left;
+    display: block;
     background: @snippet-bg;
     .user-select(none);
-    width: @snippet-width-lg;
+    width: @snippet-width;
     margin: @snippet-margin;
+    flex: none;
     
     .keditor-snippet-inner {
         display: block;
@@ -309,27 +314,7 @@ body {
     }
     
     @media (max-width: @screen-xs-max) {
-        width: @snippet-width-xs;
-    }
-    
-    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-        width: @snippet-width-sm;
-    }
-    
-    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-        width: @snippet-width-md;
-    }
-    
-    @media (min-width: @screen-lg-min) and (max-width: @screen-lg-max) {
-        width: @snippet-width-lg;
-    }
-    
-    @media (min-width: @screen-xl-min) and (max-width: @screen-xl-max) {
-        width: @snippet-width-xl;
-    }
-    
-    @media (min-width: @screen-xxl-min) {
-        width: @snippet-width-xxl;
+        width: @snippet-width-mobile;
     }
 }
 

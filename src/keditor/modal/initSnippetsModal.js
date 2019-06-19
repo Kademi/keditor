@@ -15,10 +15,6 @@ export default function () {
                     <div class="${CLASS_NAMES.SNIPPETS}"></div>
                 </div>
             </div>
-            <div class="${CLASS_NAMES.MODAL_FOOTER}">
-                <button type="button" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.MODAL_CLOSE}">Close</button>
-                <button type="button" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_PRIMARY} ${CLASS_NAMES.MODAL_ADD}">Add</button>
-            </div>
         </div>
     `);
     
@@ -42,6 +38,22 @@ export default function () {
             }
         });
         
+        // Snippet events
+        modal.on({
+            click: function (e) {
+                e.preventDefault();
+                
+                modal.find(`.${CLASS_NAMES.STATE_SELECTED}`).removeClass(CLASS_NAMES.STATE_SELECTED);
+                $(this).addClass(CLASS_NAMES.STATE_SELECTED);
+            },
+            mouseover: function () {
+                $(this).addClass(CLASS_NAMES.STATE_SELECTED);
+            },
+            mouseout: function () {
+                $(this).removeClass(CLASS_NAMES.STATE_SELECTED);
+            }
+        }, `.${CLASS_NAMES.SNIPPET}`);
+        
         // Close buttons
         modal.find(`.${CLASS_NAMES.MODAL_CLOSE}`).on('click', function (e) {
             e.preventDefault();
@@ -49,15 +61,10 @@ export default function () {
             self.closeModal();
         });
         
-        // Add button
-        modal.find(`.${CLASS_NAMES.MODAL_ADD}`).on('click', function (e) {
+        modal.on('click', `.${CLASS_NAMES.SNIPPET_ADD}`, function (e) {
             e.preventDefault();
             
-            let selectedSnippet = modal.find(`.${CLASS_NAMES.SNIPPETS_WRAPPER} .${CLASS_NAMES.STATE_SELECTED}`);
-            if (selectedSnippet.length === 0) {
-                return;
-            }
-            
+            let selectedSnippet = $(this).closest(`.${CLASS_NAMES.SNIPPET}`);
             let contentArea = self.modalTarget.closest(`.${CLASS_NAMES.CONTENT_AREA}`);
             let snippetType = selectedSnippet.attr('data-type');
             

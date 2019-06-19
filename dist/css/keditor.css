@@ -1,3 +1,14 @@
+.keditor-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+.keditor-scrollbar::-webkit-scrollbar-track {
+  background: #eee;
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1);
+}
+.keditor-scrollbar::-webkit-scrollbar-thumb {
+  background: #ddd;
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+}
 /* ==================================================================================
    Body
    ================================================================================== */
@@ -21,18 +32,11 @@ body.opened-modal {
   padding: 0;
   border: 0;
   outline: none;
-  font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
 }
 .keditor-ui,
 .keditor-ui:before,
 .keditor-ui:after {
   box-sizing: border-box;
-}
-.keditor-ui small,
-.keditor-ui .small {
-  font-size: 88%;
 }
 /* ==================================================================================
    Wrapper
@@ -133,13 +137,12 @@ body.opened-modal {
    ================================================================================== */
 .keditor-sidebar {
   position: absolute;
-  z-index: 1031;
   top: 50px;
   bottom: 0;
   right: -300px;
   width: 300px;
-  background: #f0f5f8;
-  border-left: 1px solid #dfeaf1;
+  background: #f0f0f0;
+  border-left: 1px solid #ddd;
   box-shadow: -1px 0 5px rgba(0, 0, 0, 0.15);
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
@@ -154,7 +157,7 @@ body.opened-modal {
   position: absolute;
 }
 .keditor-sidebar-header {
-  border-bottom: 1px solid #dfeaf1;
+  border-bottom: 1px solid #ddd;
   padding: 10px 30px 10px 15px;
   position: relative;
 }
@@ -186,6 +189,17 @@ body.opened-modal {
   overflow-x: hidden;
   overflow-y: auto;
   padding: 10px 15px;
+}
+.keditor-sidebar-body::-webkit-scrollbar {
+  width: 10px;
+}
+.keditor-sidebar-body::-webkit-scrollbar-track {
+  background: #eee;
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1);
+}
+.keditor-sidebar-body::-webkit-scrollbar-thumb {
+  background: #ddd;
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
 }
 .keditor-sidebar-body .keditor-setting-form {
   overflow: hidden;
@@ -223,6 +237,17 @@ body.opened-modal {
   height: 100%;
   overflow-y: scroll;
   padding: 15px 0 0 15px;
+}
+.keditor-snippets-wrapper .keditor-snippets::-webkit-scrollbar {
+  width: 10px;
+}
+.keditor-snippets-wrapper .keditor-snippets::-webkit-scrollbar-track {
+  background: #eee;
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1);
+}
+.keditor-snippets-wrapper .keditor-snippets::-webkit-scrollbar-thumb {
+  background: #ddd;
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
 }
 .keditor-snippet {
   border: 1px solid #eee;
@@ -266,16 +291,25 @@ body.opened-modal {
   padding: 0 10px;
   white-space: nowrap;
 }
+.keditor-snippet .keditor-snippet-add {
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  transform: translateX(-50%);
+  display: none;
+}
 .keditor-snippet.not-matched {
   display: none !important;
-}
-.keditor-snippet:hover {
-  border-color: #ccc;
-  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
 }
 .keditor-snippet.selected {
   border-color: #2eb2e4;
   box-shadow: 0 0 0 2px #2eb2e4;
+}
+.keditor-snippet.selected .keditor-snippet-title {
+  display: none;
+}
+.keditor-snippet.selected .keditor-snippet-add {
+  display: block;
 }
 @media (max-width: 575px) {
   .keditor-snippet {
@@ -321,6 +355,7 @@ body.opened-modal {
   background: #fff;
   transition: all 0.3s;
   opacity: 0;
+  font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .keditor-modal.showed {
   top: 0;
@@ -346,7 +381,7 @@ body.opened-modal {
 }
 .keditor-modal-header {
   background: #fff;
-  border-bottom: 1px solid #dfeaf1;
+  border-bottom: 1px solid #ddd;
   position: relative;
   padding: 15px;
   z-index: 2;
@@ -387,6 +422,7 @@ body.opened-modal {
 }
 .keditor-modal-header .keditor-snippets-filter-label {
   display: inline-block;
+  font-weight: normal;
 }
 .keditor-modal-header .keditor-snippets-filter {
   margin-right: 15px;
@@ -403,18 +439,9 @@ body.opened-modal {
   background: none;
 }
 .keditor-modal-body {
-  height: calc(100% - 56px - 61px);
+  height: calc(100% - 51px);
   position: relative;
   z-index: 1;
-}
-.keditor-modal-footer {
-  background: #fff;
-  border-top: 1px solid #dfeaf1;
-  text-align: center;
-  padding: 15px;
-}
-.keditor-modal-footer .keditor-btn {
-  margin: 0 5px;
 }
 /* ==================================================================================
    Btn group
@@ -437,17 +464,17 @@ body.opened-modal {
 .keditor-btn {
   border: 0;
   background: none;
-  height: 30px;
-  line-height: 29px;
-  font-size: 14px;
-  padding: 0 15px;
+  height: 24px;
+  line-height: 23px;
+  font-size: 12px;
+  padding: 0 10px;
   border-radius: 3px;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   display: inline-block;
   text-decoration: none !important;
 }
 .keditor-btn i {
-  line-height: 29px;
+  line-height: 23px;
 }
 .keditor-btn.keditor-btn-default {
   border: 1px solid #ddd;

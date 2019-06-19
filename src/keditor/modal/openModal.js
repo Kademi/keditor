@@ -4,8 +4,6 @@ export default function (target, showComponent, showContainer) {
     let self = this;
     let modal = self.modal;
     
-    console.log(showComponent, showContainer);
-    
     self.modalTarget = target;
     showComponent && modal.addClass(CLASS_NAMES.MODAL_COMPONENT);
     showContainer && modal.addClass(CLASS_NAMES.MODAL_CONTAINER);

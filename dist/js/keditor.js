@@ -390,12 +390,12 @@ var CLASS_NAMES = {
   MODAL_CONTAINER: 'keditor-modal-container',
   MODAL_HEADER: 'keditor-modal-header',
   MODAL_BODY: 'keditor-modal-body',
-  MODAL_FOOTER: 'keditor-modal-footer',
   MODAL_CLOSE: 'keditor-modal-close',
   MODAL_ADD: 'keditor-modal-add',
   SNIPPET: 'keditor-snippet',
   SNIPPET_INNER: 'keditor-snippet-inner',
   SNIPPET_TITLE: 'keditor-snippet-title',
+  SNIPPET_ADD: 'keditor-snippet-add',
   SNIPPET_PREVIEW: 'keditor-snippet-preview',
   SNIPPET_CONTAINER: 'keditor-snippet-container',
   SNIPPET_COMPONENT: 'keditor-snippet-component',
@@ -1873,7 +1873,7 @@ __webpack_require__.r(__webpack_exports__);
   var self = this;
   var options = self.options;
   var modalId = self.generateId();
-  var modal = self.modal = $("\n<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL, "\" id=\"").concat(modalId, "\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_HEADER, "\">\n<button type=\"button\" class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_CLOSE, "\">&times;</button>\n</div>\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_BODY, "\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPETS_WRAPPER, "\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPETS, "\"></div>\n</div>\n</div>\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_FOOTER, "\">\n<button type=\"button\" class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].BTN, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].BTN_DEFAULT, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_CLOSE, "\">Close</button>\n<button type=\"button\" class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].BTN, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].BTN_PRIMARY, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_ADD, "\">Add</button>\n</div>\n</div>\n"));
+  var modal = self.modal = $("\n<div class=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL, "\" id=\"").concat(modalId, "\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_HEADER, "\">\n<button type=\"button\" class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_CLOSE, "\">&times;</button>\n</div>\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_BODY, "\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPETS_WRAPPER, "\">\n<div class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPETS, "\"></div>\n</div>\n</div>\n</div>\n"));
 
   if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
     $.ajax({
@@ -1893,21 +1893,29 @@ __webpack_require__.r(__webpack_exports__);
           options.onSnippetsError.call(self, jqXHR);
         }
       }
-    }); // Close buttons
+    }); // Snippet events
+
+    modal.on({
+      click: function click(e) {
+        e.preventDefault();
+        modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_SELECTED)).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_SELECTED);
+        $(this).addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_SELECTED);
+      },
+      mouseover: function mouseover() {
+        $(this).addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_SELECTED);
+      },
+      mouseout: function mouseout() {
+        $(this).removeClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_SELECTED);
+      }
+    }, ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET)); // Close buttons
 
     modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_CLOSE)).on('click', function (e) {
       e.preventDefault();
       self.closeModal();
-    }); // Add button
-
-    modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_ADD)).on('click', function (e) {
+    });
+    modal.on('click', ".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_ADD), function (e) {
       e.preventDefault();
-      var selectedSnippet = modal.find(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPETS_WRAPPER, " .").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].STATE_SELECTED));
-
-      if (selectedSnippet.length === 0) {
-        return;
-      }
-
+      var selectedSnippet = $(this).closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET));
       var contentArea = self.modalTarget.closest(".".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].CONTENT_AREA));
       var snippetType = selectedSnippet.attr('data-type');
       var snippetContentElement = modal.find(selectedSnippet.attr('data-snippet'));
@@ -2038,7 +2046,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (function (target, showComponent, showContainer) {
   var self = this;
   var modal = self.modal;
-  console.log(showComponent, showContainer);
   self.modalTarget = target;
   showComponent && modal.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_COMPONENT);
   showContainer && modal.addClass(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].MODAL_CONTAINER);
@@ -2441,7 +2448,7 @@ __webpack_require__.r(__webpack_exports__);
   var self = this;
   var options = self.options;
   var snippetId = self.generateId();
-  var snippetPreviewHtml = "\n<section\nclass=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET, " ").concat(type === 'container' ? _constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_CONTAINER : _constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_COMPONENT, "\"\ndata-snippet=\"#").concat(snippetId, "\"\ndata-type=\"").concat(type, "\"\ndata-keditor-title=\"").concat(title, "\"\ndata-keditor-categories=\"").concat(categories, "\"\n>\n<span class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_INNER, "\">\n<span class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_PREVIEW, "\" style=\"background-image: url('").concat(previewUrl, "')\"></span>\n<span class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_TITLE, "\" title=\"").concat(title, "\">").concat(title, "</span>\n</span>\n</section>\n");
+  var snippetPreviewHtml = "\n<section\nclass=\"".concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].UI, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET, " ").concat(type === 'container' ? _constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_CONTAINER : _constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_COMPONENT, "\"\ndata-snippet=\"#").concat(snippetId, "\"\ndata-type=\"").concat(type, "\"\ndata-keditor-title=\"").concat(title, "\"\ndata-keditor-categories=\"").concat(categories, "\"\n>\n<span class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_INNER, "\">\n<span class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_PREVIEW, "\" style=\"background-image: url('").concat(previewUrl, "')\"></span>\n<span class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_TITLE, "\" title=\"").concat(title, "\">").concat(title, "</span>\n<span class=\"").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].SNIPPET_ADD, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].BTN, " ").concat(_constants_classNames__WEBPACK_IMPORTED_MODULE_0__["default"].BTN_PRIMARY, "\" title=\"").concat(title, "\"><i class=\"fa fa-plus\"></i> Add</span>\n</span>\n</section>\n");
   var snippetContentHtml = "<script id=\"".concat(snippetId, "\" type=\"text/html\" ").concat(extraData.join(' '), ">").concat(content, "</script>");
   categories = categories.split(options.snippetsCategoriesSeparator);
 

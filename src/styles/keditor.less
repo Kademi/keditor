@@ -3,6 +3,7 @@
 // ==================================================================================
 @import "bootstrap/variables";
 @import "bootstrap/mixins";
+@import "_mixins";
 @import "_variables";
 
 /* ==================================================================================
@@ -11,7 +12,6 @@
 body {
     margin: 0;
     
-    // Sidebar is opened
     &.opened-keditor-sidebar {
         .keditor-content-area {
             margin-right: 260px;
@@ -35,19 +35,11 @@ body {
     padding: 0;
     border: 0;
     outline: none;
-    font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-style: normal;
-    font-weight: normal;
     
     &,
     &:before,
     &:after {
         box-sizing: border-box;
-    }
-    
-    small,
-    .small {
-        font-size: 88%;
     }
 }
 
@@ -155,7 +147,6 @@ body {
    ================================================================================== */
 .keditor-sidebar {
     position: absolute;
-    z-index: @sidebar-zindex;
     top: @topbar-height;
     bottom: 0;
     right: -@sidebar-width;
@@ -213,6 +204,7 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     padding: @sidebar-body-padding;
+    .keditor-scrollbar;
     
     .keditor-setting-form {
         overflow: hidden;
@@ -244,6 +236,7 @@ body {
     height: 100%;
     
     .keditor-snippets {
+        .keditor-scrollbar;
         height: 100%;
         overflow-y: scroll;
         padding: @snippet-container-padding;
@@ -290,18 +283,29 @@ body {
         white-space: nowrap;
     }
     
-    &.not-matched {
-        display: none !important;
+    .keditor-snippet-add {
+        position: absolute;
+        left: 50%;
+        bottom: 5px;
+        transform: translateX(-50%);
+        display: none;
     }
     
-    &:hover {
-        border-color: @snippet-border-color-hover;
-        box-shadow: @snippet-box-shadow-hover;
+    &.not-matched {
+        display: none !important;
     }
     
     &.selected {
         border-color: @snippet-border-color-selected;
         box-shadow: @snippet-box-shadow-selected;
+        
+        .keditor-snippet-title {
+            display: none;
+        }
+        
+        .keditor-snippet-add {
+            display: block;
+        }
     }
     
     @media (max-width: @screen-xs-max) {
@@ -343,6 +347,7 @@ body {
     background: @modal-bg;
     transition: all @animation-duration;
     opacity: 0;
+    font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
     
     &.showed {
         top: 0;
@@ -357,7 +362,7 @@ body {
         .keditor-snippet-component {
             display: block;
         }
-
+        
         .keditor-snippets-filter-component {
             display: block;
         }
@@ -367,7 +372,7 @@ body {
         .keditor-snippet-container {
             display: block;
         }
-    
+        
         .keditor-snippets-filter-container {
             display: block;
         }
@@ -420,6 +425,7 @@ body {
     
     .keditor-snippets-filter-label {
         display: inline-block;
+        font-weight: normal;
     }
     
     .keditor-snippets-filter {
@@ -441,20 +447,9 @@ body {
 }
 
 .keditor-modal-body {
-    height: ~"calc(100% - @{modal-header-height} - @{modal-footer-height})";
+    height: ~"calc(100% - @{modal-header-height})";
     position: relative;
     z-index: 1;
-}
-
-.keditor-modal-footer {
-    background: @modal-bg;
-    border-top: 1px solid @border-color;
-    text-align: center;
-    padding: @modal-footer-padding;
-    
-    .keditor-btn {
-        margin: 0 5px;
-    }
 }
 
 /* ==================================================================================

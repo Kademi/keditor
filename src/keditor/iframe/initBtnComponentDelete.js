@@ -12,7 +12,7 @@ export default function () {
         
         let btn = $(this);
         
-        if (confirm(options.confirmDeleteComponentText)) {
+        if (confirm(options.locale.confirmDeleteComponentText)) {
             let component = btn.closest(`.${CLASS_NAMES.COMPONENT}`);
             let container = component.closest(`.${CLASS_NAMES.CONTAINER}`);
             let contentArea = component.closest(`.${CLASS_NAMES.CONTENT_AREA}`);

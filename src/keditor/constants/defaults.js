@@ -72,17 +72,71 @@ export default {
      */
     extraSettings: null,
     
-    /*
-     * Text content for confirm dialog when deleting container
-     * @option {String}
-     */
-    confirmDeleteContainerText: 'Are you sure that you want to delete this container? This action can not be undone!',
+    locale: {
+        /*
+         * Text title for devices switcher
+         * @option {String}
+         */
+        viewOnMobile: 'View on mobile',
+        viewOnTablet: 'View on tablet',
+        viewOnDesktop: 'View on desktop',
     
-    /*
-     * Text content for confirm dialog when deleting container
-     * @option {String}
-     */
-    confirmDeleteComponentText: 'Are you sure that you want to delete this component? This action can not be undone!',
+        /*
+         * Text title for preview mode
+         * @option {String}
+         */
+        previewOn: 'Preview ON',
+        previewOff: 'Preview OFF',
+    
+        /*
+         * Text title for fullscreen mode
+         * @option {String}
+         */
+        fullscreenOn: 'Fullscreen ON',
+        fullscreenOff: 'Fullscreen Off',
+    
+        /*
+         * Text title for save button
+         * @option {String}
+         */
+        save: 'Save',
+    
+        /*
+         * Text title for add content button
+         * @option {String}
+         */
+        addContent: 'Add content',
+    
+        /*
+         * Text title for add component button
+         * @option {String}
+         */
+        addComponent: 'Add component',
+    
+        /*
+         * Text title for add container button
+         * @option {String}
+         */
+        addContainer: 'Add container',
+    
+        /*
+         * Text title for add sub-container button
+         * @option {String}
+         */
+        addSubContainer: 'Add sub-container',
+        
+        /*
+         * Text content for confirm dialog when deleting container
+         * @option {String}
+         */
+        confirmDeleteContainerText: 'Are you sure that you want to delete this container? This action can not be undone!',
+    
+        /*
+         * Text content for confirm dialog when deleting container
+         * @option {String}
+         */
+        confirmDeleteComponentText: 'Are you sure that you want to delete this component? This action can not be undone!',
+    },
     
     /*
      * Width of mobile device

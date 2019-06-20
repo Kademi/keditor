@@ -7,7 +7,7 @@ export default function () {
     let options = self.options;
     
     let btnMobile = $(`
-        <a href="javascript:void(0);" title="View on mobile" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.DEVICE_MOBILE}</a>
+        <a href="javascript:void(0);" title="${options.locale.viewOnMobile}" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.DEVICE_MOBILE}</a>
     `);
     btnMobile.on('click', function (e) {
         e.preventDefault();
@@ -18,7 +18,7 @@ export default function () {
     });
     
     let btnTablet = $(`
-        <a href="javascript:void(0);" title="View on tablet" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.DEVICE_TABLET}</a>
+        <a href="javascript:void(0);" title="${options.locale.viewOnTablet}" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.DEVICE_TABLET}</a>
     `);
     btnTablet.on('click', function (e) {
         e.preventDefault();
@@ -29,7 +29,7 @@ export default function () {
     });
     
     let btnDesktop = $(`
-        <a href="javascript:void(0);" title="View on desktop" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.DEVICE_DESKTOP}</a>
+        <a href="javascript:void(0);" title="${options.locale.viewOnDesktop}" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.DEVICE_DESKTOP}</a>
     `);
     btnDesktop.on('click', function (e) {
         e.preventDefault();

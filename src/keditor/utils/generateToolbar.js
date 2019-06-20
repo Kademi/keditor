@@ -20,7 +20,7 @@ export default function (type, isComponentConfigurable) {
                 
                 return (`
                     <div class="${CLASS_NAMES.UI} ${toolbarClass}">
-                        <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTENT}" title="Add content">${ICONS.ADD_CONTENT}</a>
+                        <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTENT}" title="${options.locale.addContent}">${ICONS.ADD_CONTENT}</a>
                     </div>
                 `);
             
@@ -33,7 +33,7 @@ export default function (type, isComponentConfigurable) {
         case  TOOLBAR_TYPE.CONTENT_AREA:
             return (`
                 <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTENT_AREA_TOOLBAR}">
-                    <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTAINER}" title="Add container">${ICONS.ADD_CONTAINER}</a>
+                    <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTAINER}" title="${options.locale.addContainer}">${ICONS.ADD_CONTAINER}</a>
                 </div>
             `);
         
@@ -68,15 +68,15 @@ export default function (type, isComponentConfigurable) {
         case  TOOLBAR_TYPE.CONTAINER_CONTENT:
             return (`
                 <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_CONTENT_TOOLBAR} ${CLASS_NAMES.BTN_GROUP}">
-                    <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTAINER}" title="Add sub-container">${ICONS.ADD_CONTAINER}</a>
-                    <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_COMPONENT}" title="Add component">${ICONS.ADD_COMPONENT}</a>
+                    <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTAINER}" title="${options.locale.addSubContainer}">${ICONS.ADD_CONTAINER}</a>
+                    <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_COMPONENT}" title="${options.locale.addComponent}">${ICONS.ADD_COMPONENT}</a>
                 </div>
             `);
         
         case  TOOLBAR_TYPE.SUB_CONTAINER_CONTENT:
             return (`
                 <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_CONTENT_TOOLBAR}">
-                    <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_COMPONENT}" title="Add component">${ICONS.ADD_COMPONENT}</a>
+                    <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_COMPONENT}" title=${options.locale.addComponent}">${ICONS.ADD_COMPONENT}</a>
                 </div>
             `);
         

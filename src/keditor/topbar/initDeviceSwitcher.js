@@ -29,7 +29,7 @@ export default function () {
     });
     
     let btnDesktop = $(`
-        <a href="javascript:void(0);" title="View on desktop" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON} ${CLASS_NAMES.STATE_ACTIVE}">${ICONS.DEVICE_DESKTOP}</a>
+        <a href="javascript:void(0);" title="View on desktop" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.DEVICE_DESKTOP}</a>
     `);
     btnDesktop.on('click', function (e) {
         e.preventDefault();
@@ -37,7 +37,7 @@ export default function () {
         topbarCenter.find(`.${CLASS_NAMES.STATE_ACTIVE}`).removeClass(CLASS_NAMES.STATE_ACTIVE);
         self.iframeWrapper.css('width', '');
         btnDesktop.addClass(CLASS_NAMES.STATE_ACTIVE);
-    });
+    }).trigger('click');
     
     topbarCenter.append(btnMobile);
     topbarCenter.append(btnTablet);

@@ -1,5 +1,9 @@
 import TOOLBAR_TYPE from '../constants/toolbarType';
 import CLASS_NAMES from '../constants/classNames';
+import openModal from '../modal/openModal';
+import generateToolbar from '../utils/generateToolbar';
+import closeSidebar from '../sidebar/closeSidebar';
+import convertToContainer from '../container/convertToContainer';
 
 export default function (contentArea, dontInitToolbar) {
     let self = this;
@@ -15,12 +19,12 @@ export default function (contentArea, dontInitToolbar) {
     }
     
     if (!dontInitToolbar) {
-        let contentAreaToolbar = $(self.generateToolbar(TOOLBAR_TYPE.CONTENT_AREA));
+        let contentAreaToolbar = $(generateToolbar.call(self, TOOLBAR_TYPE.CONTENT_AREA));
         contentArea.append(contentAreaToolbar);
         contentAreaToolbar.children(options.explicitSnippetEnabled ? `.${CLASS_NAMES.ADD_CONTAINER}` : `.${CLASS_NAMES.ADD_CONTENT}`).on('click', function (e) {
             e.preventDefault();
-            
-            self.openModal(contentAreaInner, !options.explicitSnippetEnabled, true);
+    
+            openModal.call(self, contentAreaInner, !options.explicitSnippetEnabled, true);
         });
     }
     
@@ -39,7 +43,7 @@ export default function (contentArea, dontInitToolbar) {
                 helper.remove();
             }
             
-            self.closeSidebar();
+            closeSidebar.call(self);
             
             if (typeof options.onContentChanged === 'function') {
                 options.onContentChanged.call(self, event, contentArea);
@@ -59,14 +63,14 @@ export default function (contentArea, dontInitToolbar) {
     });
     
     contentAreaInner.children('section').each(function () {
-        self.convertToContainer(contentArea, $(this));
+        convertToContainer.call(self, contentArea, $(this));
     });
     
     if (typeof options.onInitContentArea === 'function') {
         let contentData = options.onInitContentArea.call(self, contentArea);
         if (contentData && contentData.length > 0) {
             $.each(contentData, function () {
-                self.convertToContainer(contentArea, $(this));
+                convertToContainer.call(self, contentArea, $(this));
             });
         }
     }

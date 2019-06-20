@@ -25,7 +25,7 @@ export default function () {
         activeForm.removeClass(CLASS_NAMES.STATE_ACTIVE);
     }
     
-    self.setSettingComponent(null);
-    self.setSettingContainer(null);
+    self.settingComponent = null;
+    self.settingContainer = null;
     sidebar.removeClass(CLASS_NAMES.STATE_OPENED);
 }

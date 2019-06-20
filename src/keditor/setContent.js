@@ -1,4 +1,5 @@
 import CLASS_NAMES from './constants/classNames';
+import initContentArea from './contentArea/initContentArea';
 
 export default function (content, contentArea) {
     let self = this;
@@ -17,5 +18,5 @@ export default function (content, contentArea) {
     }
     
     contentArea.html(content);
-    self.initContentArea(contentArea, true);
+    initContentArea.call(contentArea, true);
 };

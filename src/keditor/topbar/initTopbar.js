@@ -1,8 +1,11 @@
 import CLASS_NAMES from '../constants/classNames';
+import generateId from '../utils/generateId';
+import initDeviceSwitcher from './initDeviceSwitcher';
+import initTopbarRightActions from './initTopbarRightActions';
 
 export default function () {
     let self = this;
-    let topbarId = self.generateId();
+    let topbarId = generateId();
     let options = self.options;
     
     self.topbar = $(`
@@ -22,6 +25,6 @@ export default function () {
     
     self.topbar.appendTo(self.wrapper);
     
-    self.initDeviceSwitcher();
-    self.initTopbarRightActions();
+    initDeviceSwitcher.call(self);
+    initTopbarRightActions.call(self);
 };

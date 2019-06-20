@@ -1,4 +1,6 @@
 import CLASS_NAMES from '../constants/classNames';
+import initIframeActions from '../iframe/initIframeActions';
+import initContentAreas from './initContentAreas';
 
 export default function () {
     let self = this;
@@ -63,6 +65,6 @@ export default function () {
         options.onInitIframe.call(self, self.iframe, self.iframeHead, self.iframeBody);
     }
     
-    self.initContentAreas();
-    self.initIframeActions();
+    initContentAreas.call(self);
+    initIframeActions.call(self);
 };

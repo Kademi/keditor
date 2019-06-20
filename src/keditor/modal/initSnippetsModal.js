@@ -1,9 +1,15 @@
 import CLASS_NAMES from '../constants/classNames';
+import closeModal from './closeModal';
+import generateId from '../utils/generateId';
+import renderSnippets from '../snippet/renderSnippets';
+import initSnippetsFilter from '../snippet/initSnippetsFilter';
+import initContainer from '../container/initContainer';
+import initComponent from '../component/initComponent';
 
 export default function () {
     let self = this;
     let options = self.options;
-    let modalId = self.generateId();
+    let modalId = generateId();
     
     let modal = self.modal = $(`
         <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.MODAL}" id="${modalId}">
@@ -28,8 +34,8 @@ export default function () {
                     resp = options.onSnippetsLoaded.call(self, resp) || resp;
                 }
                 
-                self.renderSnippets(resp);
-                self.initSnippetsFilter();
+                renderSnippets.call(self, resp);
+                initSnippetsFilter.call(self);
             },
             error: function (jqXHR) {
                 if (typeof options.onSnippetsError === 'function') {
@@ -58,7 +64,7 @@ export default function () {
         modal.find(`.${CLASS_NAMES.MODAL_CLOSE}`).on('click', function (e) {
             e.preventDefault();
             
-            self.closeModal();
+            closeModal.call(self);
         });
         
         modal.on('click', `.${CLASS_NAMES.SNIPPET_ADD}`, function (e) {
@@ -119,7 +125,7 @@ export default function () {
                     options.onContentChanged.call(self, e, contentArea);
                 }
                 
-                self.initContainer(contentArea, newContainer);
+                initContainer.call(self, contentArea, newContainer);
             }
             
             if (isAddingComponent) {
@@ -140,7 +146,7 @@ export default function () {
                     options.onContentChanged.call(self, e, contentArea);
                 }
                 
-                self.initComponent(contentArea, container, newComponent);
+                initComponent.call(self, contentArea, container, newComponent);
             }
             
             if (isAddingComponentWithContainer) {
@@ -168,10 +174,10 @@ export default function () {
                     options.onContentChanged.call(self, e, contentArea);
                 }
                 
-                self.initContainer(contentArea, newContainer);
+                initContainer.call(self, contentArea, newContainer);
             }
-            
-            self.closeModal();
+    
+            closeModal.call(self);
         });
         
         // Action click for snippet

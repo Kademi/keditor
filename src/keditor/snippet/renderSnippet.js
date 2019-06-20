@@ -1,9 +1,10 @@
 import CLASS_NAMES from '../constants/classNames';
+import generateId from '../utils/generateId';
 
 export default function (type, title, previewUrl, categories, content, extraData) {
     let self = this;
     let options = self.options;
-    let snippetId = self.generateId();
+    let snippetId = generateId();
     let snippetPreviewHtml = `
         <section
             class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPET} ${type === 'container' ? CLASS_NAMES.SNIPPET_CONTAINER : CLASS_NAMES.SNIPPET_COMPONENT}"
@@ -24,9 +25,9 @@ export default function (type, title, previewUrl, categories, content, extraData
     categories = categories.split(options.snippetsCategoriesSeparator);
     
     if (type === 'container') {
-        self.snippetsContainerCategories = self.snippetsContainerCategories.concat(categories);
+        self.categoryContainer = self.categoryContainer.concat(categories);
     } else if (type.indexOf('component') !== -1) {
-        self.snippetsComponentCategories = self.snippetsComponentCategories.concat(categories);
+        self.categoryComponent = self.categoryComponent.concat(categories);
     }
     
     return [

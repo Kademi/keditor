@@ -21,8 +21,6 @@ const CLASS_NAMES = {
     STATE_INITIALIZING: 'initializing',
     STATE_PREVIEWING: 'previewing',
     STATE_TOOLBAR_SHOWED: 'showed-keditor-toolbar',
-    STATE_SETTING_OPENED: 'opened-keditor-setting',
-    STATE_SIDEBAR_OPENED: 'opened-keditor-sidebar',
     STATE_MODAL_OPENED: 'opened-modal',
     STATE_NOT_MATCHED: 'not-matched',
     

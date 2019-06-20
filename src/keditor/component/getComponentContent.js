@@ -1,11 +1,13 @@
 import CLASS_NAMES from '../constants/classNames';
+import getComponentType from './getComponentType';
+import getDataAttributes from '../utils/getDataAttributes';
 
 export default function (component) {
     let self = this;
     let clonedComponent = component.clone();
-    let componentType = self.getComponentType(clonedComponent);
+    let componentType = getComponentType.call(self, clonedComponent);
     let componentData = KEditor.components[componentType];
-    let dataAttributes = self.getDataAttributes(clonedComponent, null, true);
+    let dataAttributes = getDataAttributes(clonedComponent, null, true);
     let content;
     
     // Handle iframe-wrapper

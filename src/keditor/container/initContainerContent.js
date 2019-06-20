@@ -1,5 +1,10 @@
 import TOOLBAR_TYPE from '../constants/toolbarType';
 import CLASS_NAMES from '../constants/classNames';
+import openModal from '../modal/openModal';
+import generateId from '../utils/generateId';
+import generateToolbar from '../utils/generateToolbar';
+import convertToContainer from './convertToContainer';
+import convertToComponent from '../component/convertToComponent';
 
 export default function (contentArea, container, containerContent, isNested) {
     let self = this;
@@ -8,13 +13,13 @@ export default function (contentArea, container, containerContent, isNested) {
     
     containerContent.addClass(CLASS_NAMES.CONTAINER_CONTENT);
     isNested && containerContent.addClass(CLASS_NAMES.SUB_CONTAINER_CONTENT);
-    containerContent.attr('id', self.generateId());
+    containerContent.attr('id', generateId());
     
     let containerContentInner = $(`<div class="${CLASS_NAMES.CONTAINER_CONTENT_INNER}"></div>`);
     containerContentInner.html(containerContent.html());
     containerContent.html(containerContentInner);
     
-    let containerContentToolbar = $(self.generateToolbar(isNested ? TOOLBAR_TYPE.SUB_CONTAINER_CONTENT : TOOLBAR_TYPE.CONTAINER_CONTENT));
+    let containerContentToolbar = $(generateToolbar.call(self, isNested ? TOOLBAR_TYPE.SUB_CONTAINER_CONTENT : TOOLBAR_TYPE.CONTAINER_CONTENT));
     containerContentToolbar.appendTo(containerContent);
     
     if (options.explicitSnippetEnabled) {
@@ -23,7 +28,7 @@ export default function (contentArea, container, containerContent, isNested) {
                 containerContentToolbar.children(`.${CLASS_NAMES.ADD_CONTAINER}`).on('click', function (e) {
                     e.preventDefault();
                     
-                    self.openModal(containerContentInner, false, true);
+                    openModal.call(self, containerContentInner, false, true);
                 });
             }
         }
@@ -31,13 +36,13 @@ export default function (contentArea, container, containerContent, isNested) {
         containerContentToolbar.children(`.${CLASS_NAMES.ADD_COMPONENT}`).on('click', function (e) {
             e.preventDefault();
             
-            self.openModal(containerContentInner, true, false);
+            openModal.call(self, containerContentInner, true, false);
         });
     } else {
         containerContentToolbar.children(`.${CLASS_NAMES.ADD_CONTENT}`).on('click', function (e) {
             e.preventDefault();
             
-            self.openModal(containerContentInner, true,  !isNested && options.nestedContainerEnabled);
+            openModal.call(self, containerContentInner, true, !isNested && options.nestedContainerEnabled);
         });
     }
     
@@ -87,9 +92,9 @@ export default function (contentArea, container, containerContent, isNested) {
         let child = $(this);
         
         if (child.find('[data-type="container-content"]').length > 0) {
-            self.convertToContainer(contentArea, child);
+            convertToContainer.call(self, contentArea, child);
         } else {
-            self.convertToComponent(contentArea, container, child, true);
+            convertToComponent.call(self, contentArea, container, child, true);
         }
     });
 };

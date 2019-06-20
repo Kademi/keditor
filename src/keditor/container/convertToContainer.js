@@ -1,4 +1,5 @@
 import CLASS_NAMES from '../constants/classNames';
+import initContainer from './initContainer';
 
 export default function (contentArea, target) {
     let self = this;
@@ -17,5 +18,5 @@ export default function (contentArea, target) {
         container = target.parent().parent();
     }
     
-    self.initContainer(contentArea, container);
+    initContainer.call(self, contentArea, container);
 };

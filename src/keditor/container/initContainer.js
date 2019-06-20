@@ -1,5 +1,8 @@
 import TOOLBAR_TYPE from '../constants/toolbarType';
 import CLASS_NAMES from '../constants/classNames';
+import generateToolbar from '../utils/generateToolbar';
+import generateId from '../utils/generateId';
+import initContainerContent from './initContainerContent';
 
 export default function (contentArea, container) {
     let self = this;
@@ -17,9 +20,9 @@ export default function (contentArea, container) {
             container.addClass(CLASS_NAMES.SUB_CONTAINER);
         }
         
-        container.append(self.generateToolbar(isNested ? TOOLBAR_TYPE.SUB_CONTAINER : TOOLBAR_TYPE.CONTAINER));
+        container.append(generateToolbar.call(self, isNested ? TOOLBAR_TYPE.SUB_CONTAINER : TOOLBAR_TYPE.CONTAINER));
         
-        container.attr('id', self.generateId());
+        container.attr('id', generateId());
         
         let containerContents = container.find('[data-type="container-content"]');
         containerContents.each(function () {
@@ -30,7 +33,7 @@ export default function (contentArea, container) {
                 return;
             }
             
-            self.initContainerContent(contentArea, container, containerContent, isNested);
+            initContainerContent.call(self, contentArea, container, containerContent, isNested);
         });
         
         if (typeof options.onInitContainer === 'function') {

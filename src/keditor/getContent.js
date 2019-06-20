@@ -1,4 +1,5 @@
 import CLASS_NAMES from './constants/classNames';
+import getContainerContent from './container/getContainerContent';
 
 export default function (inArray) {
     let self = this;
@@ -9,7 +10,7 @@ export default function (inArray) {
         $(this).children(`.${CLASS_NAMES.CONTAINER}`).each(function () {
             let container = $(this);
             
-            html += self.getContainerContent(container);
+            html += getContainerContent.call(self, container);
         });
         
         result.push(html);

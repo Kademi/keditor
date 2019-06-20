@@ -1,4 +1,5 @@
 import CLASS_NAMES from '../constants/classNames';
+import getComponentType from '../component/getComponentType';
 
 export default function (target) {
     let self = this;
@@ -10,10 +11,10 @@ export default function (target) {
     activeForm.removeClass(CLASS_NAMES.STATE_ACTIVE);
     
     if (target.is(`.${CLASS_NAMES.COMPONENT}`)) {
-        self.setSettingComponent(target);
-        self.setSettingContainer(null);
+        self.settingComponent = target;
+        self.settingContainer = null;
         
-        let componentType = self.getComponentType(target);
+        let componentType = getComponentType.call(self, target);
         let componentData = KEditor.components[componentType];
         sidebarTitle.html(componentData.settingTitle);
         
@@ -51,9 +52,9 @@ export default function (target) {
             }
             settingForm.addClass(CLASS_NAMES.STATE_ACTIVE);
         }
-    } else if (target.is(`${CLASS_NAMES.CONTAINER}`)) {
-        self.setSettingContainer(target);
-        self.setSettingComponent(null);
+    } else if (target.is(`.${CLASS_NAMES.CONTAINER}`)) {
+        self.settingComponent = null;
+        self.settingContainer = target;
         
         sidebarTitle.html('Container Settings');
         
@@ -63,7 +64,6 @@ export default function (target) {
         }
         settingForm.addClass(CLASS_NAMES.STATE_ACTIVE);
     } else {
-        // should be extra tabs
         let extraKey = target.attr('data-extra-setting');
         let extraTabData = options.extraSettings[extraKey];
         

@@ -4,11 +4,11 @@ import CLASS_NAMES from '../constants/classNames';
 export default function () {
     let self = this;
     let options = self.options;
-    let [categoriesOptions, snippetsWrapper] = renderSnippetFilter.call(this);
+    let [categoriesOptions, snippetsWrapper] = renderSnippetFilter.call(self);
     
     snippetsWrapper.prepend(`
         <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER_WRAPPER}">
-            <label class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER_LABEL}">Category:</label>
+            <span class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER_LABEL}">Category:</span>
             <select class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER}">
                 ${categoriesOptions}
             </select>

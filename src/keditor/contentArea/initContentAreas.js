@@ -1,3 +1,6 @@
+import generateId from '../utils/generateId';
+import initContentArea from './initContentArea';
+
 export default function () {
     let self = this;
     let options = self.options;
@@ -18,9 +21,9 @@ export default function () {
     contentAreas.each(function () {
         let contentArea = $(this);
         if (!contentArea.attr('id')) {
-            contentArea.attr('id', self.generateId());
+            contentArea.attr('id', generateId());
         }
         
-        self.initContentArea(contentArea);
+        initContentArea.call(self, contentArea);
     });
 };

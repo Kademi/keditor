@@ -16,7 +16,7 @@ let PROD = process.env.NODE_ENV === 'production';
 
 module.exports = {
     mode: PROD ? 'production' : 'development',
-    devtool: PROD ? 'source-map' : 'source-map',
+    devtool: PROD ? 'source-map' : 'eval-source-map',
     
     entry: {
         'keditor': './src/keditor/index.js',

@@ -382,10 +382,6 @@ body.previewing .keditor-preview-area {
 .keditor-modal-header .keditor-modal-close:hover {
   color: #aaa;
 }
-.keditor-modal-header .keditor-snippets-filter-label {
-  display: inline-block;
-  font-weight: normal;
-}
 .keditor-modal-header .keditor-snippets-filter {
   margin-right: 15px;
 }
@@ -396,9 +392,11 @@ body.previewing .keditor-preview-area {
 .keditor-modal-header .keditor-snippets-filter-label,
 .keditor-modal-header .keditor-snippets-filter,
 .keditor-modal-header .keditor-snippets-search {
+  font: 14px/20px "Helvetica Neue", Helvetica, Arial, sans-serif;
   height: 20px;
-  line-height: 20px;
   background: none;
+  display: inline-block;
+  font-weight: normal;
 }
 .keditor-modal-body {
   height: calc(100% - 51px);
@@ -688,5 +686,3 @@ body.previewing .keditor-preview-area {
   display: block !important;
 }
 
-
-/*# sourceMappingURL=keditor.css.map*/

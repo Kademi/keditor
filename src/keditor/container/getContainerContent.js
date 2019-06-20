@@ -1,6 +1,7 @@
 import CLASS_NAMES from '../constants/classNames';
+import getComponentContent from '../component/getComponentContent';
 
-export default function (container, isNested) {
+export default function getContainerContent (container, isNested) {
     let self = this;
     let containerInner = container.children(`.${CLASS_NAMES.CONTAINER_INNER}`).clone();
     
@@ -15,9 +16,9 @@ export default function (container, isNested) {
             let child = $(this);
             
             if (child.is(`.${CLASS_NAMES.COMPONENT}`)) {
-                content += self.getComponentContent(child);
+                content += getComponentContent.call(self, child);
             } else if (child.is(`.${CLASS_NAMES.SUB_CONTAINER}`)) {
-                content += self.getContainerContent(child, true);
+                content += getContainerContent.call(self, child, true);
             }
         });
         

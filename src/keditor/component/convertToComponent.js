@@ -1,4 +1,5 @@
 import CLASS_NAMES from '../constants/classNames';
+import initComponent from './initComponent';
 
 export default function (contentArea, container, target, isExisting) {
     if (target.is(`.${CLASS_NAMES.CONTAINER_CONTENT_TOOLBAR}`)) {
@@ -26,5 +27,5 @@ export default function (contentArea, container, target, isExisting) {
         component.addClass(`${CLASS_NAMES.COMPONENT_EXISTING}`);
     }
     
-    self.initComponent(contentArea, container, component);
+    initComponent.call(self, contentArea, container, component);
 };

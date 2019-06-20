@@ -1,4 +1,5 @@
 import CLASS_NAMES from '../constants/classNames';
+import openSidebar from './openSidebar';
 
 export default function () {
     let self = this;
@@ -12,11 +13,11 @@ export default function () {
             form.html(extraSetting.content);
             sidebarBody.append(form);
             
-            let trigger = typeof extraSetting.trigger === 'function' ? extraSetting.trigger.call(this, extraSetting) : extraSetting.trigger;
+            let trigger = typeof extraSetting.trigger === 'function' ? extraSetting.trigger.call(self, extraSetting) : extraSetting.trigger;
             trigger.on('click', function (e) {
                 e.preventDefault();
                 
-                self.openSidebar(trigger);
+                openSidebar.call(self, trigger);
             })
         }
     }

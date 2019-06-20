@@ -47,7 +47,7 @@ export default function (contentArea, container, containerContent, isNested) {
     }
     
     containerContentInner.sortable({
-        handle: `.${CLASS_NAMES.COMPONENT_REPOSITION} .${CLASS_NAMES.CONTAINER_REPOSITION}`,
+        handle: `.${CLASS_NAMES.COMPONENT_MOVE} .${CLASS_NAMES.CONTAINER_MOVE}`,
         helper: 'clone',
         items: '> section',
         connectWith: `.${CLASS_NAMES.CONTAINER_CONTENT_INNER}`,

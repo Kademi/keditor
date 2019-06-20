@@ -90,7 +90,9 @@ const CLASS_NAMES = {
     IFRAME_COVER_HIDDEN: 'hidden-cover',
     
     COMPONENT: 'keditor-component',
-    COMPONENT_REPOSITION: 'btn-component-reposition',
+    COMPONENT_MOVE: 'btn-component-move',
+    COMPONENT_MOVE_UP: 'btn-component-move-up',
+    COMPONENT_MOVE_DOWN: 'btn-component-move-down',
     COMPONENT_SETTING: 'btn-component-setting',
     COMPONENT_DUPLICATE: 'btn-component-duplicate',
     COMPONENT_DELETE: 'btn-component-delete',
@@ -99,7 +101,9 @@ const CLASS_NAMES = {
     
     CONTAINER: 'keditor-container',
     CONTAINER_TOOLBAR: 'keditor-toolbar-container',
-    CONTAINER_REPOSITION: 'btn-container-reposition',
+    CONTAINER_MOVE: 'btn-container-move',
+    CONTAINER_MOVE_UP: 'btn-container-move-up',
+    CONTAINER_MOVE_DOWN: 'btn-container-move-down',
     CONTAINER_DUPLICATE: 'btn-container-duplicate',
     CONTAINER_DELETE: 'btn-container-delete',
     CONTAINER_SETTING: 'btn-container-setting',

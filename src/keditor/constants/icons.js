@@ -3,8 +3,14 @@ const ICONS = {
     ADD_CONTAINER: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
     ADD_COMPONENT: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-list-ul"></i>',
     
-    MOVE_CONTAINER: '<i class="fa fa-sort"></i>',
+    MOVE_CONTAINER: '<i class="fa fa-arrows-v"></i>',
     MOVE_COMPONENT: '<i class="fa fa-arrows"></i>',
+    
+    MOVE_UP_CONTAINER: '<i class="fa fa-chevron-up"></i>',
+    MOVE_UP_COMPONENT: '<i class="fa fa-chevron-up"></i>',
+    
+    MOVE_DOWN_CONTAINER: '<i class="fa fa-chevron-down"></i>',
+    MOVE_DOWN_COMPONENT: '<i class="fa fa-chevron-down"></i>',
     
     SETTING_CONTAINER: '<i class="fa fa-cog"></i>',
     SETTING_COMPONENT: '<i class="fa fa-cog"></i>',
@@ -12,8 +18,8 @@ const ICONS = {
     DUPLICATE_CONTAINER: '<i class="fa fa-files-o"></i>',
     DUPLICATE_COMPONENT: '<i class="fa fa-files-o"></i>',
     
-    DELETE_CONTAINER: '<i class="fa fa-times"></i>',
-    DELETE_COMPONENT: '<i class="fa fa-times"></i>',
+    DELETE_CONTAINER: '<i class="fa fa-trash-o"></i>',
+    DELETE_COMPONENT: '<i class="fa fa-trash-o"></i>',
     
     DEVICE_MOBILE: '<i class="fa fa-fw fa-mobile"></i>',
     DEVICE_TABLET: '<i class="fa fa-fw fa-tablet"></i>',

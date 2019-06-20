@@ -44,7 +44,9 @@ export default function (type, isComponentConfigurable) {
             
             return (`
                 <div class="${CLASS_NAMES.TOOLBAR} ${CLASS_NAMES.TOOLBAR_CONTAINER}">
-                    <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_REPOSITION}">${ICONS.MOVE_CONTAINER}</a>
+                    <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_MOVE}">${ICONS.MOVE_CONTAINER}</a>
+                    <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_MOVE_UP}">${ICONS.MOVE_UP_CONTAINER}</a>
+                    <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_MOVE_DOWN}">${ICONS.MOVE_DOWN_CONTAINER}</a>
                     ${settingBtn}
                     <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_DUPLICATE}">${ICONS.DUPLICATE_CONTAINER}</a>
                     <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_DELETE}">${ICONS.DELETE_CONTAINER}</a>
@@ -57,8 +59,10 @@ export default function (type, isComponentConfigurable) {
             }
             
             return (`
-                <div class="${CLASS_NAMES.TOOLBAR} ${CLASS_NAMES.TOOLBAR_CONTAINER} ${CLASS_NAMES.TOOLBAR} ${CLASS_NAMES.TOOLBAR_SUB_CONTAINER}">
-                    <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_REPOSITION}">${ICONS.MOVE_CONTAINER}</a>
+                <div class="${CLASS_NAMES.TOOLBAR} ${CLASS_NAMES.TOOLBAR_CONTAINER} ${CLASS_NAMES.TOOLBAR_SUB_CONTAINER}">
+                    <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_MOVE}">${ICONS.MOVE_CONTAINER}</a>
+                    <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_MOVE_UP}">${ICONS.MOVE_UP_CONTAINER}</a>
+                    <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_MOVE_DOWN}">${ICONS.MOVE_DOWN_CONTAINER}</a>
                     ${settingBtn}
                     <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_DUPLICATE}">${ICONS.DUPLICATE_CONTAINER}</a>
                     <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_DELETE}">${ICONS.DELETE_CONTAINER}</a>
@@ -87,7 +91,9 @@ export default function (type, isComponentConfigurable) {
             
             return (`
                 <div class="${CLASS_NAMES.TOOLBAR} ${CLASS_NAMES.TOOLBAR_COMPONENT}">
-                    <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_REPOSITION}">${ICONS.MOVE_COMPONENT}</a>
+                    <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_MOVE}">${ICONS.MOVE_COMPONENT}</a>
+                    <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_MOVE_UP}">${ICONS.MOVE_UP_COMPONENT}</a>
+                    <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_MOVE_DOWN}">${ICONS.MOVE_DOWN_COMPONENT}</a>
                     ${settingBtn}
                     <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_DUPLICATE}">${ICONS.DUPLICATE_COMPONENT}</a>
                     <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_DELETE}">${ICONS.DELETE_COMPONENT}</a>

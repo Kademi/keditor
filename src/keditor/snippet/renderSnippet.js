@@ -1,4 +1,5 @@
 import CLASS_NAMES from '../constants/classNames';
+import ICONS from '../constants/icons';
 import generateId from '../utils/generateId';
 
 export default function (type, title, previewUrl, categories, content, extraData) {
@@ -16,7 +17,7 @@ export default function (type, title, previewUrl, categories, content, extraData
             <span class="${CLASS_NAMES.SNIPPET_INNER}">
                 <span class="${CLASS_NAMES.SNIPPET_PREVIEW}" style="background-image: url('${previewUrl}')"></span>
                 <span class="${CLASS_NAMES.SNIPPET_TITLE}" title="${title}">${title}</span>
-                <span class="${CLASS_NAMES.SNIPPET_ADD} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_PRIMARY}" title="${title}"><i class="fa fa-plus"></i> Add</span>
+                <span class="${CLASS_NAMES.SNIPPET_ADD} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_PRIMARY}" title="${title}">${ICONS.ADD} Add</span>
             </span>
         </section>
     `;

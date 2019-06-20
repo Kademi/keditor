@@ -1,4 +1,5 @@
 import CLASS_NAMES from '../constants/classNames';
+import ICONS from '../constants/icons';
 
 export default function () {
     let self = this;
@@ -6,9 +7,7 @@ export default function () {
     let options = self.options;
     
     let btnMobile = $(`
-        <a href="javascript:void(0);" title="View on mobile" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">
-            <i class="fa fa-fw fa-mobile"></i>
-        </a>
+        <a href="javascript:void(0);" title="View on mobile" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.DEVICE_MOBILE}</a>
     `);
     btnMobile.on('click', function (e) {
         e.preventDefault();
@@ -19,9 +18,7 @@ export default function () {
     });
     
     let btnTablet = $(`
-        <a href="javascript:void(0);" title="View on tablet" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">
-            <i class="fa fa-fw fa-tablet"></i>
-        </a>
+        <a href="javascript:void(0);" title="View on tablet" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.DEVICE_TABLET}</a>
     `);
     btnTablet.on('click', function (e) {
         e.preventDefault();
@@ -32,9 +29,7 @@ export default function () {
     });
     
     let btnDesktop = $(`
-        <a href="javascript:void(0);" title="View on desktop" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON} ${CLASS_NAMES.STATE_ACTIVE}">
-            <i class="fa fa-fw fa-desktop"></i>
-        </a>
+        <a href="javascript:void(0);" title="View on desktop" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON} ${CLASS_NAMES.STATE_ACTIVE}">${ICONS.DEVICE_DESKTOP}</a>
     `);
     btnDesktop.on('click', function (e) {
         e.preventDefault();

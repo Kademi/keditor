@@ -71,8 +71,8 @@ body.previewing .keditor-preview-area {
 }
 .keditor-topbar:before,
 .keditor-topbar:after {
-  content: " ";
   display: table;
+  content: " ";
 }
 .keditor-topbar:after {
   clear: both;
@@ -196,8 +196,8 @@ body.previewing .keditor-preview-area {
 }
 .keditor-sidebar-body .keditor-setting-form:before,
 .keditor-sidebar-body .keditor-setting-form:after {
-  content: " ";
   display: table;
+  content: " ";
 }
 .keditor-sidebar-body .keditor-setting-form:after {
   clear: both;
@@ -350,8 +350,8 @@ body.previewing .keditor-preview-area {
 }
 .keditor-modal-header:before,
 .keditor-modal-header:after {
-  content: " ";
   display: table;
+  content: " ";
 }
 .keditor-modal-header:after {
   clear: both;

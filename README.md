@@ -17,8 +17,8 @@ KEditor is a jQuery plugin which provides a content editor with drag and drop sn
  * jQuery: http://jquery.com/
  * jQuery UI: https://jqueryui.com/ (Requires only sortable) 
  * jQuery Fullscreen: https://github.com/private-face/jquery.fullscreen
- * Bootstrap: http://getbootstrap.com/ (Optional for style)
- * FontAwesome: http://fontawesome.io/ (Optional for icons)
+ * FontAwesome: http://fontawesome.io/
+ * Bootstrap: http://getbootstrap.com/ (Optional for snippets' style)
 
 # Configuration
 See [source code](./src/keditor/constants/defaults.js) for more details.

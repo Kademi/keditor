@@ -89,9 +89,11 @@
         var htmlCode = $('[data-keditor="html"]').html();
         var htmlInclude = $('<div />').html($('[data-keditor="html-include"]').clone()).html();
         htmlInclude = htmlInclude.replace('data-keditor="html-include"', '');
+        htmlInclude = htmlInclude.replace(/\</g, '&lt;').replace(/\>/g, '&gt;');
         modal.find('.source-html').html(beautifyHtml(htmlCode + htmlInclude));
 
         var jsCode = $('[data-keditor="script"]').html();
+        jsCode =  jsCode.replace(/\</g, '&lt;').replace(/\>/g, '&gt;');
         modal.find('.source-js').html(beautifyJs(jsCode));
 
         modal.appendTo(document.body);

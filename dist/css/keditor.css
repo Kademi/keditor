@@ -495,10 +495,10 @@ body.previewing .keditor-preview-area {
 .keditor-toolbar > a .fa {
   line-height: inherit;
 }
-.keditor-toolbar .btn-container-reposition {
+.keditor-toolbar .btn-container-move {
   cursor: n-resize;
 }
-.keditor-toolbar .btn-component-reposition {
+.keditor-toolbar .btn-component-move {
   cursor: move;
 }
 .keditor-container {

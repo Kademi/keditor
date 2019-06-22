@@ -7,35 +7,21 @@ export default function (type, isComponentConfigurable) {
     let options = self.options;
     let settingBtn = '';
     
-    if (!options.explicitSnippetEnabled) {
-        let toolbarClass = '';
-        
-        switch (type) {
-            case TOOLBAR_TYPE.CONTENT_AREA:
-                toolbarClass = CLASS_NAMES.CONTENT_AREA_TOOLBAR;
-            
-            case TOOLBAR_TYPE.CONTAINER_CONTENT:
-            case TOOLBAR_TYPE.SUB_CONTAINER_CONTENT:
-                toolbarClass = CLASS_NAMES.CONTAINER_CONTENT_TOOLBAR;
-                
-                return (`
-                    <div class="${CLASS_NAMES.UI} ${toolbarClass}">
-                        <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTENT}" title="${options.locale.addContent}">${ICONS.ADD_CONTENT}</a>
-                    </div>
-                `);
-            
-            default:
-            // Do nothing
-        }
-    }
-    
     switch (type) {
         case  TOOLBAR_TYPE.CONTENT_AREA:
-            return (`
+            if (options.explicitSnippetEnabled) {
+                return (`
                 <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTENT_AREA_TOOLBAR}">
                     <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTAINER}" title="${options.locale.addContainer}">${ICONS.ADD_CONTAINER}</a>
                 </div>
             `);
+            } else {
+                return (`
+                    <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTENT_AREA_TOOLBAR}">
+                        <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTENT}" title="${options.locale.addContent}">${ICONS.ADD_CONTENT}</a>
+                    </div>
+                `);
+            }
         
         case  TOOLBAR_TYPE.CONTAINER:
             if (options.containerSettingEnabled === true) {
@@ -70,19 +56,35 @@ export default function (type, isComponentConfigurable) {
             `);
         
         case  TOOLBAR_TYPE.CONTAINER_CONTENT:
-            return (`
+            if (options.explicitSnippetEnabled) {
+                return (`
                 <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_CONTENT_TOOLBAR} ${CLASS_NAMES.BTN_GROUP}">
                     <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTAINER}" title="${options.locale.addSubContainer}">${ICONS.ADD_CONTAINER}</a>
                     <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_COMPONENT}" title="${options.locale.addComponent}">${ICONS.ADD_COMPONENT}</a>
                 </div>
             `);
+            } else {
+                return (`
+                    <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_CONTENT_TOOLBAR}">
+                        <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTENT}" title="${options.locale.addContent}">${ICONS.ADD_CONTENT}</a>
+                    </div>
+                `);
+            }
         
         case  TOOLBAR_TYPE.SUB_CONTAINER_CONTENT:
-            return (`
+            if (options.explicitSnippetEnabled) {
+                return (`
                 <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_CONTENT_TOOLBAR}">
                     <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_COMPONENT}" title=${options.locale.addComponent}">${ICONS.ADD_COMPONENT}</a>
                 </div>
             `);
+            } else {
+                return (`
+                    <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_CONTENT_TOOLBAR}">
+                        <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTENT}" title="${options.locale.addContent}">${ICONS.ADD_CONTENT}</a>
+                    </div>
+                `);
+            }
         
         case  TOOLBAR_TYPE.COMPONENT:
             if (isComponentConfigurable) {

@@ -1,14 +1,3 @@
-.keditor-scrollbar::-webkit-scrollbar {
-  width: 10px;
-}
-.keditor-scrollbar::-webkit-scrollbar-track {
-  background: #eee;
-  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1);
-}
-.keditor-scrollbar::-webkit-scrollbar-thumb {
-  background: #ddd;
-  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
-}
 body {
   margin: 0;
 }
@@ -132,8 +121,6 @@ body.previewing .keditor-preview-area {
   background: #f0f0f0;
   border-left: 1px solid #ddd;
   box-shadow: -1px 0 5px rgba(0, 0, 0, 0.15);
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
   transition: all 0.3s;
   opacity: 0;
 }
@@ -241,14 +228,9 @@ body.previewing .keditor-preview-area {
 .keditor-snippet {
   border: 1px solid #eee;
   cursor: pointer;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
   transition: all 0.3s;
   display: block;
   background: #ffffff;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   width: 200px;
   margin: 0 7.5px 15px;
@@ -301,7 +283,7 @@ body.previewing .keditor-preview-area {
 .keditor-snippet.selected .keditor-snippet-add {
   display: block;
 }
-@media (max-width: 575px) {
+@media (max-width: 420px) {
   .keditor-snippet {
     width: calc(100% - 15px);
   }
@@ -459,23 +441,21 @@ body.previewing .keditor-preview-area {
 .keditor-content-area-toolbar,
 .keditor-container-content-toolbar {
   text-align: center;
-  position: absolute;
-  z-index: 2;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  transform: translateY(50%);
 }
 .keditor-content-area-toolbar > *,
 .keditor-container-content-toolbar > * {
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
   transition: all 0.3s;
   opacity: 0.2;
 }
 .keditor-content-area-toolbar > *:hover,
 .keditor-container-content-toolbar > *:hover {
   opacity: 1;
+}
+.keditor-container-content-toolbar {
+  display: none;
+}
+.keditor-container-content:hover .keditor-container-content-toolbar {
+  display: block;
 }
 .keditor-toolbar {
   position: absolute;
@@ -581,10 +561,7 @@ body.previewing .keditor-preview-area {
   color: #fff;
   text-align: center;
   border-radius: 0;
-  -webkit-box-shadow: none;
   box-shadow: none;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
   transition: all 0.3s;
   display: inline-block;
 }

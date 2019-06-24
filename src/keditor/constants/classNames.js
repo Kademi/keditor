@@ -81,6 +81,7 @@ const CLASS_NAMES = {
     CONTENT_AREAS_WRAPPER: 'keditor-content-areas-wrapper',
     
     IFRAME: 'keditor-iframe',
+    IFRAME_BODY: 'keditor-iframe-body',
     IFRAME_WRAPPER: 'keditor-iframe-wrapper',
     IFRAME_COVER_WRAPPER: 'keditor-iframe-cover-wrapper',
     IFRAME_COVER_WRAPPER_FAKE: 'keditor-iframe-cover-wrapper-fake',

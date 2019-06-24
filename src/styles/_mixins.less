@@ -8,7 +8,7 @@
     
     &::-webkit-scrollbar-track {
         background: #eee;
-        -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1);
+        -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
     }
     
     &::-webkit-scrollbar-track-piece {
@@ -16,7 +16,15 @@
     
     &::-webkit-scrollbar-thumb {
         background: #ddd;
-        -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+        -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
+        
+        &:hover {
+            background: #cdcdcd;
+        }
+        
+        &:active {
+            background: #cdcdcd;
+        }
     }
     
     &::-webkit-scrollbar-corner {

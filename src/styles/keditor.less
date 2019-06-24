@@ -80,6 +80,10 @@ body {
     border: 0;
 }
 
+.keditor-iframe-body {
+    .keditor-scrollbar();
+}
+
 
 // Topbar
 // -------------------------------------------------
@@ -283,6 +287,11 @@ body {
         background: no-repeat 50% 50% / contain;
     }
     
+    .keditor-snippet-title,
+    .keditor-snippet-add {
+        transition: opacity @animation-duration;
+    }
+    
     .keditor-snippet-title {
         position: absolute;
         left: 0;
@@ -296,6 +305,8 @@ body {
         text-align: center;
         padding: 0 10px;
         white-space: nowrap;
+        z-index: 1;
+        opacity: 1;
     }
     
     .keditor-snippet-add {
@@ -303,7 +314,8 @@ body {
         left: 50%;
         bottom: 3px;
         transform: translateX(-50%);
-        display: none;
+        z-index: 2;
+        opacity: 0;
     }
     
     &.not-matched {
@@ -315,11 +327,11 @@ body {
         box-shadow: @snippet-box-shadow-selected;
         
         .keditor-snippet-title {
-            display: none;
+            opacity: 0;
         }
         
         .keditor-snippet-add {
-            display: block;
+            opacity: 1;
         }
     }
     

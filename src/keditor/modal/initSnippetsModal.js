@@ -180,17 +180,6 @@ export default function () {
             closeModal.call(self);
         });
         
-        // Action click for snippet
-        modal.on('click', `.${CLASS_NAMES.SNIPPET}`, function (e) {
-            e.preventDefault();
-            
-            let snippet = $(this);
-            if (!snippet.hasClass(CLASS_NAMES.STATE_SELECTED)) {
-                snippet.parent().find(`.${CLASS_NAMES.STATE_SELECTED}`).removeClass(CLASS_NAMES.STATE_SELECTED);
-                snippet.addClass(CLASS_NAMES.STATE_SELECTED);
-            }
-        });
-        
         let cssTransitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
         modal.on(cssTransitionEnd, () => {
             if (!modal.hasClass(CLASS_NAMES.STATE_SHOWED)) {

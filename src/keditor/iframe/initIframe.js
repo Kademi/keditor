@@ -1,6 +1,6 @@
 import CLASS_NAMES from '../constants/classNames';
-import initIframeActions from '../iframe/initIframeActions';
-import initContentAreas from './initContentAreas';
+import initIframeActions from './initIframeActions';
+import initContentAreas from '../contentArea/initContentAreas';
 
 export default function () {
     let self = this;
@@ -59,7 +59,7 @@ export default function () {
     if (!self.contentAreasWrapper.attr('id')) {
         self.contentAreasWrapper.attr('id', self.generateId());
     }
-    self.iframeBody.append(self.contentAreasWrapper);
+    self.iframeBody.append(self.contentAreasWrapper).addClass(CLASS_NAMES.IFRAME_BODY);
     
     if (typeof options.onInitIframe === 'function') {
         options.onInitIframe.call(self, self.iframe, self.iframeHead, self.iframeBody);

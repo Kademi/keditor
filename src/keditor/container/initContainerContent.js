@@ -6,6 +6,7 @@ import generateId from '../utils/generateId';
 import generateToolbar from '../utils/generateToolbar';
 import convertToContainer from './convertToContainer';
 import convertToComponent from '../component/convertToComponent';
+import checkContainerContent from './checkContainerContent';
 
 export default function (contentArea, container, containerContent, isNested) {
     let self = this;
@@ -30,7 +31,7 @@ export default function (contentArea, container, containerContent, isNested) {
     });
     
     containerContentInner.sortable({
-        handle: `.${CLASS_NAMES.COMPONENT_MOVE} .${CLASS_NAMES.CONTAINER_MOVE}`,
+        handle: `.${CLASS_NAMES.COMPONENT_MOVE}, .${CLASS_NAMES.CONTAINER_MOVE}`,
         helper: 'clone',
         items: '> section',
         connectWith: `.${CLASS_NAMES.CONTAINER_CONTENT_INNER}`,
@@ -59,6 +60,7 @@ export default function (contentArea, container, containerContent, isNested) {
             }
             
             item.removeClass(CLASS_NAMES.UI_DRAGGING);
+            checkContainerContent.call(self, containerContentInner);
         },
         start: function (e, ui) {
             ui.item.addClass(CLASS_NAMES.UI_DRAGGING);
@@ -68,6 +70,7 @@ export default function (contentArea, container, containerContent, isNested) {
                 ui.helper.remove();
             }
             ui.item.removeClass(CLASS_NAMES.UI_DRAGGING);
+            checkContainerContent.call(self, containerContentInner);
         }
     });
     
@@ -80,4 +83,6 @@ export default function (contentArea, container, containerContent, isNested) {
             convertToComponent.call(self, contentArea, container, child, true);
         }
     });
+    
+    checkContainerContent.call(self, containerContentInner);
 };

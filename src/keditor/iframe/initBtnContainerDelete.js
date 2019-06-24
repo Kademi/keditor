@@ -1,6 +1,7 @@
 import CLASS_NAMES from '../constants/classNames';
 import closeSidebar from '../sidebar/closeSidebar';
 import deleteComponent from '../component/deleteComponent';
+import checkContainerContent from "../container/checkContainerContent";
 
 export default function () {
     let self = this;
@@ -14,6 +15,7 @@ export default function () {
         
         if (confirm(options.locale.confirmDeleteContainerText)) {
             let container = btn.closest(`.${CLASS_NAMES.CONTAINER}`);
+            let containerContentInner = container.closest(`.${CLASS_NAMES.CONTAINER_CONTENT_INNER}`);
             let components = container.find(`.${CLASS_NAMES.COMPONENT}`);
             let contentArea = container.parent();
             
@@ -46,6 +48,8 @@ export default function () {
             if (typeof options.onContentChanged === 'function') {
                 options.onContentChanged.call(self, e, contentArea);
             }
+    
+            checkContainerContent(containerContentInner);
         }
     });
 };

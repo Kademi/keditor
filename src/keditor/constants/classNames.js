@@ -23,6 +23,7 @@ const CLASS_NAMES = {
     STATE_TOOLBAR_SHOWED: 'showed-keditor-toolbar',
     STATE_MODAL_OPENED: 'opened-modal',
     STATE_NOT_MATCHED: 'not-matched',
+    STATE_HAS_COMPONENT: 'has-component',
     
     ADD_CONTENT: 'btn-add-content',
     

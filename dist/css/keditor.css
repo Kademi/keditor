@@ -478,7 +478,6 @@ body.previewing .keditor-preview-area {
 .keditor-container-content-toolbar {
   text-align: center;
   padding: 15px 0;
-  position: relative;
 }
 .keditor-container-content-toolbar {
   display: block;

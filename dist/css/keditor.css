@@ -441,21 +441,14 @@ body.previewing .keditor-preview-area {
 .keditor-content-area-toolbar,
 .keditor-container-content-toolbar {
   text-align: center;
-}
-.keditor-content-area-toolbar > *,
-.keditor-container-content-toolbar > * {
-  transition: all 0.3s;
-  opacity: 0.2;
-}
-.keditor-content-area-toolbar > *:hover,
-.keditor-container-content-toolbar > *:hover {
-  opacity: 1;
+  padding: 15px 0;
+  position: relative;
 }
 .keditor-container-content-toolbar {
-  display: none;
-}
-.keditor-container-content:hover .keditor-container-content-toolbar {
   display: block;
+}
+.keditor-container-content-inner.has-component + .keditor-container-content-toolbar {
+  display: none;
 }
 .keditor-toolbar {
   position: absolute;
@@ -493,6 +486,7 @@ body.previewing .keditor-preview-area {
   border: 3px dashed transparent;
   content: " ";
   display: block;
+  z-index: -1;
 }
 .keditor-container > .keditor-toolbar {
   top: -3px;
@@ -546,7 +540,7 @@ body.previewing .keditor-preview-area {
   content: " ";
   border: 2px solid rgba(0, 0, 0, 0.5);
   display: none;
-  z-index: 1;
+  z-index: -1;
 }
 .keditor-component .keditor-toolbar {
   top: 0;

@@ -1,5 +1,6 @@
 import TOOLBAR_TYPE from '../constants/toolbarType';
 import CLASS_NAMES from '../constants/classNames';
+import ACTION_TYPE from '../constants/actionType';
 import openModal from '../modal/openModal';
 import generateToolbar from '../utils/generateToolbar';
 import closeSidebar from '../sidebar/closeSidebar';
@@ -21,10 +22,10 @@ export default function (contentArea, dontInitToolbar) {
     if (!dontInitToolbar) {
         let contentAreaToolbar = $(generateToolbar.call(self, TOOLBAR_TYPE.CONTENT_AREA));
         contentArea.append(contentAreaToolbar);
-        contentAreaToolbar.children(options.explicitSnippetEnabled ? `.${CLASS_NAMES.ADD_CONTAINER}` : `.${CLASS_NAMES.ADD_CONTENT}`).on('click', function (e) {
+        contentAreaToolbar.children(`.${CLASS_NAMES.ADD_CONTENT}`).on('click', function (e) {
             e.preventDefault();
     
-            openModal.call(self, contentAreaInner, !options.explicitSnippetEnabled, true);
+            openModal.call(self, contentAreaInner, ACTION_TYPE.APPEND, true, true);
         });
     }
     

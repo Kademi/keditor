@@ -1,4 +1,4 @@
-export default {
+const TOOLBAR_TYPE = {
     CONTENT_AREA: 0,
     CONTAINER: 1,
     SUB_CONTAINER: 2,
@@ -6,3 +6,5 @@ export default {
     SUB_CONTAINER_CONTENT: 4,
     COMPONENT: 5
 };
+
+export default TOOLBAR_TYPE;

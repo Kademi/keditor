@@ -520,23 +520,15 @@ body {
 .keditor-content-area-toolbar,
 .keditor-container-content-toolbar {
     text-align: center;
-    
-    > * {
-        transition: all @animation-duration;
-        opacity: 0.2;
-        
-        
-        &:hover {
-            opacity: 1;
-        }
-    }
+    padding: 15px 0;
+    position: relative;
 }
 
 .keditor-container-content-toolbar {
-    display: none;
+    display: block;
     
-    .keditor-container-content:hover & {
-        display: block;
+    .keditor-container-content-inner.has-component + & {
+        display: none;
     }
 }
 
@@ -584,6 +576,7 @@ body {
         border: 3px dashed transparent;
         content: " ";
         display: block;
+        z-index: -1;
     }
     
     > .keditor-toolbar {
@@ -655,7 +648,7 @@ body {
         content: " ";
         border: 2px solid @container-content-toolbar-outline-color;
         display: none;
-        z-index: 1;
+        z-index: -1;
     }
     
     .keditor-toolbar {

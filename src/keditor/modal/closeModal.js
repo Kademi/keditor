@@ -5,6 +5,7 @@ export default function () {
     let modal = self.modal;
     
     self.modalTarget = null;
+    self.modalTargetAction = null;
     modal.find(`.${CLASS_NAMES.STATE_SELECTED}`).removeClass(CLASS_NAMES.STATE_SELECTED);
     modal.find(`.${CLASS_NAMES.STATE_NOT_MATCHED}`).removeClass(CLASS_NAMES.STATE_NOT_MATCHED);
     modal.find(`.${CLASS_NAMES.SNIPPETS_FILTER}`).val('');

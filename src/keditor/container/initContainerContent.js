@@ -1,5 +1,6 @@
 import TOOLBAR_TYPE from '../constants/toolbarType';
 import CLASS_NAMES from '../constants/classNames';
+import ACTION_TYPE from '../constants/actionType';
 import openModal from '../modal/openModal';
 import generateId from '../utils/generateId';
 import generateToolbar from '../utils/generateToolbar';
@@ -22,29 +23,11 @@ export default function (contentArea, container, containerContent, isNested) {
     let containerContentToolbar = $(generateToolbar.call(self, isNested ? TOOLBAR_TYPE.SUB_CONTAINER_CONTENT : TOOLBAR_TYPE.CONTAINER_CONTENT));
     containerContentToolbar.appendTo(containerContent);
     
-    if (options.explicitSnippetEnabled) {
-        if (!isNested) {
-            if (options.explicitSnippetEnabled) {
-                containerContentToolbar.children(`.${CLASS_NAMES.ADD_CONTAINER}`).on('click', function (e) {
-                    e.preventDefault();
-                    
-                    openModal.call(self, containerContentInner, false, true);
-                });
-            }
-        }
+    containerContentToolbar.children(`.${CLASS_NAMES.ADD_CONTENT}`).on('click', function (e) {
+        e.preventDefault();
         
-        containerContentToolbar.children(`.${CLASS_NAMES.ADD_COMPONENT}`).on('click', function (e) {
-            e.preventDefault();
-            
-            openModal.call(self, containerContentInner, true, false);
-        });
-    } else {
-        containerContentToolbar.children(`.${CLASS_NAMES.ADD_CONTENT}`).on('click', function (e) {
-            e.preventDefault();
-            
-            openModal.call(self, containerContentInner, true, !isNested && options.nestedContainerEnabled);
-        });
-    }
+        openModal.call(self, containerContentInner, ACTION_TYPE.APPEND, true, !isNested && options.nestedContainerEnabled);
+    });
     
     containerContentInner.sortable({
         handle: `.${CLASS_NAMES.COMPONENT_MOVE} .${CLASS_NAMES.CONTAINER_MOVE}`,

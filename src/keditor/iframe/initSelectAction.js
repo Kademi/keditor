@@ -6,7 +6,7 @@ export default function () {
     let options = self.options;
     let contentAreasWrapper = self.contentAreasWrapper;
     
-    contentAreasWrapper.on('click', function (e) {
+    self.iframeBody.on('click', function (e) {
         let sidebar = getClickedElement(e, `.${CLASS_NAMES.SIDEBAR}`);
         let modal = getClickedElement(e, `.${CLASS_NAMES.MODAL}`);
         

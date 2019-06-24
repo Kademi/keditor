@@ -25,8 +25,6 @@ const CLASS_NAMES = {
     STATE_NOT_MATCHED: 'not-matched',
     
     ADD_CONTENT: 'btn-add-content',
-    ADD_COMPONENT: 'btn-add-component',
-    ADD_CONTAINER: 'btn-add-container',
     
     SIDEBAR: 'keditor-sidebar',
     SIDEBAR_HEADER: 'keditor-sidebar-header',

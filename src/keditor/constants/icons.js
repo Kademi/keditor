@@ -1,7 +1,5 @@
 const ICONS = {
     ADD_CONTENT: '<i class="fa fa-plus"></i>',
-    ADD_CONTAINER: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-columns"></i>',
-    ADD_COMPONENT: '<i class="fa fa-plus"></i> <i class="fa fa-fw fa-list-ul"></i>',
     
     MOVE_CONTAINER: '<i class="fa fa-arrows-v"></i>',
     MOVE_COMPONENT: '<i class="fa fa-arrows"></i>',

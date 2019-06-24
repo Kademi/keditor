@@ -1119,4 +1119,9 @@ div.cke_float[id*="cke_keditor-ui-"] .cke_toolbar {
 div.cke_float[id*="cke_keditor-ui-"] .cke_toolbar_break {
   display: none !important;
 }
+.cke_screen_reader_only {
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
 

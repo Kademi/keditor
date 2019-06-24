@@ -83,23 +83,18 @@ export default function () {
             let isAddingComponent = false;
             let isAddingComponentWithContainer = false;
             
-            if (options.explicitSnippetEnabled) {
-                isAddingComponent = isModalComponent;
-                isAddingContainer = isModalContainer;
+            if (snippetType === 'container') {
+                isAddingContainer = true;
             } else {
-                if (snippetType === 'container') {
-                    isAddingContainer = true;
-                } else {
-                    if (isModalComponent && !isModalContainer) {
+                if (isModalComponent && !isModalContainer) {
+                    isAddingComponent = true;
+                }
+                
+                if (isModalComponent && isModalContainer) {
+                    if (self.modalTarget.is(`.${CLASS_NAMES.CONTAINER_CONTENT_INNER}`)) {
                         isAddingComponent = true;
-                    }
-                    
-                    if (isModalComponent && isModalContainer) {
-                        if (self.modalTarget.is(`.${CLASS_NAMES.CONTAINER_CONTENT_INNER}`)) {
-                            isAddingComponent = true;
-                        } else {
-                            isAddingComponentWithContainer = true;
-                        }
+                    } else {
+                        isAddingComponentWithContainer = true;
                     }
                 }
             }
@@ -115,7 +110,7 @@ export default function () {
                         <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_INNER}">${snippetContent}</section>
                     </section>
                 `);
-                self.modalTarget.append(newContainer);
+                self.modalTarget[self.modalTargetAction](newContainer);
                 
                 if (typeof options.onContainerSnippetAdded === 'function') {
                     options.onContainerSnippetAdded.call(self, e, newContainer, selectedSnippet, contentArea);
@@ -135,7 +130,7 @@ export default function () {
                         <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_CONTENT}">${snippetContent}</section>
                     </section>
                 `);
-                self.modalTarget.append(newComponent);
+                self.modalTarget[self.modalTargetAction](newComponent);
                 
                 let container = self.modalTarget.closest(`.${CLASS_NAMES.CONTAINER}`);
                 if (typeof options.onComponentSnippetAdded === 'function') {
@@ -164,7 +159,7 @@ export default function () {
                     </section>
                 `);
                 newContainer.find('[data-type="container-content"]').eq(0).html(newComponent);
-                self.modalTarget.append(newContainer);
+                self.modalTarget[self.modalTargetAction](newContainer);
                 
                 if (typeof options.onComponentSnippetAdded === 'function') {
                     options.onComponentSnippetAdded.call(self, e, newComponent, selectedSnippet, contentArea);

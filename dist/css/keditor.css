@@ -208,7 +208,7 @@ body.previewing .keditor-preview-area {
 .keditor-snippets-wrapper .keditor-snippets {
   height: 100%;
   overflow-y: scroll;
-  padding: 15px 0 0 15px;
+  padding: 15px 0 0;
   display: flex;
   justify-content: space-evenly;
   align-content: flex-start;
@@ -233,7 +233,7 @@ body.previewing .keditor-preview-area {
   background: #ffffff;
   user-select: none;
   width: 200px;
-  margin: 0 7.5px 15px;
+  margin: 0 0 15px;
   flex: none;
 }
 .keditor-snippet .keditor-snippet-inner {
@@ -266,7 +266,7 @@ body.previewing .keditor-preview-area {
 .keditor-snippet .keditor-snippet-add {
   position: absolute;
   left: 50%;
-  bottom: 5px;
+  bottom: 3px;
   transform: translateX(-50%);
   display: none;
 }
@@ -285,7 +285,7 @@ body.previewing .keditor-preview-area {
 }
 @media (max-width: 420px) {
   .keditor-snippet {
-    width: calc(100% - 15px);
+    width: calc(100% - 30px);
   }
 }
 .keditor-modal {
@@ -400,8 +400,8 @@ body.previewing .keditor-preview-area {
 .keditor-btn {
   border: 0;
   background: none;
-  height: 24px;
-  line-height: 23px;
+  height: 23px;
+  line-height: 22px;
   font-size: 12px;
   padding: 0 10px;
   border-radius: 3px;
@@ -410,7 +410,7 @@ body.previewing .keditor-preview-area {
   text-decoration: none !important;
 }
 .keditor-btn i {
-  line-height: 23px;
+  line-height: 22px;
 }
 .keditor-btn.keditor-btn-default {
   border: 1px solid #ddd;

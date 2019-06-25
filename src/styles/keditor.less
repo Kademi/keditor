@@ -606,18 +606,20 @@ body {
 // Container
 // -------------------------------------------------
 .keditor-container {
-    position: relative;
-    
-    &:before {
-        position: absolute;
-        top: -3px;
-        right: -3px;
-        left: -3px;
-        bottom: -3px;
-        border: 3px dashed transparent;
-        content: " ";
-        display: block;
-        z-index: -1;
+    .keditor-container-inner {
+        position: relative;
+        
+        &:before {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            left: -3px;
+            bottom: -3px;
+            border: 3px dashed transparent;
+            content: " ";
+            display: block;
+            z-index: -1;
+        }
     }
     
     > .keditor-toolbar {
@@ -638,14 +640,18 @@ body {
     }
     
     &:hover {
-        &:before {
-            border-color: @container-outline-color-hover;
+        .keditor-container-inner {
+            &:before {
+                border-color: @container-outline-color-hover;
+            }
         }
     }
     
     &.showed-keditor-toolbar {
-        &:before {
-            border-color: @container-outline-color-selected;
+        .keditor-container-inner {
+            &:before {
+                border-color: @container-outline-color-selected;
+            }
         }
         
         > .keditor-toolbar {
@@ -679,18 +685,7 @@ body {
 .keditor-component {
     position: relative;
     z-index: 1;
-    
-    &:before {
-        position: absolute;
-        top: -2px;
-        right: -2px;
-        left: -2px;
-        bottom: -2px;
-        content: " ";
-        border: 2px solid @container-content-toolbar-outline-color;
-        display: none;
-        z-index: -1;
-    }
+    transition: padding-bottom @animation-duration;
     
     .keditor-toolbar {
         top: 0;
@@ -718,19 +713,26 @@ body {
     .keditor-component-content {
         position: relative;
         z-index: 2;
+        
+        &:before {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            left: -2px;
+            bottom: -2px;
+            content: " ";
+            border: 2px solid @container-content-toolbar-outline-color;
+            display: none;
+            z-index: -1;
+        }
     }
     
     &:hover,
     &.showed-keditor-toolbar {
-        &:before {
-            display: block;
-        }
-    }
-    
-    
-    &:hover {
-        &:before {
-            bottom: unit(@btn-height + 30 - 2, px);
+        .keditor-component-content {
+            &:before {
+                display: block;
+            }
         }
     }
     

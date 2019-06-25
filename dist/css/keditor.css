@@ -532,10 +532,10 @@ body.previewing .keditor-preview-area {
 .keditor-toolbar .btn-component-move {
   cursor: move;
 }
-.keditor-container {
+.keditor-container .keditor-container-inner {
   position: relative;
 }
-.keditor-container:before {
+.keditor-container .keditor-container-inner:before {
   position: absolute;
   top: -3px;
   right: -3px;
@@ -560,10 +560,10 @@ body.previewing .keditor-preview-area {
 .keditor-container > .keditor-toolbar > a:hover {
   background: #2eb2e4;
 }
-.keditor-container:hover:before {
+.keditor-container:hover .keditor-container-inner:before {
   border-color: #b5e4f6;
 }
-.keditor-container.showed-keditor-toolbar:before {
+.keditor-container.showed-keditor-toolbar .keditor-container-inner:before {
   border-color: #2eb2e4;
 }
 .keditor-container.showed-keditor-toolbar > .keditor-toolbar {
@@ -588,17 +588,7 @@ body.previewing .keditor-preview-area {
 .keditor-component {
   position: relative;
   z-index: 1;
-}
-.keditor-component:before {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  left: -2px;
-  bottom: -2px;
-  content: " ";
-  border: 2px solid rgba(0, 0, 0, 0.5);
-  display: none;
-  z-index: -1;
+  transition: padding-bottom 0.3s;
 }
 .keditor-component .keditor-toolbar {
   top: 0;
@@ -624,12 +614,20 @@ body.previewing .keditor-preview-area {
   position: relative;
   z-index: 2;
 }
-.keditor-component:hover:before,
-.keditor-component.showed-keditor-toolbar:before {
-  display: block;
+.keditor-component .keditor-component-content:before {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  left: -2px;
+  bottom: -2px;
+  content: " ";
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: -1;
 }
-.keditor-component:hover:before {
-  bottom: 51px;
+.keditor-component:hover .keditor-component-content:before,
+.keditor-component.showed-keditor-toolbar .keditor-component-content:before {
+  display: block;
 }
 .keditor-component.showed-keditor-toolbar .keditor-component-content {
   outline: none !important;

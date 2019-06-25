@@ -1,0 +1,74 @@
+// Import
+// -------------------------------------------------
+@import "../_mixins";
+@import "../_variables";
+
+
+// Component
+// -------------------------------------------------
+.keditor-component {
+    position: relative;
+    z-index: 1;
+    transition: padding-bottom @animation-duration;
+    
+    .keditor-toolbar {
+        top: 0;
+        left: 0;
+        background-color: @container-content-toolbar-bg;
+        padding: 0 2px 2px 0;
+        text-align: left;
+        
+        > a {
+            border: 0;
+            background: none;
+            color: @container-content-toolbar-button-color;
+            text-align: center;
+            border-radius: 0;
+            box-shadow: none;
+            transition: all @animation-duration;
+            display: inline-block;
+            
+            &:hover {
+                background-color: @container-content-toolbar-button-bg-hover;
+            }
+        }
+    }
+    
+    .keditor-component-content {
+        position: relative;
+        z-index: 2;
+        
+        &:before {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            left: -2px;
+            bottom: -2px;
+            content: " ";
+            border: 2px solid @container-content-toolbar-outline-color;
+            display: none;
+            z-index: -1;
+        }
+    }
+    
+    &:hover,
+    &.showed-keditor-toolbar {
+        z-index: 2;
+        
+        .keditor-toolbar {
+            display: block;
+        }
+        
+        .keditor-component-content {
+            &:before {
+                display: block;
+            }
+        }
+    }
+    
+    &.showed-keditor-toolbar {
+        .keditor-component-content {
+            outline: none !important;
+        }
+    }
+}

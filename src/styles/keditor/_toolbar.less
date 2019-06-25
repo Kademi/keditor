@@ -1,0 +1,81 @@
+// Import
+// -------------------------------------------------
+@import "../_mixins";
+@import "../_variables";
+
+
+// Toolbar
+// -------------------------------------------------
+.keditor-toolbar-bottom-sub-container,
+.keditor-toolbar-bottom-component,
+.keditor-toolbar-content-area,
+.keditor-toolbar-container-content {
+    text-align: center;
+    padding: 15px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.keditor-toolbar-container-content {
+    display: block;
+    
+    .keditor-container-content-inner.has-component + & {
+        display: none;
+    }
+}
+
+.keditor-toolbar-bottom-sub-container,
+.keditor-toolbar-bottom-component {
+    transition: all @animation-duration;
+    overflow: hidden;
+    opacity: 0;
+    height: 0;
+    padding: 0;
+}
+
+.keditor-toolbar-bottom-sub-container {
+    .keditor-sub-container:hover &,
+    .keditor-sub-container.showed-keditor-toolbar & {
+        opacity: 1;
+        height: auto;
+        padding: 15px 0;
+    }
+}
+
+.keditor-toolbar-bottom-component {
+    .keditor-component:hover &,
+    .keditor-component.showed-keditor-toolbar & {
+        opacity: 1;
+        height: auto;
+        padding: 15px 0;
+    }
+}
+
+.keditor-toolbar {
+    position: absolute;
+    display: none;
+    z-index: 5;
+    .keditor-text();
+    
+    > a {
+        padding: 1px 3px;
+        font-size: 12px;
+        width: 20px;
+        height: 20px;
+        display: block;
+        text-align: center;
+        line-height: 20px;
+        
+        .fa {
+            line-height: inherit;
+        }
+    }
+    
+    .btn-container-move {
+        cursor: n-resize;
+    }
+    
+    .btn-component-move {
+        cursor: move;
+    }
+}

@@ -1,0 +1,80 @@
+// Import
+// -------------------------------------------------
+@import "../_mixins";
+@import "../_variables";
+
+
+// Sidebar
+// -------------------------------------------------
+.keditor-sidebar {
+    position: absolute;
+    top: @topbar-height;
+    bottom: 0;
+    right: -@sidebar-width;
+    width: @sidebar-width;
+    background: @sidebar-bg;
+    border-left: 1px solid @border-color;
+    box-shadow: -1px 0 5px @sidebar-shadow-color;
+    transition: all @animation-duration;
+    opacity: 0;
+    
+    &.opened {
+        right: 0;
+        opacity: 1;
+    }
+    
+    .keditor-iframe-wrapper & {
+        position: absolute;
+    }
+}
+
+.keditor-sidebar-header {
+    border-bottom: 1px solid @border-color;
+    padding: 10px 30px 10px 15px;
+    position: relative;
+}
+
+.keditor-sidebar-closer {
+    text-decoration: none !important;
+    color: @closer-color;
+    text-align: center;
+    position: absolute;
+    top: 8px;
+    right: 5px;
+    width: @sidebar-close-size;
+    height: @sidebar-close-size;
+    line-height: unit(@sidebar-close-size - 1, px);
+    font-size: 19px;
+    font-weight: bold;
+    
+    &:hover {
+        color: @closer-hover-color;
+    }
+}
+
+.keditor-sidebar-title {
+    font-weight: bold;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+}
+
+.keditor-sidebar-body {
+    .keditor-scrollbar();
+    height: ~"calc(100% - 41px)";
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: @sidebar-body-padding;
+    
+    .keditor-setting-form {
+        .clearfix();
+        overflow: hidden;
+        display: none;
+        min-height: 100%;
+        
+        &.active {
+            display: block;
+        }
+    }
+}

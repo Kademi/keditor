@@ -1,0 +1,77 @@
+// Import
+// -------------------------------------------------
+@import "../_mixins";
+@import "../_variables";
+
+
+// Iframe
+// -------------------------------------------------
+.keditor-iframe-wrapper {
+    position: relative;
+    height: 100%;
+    margin: 0 auto;
+    box-shadow: @iframe-wrapper-shadow;
+}
+
+.keditor-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.keditor-iframe-body {
+    .keditor-scrollbar();
+}
+
+
+// Iframe cover
+// -------------------------------------------------
+.keditor-iframe-cover-wrapper {
+    position: relative;
+    
+    iframe,
+    .keditor-iframe-cover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    iframe {
+        z-index: -1;
+    }
+    
+    .keditor-iframe-cover {
+        z-index: 1;
+        background: rgba(0, 0, 0, .15);
+        
+        &:before {
+            display: block;
+            content: "Double-click to reveal content";
+            color: #fff;
+            font-size: 24px;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            padding: 5px;
+            left: 0;
+            top: 50%;
+            transform: translate(0, -50%);
+            text-shadow: 0 0 3px #000;
+        }
+    }
+    
+    &.hidden-cover {
+        iframe {
+            z-index: 0;
+        }
+        
+        .keditor-iframe-cover {
+            display: none;
+        }
+    }
+}

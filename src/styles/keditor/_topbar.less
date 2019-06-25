@@ -1,0 +1,70 @@
+// Import
+// -------------------------------------------------
+@import "../_mixins";
+@import "../_variables";
+
+
+// Topbar
+// -------------------------------------------------
+.keditor-topbar {
+    .clearfix();
+    .keditor-text();
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: @topbar-bg;
+}
+
+.keditor-topbar-title {
+    color: @topbar-title-color;
+    line-height: @topbar-height;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 15px;
+}
+
+.keditor-topbar-left,
+.keditor-topbar-center,
+.keditor-topbar-right {
+    float: left;
+    height: @topbar-height;
+    word-spacing: -1em;
+    
+    > * {
+        word-spacing: normal;
+        display: inline-block;
+    }
+}
+
+.keditor-topbar-left,
+.keditor-topbar-right {
+    width: 33%;
+}
+
+.keditor-topbar-right {
+    text-align: right;
+}
+
+.keditor-topbar-center {
+    width: 34%;
+    text-align: center;
+}
+
+.keditor-topbar-btn {
+    height: @topbar-height;
+    line-height: @topbar-height;
+    color: @topbar-btn-color !important;
+    text-decoration: none;
+    width: @topbar-height;
+    text-align: center;
+    
+    &:hover,
+    &.active {
+        background: @topbar-btn-hover;
+    }
+    
+    i {
+        font-size: @topbar-btn-icon-size;
+    }
+}

@@ -1,0 +1,20 @@
+// Import
+// -------------------------------------------------
+@import "../_mixins";
+@import "../_variables";
+
+
+// Wrapper
+// -------------------------------------------------
+.keditor-wrapper {
+    height: 100%;
+    padding-top: @topbar-height;
+    background: @wrapper-bg url(@wrapper-bg-image) repeat;
+    position: relative;
+    overflow: hidden;
+    box-shadow: @wrapper-shadow;
+    
+    &.small {
+        background-image: url(@wrapper-bg-image2);
+    }
+}

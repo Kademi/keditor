@@ -1,0 +1,101 @@
+// Import
+// -------------------------------------------------
+@import "../_mixins";
+@import "../_variables";
+
+
+// Snippets
+// -------------------------------------------------
+.keditor-snippets-wrapper {
+    height: 100%;
+    
+    .keditor-snippets {
+        .keditor-scrollbar();
+        height: 100%;
+        overflow-y: scroll;
+        padding: @snippet-container-padding;
+        display: flex;
+        justify-content: space-evenly;
+        align-content: flex-start;
+        flex-flow: wrap;
+    }
+}
+
+.keditor-snippet {
+    border: 1px solid @snippet-border-color;
+    cursor: pointer;
+    transition: all @animation-duration;
+    display: block;
+    background: @snippet-bg;
+    user-select: none;
+    width: @snippet-width;
+    margin: @snippet-margin;
+    flex: none;
+    
+    .keditor-snippet-inner {
+        display: block;
+        padding-bottom: 100%;
+        position: relative;
+    }
+    
+    .keditor-snippet-preview {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        bottom: @snippet-title-height;
+        right: 15px;
+        background: no-repeat 50% 50% / contain;
+    }
+    
+    .keditor-snippet-title,
+    .keditor-snippet-add {
+        transition: opacity @animation-duration;
+    }
+    
+    .keditor-snippet-title {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        font-size: @snippet-title-size;
+        height: @snippet-title-height;
+        line-height: @snippet-title-height;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+        padding: 0 10px;
+        white-space: nowrap;
+        z-index: 1;
+        opacity: 1;
+    }
+    
+    .keditor-snippet-add {
+        position: absolute;
+        left: 50%;
+        bottom: 3px;
+        transform: translateX(-50%);
+        z-index: 2;
+        opacity: 0;
+    }
+    
+    &.not-matched {
+        display: none !important;
+    }
+    
+    &.selected {
+        border-color: @snippet-border-color-selected;
+        box-shadow: @snippet-box-shadow-selected;
+        
+        .keditor-snippet-title {
+            opacity: 0;
+        }
+        
+        .keditor-snippet-add {
+            opacity: 1;
+        }
+    }
+    
+    @media (max-width: 420px) {
+        width: @snippet-width-mobile;
+    }
+}

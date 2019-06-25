@@ -1,0 +1,66 @@
+// Import
+// -------------------------------------------------
+@import "../_mixins";
+@import "../_variables";
+
+
+// Hidden UI
+// -------------------------------------------------
+.keditor-ui-hidden {
+    display: none !important;
+}
+
+
+// Dragging UI
+// -------------------------------------------------
+.keditor-ui-dragging {
+    display: block !important;
+    opacity: 0.5 !important;
+    
+    .keditor-toolbar {
+        display: none !important;
+    }
+}
+
+
+// jQuery UI
+// -------------------------------------------------
+.ui-sortable-placeholder {
+    &.keditor-snippet,
+    &.keditor-container,
+    &.keditor-component {
+        background: @blueLight !important;
+        visibility: visible !important;
+        height: 20px !important;
+        margin: 5px 0 !important;
+        float: none !important;
+        outline: none !important;
+        padding: 0 !important;
+        opacity: 1 !important;
+        border: 2px solid @blue;
+        
+        &:before,
+        &:after {
+            display: none !important;
+        }
+    }
+}
+
+.ui-sortable-helper {
+    &.keditor-section {
+        background: @snippet-bg !important;
+    }
+    
+    &.keditor-container {
+        .keditor-toolbar.keditor-toolbar-container {
+            display: block !important;
+        }
+    }
+    
+    &.keditor-component {
+        &:before,
+        .keditor-toolbar {
+            display: block !important;
+        }
+    }
+}

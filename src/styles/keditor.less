@@ -548,19 +548,28 @@ body {
     }
 }
 
+.keditor-toolbar-bottom-sub-container,
+.keditor-toolbar-bottom-component {
+    transition: all @animation-duration;
+    overflow: hidden;
+    opacity: 0;
+    height: 0;
+    padding: 0;
+}
+
 .keditor-toolbar-bottom-sub-container {
-    display: none;
-    
     .keditor-sub-container:hover & {
-        display: block;
+        opacity: 1;
+        height: auto;
+        padding: 15px 0;
     }
 }
 
 .keditor-toolbar-bottom-component {
-    display: none;
-    
     .keditor-component:hover & {
-        display: block;
+        opacity: 1;
+        height: auto;
+        padding: 15px 0;
     }
 }
 

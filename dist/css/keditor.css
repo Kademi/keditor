@@ -490,17 +490,23 @@ body.previewing .keditor-preview-area {
 .keditor-container-content-inner.has-component + .keditor-toolbar-container-content {
   display: none;
 }
-.keditor-toolbar-bottom-sub-container {
-  display: none;
+.keditor-toolbar-bottom-sub-container,
+.keditor-toolbar-bottom-component {
+  transition: all 0.3s;
+  overflow: hidden;
+  opacity: 0;
+  height: 0;
+  padding: 0;
 }
 .keditor-sub-container:hover .keditor-toolbar-bottom-sub-container {
-  display: block;
-}
-.keditor-toolbar-bottom-component {
-  display: none;
+  opacity: 1;
+  height: auto;
+  padding: 15px 0;
 }
 .keditor-component:hover .keditor-toolbar-bottom-component {
-  display: block;
+  opacity: 1;
+  height: auto;
+  padding: 15px 0;
 }
 .keditor-toolbar {
   position: absolute;

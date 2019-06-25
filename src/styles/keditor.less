@@ -558,7 +558,8 @@ body {
 }
 
 .keditor-toolbar-bottom-sub-container {
-    .keditor-sub-container:hover & {
+    .keditor-sub-container:hover &,
+    .keditor-sub-container.showed-keditor-toolbar & {
         opacity: 1;
         height: auto;
         padding: 15px 0;
@@ -566,7 +567,8 @@ body {
 }
 
 .keditor-toolbar-bottom-component {
-    .keditor-component:hover & {
+    .keditor-component:hover &,
+    .keditor-component.showed-keditor-toolbar & {
         opacity: 1;
         height: auto;
         padding: 15px 0;
@@ -606,7 +608,9 @@ body {
 // Container
 // -------------------------------------------------
 .keditor-container {
-    .keditor-container-inner {
+    position: relative;
+    
+    > .keditor-container-inner {
         position: relative;
         
         &:before {
@@ -640,7 +644,7 @@ body {
     }
     
     &:hover {
-        .keditor-container-inner {
+        > .keditor-container-inner {
             &:before {
                 border-color: @container-outline-color-hover;
             }
@@ -648,7 +652,7 @@ body {
     }
     
     &.showed-keditor-toolbar {
-        .keditor-container-inner {
+        > .keditor-container-inner {
             &:before {
                 border-color: @container-outline-color-selected;
             }
@@ -729,6 +733,12 @@ body {
     
     &:hover,
     &.showed-keditor-toolbar {
+        z-index: 2;
+    
+        .keditor-toolbar {
+            display: block;
+        }
+        
         .keditor-component-content {
             &:before {
                 display: block;
@@ -739,14 +749,6 @@ body {
     &.showed-keditor-toolbar {
         .keditor-component-content {
             outline: none !important;
-        }
-    }
-    
-    &:hover {
-        z-index: 2;
-        
-        .keditor-toolbar {
-            display: block;
         }
     }
 }

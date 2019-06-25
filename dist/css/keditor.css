@@ -498,12 +498,14 @@ body.previewing .keditor-preview-area {
   height: 0;
   padding: 0;
 }
-.keditor-sub-container:hover .keditor-toolbar-bottom-sub-container {
+.keditor-sub-container:hover .keditor-toolbar-bottom-sub-container,
+.keditor-sub-container.showed-keditor-toolbar .keditor-toolbar-bottom-sub-container {
   opacity: 1;
   height: auto;
   padding: 15px 0;
 }
-.keditor-component:hover .keditor-toolbar-bottom-component {
+.keditor-component:hover .keditor-toolbar-bottom-component,
+.keditor-component.showed-keditor-toolbar .keditor-toolbar-bottom-component {
   opacity: 1;
   height: auto;
   padding: 15px 0;
@@ -532,10 +534,13 @@ body.previewing .keditor-preview-area {
 .keditor-toolbar .btn-component-move {
   cursor: move;
 }
-.keditor-container .keditor-container-inner {
+.keditor-container {
   position: relative;
 }
-.keditor-container .keditor-container-inner:before {
+.keditor-container > .keditor-container-inner {
+  position: relative;
+}
+.keditor-container > .keditor-container-inner:before {
   position: absolute;
   top: -3px;
   right: -3px;
@@ -560,10 +565,10 @@ body.previewing .keditor-preview-area {
 .keditor-container > .keditor-toolbar > a:hover {
   background: #2eb2e4;
 }
-.keditor-container:hover .keditor-container-inner:before {
+.keditor-container:hover > .keditor-container-inner:before {
   border-color: #b5e4f6;
 }
-.keditor-container.showed-keditor-toolbar .keditor-container-inner:before {
+.keditor-container.showed-keditor-toolbar > .keditor-container-inner:before {
   border-color: #2eb2e4;
 }
 .keditor-container.showed-keditor-toolbar > .keditor-toolbar {
@@ -625,18 +630,20 @@ body.previewing .keditor-preview-area {
   display: none;
   z-index: -1;
 }
+.keditor-component:hover,
+.keditor-component.showed-keditor-toolbar {
+  z-index: 2;
+}
+.keditor-component:hover .keditor-toolbar,
+.keditor-component.showed-keditor-toolbar .keditor-toolbar {
+  display: block;
+}
 .keditor-component:hover .keditor-component-content:before,
 .keditor-component.showed-keditor-toolbar .keditor-component-content:before {
   display: block;
 }
 .keditor-component.showed-keditor-toolbar .keditor-component-content {
   outline: none !important;
-}
-.keditor-component:hover {
-  z-index: 2;
-}
-.keditor-component:hover .keditor-toolbar {
-  display: block;
 }
 .keditor-iframe-cover-wrapper {
   position: relative;

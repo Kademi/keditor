@@ -13,7 +13,7 @@ export default function () {
         let btn = $(this);
         let container = btn.closest(`.${CLASS_NAMES.CONTAINER}`);
         let contentArea = container.parent();
-        let newContainer = $(getContainerContent.call(self, container, btn.parent().hasClass(CLASS_NAMES.SUB_CONTAINER_TOOLBAR)));
+        let newContainer = $(getContainerContent.call(self, container, btn.parent().hasClass(CLASS_NAMES.TOOLBAR_SUB_CONTAINER)));
         container.after(newContainer);
         convertToContainer.call(self, contentArea, newContainer);
         

@@ -2,7 +2,7 @@ import CLASS_NAMES from '../constants/classNames';
 import initComponent from './initComponent';
 
 export default function (contentArea, container, target, isExisting) {
-    if (target.is(`.${CLASS_NAMES.CONTAINER_CONTENT_TOOLBAR}`)) {
+    if (target.is(`.${CLASS_NAMES.TOOLBAR_CONTAINER_CONTENT}`)) {
         return;
     }
     

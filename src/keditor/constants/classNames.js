@@ -66,9 +66,13 @@ const CLASS_NAMES = {
     SNIPPETS_WRAPPER: 'keditor-snippets-wrapper',
     
     TOOLBAR: 'keditor-toolbar',
+    TOOLBAR_CONTENT_AREA: 'keditor-toolbar-content-area',
     TOOLBAR_CONTAINER: 'keditor-toolbar-container',
-    TOOLBAR_SUB_CONTAINER: ' keditor-toolbar-sub-container',
+    TOOLBAR_CONTAINER_CONTENT: 'keditor-toolbar-container-content',
+    TOOLBAR_SUB_CONTAINER: 'keditor-toolbar-sub-container',
+    TOOLBAR_SUB_CONTAINER_BOTTOM: 'keditor-toolbar-bottom-sub-container',
     TOOLBAR_COMPONENT: 'keditor-toolbar-component',
+    TOOLBAR_COMPONENT_BOTTOM: 'keditor-toolbar-bottom-component',
     
     SETTING: 'keditor-setting',
     SETTING_FORM: 'keditor-setting-form',
@@ -77,7 +81,6 @@ const CLASS_NAMES = {
     
     CONTENT_AREA: 'keditor-content-area',
     CONTENT_AREA_INNER: 'keditor-content-area-inner',
-    CONTENT_AREA_TOOLBAR: 'keditor-content-area-toolbar',
     CONTENT_AREAS: 'keditor-content-areas',
     CONTENT_AREAS_WRAPPER: 'keditor-content-areas-wrapper',
     
@@ -100,7 +103,6 @@ const CLASS_NAMES = {
     COMPONENT_EXISTING: 'existing-component',
     
     CONTAINER: 'keditor-container',
-    CONTAINER_TOOLBAR: 'keditor-toolbar-container',
     CONTAINER_MOVE: 'btn-container-move',
     CONTAINER_MOVE_UP: 'btn-container-move-up',
     CONTAINER_MOVE_DOWN: 'btn-container-move-down',
@@ -110,11 +112,9 @@ const CLASS_NAMES = {
     CONTAINER_INNER: 'keditor-container-inner',
     CONTAINER_CONTENT: 'keditor-container-content',
     CONTAINER_CONTENT_INNER: 'keditor-container-content-inner',
-    CONTAINER_CONTENT_TOOLBAR: 'keditor-container-content-toolbar',
     
     SUB_CONTAINER: 'keditor-sub-container',
     SUB_CONTAINER_CONTENT: 'keditor-sub-container-content',
-    SUB_CONTAINER_TOOLBAR: 'keditor-toolbar-sub-container',
     
     PREVIEW_AREA: 'keditor-preview-area',
 };

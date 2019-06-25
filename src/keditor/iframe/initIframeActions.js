@@ -10,10 +10,17 @@ import initBtnComponentMoveUp from './initBtnComponentMoveUp';
 import initBtnContainerMoveDown from './initBtnContainerMoveDown';
 import initBtnContainerMoveUp from './initBtnContainerMoveUp';
 
+import initBtnAddContentAfterContainer from './initBtnAddContentAfterContainer';
+import initBtnAddContentAfterComponent from './initBtnAddContentAfterComponent';
+
 export default function () {
     let self = this;
     
     initSelectAction.call(self);
+    
+    
+    initBtnAddContentAfterComponent.call(self);
+    initBtnAddContentAfterContainer.call(self);
     
     initBtnComponentDelete.call(self);
     initBtnComponentDuplicate.call(self);

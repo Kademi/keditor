@@ -69,6 +69,7 @@ body.previewing .keditor-preview-area {
   background: #cdcdcd;
 }
 .keditor-topbar {
+  font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: absolute;
   top: 0;
   left: 0;
@@ -335,7 +336,7 @@ body.previewing .keditor-preview-area {
   background: #fff;
   transition: all 0.3s;
   opacity: 0;
-  font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .keditor-modal.showed {
   top: 0;
@@ -410,7 +411,7 @@ body.previewing .keditor-preview-area {
 .keditor-modal-header .keditor-snippets-filter-label,
 .keditor-modal-header .keditor-snippets-filter,
 .keditor-modal-header .keditor-snippets-search {
-  font: 14px/20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
   height: 20px;
   background: none;
   display: inline-block;
@@ -474,16 +475,32 @@ body.previewing .keditor-preview-area {
   border-color: #1f1f1f;
   background: #1f1f1f;
 }
-.keditor-content-area-toolbar,
-.keditor-container-content-toolbar {
+.keditor-toolbar-bottom-sub-container,
+.keditor-toolbar-bottom-component,
+.keditor-toolbar-content-area,
+.keditor-toolbar-container-content {
   text-align: center;
   padding: 15px 0;
+  position: relative;
+  z-index: 1;
 }
-.keditor-container-content-toolbar {
+.keditor-toolbar-container-content {
   display: block;
 }
-.keditor-container-content-inner.has-component + .keditor-container-content-toolbar {
+.keditor-container-content-inner.has-component + .keditor-toolbar-container-content {
   display: none;
+}
+.keditor-toolbar-bottom-sub-container {
+  display: none;
+}
+.keditor-sub-container:hover .keditor-toolbar-bottom-sub-container {
+  display: block;
+}
+.keditor-toolbar-bottom-component {
+  display: none;
+}
+.keditor-component:hover .keditor-toolbar-bottom-component {
+  display: block;
 }
 .keditor-toolbar {
   position: absolute;
@@ -604,6 +621,9 @@ body.previewing .keditor-preview-area {
 .keditor-component:hover:before,
 .keditor-component.showed-keditor-toolbar:before {
   display: block;
+}
+.keditor-component:hover:before {
+  bottom: 51px;
 }
 .keditor-component.showed-keditor-toolbar .keditor-component-content {
   outline: none !important;

@@ -23,7 +23,6 @@ export default function (contentArea, container, containerContent, isNested) {
     
     let containerContentToolbar = $(generateToolbar.call(self, isNested ? TOOLBAR_TYPE.SUB_CONTAINER_CONTENT : TOOLBAR_TYPE.CONTAINER_CONTENT));
     containerContentToolbar.appendTo(containerContent);
-    
     containerContentToolbar.children(`.${CLASS_NAMES.ADD_CONTENT}`).on('click', function (e) {
         e.preventDefault();
         

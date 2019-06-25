@@ -10,7 +10,7 @@ export default function (type, isComponentConfigurable) {
     switch (type) {
         case  TOOLBAR_TYPE.CONTENT_AREA:
             return (`
-                <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTENT_AREA_TOOLBAR}">
+                <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOOLBAR_CONTENT_AREA}">
                     <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTENT}" title="${options.locale.addContent}">${ICONS.ADD_CONTENT}</a>
                 </div>
             `);
@@ -47,16 +47,23 @@ export default function (type, isComponentConfigurable) {
                 </div>
             `);
         
+        case  TOOLBAR_TYPE.SUB_CONTAINER_BOTTOM:
+            return (`
+                <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOOLBAR_SUB_CONTAINER_BOTTOM}">
+                    <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTENT}" title="${options.locale.addContent}">${ICONS.ADD_CONTENT}</a>
+                </div>
+            `);
+        
         case  TOOLBAR_TYPE.CONTAINER_CONTENT:
             return (`
-                <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_CONTENT_TOOLBAR}">
+                <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOOLBAR_CONTAINER_CONTENT}">
                     <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTENT}" title="${options.locale.addContent}">${ICONS.ADD_CONTENT}</a>
                 </div>
             `);
         
         case  TOOLBAR_TYPE.SUB_CONTAINER_CONTENT:
             return (`
-                <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_CONTENT_TOOLBAR}">
+                <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOOLBAR_CONTAINER_CONTENT}">
                     <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTENT}" title="${options.locale.addContent}">${ICONS.ADD_CONTENT}</a>
                 </div>
             `);
@@ -74,6 +81,13 @@ export default function (type, isComponentConfigurable) {
                     ${settingBtn}
                     <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_DUPLICATE}">${ICONS.DUPLICATE_COMPONENT}</a>
                     <a href="javascript:void(0);" class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_DELETE}">${ICONS.DELETE_COMPONENT}</a>
+                </div>
+            `);
+        
+        case  TOOLBAR_TYPE.COMPONENT_BOTTOM:
+            return (`
+                <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOOLBAR_COMPONENT_BOTTOM}">
+                    <a href="javascript:void(0)" class="${CLASS_NAMES.UI} ${CLASS_NAMES.BTN} ${CLASS_NAMES.BTN_DEFAULT} ${CLASS_NAMES.ADD_CONTENT}" title="${options.locale.addContent}">${ICONS.ADD_CONTENT}</a>
                 </div>
             `);
         

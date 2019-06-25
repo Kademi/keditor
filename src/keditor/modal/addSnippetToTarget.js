@@ -2,6 +2,7 @@ import CLASS_NAMES from '../constants/classNames';
 import initComponent from '../component/initComponent';
 import initContainer from '../container/initContainer';
 import checkContainerContent from '../container/checkContainerContent';
+import ACTION_TYPE from '../constants/actionType';
 
 export default function (e, selectedSnippet, target, targetAction) {
     let self = this;
@@ -30,7 +31,11 @@ export default function (e, selectedSnippet, target, targetAction) {
             if (target.is(`.${CLASS_NAMES.CONTAINER_CONTENT_INNER}`)) {
                 isAddingComponent = true;
             } else {
-                isAddingComponentWithContainer = true;
+                if (targetAction === ACTION_TYPE.APPEND) {
+                    isAddingComponentWithContainer = true;
+                } else {
+                    isAddingComponent = true;
+                }
             }
         }
     }

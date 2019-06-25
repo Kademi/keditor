@@ -89,6 +89,7 @@ body {
 // -------------------------------------------------
 .keditor-topbar {
     .clearfix();
+    .keditor-text();
     position: absolute;
     top: 0;
     left: 0;
@@ -354,7 +355,7 @@ body {
     background: @modal-bg;
     transition: all @animation-duration;
     opacity: 0;
-    font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    .keditor-text();
     
     &.showed {
         top: 0;
@@ -442,7 +443,7 @@ body {
     .keditor-snippets-filter-label,
     .keditor-snippets-filter,
     .keditor-snippets-search {
-        font: 14px/20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        .keditor-text();
         height: 20px;
         background: none;
         display: inline-block;
@@ -529,13 +530,17 @@ body {
 
 // Toolbar
 // -------------------------------------------------
-.keditor-content-area-toolbar,
-.keditor-container-content-toolbar {
+.keditor-toolbar-bottom-sub-container,
+.keditor-toolbar-bottom-component,
+.keditor-toolbar-content-area,
+.keditor-toolbar-container-content {
     text-align: center;
     padding: 15px 0;
+    position: relative;
+    z-index: 1;
 }
 
-.keditor-container-content-toolbar {
+.keditor-toolbar-container-content {
     display: block;
     
     .keditor-container-content-inner.has-component + & {
@@ -543,11 +548,27 @@ body {
     }
 }
 
+.keditor-toolbar-bottom-sub-container {
+    display: none;
+    
+    .keditor-sub-container:hover & {
+        display: block;
+    }
+}
+
+.keditor-toolbar-bottom-component {
+    display: none;
+    
+    .keditor-component:hover & {
+        display: block;
+    }
+}
+
 .keditor-toolbar {
     position: absolute;
     display: none;
     z-index: 5;
-    font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    .keditor-text();
     
     > a {
         padding: 1px 3px;
@@ -694,6 +715,13 @@ body {
     &.showed-keditor-toolbar {
         &:before {
             display: block;
+        }
+    }
+    
+    
+    &:hover {
+        &:before {
+            bottom: unit(@btn-height + 30 - 2, px);
         }
     }
     

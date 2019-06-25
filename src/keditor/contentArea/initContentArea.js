@@ -30,7 +30,7 @@ export default function (contentArea, dontInitToolbar) {
     }
     
     contentAreaInner.sortable({
-        handle: `.${CLASS_NAMES.CONTAINER_TOOLBAR}:not(.${CLASS_NAMES.SUB_CONTAINER_TOOLBAR}) .${CLASS_NAMES.CONTAINER_MOVE}`,
+        handle: `.${CLASS_NAMES.TOOLBAR_CONTAINER}:not(.${CLASS_NAMES.TOOLBAR_SUB_CONTAINER}) .${CLASS_NAMES.CONTAINER_MOVE}`,
         items: '> section',
         helper: 'clone',
         connectWith: `.${CLASS_NAMES.CONTENT_AREA}`,

@@ -24,6 +24,7 @@ export default function (contentArea, container, component) {
         let componentData = KEditor.components[componentType];
         
         component.append(generateToolbar.call(self, TOOLBAR_TYPE.COMPONENT, componentData.settingEnabled));
+        component.append(generateToolbar.call(self, TOOLBAR_TYPE.COMPONENT_BOTTOM));
         
         component.find('[data-dynamic-href]').each(function () {
             let dynamicElement = $(this);

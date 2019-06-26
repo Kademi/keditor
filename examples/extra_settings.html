@@ -66,12 +66,14 @@
                     extraSettings: {
                         pageSetting: {
                             title: 'Page Settings',
-                            content: '<div>This is content of page settings.</div><hr />',
                             trigger: function (extraSetting) {
                                 var btnPageSetting = $('<a href="javascript:void(0);" class="keditor-ui keditor-topbar-btn btn-page-setting" data-extra-setting="pageSetting"><i class="fa fa-fw fa-cog"></i></a>');
                                 this.topbarRight.append(btnPageSetting);
                                 
                                 return btnPageSetting;
+                            },
+                            settingInitFunction: function (form, keditor) {
+                                form.append('<div>This is content of page settings.</div><hr />');
                             },
                             settingShowFunction: function (form, container, keditor) {
                                 form.append('<p>This content is added when showing setting</p><br />');

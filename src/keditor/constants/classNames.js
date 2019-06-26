@@ -76,8 +76,7 @@ const CLASS_NAMES = {
     
     SETTING: 'keditor-setting',
     SETTING_FORM: 'keditor-setting-form',
-    SETTING_EXTRA: 'keditor-setting-extra',
-    SETTING_CONTAINER: 'keditor-setting-container',
+    SETTING_FORM_LOADING: 'keditor-setting-form-loading',
     
     CONTENT_AREA: 'keditor-content-area',
     CONTENT_AREA_INNER: 'keditor-content-area-inner',

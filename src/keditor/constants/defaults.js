@@ -38,27 +38,31 @@ export default {
      *     }
      * }
      * @settingName.option {String} title
-     * @settingName.option {String} content
      * @settingName.option {jQuery|Function} trigger If pass as function, argument will be current extra setting. This function must return a jQuery object
+     * @settingName.option {Function} settingInitFunction Same arguments with "containerSettingInitFunction"
      * @settingName.option {Function} settingShowFunction Same arguments with "containerSettingShowFunction"
      * @example:
      * {
      *     settingName1: {
      *         title: 'Page Settings',
-     *         content: '<div>This is content of page settings</div>',
      *         trigger: $('.btn-page-setting'),
-     *         settingShowFunction: function (form, container, keditor) {
+     *         settingInitFunction: function (form, keditor) {
+     *             form.append('<div>This is content of page settings</div>');
+     *         },
+     *         settingShowFunction: function (form, trigger, keditor) {
      *             // Do something
      *         }
      *     },
      *     settingName2: {
      *         title: 'Page Settings 2',
-     *         content: '<div>This is content of page settings 2</div>',
      *         triggerSelector: '.btn-page-settings',
      *         trigger: function (extraSetting) {
      *             return $(extraSetting.triggerSelector);
      *         },
-     *         settingShowFunction: function (form, container, keditor) {
+     *         settingInitFunction: function (form, keditor) {
+     *             form.append('<div>This is content of page settings 2</div>');
+     *         },
+     *         settingShowFunction: function (form, trigger, keditor) {
      *             // Do something
      *         }
      *     }
@@ -100,6 +104,12 @@ export default {
          * @option {String}
          */
         addContent: 'Add content',
+    
+        /*
+         * Text title for container setting
+         * @option {String}
+         */
+        containerSetting: 'Container Settings',
         
         /*
          * Text content for confirm dialog when deleting container

@@ -1,4 +1,5 @@
 import CLASS_NAMES from '../constants/classNames';
+import SETTING_CATEGORY from '../constants/settingCategory';
 
 export default function () {
     let self = this;
@@ -7,19 +8,28 @@ export default function () {
     let activeForm = sidebar.find(`.${CLASS_NAMES.SIDEBAR_BODY}`).children(`.${CLASS_NAMES.STATE_ACTIVE}`);
     
     if (activeForm.length > 0) {
-        if (activeForm.is(`.${CLASS_NAMES.SETTING_CONTAINER}`)) {
-            if (typeof options.containerSettingHideFunction === 'function') {
-                options.containerSettingHideFunction.call(self, activeForm, self);
-            }
-        } else if (activeForm.is('[data-type]')) {
-            let activeType = activeForm.attr('data-type');
-            let componentData = KEditor.components[activeType];
-            
-            if (typeof componentData.hideSettingForm === 'function') {
-                componentData.hideSettingForm.call(componentData, activeForm, self);
-            }
-        } else if (activeForm.is('[data-extra-setting]')) {
-            // TODO: Will add method when hiding setting for Extra setting
+        switch (activeForm.attr('[data-setting-category]')) {
+            case SETTING_CATEGORY.CONTAINER:
+                if (typeof options.containerSettingHideFunction === 'function') {
+                    options.containerSettingHideFunction.call(self, activeForm, self);
+                }
+                break;
+                
+            case SETTING_CATEGORY.COMPONENT:
+                let activeType = activeForm.attr('data-type');
+                let componentData = KEditor.components[activeType];
+    
+                if (typeof componentData.hideSettingForm === 'function') {
+                    componentData.hideSettingForm.call(componentData, activeForm, self);
+                }
+                break;
+                
+            case SETTING_CATEGORY.EXTRA:
+                // TODO: Will add method when hiding setting for Extra setting
+                break;
+                
+            default:
+                // Do nothing
         }
         
         activeForm.removeClass(CLASS_NAMES.STATE_ACTIVE);

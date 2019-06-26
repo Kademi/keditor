@@ -4,7 +4,6 @@ import closeSidebar from './closeSidebar';
 
 export default function () {
     let self = this;
-    let options = self.options;
     let sidebarId = generateId();
     
     let sidebar = self.sidebar = $(`
@@ -23,23 +22,12 @@ export default function () {
         closeSidebar.call(self);
     });
     
-    let sidebarBody = sidebar.find(`.${CLASS_NAMES.SIDEBAR_BODY}`);
+    self.sidebarTitle = sidebar.find(`.${CLASS_NAMES.SIDEBAR_TITLE}`);
+    let sidebarBody = self.sidebarBody = sidebar.find(`.${CLASS_NAMES.SIDEBAR_BODY}`);
     sidebarBody.on('submit', 'form', function (e) {
         e.preventDefault();
         return false;
     });
-    
-    if (options.containerSettingEnabled === true) {
-        if (typeof options.containerSettingInitFunction === 'function') {
-            
-            let form = $(`<div class="${CLASS_NAMES.UI} ${CLASS_NAMES.SETTING_FORM} ${CLASS_NAMES.SETTING_CONTAINER}"></div>`);
-            sidebarBody.append(form);
-            
-            options.containerSettingInitFunction.call(self, form, self);
-        } else {
-            self.error('"containerSettingInitFunction" is not function!');
-        }
-    }
     
     sidebar.appendTo(self.wrapper);
 };

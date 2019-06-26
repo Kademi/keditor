@@ -63,6 +63,44 @@
         <script type="text/javascript" data-keditor="script">
             $(function () {
                 $('#content-area').keditor({
+                    containerSettingEnabled: true,
+                    containerSettingInitFunction: function (form, keditor) {
+                        // Add control for settings form
+                        form.append(
+                            '<div class="form-horizontal">' +
+                            '   <div class="form-group">' +
+                            '       <div class="col-sm-12">' +
+                            '           <label>Background color</label>' +
+                            '           <input type="text" class="form-control txt-bg-color" />' +
+                            '       </div>' +
+                            '   </div>' +
+                            '</div>'
+                        );
+        
+                        // Add event handle for background color textbox
+                        form.find('.txt-bg-color').on('change', function () {
+                            // Get current setting container
+                            var container = keditor.getSettingContainer();
+                            // Find '.row' for setting background color
+                            // Note: Make sure you have a div for setting background color
+                            var row = container.find('.row');
+                            // Set background color with value of textbox
+                            row.css('background-color', this.value);
+                        });
+                    },
+                    containerSettingShowFunction: function (form, container, keditor) {
+                        // Find '.row' div
+                        // Note: Make sure you have a div for setting background color
+                        var row = container.find('.row');
+                        // User "prop()" method to get properties of HTML element
+                        var backgroundColor = row.prop('style').backgroundColor || '';
+                        // User 'backgroundColor' for value of background color textbox
+                        form.find('.txt-bg-color').val(backgroundColor);
+                    },
+                    containerSettingHideFunction: function (form, keditor) {
+                        // Clean value of background color textbox when hiding settings form
+                        form.find('.txt-bg-color').val('');
+                    },
                     extraSettings: {
                         pageSetting: {
                             title: 'Page Settings',

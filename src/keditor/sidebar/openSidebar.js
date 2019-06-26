@@ -6,7 +6,6 @@ import showSettingForm from './showSettingForm';
 export default function (target) {
     let self = this;
     let options = self.options;
-    let sidebar = self.sidebar;
     let _showSettingForm = (...args) => showSettingForm.call(self, ...args);
     
     if (target.is(`.${CLASS_NAMES.COMPONENT}`)) {
@@ -19,8 +18,6 @@ export default function (target) {
     } else {
         let extraKey = target.attr('data-extra-setting');
         let extraTabData = options.extraSettings[extraKey];
-        _showSettingForm(target, extraKey, SETTING_CATEGORY.EXTRA, extraTabData.title, extraTabData.settingInitFunction, extraTabData.showSettingForm, extraTabData);
+        _showSettingForm(target, extraKey, SETTING_CATEGORY.EXTRA, extraTabData.title, extraTabData.settingInitFunction, extraTabData.settingShowFunction, extraTabData);
     }
-    
-    sidebar.addClass(CLASS_NAMES.STATE_OPENED);
 };

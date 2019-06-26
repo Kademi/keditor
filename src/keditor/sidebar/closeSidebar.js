@@ -5,7 +5,7 @@ export default function () {
     let self = this;
     let options = self.options;
     let sidebar = self.sidebar;
-    let activeForm = sidebar.find(`.${CLASS_NAMES.SIDEBAR_BODY}`).children(`.${CLASS_NAMES.STATE_ACTIVE}`);
+    let activeForm = self.sidebarBody.children(`.${CLASS_NAMES.STATE_ACTIVE}`);
     
     if (activeForm.length > 0) {
         switch (activeForm.attr('[data-setting-category]')) {

@@ -14,7 +14,7 @@ export default function (target) {
     
         _showSettingForm(target, componentType, SETTING_CATEGORY.COMPONENT, componentData.settingTitle, componentData.initSettingForm, componentData.showSettingForm, componentData);
     } else if (target.is(`.${CLASS_NAMES.CONTAINER}`)) {
-        _showSettingForm(target, null, SETTING_CATEGORY.COMPONENT, options.locale.containerSetting, options.containerSettingInitFunction, options.containerSettingShowFunction, self);
+        _showSettingForm(target, null, SETTING_CATEGORY.CONTAINER, options.locale.containerSetting, options.containerSettingInitFunction, options.containerSettingShowFunction, self);
     } else {
         let extraKey = target.attr('data-extra-setting');
         let extraTabData = options.extraSettings[extraKey];

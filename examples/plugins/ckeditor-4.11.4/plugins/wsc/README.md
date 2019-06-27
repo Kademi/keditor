@@ -27,7 +27,7 @@ There are also additional languages and specialized dictionaries available for a
 Get Started
 ------------
 
-1. Clone/copy this repository contents in a new "plugins/wsc" folder in your CKEditor installation.
+1. Clone/copy this repository contents in a new "./plugins/wsc" folder in your CKEditor installation.
 2. Enable the "wsc" plugin in the CKEditor configuration file (config.js):
 
         config.extraPlugins = 'wsc';

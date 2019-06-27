@@ -6,16 +6,21 @@ export default function () {
     let self = this;
     let element = self.element;
     let options = self.options;
-    let wrapper = self.wrapper = $(`<div class="${CLASS_NAMES.UI} ${CLASS_NAMES.WRAPPER}"></div>`);
-    let iframeWrapper = self.iframeWrapper = $(`<div class="${CLASS_NAMES.UI} ${CLASS_NAMES.IFRAME_WRAPPER}"></div>`);
-    let iframe = self.iframe = $(`<iframe class="${CLASS_NAMES.UI} ${CLASS_NAMES.IFRAME}"></iframe>`);
+    let wrapperId = self.generateId();
+    let wrapper = self.wrapper = $(`
+        <div id="${wrapperId}" class="${CLASS_NAMES.UI} ${CLASS_NAMES.WRAPPER}">
+            <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.IFRAME_WRAPPER}">
+                <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.IFRAME_WIDTH_SWITCHER}">
+                    <iframe class="${CLASS_NAMES.UI} ${CLASS_NAMES.IFRAME}"></iframe>
+                </div>
+            </div>
+        </div>
+    `);
     
-    element.after(wrapper);
     element.addClass(CLASS_NAMES.UI_HIDDEN);
+    element.after(wrapper);
     
-    iframeWrapper.html(iframe);
-    wrapper.attr('id', self.generateId()).append(iframeWrapper);
-    
+    let iframe = self.iframe = wrapper.find(`.${CLASS_NAMES.IFRAME}`);
     self.iframeDoc = iframe.contents();
     
     // Fix issue Firefox can't render content inside iframe

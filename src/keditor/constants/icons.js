@@ -21,6 +21,7 @@ const ICONS = {
     
     DEVICE_MOBILE: '<i class="fa fa-fw fa-mobile"></i>',
     DEVICE_TABLET: '<i class="fa fa-fw fa-tablet"></i>',
+    DEVICE_LAPTOP: '<i class="fa fa-fw fa-laptop"></i>',
     DEVICE_DESKTOP: '<i class="fa fa-fw fa-desktop"></i>',
     
     PREVIEW_ON: '<i class="fa fa-fw fa-eye"></i>',

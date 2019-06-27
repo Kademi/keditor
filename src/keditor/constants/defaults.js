@@ -77,6 +77,7 @@ export default {
          */
         viewOnMobile: 'View on mobile',
         viewOnTablet: 'View on tablet',
+        viewOnLaptop: 'View on laptop',
         viewOnDesktop: 'View on desktop',
     
         /*
@@ -128,13 +129,25 @@ export default {
      * Width of mobile device
      * @option {Number}
      */
-    widthMobile: 320,
+    widthMobile: 420,
     
     /*
      * Width of tablet device
      * @option {Number}
      */
-    widthTablet: 768,
+    widthTablet: 860,
+    
+    /*
+     * Width of laptop device
+     * @option {Number}
+     */
+    widthLaptop: 1100,
+    
+    /*
+     * Min width of desktop device
+     * @option {Number}
+     */
+    minWidthDesktop: 1366,
     
     /*
      * Default component type of component. If type of component does not exist in KEditor.components, will be used "defaultComponentType" as type of this component. If is function, argument is component

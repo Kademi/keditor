@@ -2,7 +2,7 @@ import CLASS_NAMES from '../constants/classNames';
 import generateId from '../utils/generateId';
 import renderSnippets from '../snippet/renderSnippets';
 import initSnippetsFilter from '../snippet/initSnippetsFilter';
-import closeModal from './closeModal';
+import closeSnippetModal from './closeSnippetModal';
 import initSnippetAction from './initSnippetAction';
 import addSnippetToTarget from './addSnippetToTarget';
 
@@ -51,7 +51,7 @@ export default function () {
         modal.find(`.${CLASS_NAMES.MODAL_CLOSE}`).on('click', function (e) {
             e.preventDefault();
             
-            closeModal.call(self);
+            closeSnippetModal.call(self);
         });
     
         // Add buttons
@@ -61,7 +61,7 @@ export default function () {
             let selectedSnippet = $(this).closest(`.${CLASS_NAMES.SNIPPET}`);
             
             addSnippetToTarget.call(self, e, selectedSnippet, self.modalTarget, self.modalTargetAction);
-            closeModal.call(self);
+            closeSnippetModal.call(self);
         });
         
         let cssTransitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';

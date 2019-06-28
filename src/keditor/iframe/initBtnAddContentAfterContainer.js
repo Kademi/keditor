@@ -1,6 +1,6 @@
 import CLASS_NAMES from '../constants/classNames';
 import ACTION_TYPE from '../constants/actionType';
-import openModal from '../modal/openModal';
+import openSnippetModal from '../modal/openSnippetModal';
 
 export default function () {
     let self = this;
@@ -12,6 +12,6 @@ export default function () {
         
         let btn = $(this);
         let subContainer = btn.closest(`.${CLASS_NAMES.SUB_CONTAINER}`);
-        openModal(subContainer, ACTION_TYPE.AFTER, true, options.nestedContainerEnabled);
+        openSnippetModal(subContainer, ACTION_TYPE.AFTER, true, options.nestedContainerEnabled);
     });
 };

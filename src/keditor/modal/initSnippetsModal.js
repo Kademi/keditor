@@ -5,26 +5,20 @@ import initSnippetsFilter from '../snippet/initSnippetsFilter';
 import closeSnippetModal from './closeSnippetModal';
 import initSnippetAction from './initSnippetAction';
 import addSnippetToTarget from './addSnippetToTarget';
+import initModal from './initModal';
 
 export default function () {
     let self = this;
     let options = self.options;
-    let modalId = generateId();
-    
-    let modal = self.modal = $(`
-        <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.MODAL}" id="${modalId}">
-            <div class="${CLASS_NAMES.MODAL_HEADER}">
-                <button type="button" class="${CLASS_NAMES.MODAL_CLOSE}">&times;</button>
-            </div>
-            <div class="${CLASS_NAMES.MODAL_BODY}">
-                <div class="${CLASS_NAMES.SNIPPETS_WRAPPER}">
-                    <div class="${CLASS_NAMES.SNIPPETS}"></div>
-                </div>
-            </div>
-        </div>
-    `);
+    let modal = self.modal = initModal.call(self, generateId(), false, true);
     
     if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
+        modal.find(`.${CLASS_NAMES.MODAL_BODY}`).append(`
+            <div class="${CLASS_NAMES.SNIPPETS_WRAPPER}">
+                <div class="${CLASS_NAMES.SNIPPETS}"></div>
+            </div>
+        `);
+        
         $.ajax({
             type: 'get',
             dataType: 'html',
@@ -63,16 +57,6 @@ export default function () {
             addSnippetToTarget.call(self, e, selectedSnippet, self.modalTarget, self.modalTargetAction);
             closeSnippetModal.call(self);
         });
-        
-        let cssTransitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
-        modal.on(cssTransitionEnd, () => {
-            if (!modal.hasClass(CLASS_NAMES.STATE_SHOWED)) {
-                modal.css('display', 'none');
-                $(document.body).removeClass(CLASS_NAMES.STATE_MODAL_OPENED);
-            }
-        });
-        
-        modal.appendTo(document.body);
     } else {
         self.error('"snippetsUrl" must be not null!');
     }

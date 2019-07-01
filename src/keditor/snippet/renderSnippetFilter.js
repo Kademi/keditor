@@ -13,8 +13,14 @@ export default function () {
         categoriesOptions += `<option value="${category}" class="${CLASS_NAMES.SNIPPETS_FILTER_CONTAINER} ${isDuplicateWithComponent ? CLASS_NAMES.STATE_DUPLICATED : ''}">${category}</option>`;
     });
     
+    let filterWrapper = modal.find(`.${CLASS_NAMES.SNIPPETS_FILTER_WRAPPER}`);
+    if (filterWrapper.length === 0) {
+        filterWrapper = $(`<div class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER_WRAPPER}"></div>`);
+        modal.find(`.${CLASS_NAMES.MODAL_TITLE}`).replaceWith(filterWrapper);
+    }
+    
     return [
         categoriesOptions,
-        modal.find(`.${CLASS_NAMES.MODAL_HEADER}`)
+        filterWrapper
     ];
 };

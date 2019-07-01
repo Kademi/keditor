@@ -4,20 +4,18 @@ import CLASS_NAMES from '../constants/classNames';
 export default function () {
     let self = this;
     let options = self.options;
-    let [categoriesOptions, snippetsWrapper] = renderSnippetFilter.call(self);
+    let [categoriesOptions, filterWrapper] = renderSnippetFilter.call(self);
     
-    snippetsWrapper.prepend(`
-        <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER_WRAPPER}">
-            <span class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER_LABEL}">Category:</span>
-            <select class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER}">
-                ${categoriesOptions}
-            </select>
-            <input type="text" class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_SEARCH}" value="" placeholder="Type to search..." />
-        </div>
+    filterWrapper.html(`
+        <span class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER_LABEL}">Category:</span>
+        <select class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER}">
+            ${categoriesOptions}
+        </select>
+        <input type="text" class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_SEARCH}" value="" placeholder="Type to search..." />
     `);
     
-    let txtSearch = snippetsWrapper.find(`.${CLASS_NAMES.SNIPPETS_SEARCH}`);
-    let cbbFilter = snippetsWrapper.find(`.${CLASS_NAMES.SNIPPETS_FILTER}`);
+    let txtSearch = filterWrapper.find(`.${CLASS_NAMES.SNIPPETS_SEARCH}`);
+    let cbbFilter = filterWrapper.find(`.${CLASS_NAMES.SNIPPETS_FILTER}`);
     
     let doFilter = function () {
         let selectedCategory = (cbbFilter.val() || '').toLowerCase();

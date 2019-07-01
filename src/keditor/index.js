@@ -12,6 +12,9 @@ import init from './init';
 import destroy from './destroy';
 import getContent from './getContent';
 import setContent from './setContent';
+import initModal from './modal/initModal';
+import openModal from './modal/openModal';
+import closeModal from './modal/closeModal';
 
 // Check dependencies
 if (!$.fn.sortable) {
@@ -81,6 +84,20 @@ class KEditor {
     //---------------------------------
     initIframeCover(iframe, wrapper) {
         return initIframeCover.apply(this, [iframe, wrapper]);
+    }
+    
+    // Modal
+    //---------------------------------
+    initModal(modalId, hasFooter, disableOriginEvents) {
+        return initModal.call(this, modalId, hasFooter, disableOriginEvents);
+    }
+    
+    openModal(modal) {
+        return openModal.call(this, modal);
+    }
+    
+    closeModal(modal) {
+        return closeModal.call(this, modal);
     }
     
     // Legacy methods. DEPRECATED

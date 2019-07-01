@@ -24,6 +24,7 @@ const CLASS_NAMES = {
     STATE_MODAL_OPENED: 'opened-modal',
     STATE_NOT_MATCHED: 'not-matched',
     STATE_HAS_COMPONENT: 'has-component',
+    STATE_HAS_FOOTER: 'has-footer',
     
     ADD_CONTENT: 'btn-add-content',
     
@@ -44,7 +45,9 @@ const CLASS_NAMES = {
     MODAL_COMPONENT: 'keditor-modal-component',
     MODAL_CONTAINER: 'keditor-modal-container',
     MODAL_HEADER: 'keditor-modal-header',
+    MODAL_TITLE: 'keditor-modal-title',
     MODAL_BODY: 'keditor-modal-body',
+    MODAL_FOOTER: 'keditor-modal-footer',
     MODAL_CLOSE: 'keditor-modal-close',
     MODAL_ADD: 'keditor-modal-add',
     

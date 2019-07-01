@@ -280,15 +280,28 @@ body.previewing .keditor-preview-area {
 .keditor-modal-header .keditor-snippets-filter,
 .keditor-modal-header .keditor-snippets-search {
   font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
-  height: 20px;
+  height: 25px;
   background: none;
   display: inline-block;
   font-weight: normal;
+  line-height: 25px;
 }
 .keditor-modal-body {
-  height: calc(100% - 51px);
+  height: calc(100% - 56px);
   position: relative;
   z-index: 1;
+}
+.has-footer .keditor-modal-body {
+  height: calc(100% - 56px - 54px);
+}
+.keditor-modal-footer {
+  background: #fff;
+  border-top: 1px solid #ddd;
+  text-align: center;
+  padding: 15px;
+}
+.keditor-modal-footer .keditor-btn {
+  margin: 0 5px;
 }
 .keditor-snippets-wrapper {
   height: 100%;

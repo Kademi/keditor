@@ -3,4 +3,30 @@
 @import "_mixins";
 @import "_variables";
 
+.keditor-component[data-type="component-form"] {
+    .keditor-component-content {
+        min-height: 50px;
+    }
+}
 
+#keditor-modal-form {
+    .form-builder-area-wrapper {
+        padding: 15px;
+        height: 100%;
+    }
+    
+    .form-builder-area {
+        height: 100%;
+    }
+    
+    .form-wrap {
+        height: 100%;
+    }
+    
+    .frmb {
+        .keditor-scrollbar();
+        height: 100%;
+        overflow-y: scroll;
+        padding: 5px;
+    }
+}

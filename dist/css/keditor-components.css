@@ -1,3 +1,38 @@
+.keditor-component[data-type="component-form"] .keditor-component-content {
+  min-height: 50px;
+}
+#keditor-modal-form .form-builder-area-wrapper {
+  padding: 15px;
+  height: 100%;
+}
+#keditor-modal-form .form-builder-area {
+  height: 100%;
+}
+#keditor-modal-form .form-wrap {
+  height: 100%;
+}
+#keditor-modal-form .frmb {
+  height: 100%;
+  overflow-y: scroll;
+  padding: 5px;
+}
+#keditor-modal-form .frmb::-webkit-scrollbar {
+  width: 10px;
+}
+#keditor-modal-form .frmb::-webkit-scrollbar-track {
+  background: #eee;
+  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
+}
+#keditor-modal-form .frmb::-webkit-scrollbar-thumb {
+  background: #ddd;
+  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
+}
+#keditor-modal-form .frmb::-webkit-scrollbar-thumb:hover {
+  background: #cdcdcd;
+}
+#keditor-modal-form .frmb::-webkit-scrollbar-thumb:active {
+  background: #cdcdcd;
+}
 
 div.cke_float[id*="cke_keditor-ui-"] {
   padding: 0;

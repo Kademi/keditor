@@ -3,80 +3,23 @@ import '../styles/keditor-component-form.less';
 import $ from 'jquery';
 import KEditor from 'keditor';
 
+let modal;
+let formBuilder;
+
 KEditor.components['form'] = {
-    initFormBuilder: function (component) {
-        let self = this;
-        
-        let formBuilderArea = component.find('.form-builder-area');
-        let formData = component.find('.form-data');
-        let formContent = component.find('.form-content');
-        
-        component.find('.keditor-component-content').prepend(
-            '<p class="form-builder-tools" style="text-align: right;">' +
-            '    <a href="#" class="btn btn-primary btn-preview-form">Preview form</a> ' +
-            '    <a href="#" class="btn btn-info btn-edit-form disabled">Edit form</a>' +
-            '</p>'
-        );
-        
-        let btnEditForm = component.find('.btn-edit-form');
-        let btnPreviewForm = component.find('.btn-preview-form');
-        
-        formBuilderArea.formBuilder({
-            disableInjectedStyle: true,
-            showActionButtons: false,
-            dataType: 'json',
-            formData: formData.html(),
-            disableFields: [
-                'autocomplete',
-                'paragraph',
-                'header'
-            ],
-            disabledAttrs: ['access'],
-            
-            typeUserDisabledAttrs: {
-                'checkbox-group': [
-                    'toggle',
-                    'inline'
-                ]
-            }
-        });
-        
-        btnEditForm.on('click', function (e) {
-            e.preventDefault();
-            
-            if (!btnEditForm.hasClass('disabled')) {
-                formBuilderArea.show();
-                formContent.hide();
-                btnEditForm.addClass('disabled');
-                btnPreviewForm.removeClass('disabled');
-            }
-        });
-        
-        btnPreviewForm.on('click', function (e) {
-            e.preventDefault();
-            
-            if (!btnPreviewForm.hasClass('disabled')) {
-                self.renderForm(component);
-                
-                formBuilderArea.hide();
-                formContent.show();
-                btnEditForm.removeClass('disabled');
-                btnPreviewForm.addClass('disabled');
-            }
-        });
+    emptyContent: '<p class="text-muted lead text-center"><br />[No form content]<br /></p>',
+    
+    designForm: function (component, keditor) {
+        formBuilder.actions.setData(component.find('.form-data').html());
+        keditor.openModal(modal);
     },
     
-    renderForm: function (component, formBuilder) {
+    renderForm: function (component) {
         let formContent = component.find('.form-content');
-        
-        if (!formBuilder) {
-            let formBuilderArea = component.find('.form-builder-area');
-            formBuilder = formBuilderArea.data('formBuilder');
-        }
         
         formContent.formRender({
             dataType: 'json',
-            formData: formBuilder.actions.getData('json')
+            formData: component.find('.form-data').html()
         });
         
         if (formContent.hasClass('form-horizontal')) {
@@ -106,9 +49,67 @@ KEditor.components['form'] = {
         }
     },
     
+    initModal: function (keditor) {
+        let self = this;
+        
+        modal = keditor.initModal('keditor-modal-form');
+        modal.find('.keditor-modal-title').html('Design form');
+    
+        modal.css({
+            visibility: 'hidden',
+            display: 'block',
+            opacity: 1
+        });
+    
+        modal.find('.keditor-modal-body').append(`
+            <div class="form-builder-area-wrapper">
+                <div class="form-builder-area"></div>
+            </div>
+        `);
+        formBuilder = modal.find('.form-builder-area').formBuilder({
+            showActionButtons: false,
+            dataType: 'json',
+            disableFields: [
+                'autocomplete',
+                'paragraph',
+                'header'
+            ],
+            disabledAttrs: ['access'],
+        
+            typeUserDisabledAttrs: {
+                'checkbox-group': [
+                    'toggle',
+                    'inline'
+                ]
+            }
+        });
+    
+        modal.find('.keditor-modal-footer').html(`
+            <button type="button" class="keditor-ui keditor-btn keditor-btn-default keditor-modal-close">Close</button>
+            <button type="button" class="keditor-ui keditor-btn keditor-btn-primary btn-save-form">Save</button>
+        `);
+    
+        modal.find('.btn-save-form').on('click', function (e) {
+            e.preventDefault();
+        
+            let component = keditor.getSettingComponent();
+            component.find('.form-data').html(formBuilder.actions.getData('json'));
+            self.renderForm(component);
+            keditor.closeModal(modal);
+        });
+    
+        setTimeout(() => {
+            modal.css({
+                visibility: '',
+                display: '',
+                opacity: ''
+            });
+        }, 500);
+    },
+    
     init: function (contentArea, container, component, keditor) {
+        let self = this;
         let componentContent = component.find('.keditor-component-content');
-        let formBuilder = component.find('.form-builder-area');
         let formContent = component.find('.form-content');
         let formData = component.find('.form-data');
         
@@ -117,32 +118,12 @@ KEditor.components['form'] = {
         }
         
         if (formContent.length === 0) {
-            componentContent.append('<form class="form-content" style="display: none !important;"></form>')
-        } else {
-            formContent.hide()
+            componentContent.append(`<form class="form-content">${self.emptyContent}</form>`);
         }
-        
-        if (formBuilder.length === 0) {
-            formBuilder = $('<div class="form-builder-area clearfix"></div>');
-            componentContent.append(formBuilder);
-        }
-        
-        this.initFormBuilder(component);
-    },
     
-    getContent: function (component, keditor) {
-        let self = this;
-        let componentContent = component.find('.keditor-component-content');
-        let formData = component.find('.form-data');
-        let formBuilderArea = $('#' + component.attr('id')).find('.form-builder-area');
-        let formBuilder = formBuilderArea.data('formBuilder');
-        
-        self.renderForm(component, formBuilder);
-        formData.html(formBuilder.actions.getData('json'));
-        component.find('.form-builder-area, .form-builder-tools').remove();
-        component.find('.form-content').show();
-        
-        return componentContent.html();
+        if (!modal) {
+            self.initModal(keditor);
+        }
     },
     
     settingEnabled: true,
@@ -152,61 +133,72 @@ KEditor.components['form'] = {
     initSettingForm: function (form, keditor) {
         let self = this;
         
-        form.html(
-            '<div class="form-horizontal">' +
-            '    <div class="form-group">' +
-            '        <label class="col-sm-12">Action</label>' +
-            '        <div class="col-sm-12">' +
-            '            <input type="text" class="form-control txt-form-action" />' +
-            '        </div>' +
-            '    </div>' +
-            '    <div class="form-group">' +
-            '        <label class="col-sm-12">Method</label>' +
-            '        <div class="col-sm-12">' +
-            '            <select class="form-control select-method">' +
-            '                <option value="get">Get</option>' +
-            '                <option value="post">Post</option>' +
-            '                <option value="put">Put</option>' +
-            '                <option value="delete">Delete</option>' +
-            '            </select>' +
-            '        </div>' +
-            '    </div>' +
-            '    <div class="form-group">' +
-            '        <label class="col-sm-12">Enctype</label>' +
-            '        <div class="col-sm-12">' +
-            '            <select class="form-control select-enctype">' +
-            '                <option value="text/plain">text/plain</option>' +
-            '                <option value="multipart/form-data">multipart/form-data</option>' +
-            '                <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>' +
-            '            </select>' +
-            '        </div>' +
-            '    </div>' +
-            '    <div class="form-group">' +
-            '        <label class="col-sm-12">Layout</label>' +
-            '        <div class="col-sm-12">' +
-            '            <select class="form-control select-layout">' +
-            '                <option value="">Normal</option>' +
-            '                <option value="form-horizontal">Horizontal</option>' +
-            '                <option value="form-inline">Inline</option>' +
-            '            </select>' +
-            '        </div>' +
-            '    </div>' +
-            '    <div class="form-group select-grid-wrapper">' +
-            '        <label class="col-sm-12">Grid setting</label>' +
-            '        <div class="col-sm-12">' +
-            '            <select class="form-control select-grid">' +
-            '                <option value="2-10">col-2 col-10</option>' +
-            '                <option value="3-9">col-3 col-9</option>' +
-            '                <option value="4-8">col-4 col-8</option>' +
-            '                <option value="5-7">col-5 col-7</option>' +
-            '                <option value="6-6">col-6 col-6</option>' +
-            '            </select>' +
-            '            <small class="help-block">This setting is for width of label and control with number of cols as unit</small>' +
-            '        </div>' +
-            '    </div>' +
-            '</div>'
-        );
+        form.html(`
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                       <button class="btn btn-primary btn-block btn-design-form" type="button">Design form</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12">Action</label>
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control txt-form-action" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12">Method</label>
+                    <div class="col-sm-12">
+                        <select class="form-control select-method">
+                            <option value="get">Get</option>
+                            <option value="post">Post</option>
+                            <option value="put">Put</option>
+                            <option value="delete">Delete</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12">Enctype</label>
+                    <div class="col-sm-12">
+                        <select class="form-control select-enctype">
+                            <option value="text/plain">text/plain</option>
+                            <option value="multipart/form-data">multipart/form-data</option>
+                            <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12">Layout</label>
+                    <div class="col-sm-12">
+                        <select class="form-control select-layout">
+                            <option value="">Normal</option>
+                            <option value="form-horizontal">Horizontal</option>
+                            <option value="form-inline">Inline</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group select-grid-wrapper">
+                    <label class="col-sm-12">Grid setting</label>
+                    <div class="col-sm-12">
+                        <select class="form-control select-grid">
+                            <option value="2-10">col-2 col-10</option>
+                            <option value="3-9">col-3 col-9</option>
+                            <option value="4-8">col-4 col-8</option>
+                            <option value="5-7">col-5 col-7</option>
+                            <option value="6-6">col-6 col-6</option>
+                        </select>
+                        <small class="help-block">This setting is for width of label and control with number of cols as unit</small>
+                    </div>
+                </div>
+            </div>
+        `);
         
+        form.find('.btn-design-form').on('click', function (e) {
+            e.preventDefault();
+            
+            let component = keditor.getSettingComponent();
+            self.designForm(component, keditor);
+        });
         
         form.find('.txt-form-action').on('change', function () {
             let component = keditor.getSettingComponent();

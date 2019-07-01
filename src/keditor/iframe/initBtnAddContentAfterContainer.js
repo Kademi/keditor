@@ -12,6 +12,6 @@ export default function () {
         
         let btn = $(this);
         let subContainer = btn.closest(`.${CLASS_NAMES.SUB_CONTAINER}`);
-        openSnippetModal(subContainer, ACTION_TYPE.AFTER, true, options.nestedContainerEnabled);
+        openSnippetModal.call(self, subContainer, ACTION_TYPE.AFTER, true, options.nestedContainerEnabled);
     });
 };

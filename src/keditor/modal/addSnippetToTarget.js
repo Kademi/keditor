@@ -68,7 +68,7 @@ export default function (e, selectedSnippet, target, targetAction) {
         let dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
         newComponent = $(`
             <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT}" data-type="${snippetType}" ${dataAttributes.join(' ')}>
-                <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_CONTENT}">${snippetContent}</section>
+                ${snippetContent}
             </section>
         `);
         target[targetAction](newComponent);
@@ -96,7 +96,7 @@ export default function (e, selectedSnippet, target, targetAction) {
         `);
         newComponent = $(`
             <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT}" data-type="${snippetType}" ${dataAttributes.join(' ')}>
-                <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_CONTENT}">${snippetContent}</section>
+                ${snippetContent}
             </section>
         `);
         newContainer.find('[data-type="container-content"]').eq(0).html(newComponent);

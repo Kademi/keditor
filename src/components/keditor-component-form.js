@@ -9,11 +9,6 @@ let formBuilder;
 KEditor.components['form'] = {
     emptyContent: '<p class="text-muted lead text-center"><br />[No form content]<br /></p>',
     
-    designForm: function (component, keditor) {
-        formBuilder.actions.setData(component.find('.form-data').html());
-        keditor.openModal(modal);
-    },
-    
     renderForm: function (component) {
         let formContent = component.find('.form-content');
         
@@ -197,7 +192,8 @@ KEditor.components['form'] = {
             e.preventDefault();
             
             let component = keditor.getSettingComponent();
-            self.designForm(component, keditor);
+            formBuilder.actions.setData(component.find('.form-data').html());
+            keditor.openModal(modal);
         });
         
         form.find('.txt-form-action').on('change', function () {

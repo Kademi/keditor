@@ -5,15 +5,14 @@
   padding: 15px;
   height: 100%;
 }
-#keditor-modal-form .form-builder-area {
-  height: 100%;
-}
-#keditor-modal-form .form-wrap {
+#keditor-modal-form .form-builder-area,
+#keditor-modal-form .form-wrap,
+#keditor-modal-form .stage-wrap {
   height: 100%;
 }
 #keditor-modal-form .frmb {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 5px;
 }
 #keditor-modal-form .frmb::-webkit-scrollbar {

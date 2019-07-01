@@ -137,7 +137,7 @@ KEditor.components['form'] = {
             <div class="form-horizontal">
                 <div class="form-group">
                     <div class="col-sm-12">
-                       <button class="btn btn-primary btn-block btn-design-form" type="button">Design form</button>
+                       <button class="btn btn-primary btn-block btn-design-form" type="button"><i class="fa fa-paint-brush"></i> Design form</button>
                     </div>
                 </div>
                 <div class="form-group">

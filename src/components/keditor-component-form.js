@@ -14,7 +14,7 @@ KEditor.components['form'] = {
         
         formContent.formRender({
             dataType: 'json',
-            formData: component.find('.form-data').html()
+            formData: component.find('.form-data').html() || ''
         });
         
         if (formContent.hasClass('form-horizontal')) {

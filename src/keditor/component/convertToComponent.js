@@ -12,7 +12,7 @@ export default function (contentArea, container, target, isExisting) {
     
     if (isSection) {
         target.addClass(`${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT}`);
-        target.wrapInner(`<section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_CONTENT}"></section>`);
+        target.find(`.${CLASS_NAMES.COMPONENT_CONTENT}`).length === 0 && target.wrapInner(`<section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_CONTENT}"></section>`);
         component = target;
     } else {
         target.wrap(`

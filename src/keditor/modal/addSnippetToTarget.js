@@ -1,8 +1,8 @@
 import CLASS_NAMES from '../constants/classNames';
+import ACTION_TYPE from '../constants/actionType';
 import initComponent from '../component/initComponent';
 import initContainer from '../container/initContainer';
 import checkContainerContent from '../container/checkContainerContent';
-import ACTION_TYPE from '../constants/actionType';
 
 export default function (e, selectedSnippet, target, targetAction) {
     let self = this;
@@ -43,9 +43,9 @@ export default function (e, selectedSnippet, target, targetAction) {
     let newContainer;
     let newComponent;
     
+    self.contentAreasWrapper.find(`.${CLASS_NAMES.STATE_TOOLBAR_SHOWED}`).removeClass(CLASS_NAMES.STATE_TOOLBAR_SHOWED);
+    
     if (isAddingContainer) {
-        self.contentAreasWrapper.find(`.${CLASS_NAMES.CONTAINER}.${CLASS_NAMES.STATE_TOOLBAR_SHOWED}`).removeClass(CLASS_NAMES.STATE_TOOLBAR_SHOWED);
-        
         newContainer = $(`
             <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER} ${CLASS_NAMES.STATE_TOOLBAR_SHOWED}">
                 <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_INNER}">${snippetContent}</section>
@@ -67,13 +67,14 @@ export default function (e, selectedSnippet, target, targetAction) {
     if (isAddingComponent) {
         let dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
         newComponent = $(`
-            <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT}" data-type="${snippetType}" ${dataAttributes.join(' ')}>
-                ${snippetContent}
+            <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT} ${CLASS_NAMES.STATE_TOOLBAR_SHOWED}" data-type="${snippetType}" ${dataAttributes.join(' ')}>
+                <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_CONTENT}">${snippetContent}</section>
             </section>
         `);
         target[targetAction](newComponent);
         
         let container = target.closest(`.${CLASS_NAMES.CONTAINER}`);
+        container.addClass(CLASS_NAMES.STATE_TOOLBAR_SHOWED);
         if (typeof options.onComponentSnippetAdded === 'function') {
             options.onComponentSnippetAdded.call(self, e, newComponent, selectedSnippet, contentArea);
         }
@@ -86,8 +87,6 @@ export default function (e, selectedSnippet, target, targetAction) {
     }
     
     if (isAddingComponentWithContainer) {
-        self.contentAreasWrapper.find(`.${CLASS_NAMES.CONTAINER}.${CLASS_NAMES.STATE_TOOLBAR_SHOWED}`).removeClass(CLASS_NAMES.STATE_TOOLBAR_SHOWED);
-        
         let dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
         newContainer = $(`
             <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER} ${CLASS_NAMES.STATE_TOOLBAR_SHOWED}">
@@ -95,8 +94,8 @@ export default function (e, selectedSnippet, target, targetAction) {
             </section>
         `);
         newComponent = $(`
-            <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT}" data-type="${snippetType}" ${dataAttributes.join(' ')}>
-                ${snippetContent}
+            <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT} ${CLASS_NAMES.STATE_TOOLBAR_SHOWED}" data-type="${snippetType}" ${dataAttributes.join(' ')}>
+                <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_CONTENT}">${snippetContent}</section>
             </section>
         `);
         newContainer.find('[data-type="container-content"]').eq(0).html(newComponent);

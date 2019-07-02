@@ -1,9 +1,6 @@
-import KEditor from 'keditor';
-import CKEDITOR from 'ckeditor';
-
 import '../styles/keditor-component-text.less';
-
-CKEDITOR.disableAutoInline = true;
+import KEditor from 'keditor';
+const instances = {};
 
 // Text component
 // ---------------------------------------------------------------------
@@ -34,6 +31,30 @@ KEditor.components['text'] = {
         minimumChangeMilliseconds: 100
     },
     
+    initCKEditor: function (keditor, callback) {
+        if (keditor.iframeWindow.CKEDITOR) {
+            callback(keditor.iframeWindow.CKEDITOR);
+        } else {
+            let ckeditorSrc = $(document.body).find('[data-type="ckeditor-script"]').attr('src');
+            let ckeditorScript = keditor.iframeDoc[0].createElement('script');
+            ckeditorScript.type = 'text/javascript';
+            ckeditorScript.src = ckeditorSrc;
+            ckeditorScript.onreadystatechange = function () {
+                keditor.iframeWindow.CKEDITOR.disableAutoInline = true;
+                callback(keditor.iframeWindow.CKEDITOR);
+            };
+            ckeditorScript.onload = function () {
+                keditor.iframeWindow.CKEDITOR.disableAutoInline = true;
+                callback(keditor.iframeWindow.CKEDITOR);
+            };
+            keditor.iframeHead.append(ckeditorScript);
+            
+            setTimeout(() => {
+                ckeditorScript.src = ckeditorSrc;
+            }, 500);
+        }
+    },
+    
     init: function (contentArea, container, component, keditor) {
         let self = this;
         let options = keditor.options;
@@ -55,18 +76,21 @@ KEditor.components['text'] = {
             }
         });
         
-        let editor = componentContent.ckeditor(self.options).editor;
-        editor.on('instanceReady', function () {
-            if (typeof options.onComponentReady === 'function') {
-                options.onComponentReady.call(contentArea, component, editor);
-            }
+        self.initCKEditor(keditor, function (ckeditor) {
+            let editor = ckeditor.inline(componentContent[0], self.options);
+            instances[componentContent.attr('id')] = editor;
+            editor.on('instanceReady', function () {
+                if (typeof options.onComponentReady === 'function') {
+                    options.onComponentReady.call(contentArea, component, editor);
+                }
+            });
         });
     },
     
     getContent: function (component, keditor) {
         let componentContent = component.find('.keditor-component-content');
         let id = componentContent.attr('id');
-        let editor = CKEDITOR.instances[id];
+        let editor = instances[id];
         if (editor) {
             return editor.getData();
         } else {
@@ -76,6 +100,6 @@ KEditor.components['text'] = {
     
     destroy: function (component, keditor) {
         let id = component.find('.keditor-component-content').attr('id');
-        CKEDITOR.instances[id] && CKEDITOR.instances[id].destroy();
+        instances[id] && instances[id].destroy();
     }
 };

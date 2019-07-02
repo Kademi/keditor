@@ -8,9 +8,6 @@ export default function (target, settingType, settingCategory, settingTitle, ini
     let sidebarTitle = self.sidebarTitle;
     let sidebarBody = self.sidebarBody;
     
-    self.settingComponent = null;
-    self.settingContainer = null;
-    
     let settingForm = sidebarBody.children(`.${CLASS_NAMES.SETTING_FORM}[data-setting-type="${settingType}"][data-setting-category="${settingCategory}"]`);
     if (settingForm.length === 0) {
         if (typeof initFunction === 'function') {
@@ -36,7 +33,7 @@ export default function (target, settingType, settingCategory, settingTitle, ini
             });
         }
     } else {
-        if (settingForm.hasClass(CLASS_NAMES.STATE_ACTIVE)) {
+        if (settingForm.hasClass(CLASS_NAMES.STATE_ACTIVE) && (target.is(self.settingContainer) || target.is(self.settingComponent))) {
             closeSidebar.call(self);
             return;
         } else {
@@ -45,6 +42,9 @@ export default function (target, settingType, settingCategory, settingTitle, ini
             }
         }
     }
+    
+    self.settingComponent = null;
+    self.settingContainer = null;
     
     switch (settingCategory) {
         case SETTING_CATEGORY.COMPONENT:

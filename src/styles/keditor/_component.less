@@ -15,8 +15,7 @@
         top: 0;
         left: 0;
         background-color: @container-content-toolbar-bg;
-        padding: 0 2px 2px 0;
-        text-align: left;
+        border-bottom-right-radius: @border-radius;
         
         > a {
             border: 0;
@@ -26,7 +25,7 @@
             border-radius: 0;
             box-shadow: none;
             transition: all @animation-duration;
-            display: inline-block;
+            float: left;
             
             &:hover {
                 background-color: @container-content-toolbar-button-bg-hover;
@@ -40,24 +39,26 @@
         
         &:before {
             position: absolute;
-            top: -2px;
-            right: -2px;
-            left: -2px;
-            bottom: -2px;
+            top: -@component-outline-with;
+            right: -@component-outline-with;
+            left: -@component-outline-with;
+            bottom: -@component-outline-with;
             content: " ";
-            border: 2px solid @container-content-toolbar-outline-color;
+            border: @component-outline-with solid @container-content-toolbar-outline-color;
             display: none;
             z-index: -1;
+        }
+    }
+    
+    &:hover {
+        .keditor-toolbar {
+            display: block;
         }
     }
     
     &:hover,
     &.showed-keditor-toolbar {
         z-index: 2;
-        
-        .keditor-toolbar {
-            display: block;
-        }
         
         .keditor-component-content {
             &:before {

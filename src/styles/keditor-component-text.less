@@ -7,6 +7,11 @@
 // -------------------------------------------------
 div.cke_float[id*="cke_keditor-ui-"] {
     padding: 0;
+    margin-top: -3px;
+    
+    @media screen and (min-width: 1024px) {
+        margin-left: -@component-outline-with;
+    }
     
     .cke_top {
         padding: 3px 3px 0;

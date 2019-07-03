@@ -41,7 +41,7 @@ body.previewing .keditor-preview-area {
   top: 0;
   left: 0;
   width: 100%;
-  background: #252836;
+  background: #1b1d27;
 }
 .keditor-topbar:before,
 .keditor-topbar:after {
@@ -190,7 +190,7 @@ body.previewing .keditor-preview-area {
   min-height: 100px;
   width: auto;
   margin: 0;
-  padding: 30px 50px;
+  padding: 30px;
   position: relative;
 }
 .keditor-modal {
@@ -388,8 +388,8 @@ body.previewing .keditor-preview-area {
   display: none !important;
 }
 .keditor-snippet.selected {
-  border-color: #2eb2e4;
-  box-shadow: 0 0 0 2px #2eb2e4;
+  border-color: #3988b7;
+  box-shadow: 0 0 0 2px #3988b7;
 }
 .keditor-snippet.selected .keditor-snippet-title {
   opacity: 0;
@@ -421,7 +421,7 @@ body.previewing .keditor-preview-area {
   line-height: 22px;
   font-size: 12px;
   padding: 0 10px;
-  border-radius: 3px;
+  border-radius: 5px;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   display: inline-block;
   text-decoration: none !important;
@@ -497,7 +497,6 @@ body.previewing .keditor-preview-area {
   font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .keditor-toolbar > a {
-  padding: 1px 3px;
   font-size: 12px;
   width: 20px;
   height: 20px;
@@ -522,34 +521,33 @@ body.previewing .keditor-preview-area {
 }
 .keditor-container > .keditor-container-inner:before {
   position: absolute;
-  top: -3px;
-  right: -3px;
-  left: -3px;
-  bottom: -3px;
-  border: 3px dashed transparent;
+  top: -2px;
+  right: -2px;
+  left: -2px;
+  bottom: -2px;
+  border: 2px dashed transparent;
   content: " ";
   display: block;
   z-index: -1;
 }
 .keditor-container > .keditor-toolbar {
-  top: -3px;
-  left: -39px;
-  border: 1px solid #333;
-  border-radius: 3px;
+  top: -2px;
+  left: -26px;
+  border-radius: 5px;
   overflow: hidden;
 }
 .keditor-container > .keditor-toolbar > a {
-  background: #333;
+  background: #1b1d27;
   color: #fff;
 }
 .keditor-container > .keditor-toolbar > a:hover {
-  background: #2eb2e4;
+  background: #3988b7;
 }
 .keditor-container:hover > .keditor-container-inner:before {
   border-color: #b5e4f6;
 }
 .keditor-container.showed-keditor-toolbar > .keditor-container-inner:before {
-  border-color: #2eb2e4;
+  border-color: #3988b7;
 }
 .keditor-container.showed-keditor-toolbar > .keditor-toolbar {
   display: block;
@@ -579,8 +577,7 @@ body.previewing .keditor-preview-area {
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  padding: 0 2px 2px 0;
-  text-align: left;
+  border-bottom-right-radius: 5px;
 }
 .keditor-component .keditor-toolbar > a {
   border: 0;
@@ -590,7 +587,7 @@ body.previewing .keditor-preview-area {
   border-radius: 0;
   box-shadow: none;
   transition: all 0.3s;
-  display: inline-block;
+  float: left;
 }
 .keditor-component .keditor-toolbar > a:hover {
   background-color: rgba(255, 255, 255, 0.2);
@@ -601,22 +598,21 @@ body.previewing .keditor-preview-area {
 }
 .keditor-component .keditor-component-content:before {
   position: absolute;
-  top: -2px;
-  right: -2px;
-  left: -2px;
-  bottom: -2px;
+  top: -1px;
+  right: -1px;
+  left: -1px;
+  bottom: -1px;
   content: " ";
-  border: 2px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
   display: none;
   z-index: -1;
+}
+.keditor-component:hover .keditor-toolbar {
+  display: block;
 }
 .keditor-component:hover,
 .keditor-component.showed-keditor-toolbar {
   z-index: 2;
-}
-.keditor-component:hover .keditor-toolbar,
-.keditor-component.showed-keditor-toolbar .keditor-toolbar {
-  display: block;
 }
 .keditor-component:hover .keditor-component-content:before,
 .keditor-component.showed-keditor-toolbar .keditor-component-content:before {
@@ -719,7 +715,7 @@ body.previewing .keditor-preview-area {
   outline: none !important;
   padding: 0 !important;
   opacity: 1 !important;
-  border: 2px solid #2eb2e4;
+  border: 2px solid #3988b7;
 }
 .ui-sortable-placeholder.keditor-snippet:before,
 .ui-sortable-placeholder.keditor-container:before,

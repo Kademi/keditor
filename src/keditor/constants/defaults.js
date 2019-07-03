@@ -135,19 +135,19 @@ export default {
      * Width of tablet device
      * @option {Number}
      */
-    widthTablet: 860,
+    widthTablet: 820,
     
     /*
      * Width of laptop device
      * @option {Number}
      */
-    widthLaptop: 1100,
+    widthLaptop: 1050,
     
     /*
      * Min width of desktop device
      * @option {Number}
      */
-    minWidthDesktop: 1366,
+    minWidthDesktop: 1200,
     
     /*
      * Default component type of component. If type of component does not exist in KEditor.components, will be used "defaultComponentType" as type of this component. If is function, argument is component

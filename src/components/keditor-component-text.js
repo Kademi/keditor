@@ -9,12 +9,10 @@ KEditor.components['text'] = {
         toolbarGroups: [
             {name: 'document', groups: ['mode', 'document', 'doctools']},
             {name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing']},
-            {name: 'forms', groups: ['forms']},
             {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
             {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
             {name: 'links', groups: ['links']},
             {name: 'insert', groups: ['insert']},
-            '/',
             {name: 'clipboard', groups: ['clipboard', 'undo']},
             {name: 'styles', groups: ['styles']},
             {name: 'colors', groups: ['colors']},
@@ -26,7 +24,7 @@ KEditor.components['text'] = {
         enterMode: 'P',
         forceEnterMode: true,
         format_tags: 'p;h1;h2;h3;h4;h5;h6',
-        removePlugins: 'table,magicline,tableselection,tabletools',
+        removePlugins: 'table,magicline,tableselection,tabletools,div',
         removeButtons: 'Save,NewPage,Preview,Print,Templates,PasteText,PasteFromWord,Find,Replace,SelectAll,Scayt,Form,HiddenField,ImageButton,Button,Select,Textarea,TextField,Radio,Checkbox,Outdent,Indent,Blockquote,CreateDiv,Language,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Styles,BGColor,Maximize,About,ShowBlocks,BidiLtr,BidiRtl,Flash,Image,Subscript,Superscript,Anchor',
         minimumChangeMilliseconds: 100
     },

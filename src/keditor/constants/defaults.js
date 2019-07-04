@@ -107,6 +107,12 @@ export default {
         addContent: 'Add content',
     
         /*
+         * Text title for add content button below sub-container and component
+         * @option {String}
+         */
+        addContentBelow: 'Add content below',
+    
+        /*
          * Text title for container setting
          * @option {String}
          */

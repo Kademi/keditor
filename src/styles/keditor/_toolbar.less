@@ -6,7 +6,6 @@
 
 // Toolbar
 // -------------------------------------------------
-.keditor-toolbar-bottom-sub-container,
 .keditor-toolbar-content-area,
 .keditor-toolbar-container-content {
     text-align: center;
@@ -20,23 +19,6 @@
     
     .keditor-container-content-inner.has-component + & {
         display: none;
-    }
-}
-
-.keditor-toolbar-bottom-sub-container {
-    transition: all @animation-duration;
-    overflow: hidden;
-    opacity: 0;
-    height: 0;
-    padding: 0;
-}
-
-.keditor-toolbar-bottom-sub-container {
-    .keditor-sub-container:hover &,
-    .keditor-sub-container.showed-keditor-toolbar & {
-        opacity: 1;
-        height: auto;
-        padding: 15px 0;
     }
 }
 
@@ -67,5 +49,17 @@
     
     .btn-component-move {
         cursor: move;
+    }
+}
+
+.keditor-toolbar.keditor-toolbar-bottom {
+    top: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+    background-color: @component-toolbar-bg;
+    border-radius: 0 0 @border-radius @border-radius;
+    
+    > a {
+        line-height: unit(@toolbar-item-size + 1, px);
     }
 }

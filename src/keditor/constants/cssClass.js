@@ -69,6 +69,7 @@ const CSS_CLASS = {
     SNIPPETS_WRAPPER: 'keditor-snippets-wrapper',
     
     TOOLBAR: 'keditor-toolbar',
+    TOOLBAR_BOTTOM: 'keditor-toolbar-bottom',
     TOOLBAR_CONTENT_AREA: 'keditor-toolbar-content-area',
     TOOLBAR_CONTAINER: 'keditor-toolbar-container',
     TOOLBAR_CONTAINER_CONTENT: 'keditor-toolbar-container-content',

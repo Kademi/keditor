@@ -58,15 +58,15 @@ export default function (type, isConfigurable) {
     
         case TOOLBAR_TYPE.SUB_CONTAINER_BOTTOM:
             return (`
-                <div class="${CSS_CLASS.UI} ${CSS_CLASS.TOOLBAR_SUB_CONTAINER_BOTTOM}">
-                    <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.BTN} ${CSS_CLASS.BTN_DEFAULT} ${CSS_CLASS.ADD_CONTENT}" title="${options.locale.addContent}">${ICON.ADD_CONTENT}</a>
+                <div class="${CSS_CLASS.UI} ${CSS_CLASS.TOOLBAR} ${CSS_CLASS.TOOLBAR_BOTTOM} ${CSS_CLASS.TOOLBAR_SUB_CONTAINER_BOTTOM}">
+                    <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.ADD_CONTENT}" title="${options.locale.addContentBelow}">${ICON.ADD_CONTENT}</a>
                 </div>
             `);
         
         case TOOLBAR_TYPE.COMPONENT_BOTTOM:
             return (`
-                <div class="${CSS_CLASS.UI} ${CSS_CLASS.TOOLBAR} ${CSS_CLASS.TOOLBAR_COMPONENT_BOTTOM}">
-                    <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.ADD_CONTENT}" title="${options.locale.addContent}">${ICON.ADD_CONTENT}</a>
+                <div class="${CSS_CLASS.UI} ${CSS_CLASS.TOOLBAR} ${CSS_CLASS.TOOLBAR_BOTTOM} ${CSS_CLASS.TOOLBAR_COMPONENT_BOTTOM}">
+                    <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.ADD_CONTENT}" title="${options.locale.addContentBelow}">${ICON.ADD_CONTENT}</a>
                 </div>
             `);
         

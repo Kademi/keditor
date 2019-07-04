@@ -1,7 +1,5 @@
-// ==================================================================================
-// Variables
-// ==================================================================================
-// Base colors
+// Colors
+// -------------------------------------------------
 @blue                                       : #2eb2e4;
 @blueLight                                  : #b5e4f6;
 @blueLighter                                : #dfeaf1;
@@ -12,80 +10,31 @@
 @ui-color                                   : #333;
 
 // Border radius
+// -------------------------------------------------
 @border-radius                              : 5px;
 
 // Animation option
+// -------------------------------------------------
 @animation-duration                         : 0.3s;
 
 // Closer
+// -------------------------------------------------
 @closer-color                               : #ccc;
 @closer-hover-color                         : #aaa;
 
 // Wrapper
+// -------------------------------------------------
 @wrapper-bg                                 : #F6F6F6;
 @wrapper-shadow                             : 0 0 3px rgba(0, 0, 0, .2);
 @wrapper-bg-image                           : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RDc0RDRBMjA4RDhFMTFFOUExMDBGMzg5QkFCNzlCMTYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RDc0RDRBMjE4RDhFMTFFOUExMDBGMzg5QkFCNzlCMTYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpENzRENEExRThEOEUxMUU5QTEwMEYzODlCQUI3OUIxNiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpENzRENEExRjhEOEUxMUU5QTEwMEYzODlCQUI3OUIxNiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PkwGdVcAAAAGUExUReDh4////2LjhOYAAAACdFJOU/8A5bcwSgAAAEpJREFUeNrs0MEJADAMAzF7/6X76QoNJegWEFzapo/LHuRm119IIRAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCGQCOQIMAPTHJwTdmuFCAAAAAElFTkSuQmCC';
 @wrapper-bg-image2                          : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAMAAABG8BK2AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDdCNUFGQ0M4RDhGMTFFOUI5OEU4NzVCODUzRTM3RjYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDdCNUFGQ0Q4RDhGMTFFOUI5OEU4NzVCODUzRTM3RjYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowN0I1QUZDQThEOEYxMUU5Qjk4RTg3NUI4NTNFMzdGNiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowN0I1QUZDQjhEOEYxMUU5Qjk4RTg3NUI4NTNFMzdGNiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PmkfBJAAAAAGUExUReDh4////2LjhOYAAAACdFJOU/8A5bcwSgAAADtJREFUeNrsz7ENADAMwzD7/6e79INmKALqAAJK2/S5/MXcdk3NMcVgMBgMBoPBYDAYDAaDwcwzR4ABAPlJExg4Hh9rAAAAAElFTkSuQmCC';
 
 // Iframe
+// -------------------------------------------------
 @iframe-wrapper-shadow                      : 0 0 35px rgba(0, 0, 0, .07);
 
-// Topbar
-@topbar-height                              : 50px;
-@topbar-bg                                  : @black;
-@topbar-title-size                          : 16px;
-@topbar-title-color                         : #fff;
-@topbar-btn-hover                           : #303443;
-@topbar-btn-color                           : #c8c9cf;
-@topbar-btn-icon-size                       : 20px;
-
-// Sidebar
-@sidebar-bg                                 : #f0f0f0;
-@sidebar-shadow-color                       : rgba(0, 0, 0, .15);
-@sidebar-width                              : 300px;
-@sidebar-close-size                         : 24px;
-@sidebar-body-padding                       : 10px 15px;
-
-// Snippet
-@snippet-container-padding                  : 15px 0 0;
-@snippet-bg                                 : #ffffff;
-@snippet-title-height                       : 30px;
-@snippet-title-size                         : 12px;
-@snippet-margin                             : 0 0 15px;
-@snippet-width                              : 200px;
-@snippet-width-mobile                       : ~"calc(100% - 30px)";
-@snippet-border-color                       : #eee;
-@snippet-border-color-selected              : @blue;
-@snippet-box-shadow-selected                : 0 0 0 2px @blue;
-
-// Toolbar
-@toolbar-item-size                          : 21px;
-@toolbar-item-font-size                     : 12px;
-
-// Component
-@component-outline-with                     : 1px;
-
-// Container
-@container-outline-with                     : 2px;
-@container-outline-color-hover              : @blueLight;
-@container-outline-color-selected           : @blue;
-
-// Container toolbar
-@container-toolbar-button-bg                 : @black;
-@container-toolbar-button-bg-hover           : @blue;
-@container-toolbar-button-color              : #fff;
-
-// Container content
-@container-content-outline-color            : #e0e0e0;
-@container-content-outline-highlighted      : @blue;
-
-// Container content toolbar
-@container-content-toolbar-bg               : rgba(0, 0, 0, .5);
-@container-content-toolbar-button-color     : #fff;
-@container-content-toolbar-button-bg-hover  : rgba(0, 0, 0, .8);
-@container-content-toolbar-outline-color    : rgba(0, 0, 0, .5);
-
 // Button
+// -------------------------------------------------
 @btn-height                                 : 23px;
 @btn-font-size                              : 12px;
 @btn-box-shadow                             : 1px 1px 2px rgba(0, 0, 0, 0.2);
@@ -98,6 +47,7 @@
 @btn-primary-border                         : #333;
 
 // Modal
+// -------------------------------------------------
 @modal-zindex                               : 99999;
 @modal-bg                                   : #fff;
 
@@ -115,3 +65,66 @@
 // Modal closer
 @modal-closer-size                          : 32px;
 @modal-closer-font-size                     : 20px;
+
+// Topbar
+// -------------------------------------------------
+@topbar-height                              : 50px;
+@topbar-bg                                  : @black;
+@topbar-title-size                          : 16px;
+@topbar-title-color                         : #fff;
+@topbar-btn-hover                           : #303443;
+@topbar-btn-color                           : #c8c9cf;
+@topbar-btn-icon-size                       : 20px;
+
+// Sidebar
+// -------------------------------------------------
+@sidebar-bg                                 : #f0f0f0;
+@sidebar-shadow-color                       : rgba(0, 0, 0, .15);
+@sidebar-width                              : 300px;
+@sidebar-close-size                         : 24px;
+@sidebar-body-padding                       : 10px 15px;
+
+// Snippet
+// -------------------------------------------------
+@snippet-container-padding                  : 15px 0 0;
+@snippet-bg                                 : #ffffff;
+@snippet-title-height                       : 30px;
+@snippet-title-size                         : 12px;
+@snippet-margin                             : 0 0 15px;
+@snippet-width                              : 200px;
+@snippet-width-mobile                       : ~"calc(100% - 30px)";
+@snippet-border-color                       : #eee;
+@snippet-border-color-selected              : @blue;
+@snippet-box-shadow-selected                : 0 0 0 2px @blue;
+
+// Toolbar
+// -------------------------------------------------
+@toolbar-item-size                          : 21px;
+@toolbar-item-font-size                     : 12px;
+
+// Component
+// -------------------------------------------------
+@component-outline-with                     : 1px;
+@component-outline-color-hover              : rgba(0, 0, 0, .5);
+@component-outline-color-selected           : rgba(0, 0, 0, .8);
+
+// Component toolbar
+@component-toolbar-bg                       : rgba(0, 0, 0, .5);
+@component-toolbar-button-color             : #fff;
+@component-toolbar-button-bg-hover          : rgba(0, 0, 0, .8);
+@component-toolbar-outline-color            : rgba(0, 0, 0, .5);
+
+// Container
+// -------------------------------------------------
+@container-outline-with                     : 2px;
+@container-outline-color-hover              : @blueLight;
+@container-outline-color-selected           : @blue;
+
+// Container toolbar
+@container-toolbar-button-bg                 : @black;
+@container-toolbar-button-bg-hover           : @blue;
+@container-toolbar-button-color              : #fff;
+
+// Container content
+@container-content-outline-color             : #e0e0e0;
+@container-content-outline-highlighted       : @blue;

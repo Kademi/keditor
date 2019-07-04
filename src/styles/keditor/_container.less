@@ -40,6 +40,10 @@
         }
     }
     
+    > .keditor-toolbar-bottom-sub-container {
+        bottom: unit(-@toolbar-item-size - 3, px);
+    }
+    
     &:hover {
         > .keditor-container-inner {
             &:before {
@@ -54,7 +58,10 @@
                 border-color: @container-outline-color-selected;
             }
         }
-        
+    }
+    
+    &:hover,
+    &.showed-keditor-toolbar {
         > .keditor-toolbar {
             display: block;
         }

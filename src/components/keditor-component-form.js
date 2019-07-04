@@ -7,15 +7,18 @@ let modal;
 let formBuilder;
 
 KEditor.components['form'] = {
-    emptyContent: '<p class="text-muted lead text-center"><br />[No form content]<br /></p>',
+    emptyContent: '<p class="text-muted lead text-center"><br />[No form content]<br /><br /></p>',
     
     renderForm: function (component) {
         let formContent = component.find('.form-content');
-        
-        formContent.formRender({
+        let temp = $('<div />');
+    
+        temp.formRender({
             dataType: 'json',
-            formData: component.find('.form-data').html() || ''
+            formData: formBuilder.actions.getData('json')
         });
+        
+        formContent.html(temp.html());
         
         if (formContent.hasClass('form-horizontal')) {
             formContent.children('div').each(function () {
@@ -25,18 +28,18 @@ KEditor.components['form'] = {
                 
                 if (div.attr('class')) {
                     if (div.hasClass('fb-button')) {
-                        div.find('button').wrap('<div class="col-sm-' + dataGrid[1] + ' col-sm-offset-' + dataGrid[0] + '"></div>');
+                        div.find('button').wrap(`<div class="col-sm-${dataGrid[1]} col-sm-offset-${dataGrid[0]}"></div>`);
                     } else {
                         let label = div.children('label');
                         let input = div.children('input, select, textarea');
                         let subDiv = div.children('div');
                         
-                        label.addClass('control-label col-sm-' + dataGrid[0]);
+                        label.addClass(`control-label col-sm-${dataGrid[0]}`);
                         
                         if (subDiv.length > 0) {
-                            subDiv.addClass('col-sm-' + dataGrid[1]);
+                            subDiv.addClass(`col-sm-${dataGrid[1]}`);
                         } else {
-                            input.addClass('form-control').wrap('<div class="col-sm-' + dataGrid[1] + '"></div>');
+                            input.addClass('form-control').wrap(`<div class="col-sm-${dataGrid[1]}"></div>`);
                         }
                     }
                 }

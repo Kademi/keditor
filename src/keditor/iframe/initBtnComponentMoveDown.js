@@ -1,20 +1,20 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 
 export default function () {
     let self = this;
     let options = self.options;
     let contentAreasWrapper = self.contentAreasWrapper;
     
-    contentAreasWrapper.on('click', `.${CLASS_NAMES.COMPONENT_MOVE_DOWN}`, function (e) {
+    contentAreasWrapper.on('click', `.${CSS_CLASS.COMPONENT_MOVE_DOWN}`, function (e) {
         e.preventDefault();
         
         let btn = $(this);
-        let component = btn.closest(`.${CLASS_NAMES.COMPONENT}`);
-        let nextComponent = component.next(`.${CLASS_NAMES.COMPONENT}`);
+        let component = btn.closest(`.${CSS_CLASS.COMPONENT}`);
+        let nextComponent = component.next(`.${CSS_CLASS.COMPONENT}`);
         
         if (nextComponent.length > 0) {
-            let container = component.closest(`.${CLASS_NAMES.CONTAINER}`);
-            let contentArea = component.closest(`.${CLASS_NAMES.CONTENT_AREA}`);
+            let container = component.closest(`.${CSS_CLASS.CONTAINER}`);
+            let contentArea = component.closest(`.${CSS_CLASS.CONTENT_AREA}`);
     
             nextComponent.after(component);
             

@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import closeSidebar from '../sidebar/closeSidebar';
 import deleteComponent from '../component/deleteComponent';
 import checkContainerContent from '../container/checkContainerContent';
@@ -8,16 +8,16 @@ export default function () {
     let options = self.options;
     let contentAreasWrapper = self.contentAreasWrapper;
     
-    contentAreasWrapper.on('click', `.${CLASS_NAMES.COMPONENT_DELETE}`, function (e) {
+    contentAreasWrapper.on('click', `.${CSS_CLASS.COMPONENT_DELETE}`, function (e) {
         e.preventDefault();
         
         let btn = $(this);
         
         if (confirm(options.locale.confirmDeleteComponentText)) {
-            let component = btn.closest(`.${CLASS_NAMES.COMPONENT}`);
-            let container = component.closest(`.${CLASS_NAMES.CONTAINER}`);
-            let containerContentInner = component.closest(`.${CLASS_NAMES.CONTAINER_CONTENT_INNER}`);
-            let contentArea = component.closest(`.${CLASS_NAMES.CONTENT_AREA}`);
+            let component = btn.closest(`.${CSS_CLASS.COMPONENT}`);
+            let container = component.closest(`.${CSS_CLASS.CONTAINER}`);
+            let containerContentInner = component.closest(`.${CSS_CLASS.CONTAINER_CONTENT_INNER}`);
+            let contentArea = component.closest(`.${CSS_CLASS.CONTENT_AREA}`);
             
             if (typeof options.onBeforeComponentDeleted === 'function') {
                 options.onBeforeComponentDeleted.call(self, e, component, contentArea);

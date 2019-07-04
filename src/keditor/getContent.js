@@ -1,13 +1,13 @@
-import CLASS_NAMES from './constants/classNames';
+import CSS_CLASS from './constants/cssClass';
 import getContainerContent from './container/getContainerContent';
 
 export default function (inArray) {
     let self = this;
     let result = [];
     
-    self.contentAreasWrapper.find(`.${CLASS_NAMES.CONTENT_AREA_INNER}`).each(function () {
+    self.contentAreasWrapper.find(`.${CSS_CLASS.CONTENT_AREA_INNER}`).each(function () {
         let html = '';
-        $(this).children(`.${CLASS_NAMES.CONTAINER}`).each(function () {
+        $(this).children(`.${CSS_CLASS.CONTAINER}`).each(function () {
             let container = $(this);
             
             html += getContainerContent.call(self, container);

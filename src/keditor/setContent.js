@@ -1,4 +1,4 @@
-import CLASS_NAMES from './constants/classNames';
+import CSS_CLASS from './constants/cssClass';
 import initContentArea from './contentArea/initContentArea';
 
 export default function (content, contentArea) {
@@ -6,7 +6,7 @@ export default function (content, contentArea) {
     let contentAreasWrapper = self.wrapper;
     
     if (!contentArea) {
-        contentArea = contentAreasWrapper.children(`.${CLASS_NAMES.CONTENT_AREA}`);
+        contentArea = contentAreasWrapper.children(`.${CSS_CLASS.CONTENT_AREA}`);
     } else {
         if (!contentArea.jquery) {
             contentArea = contentAreasWrapper.find(contentArea);

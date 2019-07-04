@@ -1,5 +1,5 @@
-import CLASS_NAMES from '../constants/classNames';
-import ICONS from '../constants/icons';
+import CSS_CLASS from '../constants/cssClass';
+import ICON from '../constants/icon';
 
 export default function () {
     let self = this;
@@ -8,51 +8,51 @@ export default function () {
     let iframeWidthSwitcher = self.iframe.parent();
     
     let btnMobile = $(`
-        <a href="javascript:void(0);" title="${options.locale.viewOnMobile}" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.DEVICE_MOBILE}</a>
+        <a href="javascript:void(0);" title="${options.locale.viewOnMobile}" class="${CSS_CLASS.UI} ${CSS_CLASS.TOPBAR_BUTTON}">${ICON.DEVICE_MOBILE}</a>
     `);
     btnMobile.on('click', function (e) {
         e.preventDefault();
         
-        topbarCenter.find(`.${CLASS_NAMES.STATE_ACTIVE}`).removeClass(CLASS_NAMES.STATE_ACTIVE);
+        topbarCenter.find(`.${CSS_CLASS.STATE_ACTIVE}`).removeClass(CSS_CLASS.STATE_ACTIVE);
         iframeWidthSwitcher.css('width', options.widthMobile);
         iframeWidthSwitcher.css('min-width', '');
-        btnMobile.addClass(CLASS_NAMES.STATE_ACTIVE);
+        btnMobile.addClass(CSS_CLASS.STATE_ACTIVE);
     });
     
     let btnTablet = $(`
-        <a href="javascript:void(0);" title="${options.locale.viewOnTablet}" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.DEVICE_TABLET}</a>
+        <a href="javascript:void(0);" title="${options.locale.viewOnTablet}" class="${CSS_CLASS.UI} ${CSS_CLASS.TOPBAR_BUTTON}">${ICON.DEVICE_TABLET}</a>
     `);
     btnTablet.on('click', function (e) {
         e.preventDefault();
         
-        topbarCenter.find(`.${CLASS_NAMES.STATE_ACTIVE}`).removeClass(CLASS_NAMES.STATE_ACTIVE);
+        topbarCenter.find(`.${CSS_CLASS.STATE_ACTIVE}`).removeClass(CSS_CLASS.STATE_ACTIVE);
         iframeWidthSwitcher.css('width', options.widthTablet);
         iframeWidthSwitcher.css('min-width', '');
-        btnTablet.addClass(CLASS_NAMES.STATE_ACTIVE);
+        btnTablet.addClass(CSS_CLASS.STATE_ACTIVE);
     });
     
     let btnLaptop = $(`
-        <a href="javascript:void(0);" title="${options.locale.viewOnLaptop}" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.DEVICE_LAPTOP}</a>
+        <a href="javascript:void(0);" title="${options.locale.viewOnLaptop}" class="${CSS_CLASS.UI} ${CSS_CLASS.TOPBAR_BUTTON}">${ICON.DEVICE_LAPTOP}</a>
     `);
     btnLaptop.on('click', function (e) {
         e.preventDefault();
         
-        topbarCenter.find(`.${CLASS_NAMES.STATE_ACTIVE}`).removeClass(CLASS_NAMES.STATE_ACTIVE);
+        topbarCenter.find(`.${CSS_CLASS.STATE_ACTIVE}`).removeClass(CSS_CLASS.STATE_ACTIVE);
         iframeWidthSwitcher.css('width', options.widthLaptop);
         iframeWidthSwitcher.css('min-width', '');
-        btnLaptop.addClass(CLASS_NAMES.STATE_ACTIVE);
+        btnLaptop.addClass(CSS_CLASS.STATE_ACTIVE);
     });
     
     let btnDesktop = $(`
-        <a href="javascript:void(0);" title="${options.locale.viewOnDesktop}" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.DEVICE_DESKTOP}</a>
+        <a href="javascript:void(0);" title="${options.locale.viewOnDesktop}" class="${CSS_CLASS.UI} ${CSS_CLASS.TOPBAR_BUTTON}">${ICON.DEVICE_DESKTOP}</a>
     `);
     btnDesktop.on('click', function (e) {
         e.preventDefault();
         
-        topbarCenter.find(`.${CLASS_NAMES.STATE_ACTIVE}`).removeClass(CLASS_NAMES.STATE_ACTIVE);
+        topbarCenter.find(`.${CSS_CLASS.STATE_ACTIVE}`).removeClass(CSS_CLASS.STATE_ACTIVE);
         iframeWidthSwitcher.css('width', '');
         iframeWidthSwitcher.css('min-width', options.minWidthDesktop);
-        btnDesktop.addClass(CLASS_NAMES.STATE_ACTIVE);
+        btnDesktop.addClass(CSS_CLASS.STATE_ACTIVE);
     }).trigger('click');
     
     topbarCenter.append(btnMobile);

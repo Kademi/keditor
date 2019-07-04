@@ -1,5 +1,5 @@
 import renderSnippet from './renderSnippet';
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import beautifyCategories from '../utils/beautifyCategories';
 
 export default function (resp) {
@@ -27,6 +27,6 @@ export default function (resp) {
     self.categoryContainer = beautifyCategories(self.categoryContainer);
     self.categoryComponent = beautifyCategories(self.categoryComponent);
     
-    self.modal.find(`.${CLASS_NAMES.SNIPPETS}`).html(snippetsHtml);
-    self.modal.find(`.${CLASS_NAMES.MODAL_BODY}`).append(snippetsContentHtml);
+    self.modal.find(`.${CSS_CLASS.SNIPPETS}`).html(snippetsHtml);
+    self.modal.find(`.${CSS_CLASS.MODAL_BODY}`).append(snippetsContentHtml);
 };

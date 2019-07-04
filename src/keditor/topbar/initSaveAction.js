@@ -1,11 +1,11 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import getContent from '../getContent';
-import ICONS from '../constants/icons';
+import ICON from '../constants/icon';
 
 export default function () {
     let self = this;
     let options = self.options;
-    let btnSave = $(`<a href="javascript:void(0);" title="${options.locale.save}" class="${CLASS_NAMES.UI} ${CLASS_NAMES.TOPBAR_BUTTON}">${ICONS.SAVE}</a>`);
+    let btnSave = $(`<a href="javascript:void(0);" title="${options.locale.save}" class="${CSS_CLASS.UI} ${CSS_CLASS.TOPBAR_BUTTON}">${ICON.SAVE}</a>`);
     btnSave.on('click', function (e) {
         e.preventDefault();
         

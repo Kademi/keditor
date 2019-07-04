@@ -1,4 +1,4 @@
-const ICONS = {
+const ICON = {
     ADD_CONTENT: '<i class="fa fa-plus"></i>',
     
     MOVE_CONTAINER: '<i class="fa fa-arrows-v"></i>',
@@ -35,4 +35,4 @@ const ICONS = {
     ADD: '<i class="fa fa-plus"></i>'
 };
 
-export default ICONS;
+export default ICON;

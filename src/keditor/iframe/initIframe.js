@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import initIframeActions from './initIframeActions';
 import initContentAreas from '../contentArea/initContentAreas';
 
@@ -8,19 +8,19 @@ export default function () {
     let options = self.options;
     let wrapperId = self.generateId();
     let wrapper = self.wrapper = $(`
-        <div id="${wrapperId}" class="${CLASS_NAMES.UI} ${CLASS_NAMES.WRAPPER}">
-            <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.IFRAME_WRAPPER}">
-                <div class="${CLASS_NAMES.UI} ${CLASS_NAMES.IFRAME_WIDTH_SWITCHER}">
-                    <iframe class="${CLASS_NAMES.UI} ${CLASS_NAMES.IFRAME}"></iframe>
+        <div id="${wrapperId}" class="${CSS_CLASS.UI} ${CSS_CLASS.WRAPPER}">
+            <div class="${CSS_CLASS.UI} ${CSS_CLASS.IFRAME_WRAPPER}">
+                <div class="${CSS_CLASS.UI} ${CSS_CLASS.IFRAME_WIDTH_SWITCHER}">
+                    <iframe class="${CSS_CLASS.UI} ${CSS_CLASS.IFRAME}"></iframe>
                 </div>
             </div>
         </div>
     `);
     
-    element.addClass(CLASS_NAMES.UI_HIDDEN);
+    element.addClass(CSS_CLASS.UI_HIDDEN);
     element.after(wrapper);
     
-    let iframe = self.iframe = wrapper.find(`.${CLASS_NAMES.IFRAME}`);
+    let iframe = self.iframe = wrapper.find(`.${CSS_CLASS.IFRAME}`);
     self.iframeDoc = iframe.contents();
     
     // Fix issue Firefox can't render content inside iframe
@@ -59,12 +59,12 @@ export default function () {
     
     // Generate body content for iframe
     self.contentAreasWrapper = $(options.contentAreasWrapper || '<div />');
-    self.contentAreasWrapper.attr('class', `${CLASS_NAMES.UI} ${CLASS_NAMES.CONTENT_AREAS_WRAPPER}`);
+    self.contentAreasWrapper.attr('class', `${CSS_CLASS.UI} ${CSS_CLASS.CONTENT_AREAS_WRAPPER}`);
     self.contentAreasWrapper.html(element.val() || element.html() || '');
     if (!self.contentAreasWrapper.attr('id')) {
         self.contentAreasWrapper.attr('id', self.generateId());
     }
-    self.iframeBody.append(self.contentAreasWrapper).addClass(CLASS_NAMES.IFRAME_BODY);
+    self.iframeBody.append(self.contentAreasWrapper).addClass(CSS_CLASS.IFRAME_BODY);
     
     if (typeof options.onInitIframe === 'function') {
         options.onInitIframe.call(self, self.iframe, self.iframeHead, self.iframeBody);

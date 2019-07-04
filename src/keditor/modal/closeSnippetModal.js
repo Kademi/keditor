@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import closeModal from './closeModal';
 
 export default function () {
@@ -7,11 +7,11 @@ export default function () {
     
     self.modalTarget = null;
     self.modalTargetAction = null;
-    modal.find(`.${CLASS_NAMES.STATE_SELECTED}`).removeClass(CLASS_NAMES.STATE_SELECTED);
-    modal.find(`.${CLASS_NAMES.STATE_NOT_MATCHED}`).removeClass(CLASS_NAMES.STATE_NOT_MATCHED);
-    modal.find(`.${CLASS_NAMES.SNIPPETS_FILTER}`).val('');
-    modal.removeClass(CLASS_NAMES.MODAL_COMPONENT);
-    modal.removeClass(CLASS_NAMES.MODAL_CONTAINER);
+    modal.find(`.${CSS_CLASS.STATE_SELECTED}`).removeClass(CSS_CLASS.STATE_SELECTED);
+    modal.find(`.${CSS_CLASS.STATE_NOT_MATCHED}`).removeClass(CSS_CLASS.STATE_NOT_MATCHED);
+    modal.find(`.${CSS_CLASS.SNIPPETS_FILTER}`).val('');
+    modal.removeClass(CSS_CLASS.MODAL_COMPONENT);
+    modal.removeClass(CSS_CLASS.MODAL_CONTAINER);
     
     closeModal.call(self, modal);
 };

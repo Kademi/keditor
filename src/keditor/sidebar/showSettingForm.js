@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import SETTING_CATEGORY from '../constants/settingCategory';
 import closeSidebar from './closeSidebar';
 
@@ -8,17 +8,17 @@ export default function (target, settingType, settingCategory, settingTitle, ini
     let sidebarTitle = self.sidebarTitle;
     let sidebarBody = self.sidebarBody;
     
-    let settingForm = sidebarBody.children(`.${CLASS_NAMES.SETTING_FORM}[data-setting-type="${settingType}"][data-setting-category="${settingCategory}"]`);
+    let settingForm = sidebarBody.children(`.${CSS_CLASS.SETTING_FORM}[data-setting-type="${settingType}"][data-setting-category="${settingCategory}"]`);
     if (settingForm.length === 0) {
         if (typeof initFunction === 'function') {
             settingForm = $(`
                 <div
                     data-setting-type="${settingType}"
                     data-setting-category="${settingCategory}"
-                    class="${CLASS_NAMES.UI} ${CLASS_NAMES.SETTING_FORM}"
+                    class="${CSS_CLASS.UI} ${CSS_CLASS.SETTING_FORM}"
                 ></div>
             `);
-            let loadingText = $(`<span class="${CLASS_NAMES.SETTING_FORM_LOADING}" />`).html('Loading...');
+            let loadingText = $(`<span class="${CSS_CLASS.SETTING_FORM_LOADING}" />`).html('Loading...');
             sidebarBody.append(settingForm);
             settingForm.append(loadingText);
             
@@ -33,7 +33,7 @@ export default function (target, settingType, settingCategory, settingTitle, ini
             });
         }
     } else {
-        if (settingForm.hasClass(CLASS_NAMES.STATE_ACTIVE) && (target.is(self.settingContainer) || target.is(self.settingComponent))) {
+        if (settingForm.hasClass(CSS_CLASS.STATE_ACTIVE) && (target.is(self.settingContainer) || target.is(self.settingComponent))) {
             closeSidebar.call(self);
             return;
         } else {
@@ -59,8 +59,8 @@ export default function (target, settingType, settingCategory, settingTitle, ini
         // Do nothing
     }
     
-    sidebarBody.children(`.${CLASS_NAMES.STATE_ACTIVE}`).removeClass(CLASS_NAMES.STATE_ACTIVE);
+    sidebarBody.children(`.${CSS_CLASS.STATE_ACTIVE}`).removeClass(CSS_CLASS.STATE_ACTIVE);
     sidebarTitle.html(settingTitle);
-    settingForm.addClass(CLASS_NAMES.STATE_ACTIVE);
-    sidebar.addClass(CLASS_NAMES.STATE_OPENED);
+    settingForm.addClass(CSS_CLASS.STATE_ACTIVE);
+    sidebar.addClass(CSS_CLASS.STATE_OPENED);
 }

@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import ACTION_TYPE from '../constants/actionType';
 import initComponent from '../component/initComponent';
 import initContainer from '../container/initContainer';
@@ -8,14 +8,14 @@ export default function (e, selectedSnippet, target, targetAction) {
     let self = this;
     let modal = self.modal;
     let options = self.options;
-    let contentArea = target.closest(`.${CLASS_NAMES.CONTENT_AREA}`);
+    let contentArea = target.closest(`.${CSS_CLASS.CONTENT_AREA}`);
     let snippetType = selectedSnippet.attr('data-type');
     
     let snippetContentElement = modal.find(selectedSnippet.attr('data-snippet'));
     
     let snippetContent = snippetContentElement.html();
-    let isModalComponent = modal.hasClass(CLASS_NAMES.MODAL_COMPONENT);
-    let isModalContainer = modal.hasClass(CLASS_NAMES.MODAL_CONTAINER);
+    let isModalComponent = modal.hasClass(CSS_CLASS.MODAL_COMPONENT);
+    let isModalContainer = modal.hasClass(CSS_CLASS.MODAL_CONTAINER);
     let isAddingContainer = false;
     let isAddingComponent = false;
     let isAddingComponentWithContainer = false;
@@ -28,7 +28,7 @@ export default function (e, selectedSnippet, target, targetAction) {
         }
         
         if (isModalComponent && isModalContainer) {
-            if (target.is(`.${CLASS_NAMES.CONTAINER_CONTENT_INNER}`)) {
+            if (target.is(`.${CSS_CLASS.CONTAINER_CONTENT_INNER}`)) {
                 isAddingComponent = true;
             } else {
                 if (targetAction === ACTION_TYPE.APPEND) {
@@ -43,12 +43,12 @@ export default function (e, selectedSnippet, target, targetAction) {
     let newContainer;
     let newComponent;
     
-    self.contentAreasWrapper.find(`.${CLASS_NAMES.STATE_TOOLBAR_SHOWED}`).removeClass(CLASS_NAMES.STATE_TOOLBAR_SHOWED);
+    self.contentAreasWrapper.find(`.${CSS_CLASS.STATE_TOOLBAR_SHOWED}`).removeClass(CSS_CLASS.STATE_TOOLBAR_SHOWED);
     
     if (isAddingContainer) {
         newContainer = $(`
-            <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER} ${CLASS_NAMES.STATE_TOOLBAR_SHOWED}">
-                <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_INNER}">${snippetContent}</section>
+            <section class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER} ${CSS_CLASS.STATE_TOOLBAR_SHOWED}">
+                <section class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_INNER}">${snippetContent}</section>
             </section>
         `);
         target[targetAction](newContainer);
@@ -67,14 +67,14 @@ export default function (e, selectedSnippet, target, targetAction) {
     if (isAddingComponent) {
         let dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
         newComponent = $(`
-            <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT} ${CLASS_NAMES.STATE_TOOLBAR_SHOWED}" data-type="${snippetType}" ${dataAttributes.join(' ')}>
-                <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_CONTENT}">${snippetContent}</section>
+            <section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT} ${CSS_CLASS.STATE_TOOLBAR_SHOWED}" data-type="${snippetType}" ${dataAttributes.join(' ')}>
+                <section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_CONTENT}">${snippetContent}</section>
             </section>
         `);
         target[targetAction](newComponent);
         
-        let container = target.closest(`.${CLASS_NAMES.CONTAINER}`);
-        container.addClass(CLASS_NAMES.STATE_TOOLBAR_SHOWED);
+        let container = target.closest(`.${CSS_CLASS.CONTAINER}`);
+        container.addClass(CSS_CLASS.STATE_TOOLBAR_SHOWED);
         if (typeof options.onComponentSnippetAdded === 'function') {
             options.onComponentSnippetAdded.call(self, e, newComponent, selectedSnippet, contentArea);
         }
@@ -89,13 +89,13 @@ export default function (e, selectedSnippet, target, targetAction) {
     if (isAddingComponentWithContainer) {
         let dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
         newContainer = $(`
-            <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER} ${CLASS_NAMES.STATE_TOOLBAR_SHOWED}">
-                <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_INNER}">${options.containerForQuickAddComponent}</section>
+            <section class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER} ${CSS_CLASS.STATE_TOOLBAR_SHOWED}">
+                <section class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_INNER}">${options.containerForQuickAddComponent}</section>
             </section>
         `);
         newComponent = $(`
-            <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT} ${CLASS_NAMES.STATE_TOOLBAR_SHOWED}" data-type="${snippetType}" ${dataAttributes.join(' ')}>
-                <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_CONTENT}">${snippetContent}</section>
+            <section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT} ${CSS_CLASS.STATE_TOOLBAR_SHOWED}" data-type="${snippetType}" ${dataAttributes.join(' ')}>
+                <section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_CONTENT}">${snippetContent}</section>
             </section>
         `);
         newContainer.find('[data-type="container-content"]').eq(0).html(newComponent);
@@ -112,7 +112,7 @@ export default function (e, selectedSnippet, target, targetAction) {
         initContainer.call(self, contentArea, newContainer);
     }
     
-    if (!target.is(`.${CLASS_NAMES.CONTENT_AREA_INNER}`)) {
+    if (!target.is(`.${CSS_CLASS.CONTENT_AREA_INNER}`)) {
         checkContainerContent(target);
     }
 };

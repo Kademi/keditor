@@ -1,9 +1,9 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 
 export default function (modal) {
     modal.css('display', 'block');
-    $(document.body).addClass(CLASS_NAMES.STATE_MODAL_OPENED);
+    $(document.body).addClass(CSS_CLASS.STATE_MODAL_OPENED);
     setTimeout(() => {
-        modal.addClass(CLASS_NAMES.STATE_SHOWED);
+        modal.addClass(CSS_CLASS.STATE_SHOWED);
     }, 0);
 };

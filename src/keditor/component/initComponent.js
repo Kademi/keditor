@@ -1,5 +1,5 @@
 import TOOLBAR_TYPE from '../constants/toolbarType';
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import generateId from '../utils/generateId';
 import getComponentType from './getComponentType';
 import generateToolbar from '../utils/generateToolbar';
@@ -9,15 +9,15 @@ export default function (contentArea, container, component) {
     let self = this;
     let options = self.options;
     
-    if (!component.hasClass(CLASS_NAMES.STATE_INITIALIZED) || !component.hasClass(CLASS_NAMES.STATE_INITIALIZING)) {
-        component.addClass(CLASS_NAMES.STATE_INITIALIZING);
+    if (!component.hasClass(CSS_CLASS.STATE_INITIALIZED) || !component.hasClass(CSS_CLASS.STATE_INITIALIZING)) {
+        component.addClass(CSS_CLASS.STATE_INITIALIZING);
         component.attr('id', generateId());
         
         if (typeof options.onBeforeInitComponent === 'function') {
             options.onBeforeInitComponent.call(self, component, contentArea);
         }
         
-        let componentContent = component.children(`.${CLASS_NAMES.COMPONENT_CONTENT}`);
+        let componentContent = component.children(`.${CSS_CLASS.COMPONENT_CONTENT}`);
         componentContent.attr('id', generateId());
         
         let componentType = getComponentType.call(self, component);
@@ -40,7 +40,7 @@ export default function (contentArea, container, component) {
             options.onInitComponent.call(self, component, contentArea);
         }
         
-        component.addClass(CLASS_NAMES.STATE_INITIALIZED);
-        component.removeClass(CLASS_NAMES.STATE_INITIALIZING);
+        component.addClass(CSS_CLASS.STATE_INITIALIZED);
+        component.removeClass(CSS_CLASS.STATE_INITIALIZING);
     }
 };

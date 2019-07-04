@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import generateId from '../utils/generateId';
 import renderSnippets from '../snippet/renderSnippets';
 import initSnippetsFilter from '../snippet/initSnippetsFilter';
@@ -13,9 +13,9 @@ export default function () {
     let modal = self.modal = initModal.call(self, generateId(), false, true);
     
     if (typeof options.snippetsUrl === 'string' && options.snippetsUrl.length > 0) {
-        modal.find(`.${CLASS_NAMES.MODAL_BODY}`).append(`
-            <div class="${CLASS_NAMES.SNIPPETS_WRAPPER}">
-                <div class="${CLASS_NAMES.SNIPPETS}"></div>
+        modal.find(`.${CSS_CLASS.MODAL_BODY}`).append(`
+            <div class="${CSS_CLASS.SNIPPETS_WRAPPER}">
+                <div class="${CSS_CLASS.SNIPPETS}"></div>
             </div>
         `);
         
@@ -42,17 +42,17 @@ export default function () {
         initSnippetAction.call(self);
         
         // Close buttons
-        modal.find(`.${CLASS_NAMES.MODAL_CLOSE}`).on('click', function (e) {
+        modal.find(`.${CSS_CLASS.MODAL_CLOSE}`).on('click', function (e) {
             e.preventDefault();
             
             closeSnippetModal.call(self);
         });
     
         // Add buttons
-        modal.on('click', `.${CLASS_NAMES.SNIPPET_ADD}`, function (e) {
+        modal.on('click', `.${CSS_CLASS.SNIPPET_ADD}`, function (e) {
             e.preventDefault();
             
-            let selectedSnippet = $(this).closest(`.${CLASS_NAMES.SNIPPET}`);
+            let selectedSnippet = $(this).closest(`.${CSS_CLASS.SNIPPET}`);
             
             addSnippetToTarget.call(self, e, selectedSnippet, self.modalTarget, self.modalTargetAction);
             closeSnippetModal.call(self);

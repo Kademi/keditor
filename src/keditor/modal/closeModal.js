@@ -1,14 +1,14 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 
 export default function (modal) {
     let cssTransitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
     
     modal.off(cssTransitionEnd).on(cssTransitionEnd, () => {
-        if (!modal.hasClass(CLASS_NAMES.STATE_SHOWED)) {
+        if (!modal.hasClass(CSS_CLASS.STATE_SHOWED)) {
             modal.css('display', 'none');
-            $(document.body).removeClass(CLASS_NAMES.STATE_MODAL_OPENED);
+            $(document.body).removeClass(CSS_CLASS.STATE_MODAL_OPENED);
         }
     });
     
-    modal.removeClass(CLASS_NAMES.STATE_SHOWED);
+    modal.removeClass(CSS_CLASS.STATE_SHOWED);
 };

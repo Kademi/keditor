@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import getDataAttributes from '../utils/getDataAttributes';
 import generateId from '../utils/generateId';
 
@@ -6,7 +6,7 @@ export default function (dynamicElement) {
     let self = this;
     let options = self.options;
     let component = dynamicElement.closest('[data-type^=component]');
-    let contentArea = dynamicElement.closest(`.${CLASS_NAMES.CONTENT_AREA}`);
+    let contentArea = dynamicElement.closest(`.${CSS_CLASS.CONTENT_AREA}`);
     
     dynamicElement.attr('id', generateId());
     

@@ -1,8 +1,8 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import initComponent from './initComponent';
 
 export default function (contentArea, container, target, isExisting) {
-    if (target.is(`.${CLASS_NAMES.TOOLBAR_CONTAINER_CONTENT}`)) {
+    if (target.is(`.${CSS_CLASS.TOOLBAR_CONTAINER_CONTENT}`)) {
         return;
     }
     
@@ -11,20 +11,20 @@ export default function (contentArea, container, target, isExisting) {
     let component;
     
     if (isSection) {
-        target.addClass(`${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT}`);
-        target.find(`.${CLASS_NAMES.COMPONENT_CONTENT}`).length === 0 && target.wrapInner(`<section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_CONTENT}"></section>`);
+        target.addClass(`${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT}`);
+        target.find(`.${CSS_CLASS.COMPONENT_CONTENT}`).length === 0 && target.wrapInner(`<section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_CONTENT}"></section>`);
         component = target;
     } else {
         target.wrap(`
-            <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT}">
-                <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.COMPONENT_CONTENT}"></section>
+            <section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT}">
+                <section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_CONTENT}"></section>
             </section>
         `);
         component = target.parent().parent();
     }
     
     if (isExisting) {
-        component.addClass(`${CLASS_NAMES.COMPONENT_EXISTING}`);
+        component.addClass(`${CSS_CLASS.COMPONENT_EXISTING}`);
     }
     
     initComponent.call(self, contentArea, container, component);

@@ -7,7 +7,6 @@
 // Toolbar
 // -------------------------------------------------
 .keditor-toolbar-bottom-sub-container,
-.keditor-toolbar-bottom-component,
 .keditor-toolbar-content-area,
 .keditor-toolbar-container-content {
     text-align: center;
@@ -24,8 +23,7 @@
     }
 }
 
-.keditor-toolbar-bottom-sub-container,
-.keditor-toolbar-bottom-component {
+.keditor-toolbar-bottom-sub-container {
     transition: all @animation-duration;
     overflow: hidden;
     opacity: 0;
@@ -42,28 +40,21 @@
     }
 }
 
-.keditor-toolbar-bottom-component {
-    .keditor-component:hover &,
-    .keditor-component.showed-keditor-toolbar & {
-        opacity: 1;
-        height: auto;
-        padding: 15px 0;
-    }
-}
-
 .keditor-toolbar {
     position: absolute;
     display: none;
     z-index: 5;
     .keditor-text();
+    overflow: hidden;
     
     > a {
-        font-size: 12px;
-        width: 20px;
-        height: 20px;
+        font-size: @toolbar-item-font-size;
+        width: @toolbar-item-size;
+        height: @toolbar-item-size;
         display: block;
         text-align: center;
-        line-height: 20px;
+        line-height: @toolbar-item-size;
+        transition: all @animation-duration;
         
         .fa {
             line-height: inherit;

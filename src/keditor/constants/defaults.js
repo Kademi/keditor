@@ -1,4 +1,4 @@
-import CLASS_NAMES from './classNames';
+import CSS_CLASS from './cssClass';
 
 export default {
     
@@ -192,7 +192,7 @@ export default {
      * The wrapper element for all contents inside iframe or new div which will contains content of textarea. It's just for displaying purpose. If you want all contents inside iframe are appended into body tag, just leave it as blank
      * @option {String}
      */
-    contentAreasWrapper: `<div class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTENT_AREAS_WRAPPER}"></div>`,
+    contentAreasWrapper: `<div class="${CSS_CLASS.UI} ${CSS_CLASS.CONTENT_AREAS_WRAPPER}"></div>`,
     
     /*
      * Enable setting panel for container

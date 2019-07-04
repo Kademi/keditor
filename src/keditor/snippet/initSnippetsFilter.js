@@ -1,5 +1,5 @@
 import renderSnippetFilter from './renderSnippetFilter';
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 
 export default function () {
     let self = this;
@@ -7,21 +7,21 @@ export default function () {
     let [categoriesOptions, filterWrapper] = renderSnippetFilter.call(self);
     
     filterWrapper.html(`
-        <span class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER_LABEL}">Category:</span>
-        <select class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_FILTER}">
+        <span class="${CSS_CLASS.UI} ${CSS_CLASS.SNIPPETS_FILTER_LABEL}">Category:</span>
+        <select class="${CSS_CLASS.UI} ${CSS_CLASS.SNIPPETS_FILTER}">
             ${categoriesOptions}
         </select>
-        <input type="text" class="${CLASS_NAMES.UI} ${CLASS_NAMES.SNIPPETS_SEARCH}" value="" placeholder="Type to search..." />
+        <input type="text" class="${CSS_CLASS.UI} ${CSS_CLASS.SNIPPETS_SEARCH}" value="" placeholder="Type to search..." />
     `);
     
-    let txtSearch = filterWrapper.find(`.${CLASS_NAMES.SNIPPETS_SEARCH}`);
-    let cbbFilter = filterWrapper.find(`.${CLASS_NAMES.SNIPPETS_FILTER}`);
+    let txtSearch = filterWrapper.find(`.${CSS_CLASS.SNIPPETS_SEARCH}`);
+    let cbbFilter = filterWrapper.find(`.${CSS_CLASS.SNIPPETS_FILTER}`);
     
     let doFilter = function () {
         let selectedCategory = (cbbFilter.val() || '').toLowerCase();
         let searchText = (txtSearch.val() || '').toLowerCase();
-        let snippets = self.modal.find(`.${CLASS_NAMES.SNIPPET}`);
-        snippets.filter(`.${CLASS_NAMES.STATE_SELECTED}`).removeClass(CLASS_NAMES.STATE_SELECTED);
+        let snippets = self.modal.find(`.${CSS_CLASS.SNIPPET}`);
+        snippets.filter(`.${CSS_CLASS.STATE_SELECTED}`).removeClass(CSS_CLASS.STATE_SELECTED);
         
         if (selectedCategory || searchText) {
             snippets.each(function () {
@@ -43,10 +43,10 @@ export default function () {
                     }
                 }
                 
-                snippet[error === 0 ? 'removeClass' : 'addClass'](CLASS_NAMES.STATE_NOT_MATCHED);
+                snippet[error === 0 ? 'removeClass' : 'addClass'](CSS_CLASS.STATE_NOT_MATCHED);
             });
         } else {
-            snippets.removeClass(CLASS_NAMES.STATE_NOT_MATCHED);
+            snippets.removeClass(CSS_CLASS.STATE_NOT_MATCHED);
         }
     };
     

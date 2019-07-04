@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import initContainer from './initContainer';
 
 export default function (contentArea, target) {
@@ -6,13 +6,13 @@ export default function (contentArea, target) {
     let container;
     
     if (target.is('section')) {
-        target.addClass(`${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER}`);
-        target.wrapInner(`<section class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_INNER}"></section>`);
+        target.addClass(`${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER}`);
+        target.wrapInner(`<section class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_INNER}"></section>`);
         container = target;
     } else {
         target.wrap(`
-            <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER}">
-                <section class="${CLASS_NAMES.UI} ${CLASS_NAMES.CONTAINER_INNER}"></section>
+            <section class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER}">
+                <section class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_INNER}"></section>
             </section>
         `);
         container = target.parent().parent();

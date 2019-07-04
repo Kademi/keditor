@@ -1,4 +1,4 @@
-const CLASS_NAMES = {
+const CSS_CLASS = {
     UI: 'keditor-ui',
     UI_DRAGGING: 'keditor-ui-dragging',
     UI_HIDDEN: 'keditor-ui-hidden',
@@ -122,4 +122,4 @@ const CLASS_NAMES = {
     PREVIEW_AREA: 'keditor-preview-area',
 };
 
-export default CLASS_NAMES;
+export default CSS_CLASS;

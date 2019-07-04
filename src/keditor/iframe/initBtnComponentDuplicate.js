@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import getComponentContent from '../component/getComponentContent';
 import convertToComponent from '../component/convertToComponent';
 
@@ -7,12 +7,12 @@ export default function () {
     let options = self.options;
     let contentAreasWrapper = self.contentAreasWrapper;
     
-    contentAreasWrapper.on('click', `.${CLASS_NAMES.COMPONENT_DUPLICATE}`, function (e) {
+    contentAreasWrapper.on('click', `.${CSS_CLASS.COMPONENT_DUPLICATE}`, function (e) {
         e.preventDefault();
         
         let btn = $(this);
-        let component = btn.closest(`.${CLASS_NAMES.COMPONENT}`);
-        let container = component.closest(`.${CLASS_NAMES.CONTAINER}`);
+        let component = btn.closest(`.${CSS_CLASS.COMPONENT}`);
+        let container = component.closest(`.${CSS_CLASS.CONTAINER}`);
         let contentArea = container.parent();
         let newComponent = $(getComponentContent.call(self, component));
         

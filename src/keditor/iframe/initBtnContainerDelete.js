@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import closeSidebar from '../sidebar/closeSidebar';
 import deleteComponent from '../component/deleteComponent';
 import checkContainerContent from "../container/checkContainerContent";
@@ -8,15 +8,15 @@ export default function () {
     let options = self.options;
     let contentAreasWrapper = self.contentAreasWrapper;
     
-    contentAreasWrapper.on('click', `.${CLASS_NAMES.CONTAINER_DELETE}`, function (e) {
+    contentAreasWrapper.on('click', `.${CSS_CLASS.CONTAINER_DELETE}`, function (e) {
         e.preventDefault();
         
         let btn = $(this);
         
         if (confirm(options.locale.confirmDeleteContainerText)) {
-            let container = btn.closest(`.${CLASS_NAMES.CONTAINER}`);
-            let containerContentInner = container.closest(`.${CLASS_NAMES.CONTAINER_CONTENT_INNER}`);
-            let components = container.find(`.${CLASS_NAMES.COMPONENT}`);
+            let container = btn.closest(`.${CSS_CLASS.CONTAINER}`);
+            let containerContentInner = container.closest(`.${CSS_CLASS.CONTAINER_CONTENT_INNER}`);
+            let components = container.find(`.${CSS_CLASS.COMPONENT}`);
             let contentArea = container.parent();
             
             if (typeof options.onBeforeContainerDeleted === 'function') {
@@ -25,7 +25,7 @@ export default function () {
             
             let settingComponent = self.settingComponent;
             if (settingComponent) {
-                let settingComponentParent = settingComponent.closest(`.${CLASS_NAMES.CONTAINER}`);
+                let settingComponentParent = settingComponent.closest(`.${CSS_CLASS.CONTAINER}`);
                 if (settingComponentParent.is(container)) {
                     closeSidebar.call(self);
                 }

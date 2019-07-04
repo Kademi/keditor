@@ -18,15 +18,30 @@
         border-bottom-right-radius: @border-radius;
         
         > a {
-            border: 0;
-            background: none;
             color: @container-content-toolbar-button-color;
-            text-align: center;
-            border-radius: 0;
-            box-shadow: none;
-            transition: all @animation-duration;
             float: left;
             
+            &:hover {
+                background-color: @container-content-toolbar-button-bg-hover;
+            }
+        }
+    }
+    
+    .keditor-toolbar-bottom-component {
+        right: 0;
+        top: auto;
+        bottom: unit(-@toolbar-item-size - 1, px);
+        border-radius: 0;
+        background: none;
+        text-align: center;
+        
+        > a {
+            display: inline-block;
+            float: none;
+            background-color: @container-content-toolbar-bg;
+            border-radius: 0 0 @border-radius @border-radius;
+            width: unit(@toolbar-item-size * 2, px);;
+    
             &:hover {
                 background-color: @container-content-toolbar-button-bg-hover;
             }
@@ -50,12 +65,6 @@
         }
     }
     
-    &:hover {
-        .keditor-toolbar {
-            display: block;
-        }
-    }
-    
     &:hover,
     &.showed-keditor-toolbar {
         z-index: 2;
@@ -64,6 +73,10 @@
             &:before {
                 display: block;
             }
+        }
+        
+        .keditor-toolbar {
+            display: block;
         }
     }
     

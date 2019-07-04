@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 
 export default function (containerContentInner) {
     if (containerContentInner.length === 0) {
@@ -6,5 +6,5 @@ export default function (containerContentInner) {
     }
     
     let hasComponent = containerContentInner.children().length > 0;
-    containerContentInner[hasComponent ? 'addClass' : 'removeClass'](CLASS_NAMES.STATE_HAS_COMPONENT);
+    containerContentInner[hasComponent ? 'addClass' : 'removeClass'](CSS_CLASS.STATE_HAS_COMPONENT);
 };

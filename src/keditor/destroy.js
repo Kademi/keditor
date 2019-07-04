@@ -1,4 +1,4 @@
-import CLASS_NAMES from './constants/classNames';
+import CSS_CLASS from './constants/cssClass';
 import getContent from './getContent';
 
 export default function () {
@@ -15,7 +15,7 @@ export default function () {
         element.html(content);
     }
     
-    element.removeClass(CLASS_NAMES.UI_HIDDEN);
+    element.removeClass(CSS_CLASS.UI_HIDDEN);
     element.data('keditor', null);
     delete KEditor.instances[id];
 };

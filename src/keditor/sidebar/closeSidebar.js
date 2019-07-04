@@ -1,11 +1,11 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import SETTING_CATEGORY from '../constants/settingCategory';
 
 export default function () {
     let self = this;
     let options = self.options;
     let sidebar = self.sidebar;
-    let activeForm = self.sidebarBody.children(`.${CLASS_NAMES.STATE_ACTIVE}`);
+    let activeForm = self.sidebarBody.children(`.${CSS_CLASS.STATE_ACTIVE}`);
     
     if (activeForm.length > 0) {
         switch (activeForm.attr('[data-setting-category]')) {
@@ -32,10 +32,10 @@ export default function () {
                 // Do nothing
         }
         
-        activeForm.removeClass(CLASS_NAMES.STATE_ACTIVE);
+        activeForm.removeClass(CSS_CLASS.STATE_ACTIVE);
     }
     
     self.settingComponent = null;
     self.settingContainer = null;
-    sidebar.removeClass(CLASS_NAMES.STATE_OPENED);
+    sidebar.removeClass(CSS_CLASS.STATE_OPENED);
 }

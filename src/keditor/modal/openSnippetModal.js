@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import openModal from './openModal';
 
 export default function (target, actionType, showComponent, showContainer) {
@@ -7,8 +7,8 @@ export default function (target, actionType, showComponent, showContainer) {
     
     self.modalTarget = target;
     self.modalTargetAction = actionType;
-    showComponent && modal.addClass(CLASS_NAMES.MODAL_COMPONENT);
-    showContainer && modal.addClass(CLASS_NAMES.MODAL_CONTAINER);
+    showComponent && modal.addClass(CSS_CLASS.MODAL_COMPONENT);
+    showContainer && modal.addClass(CSS_CLASS.MODAL_CONTAINER);
     modal.css('display', 'block');
     
     openModal.call(self, modal);

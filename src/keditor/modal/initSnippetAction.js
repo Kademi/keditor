@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 
 export default function () {
     let self = this;
@@ -9,18 +9,18 @@ export default function () {
             e.preventDefault();
             
             let snippet = $(this);
-            if (snippet.hasClass(CLASS_NAMES.STATE_SELECTED)) {
-                snippet.removeClass(CLASS_NAMES.STATE_SELECTED)
+            if (snippet.hasClass(CSS_CLASS.STATE_SELECTED)) {
+                snippet.removeClass(CSS_CLASS.STATE_SELECTED)
             } else {
-                modal.find(`.${CLASS_NAMES.STATE_SELECTED}`).removeClass(CLASS_NAMES.STATE_SELECTED);
-                snippet.addClass(CLASS_NAMES.STATE_SELECTED);
+                modal.find(`.${CSS_CLASS.STATE_SELECTED}`).removeClass(CSS_CLASS.STATE_SELECTED);
+                snippet.addClass(CSS_CLASS.STATE_SELECTED);
             }
         },
         mouseover: function () {
-            $(this).addClass(CLASS_NAMES.STATE_SELECTED);
+            $(this).addClass(CSS_CLASS.STATE_SELECTED);
         },
         mouseout: function () {
-            $(this).removeClass(CLASS_NAMES.STATE_SELECTED);
+            $(this).removeClass(CSS_CLASS.STATE_SELECTED);
         }
-    }, `.${CLASS_NAMES.SNIPPET}`);
+    }, `.${CSS_CLASS.SNIPPET}`);
 };

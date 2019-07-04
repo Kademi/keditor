@@ -1,23 +1,23 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 
 export default function (iframe, wrapper) {
     if (!wrapper) {
-        iframe.wrap(`<div class="${CLASS_NAMES.IFRAME_COVER_WRAPPER_FAKE}"></div>`);
+        iframe.wrap(`<div class="${CSS_CLASS.IFRAME_COVER_WRAPPER_FAKE}"></div>`);
         wrapper = iframe.parent();
     }
     
-    wrapper.addClass(`${CLASS_NAMES.IFRAME_COVER_WRAPPER}`);
+    wrapper.addClass(`${CSS_CLASS.IFRAME_COVER_WRAPPER}`);
     
-    let cover = $(`<div class="${CLASS_NAMES.IFRAME_COVER}"></div>`);
+    let cover = $(`<div class="${CSS_CLASS.IFRAME_COVER}"></div>`);
     wrapper.prepend(cover);
     
     wrapper.on('mouseleave', function () {
-        wrapper.removeClass(`${CLASS_NAMES.IFRAME_COVER_HIDDEN}`);
+        wrapper.removeClass(`${CSS_CLASS.IFRAME_COVER_HIDDEN}`);
     });
     
     cover.on('dblclick', function (e) {
         e.preventDefault();
         
-        wrapper.addClass(`${CLASS_NAMES.IFRAME_COVER_HIDDEN}`);
+        wrapper.addClass(`${CSS_CLASS.IFRAME_COVER_HIDDEN}`);
     });
 };

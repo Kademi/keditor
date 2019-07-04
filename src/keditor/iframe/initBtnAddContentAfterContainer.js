@@ -1,4 +1,4 @@
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import ACTION_TYPE from '../constants/actionType';
 import openSnippetModal from '../modal/openSnippetModal';
 
@@ -7,11 +7,11 @@ export default function () {
     let options = self.options;
     let contentAreasWrapper = self.contentAreasWrapper;
     
-    contentAreasWrapper.on('click', `.${CLASS_NAMES.TOOLBAR_SUB_CONTAINER_BOTTOM} .${CLASS_NAMES.ADD_CONTENT}`, function (e) {
+    contentAreasWrapper.on('click', `.${CSS_CLASS.TOOLBAR_SUB_CONTAINER_BOTTOM} .${CSS_CLASS.ADD_CONTENT}`, function (e) {
         e.preventDefault();
         
         let btn = $(this);
-        let subContainer = btn.closest(`.${CLASS_NAMES.SUB_CONTAINER}`);
+        let subContainer = btn.closest(`.${CSS_CLASS.SUB_CONTAINER}`);
         openSnippetModal.call(self, subContainer, ACTION_TYPE.AFTER, true, options.nestedContainerEnabled);
     });
 };

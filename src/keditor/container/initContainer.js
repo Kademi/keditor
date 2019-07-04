@@ -1,5 +1,5 @@
 import TOOLBAR_TYPE from '../constants/toolbarType';
-import CLASS_NAMES from '../constants/classNames';
+import CSS_CLASS from '../constants/cssClass';
 import generateToolbar from '../utils/generateToolbar';
 import generateId from '../utils/generateId';
 import initContainerContent from './initContainerContent';
@@ -9,18 +9,20 @@ export default function (contentArea, container) {
     let options = self.options;
     let isNested = options.nestedContainerEnabled && container.closest('[data-type="container-content"]').length > 0;
     
-    if (!container.hasClass(CLASS_NAMES.STATE_INITIALIZED) || !container.hasClass(CLASS_NAMES.STATE_INITIALIZING)) {
-        container.addClass(CLASS_NAMES.STATE_INITIALIZING);
+    if (!container.hasClass(CSS_CLASS.STATE_INITIALIZED) || !container.hasClass(CSS_CLASS.STATE_INITIALIZING)) {
+        container.addClass(CSS_CLASS.STATE_INITIALIZING);
         
         if (typeof options.onBeforeInitContainer === 'function') {
             options.onBeforeInitContainer.call(self, container, contentArea);
         }
         
         if (isNested) {
-            container.addClass(CLASS_NAMES.SUB_CONTAINER);
+            container.addClass(CSS_CLASS.SUB_CONTAINER);
         }
         
-        container.append(generateToolbar.call(self, isNested ? TOOLBAR_TYPE.SUB_CONTAINER : TOOLBAR_TYPE.CONTAINER));
+        container.append(
+            generateToolbar.call(self, isNested ? TOOLBAR_TYPE.SUB_CONTAINER : TOOLBAR_TYPE.CONTAINER, options.containerSettingEnabled)
+        );
         isNested && container.append(generateToolbar.call(self, TOOLBAR_TYPE.SUB_CONTAINER_BOTTOM));
         
         container.attr('id', generateId());
@@ -41,7 +43,7 @@ export default function (contentArea, container) {
             options.onInitContainer.call(self, container, contentArea);
         }
         
-        container.addClass(CLASS_NAMES.STATE_INITIALIZED);
-        container.removeClass(CLASS_NAMES.STATE_INITIALIZING);
+        container.addClass(CSS_CLASS.STATE_INITIALIZED);
+        container.removeClass(CSS_CLASS.STATE_INITIALIZING);
     }
 };

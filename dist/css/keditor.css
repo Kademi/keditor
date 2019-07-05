@@ -511,18 +511,18 @@ body.previewing .keditor-preview-area {
 }
 .keditor-container > .keditor-container-inner:before {
   position: absolute;
-  top: -3px;
-  right: -3px;
-  left: -3px;
-  bottom: -3px;
+  top: -2px;
+  right: -2px;
+  left: -2px;
+  bottom: -2px;
   border: 2px dashed transparent;
   content: " ";
   display: block;
   z-index: -1;
 }
 .keditor-container > .keditor-toolbar {
-  top: -3px;
-  left: -22px;
+  top: -2px;
+  left: -21px;
   border-radius: 5px 0 0 5px;
 }
 .keditor-container > .keditor-toolbar > a {

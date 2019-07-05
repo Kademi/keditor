@@ -1,5 +1,6 @@
 const ICON = {
     ADD_CONTENT: '<i class="fa fa-plus"></i>',
+    PASTE_CONTENT: '<i class="fa fa-paste"></i>',
     
     MOVE_CONTAINER: '<i class="fa fa-arrows-v"></i>',
     MOVE_COMPONENT: '<i class="fa fa-arrows"></i>',
@@ -15,6 +16,12 @@ const ICON = {
     
     DUPLICATE_CONTAINER: '<i class="fa fa-files-o"></i>',
     DUPLICATE_COMPONENT: '<i class="fa fa-files-o"></i>',
+    
+    COPY_CONTAINER: '<i class="fa fa-files-o"></i>',
+    COPY_COMPONENT: '<i class="fa fa-files-o"></i>',
+    
+    CUT_CONTAINER: '<i class="fa fa-cut"></i>',
+    CUT_COMPONENT: '<i class="fa fa-cut"></i>',
     
     DELETE_CONTAINER: '<i class="fa fa-trash-o"></i>',
     DELETE_COMPONENT: '<i class="fa fa-trash-o"></i>',

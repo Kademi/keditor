@@ -18,7 +18,6 @@ export default function () {
     
     initSelectAction.call(self);
     
-    
     initBtnAddContentAfterComponent.call(self);
     initBtnAddContentAfterContainer.call(self);
     

@@ -54,6 +54,7 @@ export default function (contentArea, dontInitToolbar) {
         },
         start: function (e, ui) {
             ui.item.addClass(CSS_CLASS.UI_DRAGGING);
+            ui.item.addClass(CSS_CLASS.STATE_TOOLBAR_SHOWED);
         },
         stop: function (e, ui) {
             if (ui.helper) {

@@ -20,7 +20,8 @@ export default function (type, isConfigurable) {
                     <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_MOVE_UP}">${ICON.MOVE_UP_CONTAINER}</a>
                     <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_MOVE_DOWN}">${ICON.MOVE_DOWN_CONTAINER}</a>
                     ${settingBtn}
-                    <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_DUPLICATE}">${ICON.DUPLICATE_CONTAINER}</a>
+                    <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_CUT}">${ICON.CUT_CONTAINER}</a>
+                    <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_COPY}">${ICON.COPY_CONTAINER}</a>
                     <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_DELETE}">${ICON.DELETE_CONTAINER}</a>
                 </div>
             `);
@@ -36,7 +37,8 @@ export default function (type, isConfigurable) {
                     <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_MOVE_UP}">${ICON.MOVE_UP_COMPONENT}</a>
                     <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_MOVE_DOWN}">${ICON.MOVE_DOWN_COMPONENT}</a>
                     ${settingBtn}
-                    <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_DUPLICATE}">${ICON.DUPLICATE_COMPONENT}</a>
+                    <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_CUT}">${ICON.CUT_COMPONENT}</a>
+                    <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_COPY}">${ICON.COPY_COMPONENT}</a>
                     <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_DELETE}">${ICON.DELETE_COMPONENT}</a>
                 </div>
             `);

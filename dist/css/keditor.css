@@ -511,19 +511,19 @@ body.previewing .keditor-preview-area {
 }
 .keditor-container > .keditor-container-inner:before {
   position: absolute;
-  top: -2px;
-  right: -2px;
-  left: -2px;
-  bottom: -2px;
+  top: -3px;
+  right: -3px;
+  left: -3px;
+  bottom: -3px;
   border: 2px dashed transparent;
   content: " ";
   display: block;
   z-index: -1;
 }
 .keditor-container > .keditor-toolbar {
-  top: -2px;
-  left: -27px;
-  border-radius: 5px;
+  top: -3px;
+  left: -22px;
+  border-radius: 5px 0 0 5px;
 }
 .keditor-container > .keditor-toolbar > a {
   background: #1b1d27;
@@ -536,10 +536,10 @@ body.previewing .keditor-preview-area {
   bottom: -24px;
 }
 .keditor-container:hover > .keditor-container-inner:before {
-  border-color: #b5e4f6;
+  border-color: #adb2c7;
 }
 .keditor-container.showed-keditor-toolbar > .keditor-container-inner:before {
-  border-color: #2eb2e4;
+  border-color: #1b1d27;
 }
 .keditor-container:hover > .keditor-toolbar,
 .keditor-container.showed-keditor-toolbar > .keditor-toolbar {
@@ -559,12 +559,22 @@ body.previewing .keditor-preview-area {
   border: 1px dashed #e0e0e0;
 }
 .keditor-container-content-inner {
-  min-height: 50px !important;
+  min-height: 70px !important;
 }
 .keditor-component {
   position: relative;
   z-index: 1;
   transition: padding-bottom 0.3s;
+}
+.keditor-component:before {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  left: -1px;
+  bottom: -1px;
+  content: " ";
+  border: 1px solid transparent;
+  z-index: -1;
 }
 .keditor-component .keditor-toolbar {
   top: 0;
@@ -586,28 +596,26 @@ body.previewing .keditor-preview-area {
   position: relative;
   z-index: 2;
 }
-.keditor-component .keditor-component-content:before {
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  left: -1px;
-  bottom: -1px;
+.keditor-component .keditor-component-content:before,
+.keditor-component .keditor-component-content:after {
+  display: table;
   content: " ";
-  border: 1px solid transparent;
-  z-index: -1;
 }
-.keditor-component:hover .keditor-component-content:before {
+.keditor-component .keditor-component-content:after {
+  clear: both;
+}
+.keditor-component:hover:before {
   border-color: rgba(0, 0, 0, 0.5);
 }
-.keditor-component.showed-keditor-toolbar .keditor-component-content:before {
+.keditor-component.showed-keditor-toolbar:before {
   border-color: rgba(0, 0, 0, 0.8);
 }
 .keditor-component:hover,
 .keditor-component.showed-keditor-toolbar {
   z-index: 2;
 }
-.keditor-component:hover .keditor-component-content:before,
-.keditor-component.showed-keditor-toolbar .keditor-component-content:before {
+.keditor-component:hover:before,
+.keditor-component.showed-keditor-toolbar:before {
   display: block;
 }
 .keditor-component:hover .keditor-toolbar,
@@ -695,7 +703,7 @@ body.previewing .keditor-preview-area {
 }
 .keditor-ui-dragging {
   display: block !important;
-  opacity: 0.5 !important;
+  opacity: 0.2 !important;
 }
 .keditor-ui-dragging .keditor-toolbar {
   display: none !important;
@@ -727,8 +735,25 @@ body.previewing .keditor-preview-area {
 .ui-sortable-helper.keditor-container .keditor-toolbar.keditor-toolbar-container {
   display: block !important;
 }
-.ui-sortable-helper.keditor-component:before,
+.ui-sortable-helper.keditor-container .keditor-toolbar.keditor-toolbar-container > a {
+  display: none;
+}
+.ui-sortable-helper.keditor-container .keditor-toolbar.keditor-toolbar-container > a.btn-container-move {
+  display: block;
+}
+.ui-sortable-helper.keditor-container .keditor-toolbar-bottom {
+  display: none !important;
+}
 .ui-sortable-helper.keditor-component .keditor-toolbar {
   display: block !important;
+}
+.ui-sortable-helper.keditor-component .keditor-toolbar > a {
+  display: none;
+}
+.ui-sortable-helper.keditor-component .keditor-toolbar > a.btn-component-move {
+  display: block;
+}
+.ui-sortable-helper.keditor-component .keditor-toolbar-bottom {
+  display: none !important;
 }
 

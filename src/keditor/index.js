@@ -37,6 +37,10 @@ class KEditor {
     
     settingComponent = null;
     settingContainer = null;
+    
+    copyContent = null;
+    cutContent = null;
+    
     categoryComponent = [];
     categoryContainer = [];
     

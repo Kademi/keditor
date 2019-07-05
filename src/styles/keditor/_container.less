@@ -14,10 +14,10 @@
         
         &:before {
             position: absolute;
-            top: -@container-outline-with;
-            right: -@container-outline-with;
-            left: -@container-outline-with;
-            bottom: -@container-outline-with;
+            top: unit(-@container-outline-with + @container-outline-offset, px);
+            right: unit(-@container-outline-with + @container-outline-offset, px);
+            left: unit(-@container-outline-with + @container-outline-offset, px);
+            bottom: unit(-@container-outline-with + @container-outline-offset, px);
             border: @container-outline-with dashed transparent;
             content: " ";
             display: block;
@@ -26,9 +26,9 @@
     }
     
     > .keditor-toolbar {
-        top: -@container-outline-with;
-        left: unit(-@toolbar-item-size - 6, px);
-        border-radius: @border-radius;
+        top: unit(-@container-outline-with + @container-outline-offset, px);
+        left: unit(-@toolbar-item-size + @container-outline-offset, px);
+        border-radius: @border-radius 0 0 @border-radius;
         
         > a {
             background: @container-toolbar-button-bg;
@@ -84,5 +84,5 @@
 }
 
 .keditor-container-content-inner {
-    min-height: 50px !important;
+    min-height: 70px !important;
 }

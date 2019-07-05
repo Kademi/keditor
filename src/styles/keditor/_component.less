@@ -11,6 +11,17 @@
     z-index: 1;
     transition: padding-bottom @animation-duration;
     
+    &:before {
+        position: absolute;
+        top: -@component-outline-with;
+        right: -@component-outline-with;
+        left: -@component-outline-with;
+        bottom: -@component-outline-with;
+        content: " ";
+        border: @component-outline-with solid transparent;
+        z-index: -1;
+    }
+    
     .keditor-toolbar {
         top: 0;
         left: 0;
@@ -32,35 +43,20 @@
     }
     
     .keditor-component-content {
+        .clearfix();
         position: relative;
         z-index: 2;
-        
-        &:before {
-            position: absolute;
-            top: -@component-outline-with;
-            right: -@component-outline-with;
-            left: -@component-outline-with;
-            bottom: -@component-outline-with;
-            content: " ";
-            border: @component-outline-with solid transparent;
-            z-index: -1;
-        }
     }
     
-    
     &:hover {
-        .keditor-component-content {
-            &:before {
-                border-color: @component-outline-color-hover;
-            }
+        &:before {
+            border-color: @component-outline-color-hover;
         }
     }
     
     &.showed-keditor-toolbar {
-        .keditor-component-content {
-            &:before {
-                border-color: @component-outline-color-selected;
-            }
+        &:before {
+            border-color: @component-outline-color-selected;
         }
     }
     
@@ -68,10 +64,8 @@
     &.showed-keditor-toolbar {
         z-index: 2;
         
-        .keditor-component-content {
-            &:before {
-                display: block;
-            }
+        &:before {
+            display: block;
         }
         
         .keditor-toolbar {

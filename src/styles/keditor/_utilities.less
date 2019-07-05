@@ -15,7 +15,7 @@
 // -------------------------------------------------
 .keditor-ui-dragging {
     display: block !important;
-    opacity: 0.5 !important;
+    opacity: 0.2 !important;
     
     .keditor-toolbar {
         display: none !important;
@@ -54,13 +54,36 @@
     &.keditor-container {
         .keditor-toolbar.keditor-toolbar-container {
             display: block !important;
+            
+            > a {
+                display: none;
+                
+                &.btn-container-move {
+                    display: block;
+                }
+            }
+        }
+        
+        .keditor-toolbar-bottom {
+            display: none !important;
         }
     }
     
     &.keditor-component {
-        &:before,
         .keditor-toolbar {
             display: block !important;
+            
+            > a {
+                display: none;
+                
+                &.btn-component-move {
+                    display: block;
+                }
+            }
+        }
+        
+        .keditor-toolbar-bottom {
+            display: none !important;
         }
     }
 }

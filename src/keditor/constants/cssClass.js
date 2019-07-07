@@ -2,6 +2,7 @@ const CSS_CLASS = {
     UI: 'keditor-ui',
     UI_DRAGGING: 'keditor-ui-dragging',
     UI_HIDDEN: 'keditor-ui-hidden',
+    UI_CUTTING: 'keditor-ui-cutting',
     
     SORTABLE: 'ui-sortable',
     

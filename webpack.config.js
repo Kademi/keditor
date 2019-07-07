@@ -75,11 +75,6 @@ module.exports = {
                                 {
                                     search: '@{version}',
                                     replace: packageJson.version
-                                },
-                                {
-                                    search: '\\n\\s+',
-                                    replace: '',
-                                    flags: 'g'
                                 }
                             ]
                         }

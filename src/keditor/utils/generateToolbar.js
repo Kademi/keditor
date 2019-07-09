@@ -62,6 +62,7 @@ export default function (type, isConfigurable) {
             return (`
                 <div class="${CSS_CLASS.UI} ${CSS_CLASS.TOOLBAR} ${CSS_CLASS.TOOLBAR_BOTTOM} ${CSS_CLASS.TOOLBAR_SUB_CONTAINER_BOTTOM}">
                     <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.ADD_CONTENT}" title="${options.locale.addContentBelow}">${ICON.ADD_CONTENT}</a>
+                    <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.PASTE_CONTENT}" title="${options.locale.pasteContentBelow}">${ICON.PASTE_CONTENT}</a>
                 </div>
             `);
         
@@ -69,6 +70,7 @@ export default function (type, isConfigurable) {
             return (`
                 <div class="${CSS_CLASS.UI} ${CSS_CLASS.TOOLBAR} ${CSS_CLASS.TOOLBAR_BOTTOM} ${CSS_CLASS.TOOLBAR_COMPONENT_BOTTOM}">
                     <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.ADD_CONTENT}" title="${options.locale.addContentBelow}">${ICON.ADD_CONTENT}</a>
+                    <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.PASTE_CONTENT}" title="${options.locale.pasteContentBelow}">${ICON.PASTE_CONTENT}</a>
                 </div>
             `);
         

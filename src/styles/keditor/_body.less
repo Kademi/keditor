@@ -1,0 +1,40 @@
+// Import
+// -------------------------------------------------
+@import "../_mixins";
+@import "../_variables";
+
+
+// Body
+// -------------------------------------------------
+body {
+    &.opened-keditor-sidebar {
+        .keditor-content-area {
+            margin-right: 260px;
+        }
+        
+        .keditor-sidebar {
+            right: 0;
+        }
+    }
+    
+    &.opened-modal {
+        overflow: hidden;
+    }
+    
+    &.previewing {
+        .keditor-content-areas-wrapper {
+            display: none;
+        }
+        
+        .keditor-preview-area {
+            display: block;
+        }
+    }
+    
+    &.copying-content,
+    &.cutting-content {
+        .btn-paste-content {
+            display: block !important;
+        }
+    }
+}

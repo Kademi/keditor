@@ -14,13 +14,18 @@ div.cke_float[id*="cke_keditor-ui-"] {
     }
     
     .cke_top {
-        padding: 3px 3px 0;
+        padding: 3px;
+    
+        @media screen and (min-width: 1024px) {
+            padding: 5px 1px 0 6px;
+        }
     }
     
     .cke_toolbox {
         display: block !important;
         overflow-x: auto;
         overflow-y: hidden;
+        .keditor-scrollbar(5px);
     }
     
     .cke_toolbar {

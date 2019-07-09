@@ -113,6 +113,12 @@ export default {
         addContentBelow: 'Add content below',
     
         /*
+         * Text title for paste content button below sub-container and component
+         * @option {String}
+         */
+        pasteContentBelow: 'Paste content below',
+    
+        /*
          * Text title for container setting
          * @option {String}
          */

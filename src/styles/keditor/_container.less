@@ -41,7 +41,12 @@
     }
     
     > .keditor-toolbar-bottom-sub-container {
-        bottom: unit(-@toolbar-item-size - 3, px);
+        bottom: -@toolbar-item-size;
+        border-radius: 0 0 @border-radius @border-radius;
+        
+        > a {
+            float: left;
+        }
     }
     
     &:hover {

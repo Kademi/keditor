@@ -17,6 +17,7 @@
 }
 #keditor-modal-form .frmb::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 #keditor-modal-form .frmb::-webkit-scrollbar-track {
   background: #eee;
@@ -43,12 +44,35 @@ div.cke_float[id*="cke_keditor-ui-"] {
   }
 }
 div.cke_float[id*="cke_keditor-ui-"] .cke_top {
-  padding: 3px 3px 0;
+  padding: 3px;
+}
+@media screen and (min-width: 1024px) {
+  div.cke_float[id*="cke_keditor-ui-"] .cke_top {
+    padding: 5px 1px 0 6px;
+  }
 }
 div.cke_float[id*="cke_keditor-ui-"] .cke_toolbox {
   display: block !important;
   overflow-x: auto;
   overflow-y: hidden;
+}
+div.cke_float[id*="cke_keditor-ui-"] .cke_toolbox::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+div.cke_float[id*="cke_keditor-ui-"] .cke_toolbox::-webkit-scrollbar-track {
+  background: #eee;
+  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
+}
+div.cke_float[id*="cke_keditor-ui-"] .cke_toolbox::-webkit-scrollbar-thumb {
+  background: #ddd;
+  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
+}
+div.cke_float[id*="cke_keditor-ui-"] .cke_toolbox::-webkit-scrollbar-thumb:hover {
+  background: #cdcdcd;
+}
+div.cke_float[id*="cke_keditor-ui-"] .cke_toolbox::-webkit-scrollbar-thumb:active {
+  background: #cdcdcd;
 }
 div.cke_float[id*="cke_keditor-ui-"] .cke_toolbar {
   float: none !important;

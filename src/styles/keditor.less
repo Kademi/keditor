@@ -1,31 +1,4 @@
-// Body
-// -------------------------------------------------
-body {
-    &.opened-keditor-sidebar {
-        .keditor-content-area {
-            margin-right: 260px;
-        }
-        
-        .keditor-sidebar {
-            right: 0;
-        }
-    }
-    
-    &.opened-modal {
-        overflow: hidden;
-    }
-    
-    &.previewing {
-        .keditor-content-areas-wrapper {
-            display: none;
-        }
-        
-        .keditor-preview-area {
-            display: block;
-        }
-    }
-}
-
+@import "keditor/_body";
 @import "keditor/_ui";
 @import "keditor/_wrapper";
 @import "keditor/_topbar";

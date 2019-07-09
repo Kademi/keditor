@@ -26,8 +26,11 @@ const CSS_CLASS = {
     STATE_NOT_MATCHED: 'not-matched',
     STATE_HAS_COMPONENT: 'has-component',
     STATE_HAS_FOOTER: 'has-footer',
+    STATE_CUTTING: 'cutting-content',
+    STATE_COPYING: 'copying-content',
     
     ADD_CONTENT: 'btn-add-content',
+    PASTE_CONTENT: 'btn-paste-content',
     
     SIDEBAR: 'keditor-sidebar',
     SIDEBAR_HEADER: 'keditor-sidebar-header',

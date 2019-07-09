@@ -2,9 +2,10 @@
     font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.keditor-scrollbar() {
+.keditor-scrollbar(@size: 10px) {
     &::-webkit-scrollbar {
-        width: 10px;
+        width: @size;
+        height: @size;
     }
     
     &::-webkit-scrollbar-button {

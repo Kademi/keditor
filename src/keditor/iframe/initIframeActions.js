@@ -1,4 +1,5 @@
 import initSelectAction from './initSelectAction';
+import initKeyDownAction from './initKeyDownAction';
 
 import initBtnAddContentAfterContainer from './initBtnAddContentAfterContainer';
 import initBtnAddContentAfterComponent from './initBtnAddContentAfterComponent';
@@ -23,6 +24,8 @@ export default function () {
     let self = this;
     
     initSelectAction.call(self);
+    
+    initKeyDownAction.call(self);
     
     initBtnAddContentAfterComponent.call(self);
     initBtnAddContentAfterContainer.call(self);

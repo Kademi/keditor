@@ -13,6 +13,10 @@ body.previewing .keditor-content-areas-wrapper {
 body.previewing .keditor-preview-area {
   display: block;
 }
+body.copying-content .btn-paste-content,
+body.cutting-content .btn-paste-content {
+  display: block !important;
+}
 .keditor-ui {
   margin: 0;
   padding: 0;
@@ -152,6 +156,7 @@ body.previewing .keditor-preview-area {
 }
 .keditor-sidebar-body::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 .keditor-sidebar-body::-webkit-scrollbar-track {
   background: #eee;
@@ -317,6 +322,7 @@ body.previewing .keditor-preview-area {
 }
 .keditor-snippets-wrapper .keditor-snippets::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 .keditor-snippets-wrapper .keditor-snippets::-webkit-scrollbar-track {
   background: #eee;
@@ -503,6 +509,9 @@ body.previewing .keditor-preview-area {
 .keditor-toolbar.keditor-toolbar-bottom > a {
   line-height: 22px;
 }
+.keditor-toolbar.keditor-toolbar-bottom .btn-paste-content {
+  display: none;
+}
 .keditor-container {
   position: relative;
 }
@@ -533,7 +542,11 @@ body.previewing .keditor-preview-area {
   background: #2eb2e4;
 }
 .keditor-container > .keditor-toolbar-bottom-sub-container {
-  bottom: -24px;
+  bottom: -21px;
+  border-radius: 0 0 5px 5px;
+}
+.keditor-container > .keditor-toolbar-bottom-sub-container > a {
+  float: left;
 }
 .keditor-container:hover > .keditor-container-inner:before {
   border-color: #adb2c7;
@@ -645,6 +658,7 @@ body.previewing .keditor-preview-area {
 }
 .keditor-iframe-body::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 .keditor-iframe-body::-webkit-scrollbar-track {
   background: #eee;

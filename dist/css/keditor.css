@@ -346,7 +346,7 @@ body.cutting-content .btn-paste-content {
   background: #ffffff;
   user-select: none;
   width: 200px;
-  margin: 0 0 15px;
+  margin: 0 15px 15px;
   flex: none;
 }
 .keditor-snippet .keditor-snippet-inner {
@@ -461,19 +461,6 @@ body.cutting-content .btn-paste-content {
   border-color: #1f1f1f;
   background: #1f1f1f;
 }
-.keditor-toolbar-content-area,
-.keditor-toolbar-container-content {
-  text-align: center;
-  padding: 15px 0;
-  position: relative;
-  z-index: 1;
-}
-.keditor-toolbar-container-content {
-  display: block;
-}
-.keditor-container-content-inner.has-component + .keditor-toolbar-container-content {
-  display: none;
-}
 .keditor-toolbar {
   position: absolute;
   display: none;
@@ -512,6 +499,18 @@ body.cutting-content .btn-paste-content {
 .keditor-toolbar.keditor-toolbar-bottom .btn-paste-content {
   display: none;
 }
+.keditor-toolbar-content-area,
+.keditor-toolbar-container-content {
+  text-align: center;
+  padding: 15px 0;
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+.has-children + .keditor-toolbar-content-area,
+.has-children + .keditor-toolbar-container-content {
+  display: none;
+}
 .keditor-container {
   position: relative;
 }
@@ -541,11 +540,11 @@ body.cutting-content .btn-paste-content {
 .keditor-container > .keditor-toolbar > a:hover {
   background: #2eb2e4;
 }
-.keditor-container > .keditor-toolbar-bottom-sub-container {
+.keditor-container > .keditor-toolbar-bottom-container {
   bottom: -21px;
   border-radius: 0 0 5px 5px;
 }
-.keditor-container > .keditor-toolbar-bottom-sub-container > a {
+.keditor-container > .keditor-toolbar-bottom-container > a {
   float: left;
 }
 .keditor-container:hover > .keditor-container-inner:before {

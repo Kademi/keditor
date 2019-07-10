@@ -58,9 +58,10 @@ export default function (type, isConfigurable) {
                 </div>
             `);
     
+        case TOOLBAR_TYPE.CONTAINER_BOTTOM:
         case TOOLBAR_TYPE.SUB_CONTAINER_BOTTOM:
             return (`
-                <div class="${CSS_CLASS.UI} ${CSS_CLASS.TOOLBAR} ${CSS_CLASS.TOOLBAR_BOTTOM} ${CSS_CLASS.TOOLBAR_SUB_CONTAINER_BOTTOM}">
+                <div class="${CSS_CLASS.UI} ${CSS_CLASS.TOOLBAR} ${CSS_CLASS.TOOLBAR_BOTTOM} ${CSS_CLASS.TOOLBAR_CONTAINER_BOTTOM} ${type === TOOLBAR_TYPE.SUB_CONTAINER_BOTTOM ? CSS_CLASS.TOOLBAR_SUB_CONTAINER_BOTTOM : ''}">
                     <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.ADD_CONTENT}" title="${options.locale.addContentBelow}">${ICON.ADD_CONTENT}</a>
                     <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.PASTE_CONTENT}" title="${options.locale.pasteContentBelow}">${ICON.PASTE_CONTENT}</a>
                 </div>

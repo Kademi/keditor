@@ -22,8 +22,9 @@ export default function (contentArea, container) {
         
         container.append(
             generateToolbar.call(self, isNested ? TOOLBAR_TYPE.SUB_CONTAINER : TOOLBAR_TYPE.CONTAINER, options.containerSettingEnabled)
+            +
+            generateToolbar.call(self, isNested ? TOOLBAR_TYPE.SUB_CONTAINER_BOTTOM : TOOLBAR_TYPE.CONTAINER_BOTTOM)
         );
-        isNested && container.append(generateToolbar.call(self, TOOLBAR_TYPE.SUB_CONTAINER_BOTTOM));
         
         container.attr('id', generateId());
         

@@ -5,6 +5,7 @@ import openSnippetModal from '../modal/openSnippetModal';
 import generateToolbar from '../utils/generateToolbar';
 import closeSidebar from '../sidebar/closeSidebar';
 import convertToContainer from '../container/convertToContainer';
+import checkChildren from '../utils/checkChildren';
 
 export default function (contentArea, dontInitToolbar) {
     let self = this;
@@ -51,6 +52,7 @@ export default function (contentArea, dontInitToolbar) {
             }
             
             item.addClass(CSS_CLASS.UI_DRAGGING);
+            checkChildren(contentAreaInner);
         },
         start: function (e, ui) {
             ui.item.addClass(CSS_CLASS.UI_DRAGGING);
@@ -61,6 +63,7 @@ export default function (contentArea, dontInitToolbar) {
                 ui.helper.remove();
             }
             ui.item.removeClass(CSS_CLASS.UI_DRAGGING);
+            checkChildren(contentAreaInner);
         }
     });
     
@@ -76,4 +79,6 @@ export default function (contentArea, dontInitToolbar) {
             });
         }
     }
+    
+    checkChildren(contentAreaInner);
 };

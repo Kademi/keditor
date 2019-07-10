@@ -1,7 +1,7 @@
 import CSS_CLASS from '../constants/cssClass';
 import closeSidebar from '../sidebar/closeSidebar';
 import deleteComponent from '../component/deleteComponent';
-import checkContainerContent from '../container/checkContainerContent';
+import checkChildren from '../utils/checkChildren';
 
 export default function () {
     let self = this;
@@ -41,7 +41,7 @@ export default function () {
                 options.onContentChanged.call(self, e, contentArea);
             }
             
-            checkContainerContent(containerContentInner);
+            checkChildren(containerContentInner);
         }
     });
 };

@@ -6,22 +6,6 @@
 
 // Toolbar
 // -------------------------------------------------
-.keditor-toolbar-content-area,
-.keditor-toolbar-container-content {
-    text-align: center;
-    padding: 15px 0;
-    position: relative;
-    z-index: 1;
-}
-
-.keditor-toolbar-container-content {
-    display: block;
-    
-    .keditor-container-content-inner.has-component + & {
-        display: none;
-    }
-}
-
 .keditor-toolbar {
     position: absolute;
     display: none;
@@ -64,6 +48,19 @@
     }
     
     .btn-paste-content {
+        display: none;
+    }
+}
+
+.keditor-toolbar-content-area,
+.keditor-toolbar-container-content {
+    text-align: center;
+    padding: 15px 0;
+    position: relative;
+    z-index: 1;
+    display: block;
+    
+    .has-children + & {
         display: none;
     }
 }

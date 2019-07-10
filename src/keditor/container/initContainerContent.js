@@ -6,7 +6,7 @@ import generateId from '../utils/generateId';
 import generateToolbar from '../utils/generateToolbar';
 import convertToContainer from './convertToContainer';
 import convertToComponent from '../component/convertToComponent';
-import checkContainerContent from './checkContainerContent';
+import checkChildren from '../utils/checkChildren';
 
 export default function (contentArea, container, containerContent, isNested) {
     let self = this;
@@ -61,7 +61,7 @@ export default function (contentArea, container, containerContent, isNested) {
             }
             
             item.removeClass(CSS_CLASS.UI_DRAGGING);
-            checkContainerContent.call(self, containerContentInner);
+            checkChildren(containerContentInner);
         },
         start: function (e, ui) {
             ui.item.addClass(CSS_CLASS.UI_DRAGGING);
@@ -72,7 +72,7 @@ export default function (contentArea, container, containerContent, isNested) {
                 ui.helper.remove();
             }
             ui.item.removeClass(CSS_CLASS.UI_DRAGGING);
-            checkContainerContent.call(self, containerContentInner);
+            checkChildren(containerContentInner);
         }
     });
     
@@ -86,5 +86,5 @@ export default function (contentArea, container, containerContent, isNested) {
         }
     });
     
-    checkContainerContent.call(self, containerContentInner);
+    checkChildren(containerContentInner);
 };

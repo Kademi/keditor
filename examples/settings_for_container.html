@@ -81,6 +81,14 @@
                             // Find '.row' for setting background color
                             // Note: Make sure you have a div for setting background color
                             var row = container.find('.row');
+                            if (container.hasClass('keditor-sub-container')) {
+                                // Do nothing
+                            } else {
+                                row = row.filter(function () {
+                                    return $(this).parents('.keditor-container').length === 1;
+                                });
+                            }
+                            
                             // Set background color with value of textbox
                             row.css('background-color', this.value);
                         });

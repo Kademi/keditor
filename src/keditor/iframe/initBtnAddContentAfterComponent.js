@@ -12,6 +12,7 @@ export default function () {
         
         let btn = $(this);
         let component = btn.closest(`.${CSS_CLASS.COMPONENT}`);
-        openSnippetModal.call(self, component, ACTION_TYPE.AFTER, true, options.nestedContainerEnabled);
+        let container = btn.closest(`.${CSS_CLASS.CONTAINER}`);
+        openSnippetModal.call(self, component, ACTION_TYPE.AFTER, true, options.nestedContainerEnabled ? !container.hasClass(CSS_CLASS.SUB_CONTAINER) : false);
     });
 };

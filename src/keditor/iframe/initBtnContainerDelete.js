@@ -1,7 +1,6 @@
 import CSS_CLASS from '../constants/cssClass';
 import closeSidebar from '../sidebar/closeSidebar';
 import deleteComponent from '../component/deleteComponent';
-import checkChildren from '../utils/checkChildren';
 
 export default function () {
     let self = this;
@@ -15,10 +14,8 @@ export default function () {
         
         if (confirm(options.locale.confirmDeleteContainerText)) {
             let container = btn.closest(`.${CSS_CLASS.CONTAINER}`);
-            let containerContentInner = container.closest(`.${CSS_CLASS.CONTAINER_CONTENT_INNER}`);
             let components = container.find(`.${CSS_CLASS.COMPONENT}`);
             let contentArea = container.closest(`.${CSS_CLASS.CONTENT_AREA}`);
-            let contentAreaInner = contentArea.find(`.${CSS_CLASS.CONTENT_AREA_INNER}`);
             
             if (typeof options.onBeforeContainerDeleted === 'function') {
                 options.onBeforeContainerDeleted.call(self, e, container, contentArea);
@@ -48,9 +45,6 @@ export default function () {
             if (typeof options.onContentChanged === 'function') {
                 options.onContentChanged.call(self, e, contentArea);
             }
-    
-            checkChildren(containerContentInner);
-            checkChildren(contentAreaInner);
         }
     });
 };

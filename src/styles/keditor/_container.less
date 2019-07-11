@@ -41,8 +41,7 @@
     }
     
     > .keditor-toolbar-bottom-container {
-        bottom: -@toolbar-item-size;
-        border-radius: 0 0 @border-radius @border-radius;
+        bottom: -@container-outline-with;
         
         > a {
             float: left;
@@ -58,6 +57,8 @@
     }
     
     &.showed-keditor-toolbar {
+        z-index: 2;
+        
         > .keditor-container-inner {
             &:before {
                 border-color: @container-outline-color-selected;

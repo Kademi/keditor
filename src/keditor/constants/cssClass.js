@@ -24,7 +24,6 @@ const CSS_CLASS = {
     STATE_TOOLBAR_SHOWED: 'showed-keditor-toolbar',
     STATE_MODAL_OPENED: 'opened-modal',
     STATE_NOT_MATCHED: 'not-matched',
-    STATE_HAS_CHILDREN: 'has-children',
     STATE_HAS_FOOTER: 'has-footer',
     STATE_COPYING: 'copying',
     STATE_COPYING_COMPONENT: 'copying-component',

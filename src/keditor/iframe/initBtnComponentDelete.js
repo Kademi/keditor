@@ -1,7 +1,6 @@
 import CSS_CLASS from '../constants/cssClass';
 import closeSidebar from '../sidebar/closeSidebar';
 import deleteComponent from '../component/deleteComponent';
-import checkChildren from '../utils/checkChildren';
 
 export default function () {
     let self = this;
@@ -40,8 +39,6 @@ export default function () {
             if (typeof options.onContentChanged === 'function') {
                 options.onContentChanged.call(self, e, contentArea);
             }
-            
-            checkChildren(containerContentInner);
         }
     });
 };

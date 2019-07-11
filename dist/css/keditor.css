@@ -501,7 +501,7 @@ body.opened-modal {
   left: 50% !important;
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 0 0 5px 5px;
+  border-radius: 5px 5px 0 0 !important;
 }
 .keditor-toolbar.keditor-toolbar-bottom > a {
   line-height: 22px;
@@ -513,10 +513,6 @@ body.opened-modal {
   position: relative;
   z-index: 1;
   display: block;
-}
-.has-children + .keditor-toolbar-content-area,
-.has-children + .keditor-toolbar-container-content {
-  display: none;
 }
 .keditor-container {
   position: relative;
@@ -548,14 +544,16 @@ body.opened-modal {
   background: #2eb2e4;
 }
 .keditor-container > .keditor-toolbar-bottom-container {
-  bottom: -21px;
-  border-radius: 0 0 5px 5px;
+  bottom: -2px;
 }
 .keditor-container > .keditor-toolbar-bottom-container > a {
   float: left;
 }
 .keditor-container:hover > .keditor-container-inner:before {
   border-color: #adb2c7;
+}
+.keditor-container.showed-keditor-toolbar {
+  z-index: 2;
 }
 .keditor-container.showed-keditor-toolbar > .keditor-container-inner:before {
   border-color: #1b1d27;
@@ -613,7 +611,7 @@ body.opened-modal {
   background-color: rgba(0, 0, 0, 0.8);
 }
 .keditor-component .keditor-toolbar-bottom-component {
-  bottom: -22px;
+  bottom: -1px;
 }
 .keditor-component .keditor-component-content {
   position: relative;

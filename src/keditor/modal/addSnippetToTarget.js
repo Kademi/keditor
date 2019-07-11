@@ -2,7 +2,6 @@ import CSS_CLASS from '../constants/cssClass';
 import ACTION_TYPE from '../constants/actionType';
 import initComponent from '../component/initComponent';
 import initContainer from '../container/initContainer';
-import checkChildren from '../utils/checkChildren';
 
 export default function (e, selectedSnippet, target, targetAction) {
     let self = this;
@@ -110,9 +109,5 @@ export default function (e, selectedSnippet, target, targetAction) {
         }
         
         initContainer.call(self, contentArea, newContainer);
-    }
-    
-    if (!target.is(`.${CSS_CLASS.CONTENT_AREA_INNER}`)) {
-        checkChildren(target);
     }
 };

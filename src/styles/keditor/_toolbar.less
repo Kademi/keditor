@@ -41,7 +41,7 @@
     left: 50% !important;
     transform: translateX(-50%);
     background-color: @component-toolbar-bg;
-    border-radius: 0 0 @border-radius @border-radius;
+    border-radius: @border-radius @border-radius 0 0 !important;
     
     > a {
         line-height: unit(@toolbar-item-size + 1, px);
@@ -55,8 +55,4 @@
     position: relative;
     z-index: 1;
     display: block;
-    
-    .has-children + & {
-        display: none;
-    }
 }

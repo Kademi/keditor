@@ -28,7 +28,7 @@ export default function (contentArea, container, containerContent, isNested) {
     containerContentToolbar.children(`.${CSS_CLASS.ADD_CONTENT}`).on('click', function (e) {
         e.preventDefault();
         
-        openSnippetModal.call(self, containerContentInner, ACTION_TYPE.APPEND, true, !isNested && options.nestedContainerEnabled);
+        openSnippetModal.call(self, containerContentInner, ACTION_TYPE.APPEND, true, !isNested);
     });
     
     containerContentInner.sortable({

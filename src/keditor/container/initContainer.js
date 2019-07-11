@@ -7,7 +7,7 @@ import initContainerContent from './initContainerContent';
 export default function (contentArea, container) {
     let self = this;
     let options = self.options;
-    let isNested = options.nestedContainerEnabled && container.closest('[data-type="container-content"]').length > 0;
+    let isNested = container.closest('[data-type="container-content"]').length > 0;
     
     if (!container.hasClass(CSS_CLASS.STATE_INITIALIZED) || !container.hasClass(CSS_CLASS.STATE_INITIALIZING)) {
         container.addClass(CSS_CLASS.STATE_INITIALIZING);
@@ -32,7 +32,7 @@ export default function (contentArea, container) {
         containerContents.each(function () {
             let containerContent = $(this);
             
-            if (options.nestedContainerEnabled && !isNested && containerContent.parents('[data-type="container-content"]').length > 0) {
+            if (!isNested && containerContent.parents('[data-type="container-content"]').length > 0) {
                 // Do nothing because it's container content of sub container
                 return;
             }

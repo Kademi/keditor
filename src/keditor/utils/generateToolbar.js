@@ -22,7 +22,6 @@ export default function (type, isConfigurable) {
                     ${settingBtn}
                     <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_CUT}" title="${options.locale.cut}">${ICON.CUT_CONTAINER}</a>
                     <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_COPY}" title="${options.locale.copy}">${ICON.COPY_CONTAINER}</a>
-                    <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.PASTE_CONTENT}" title="${options.locale.paste}">${ICON.PASTE_CONTENT}</a>
                     <a href="javascript:void(0);" class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_DELETE}" title="${options.locale.delete}">${ICON.DELETE_CONTAINER}</a>
                 </div>
             `);
@@ -48,14 +47,16 @@ export default function (type, isConfigurable) {
             return (`
                 <div class="${CSS_CLASS.UI} ${CSS_CLASS.TOOLBAR_CONTENT_AREA}">
                     <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.BTN} ${CSS_CLASS.BTN_DEFAULT} ${CSS_CLASS.ADD_CONTENT}" title="${options.locale.addContent}">${ICON.ADD_CONTENT}</a>
+                    <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.BTN} ${CSS_CLASS.BTN_DEFAULT} ${CSS_CLASS.PASTE_CONTENT}" title="${options.locale.pasteContent}">${ICON.PASTE_CONTENT}</a>
                 </div>
             `);
         
         case TOOLBAR_TYPE.CONTAINER_CONTENT:
         case TOOLBAR_TYPE.SUB_CONTAINER_CONTENT:
             return (`
-                <div class="${CSS_CLASS.UI} ${CSS_CLASS.TOOLBAR_CONTAINER_CONTENT}">
+                <div class="${CSS_CLASS.UI} ${CSS_CLASS.TOOLBAR_CONTAINER_CONTENT} ${type === TOOLBAR_TYPE.SUB_CONTAINER_CONTENT ? CSS_CLASS.TOOLBAR_SUB_CONTAINER_CONTENT : ''}">
                     <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.BTN} ${CSS_CLASS.BTN_DEFAULT} ${CSS_CLASS.ADD_CONTENT}" title="${options.locale.addContent}">${ICON.ADD_CONTENT}</a>
+                    <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.BTN} ${CSS_CLASS.BTN_DEFAULT} ${CSS_CLASS.PASTE_CONTENT}" title="${options.locale.pasteContent}">${ICON.PASTE_CONTENT}</a>
                 </div>
             `);
     
@@ -64,6 +65,7 @@ export default function (type, isConfigurable) {
             return (`
                 <div class="${CSS_CLASS.UI} ${CSS_CLASS.TOOLBAR} ${CSS_CLASS.TOOLBAR_BOTTOM} ${CSS_CLASS.TOOLBAR_CONTAINER_BOTTOM} ${type === TOOLBAR_TYPE.SUB_CONTAINER_BOTTOM ? CSS_CLASS.TOOLBAR_SUB_CONTAINER_BOTTOM : ''}">
                     <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.ADD_CONTENT}" title="${options.locale.addContentBelow}">${ICON.ADD_CONTENT}</a>
+                    <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.PASTE_CONTENT}" title="${options.locale.pasteContentBelow}">${ICON.PASTE_CONTENT}</a>
                 </div>
             `);
         
@@ -71,6 +73,7 @@ export default function (type, isConfigurable) {
             return (`
                 <div class="${CSS_CLASS.UI} ${CSS_CLASS.TOOLBAR} ${CSS_CLASS.TOOLBAR_BOTTOM} ${CSS_CLASS.TOOLBAR_COMPONENT_BOTTOM}">
                     <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.ADD_CONTENT}" title="${options.locale.addContentBelow}">${ICON.ADD_CONTENT}</a>
+                    <a href="javascript:void(0)" class="${CSS_CLASS.UI} ${CSS_CLASS.PASTE_CONTENT}" title="${options.locale.pasteContentBelow}">${ICON.PASTE_CONTENT}</a>
                 </div>
             `);
         

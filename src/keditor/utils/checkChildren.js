@@ -6,5 +6,5 @@ export default function (target) {
     }
     
     let hasComponent = target.children().length > 0;
-    target[hasComponent ? 'addClass' : 'removeClass'](CSS_CLASS.STATE_HAS_CHILDREN);
+    // target[hasComponent ? 'addClass' : 'removeClass'](CSS_CLASS.STATE_HAS_CHILDREN);
 };

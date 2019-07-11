@@ -71,6 +71,13 @@
             display: block;
         }
     }
+    
+    &:last-child,
+    &:only-child {
+        > .keditor-toolbar-bottom-container {
+            display: none;
+        }
+    }
 }
 
 .keditor-container-content {

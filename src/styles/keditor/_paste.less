@@ -1,0 +1,32 @@
+// Import
+// -------------------------------------------------
+@import "../_mixins";
+@import "../_variables";
+
+
+// Paste
+// -------------------------------------------------
+.btn-paste-content {
+    display: none !important;
+    
+    .copying & {
+        display: inline-block !important;
+    }
+    
+    .copying-component .keditor-toolbar-bottom-container:not(.keditor-toolbar-bottom-sub-container) &,
+    .copying-component .keditor-toolbar-content-area & {
+        display: none !important;
+    }
+    
+    .copying-container .keditor-toolbar-bottom-component &,
+    .copying-container .keditor-toolbar-bottom-sub-container &,
+    .copying-container .keditor-toolbar-container-content & {
+        display: none !important;
+    }
+    
+    .copying-sub-container .keditor-toolbar-sub-container-content &,
+    .copying-sub-container .keditor-toolbar-bottom-container:not(.keditor-toolbar-bottom-sub-container) &,
+    .copying-sub-container .keditor-toolbar-content-area & {
+        display: none !important;
+    }
+}

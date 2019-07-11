@@ -82,6 +82,7 @@ const CSS_CLASS = {
     TOOLBAR_CONTAINER_CONTENT: 'keditor-toolbar-container-content',
     TOOLBAR_SUB_CONTAINER: 'keditor-toolbar-sub-container',
     TOOLBAR_SUB_CONTAINER_BOTTOM: 'keditor-toolbar-bottom-sub-container',
+    TOOLBAR_SUB_CONTAINER_CONTENT: 'keditor-toolbar-sub-container-content',
     TOOLBAR_COMPONENT: 'keditor-toolbar-component',
     TOOLBAR_COMPONENT_BOTTOM: 'keditor-toolbar-bottom-component',
     

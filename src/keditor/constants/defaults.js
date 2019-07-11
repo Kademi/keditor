@@ -9,12 +9,6 @@ export default {
     title: 'Editing with KEditor',
     
     /*
-     * Enable nested container or not
-     * @option {Boolean}
-     */
-    nestedContainerEnabled: true,
-    
-    /*
      * containerForQuickAddComponent The container snippet which will be added automatically in content are when you adding a component. Note: component will be added in first container content of container
      * @option {String}
      */
@@ -113,6 +107,12 @@ export default {
         addContentBelow: 'Add content below',
     
         /*
+         * Text title for paste content button
+         * @option {String}
+         */
+        pasteContent: 'Paste content',
+    
+        /*
          * Text title for paste content button below sub-container and component
          * @option {String}
          */
@@ -153,12 +153,6 @@ export default {
          * @option {String}
          */
         cut: 'Cut',
-    
-        /*
-         * Text title for paste button
-         * @option {String}
-         */
-        paste: 'Paste',
     
         /*
          * Text title for delete button

@@ -1,5 +1,6 @@
 import initSelectAction from './initSelectAction';
 import initKeyDownAction from './initKeyDownAction';
+import initBtnPasteContent from './initBtnPasteContent';
 
 import initBtnAddContentAfterContainer from './initBtnAddContentAfterContainer';
 import initBtnAddContentAfterComponent from './initBtnAddContentAfterComponent';
@@ -26,6 +27,8 @@ export default function () {
     initSelectAction.call(self);
     
     initKeyDownAction.call(self);
+    
+    initBtnPasteContent.call(self);
     
     initBtnAddContentAfterComponent.call(self);
     initBtnAddContentAfterContainer.call(self);

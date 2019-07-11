@@ -2,6 +2,7 @@ import '../styles/keditor.less';
 
 import $ from 'jquery';
 import DEFAULTS from './constants/defaults';
+import log from './utils/log';
 import generateId from './utils/generateId';
 import getDataAttributes from './utils/getDataAttributes';
 import initIframeCover from './utils/initIframeCover';
@@ -51,9 +52,7 @@ class KEditor {
     // Static methods
     //---------------------------------
     static log(...args) {
-        if (console && typeof console.log === 'function' && window.KEDITOR_DEBUG) {
-            console.log.apply(console, ['[ KEditor ] ', ...args]);
-        }
+        log(...args);
     }
     
     static error(message) {

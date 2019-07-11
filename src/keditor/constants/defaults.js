@@ -119,6 +119,54 @@ export default {
         pasteContentBelow: 'Paste content below',
     
         /*
+         * Text title for move button
+         * @option {String}
+         */
+        move: 'Drag',
+    
+        /*
+         * Text title for move up button
+         * @option {String}
+         */
+        moveUp: 'Move up',
+    
+        /*
+         * Text title for move down button
+         * @option {String}
+         */
+        moveDown: 'Move down',
+    
+        /*
+         * Text title for setting button
+         * @option {String}
+         */
+        setting: 'Setting',
+    
+        /*
+         * Text title for copy button
+         * @option {String}
+         */
+        copy: 'Copy',
+    
+        /*
+         * Text title for cut button
+         * @option {String}
+         */
+        cut: 'Cut',
+    
+        /*
+         * Text title for paste button
+         * @option {String}
+         */
+        paste: 'Paste',
+    
+        /*
+         * Text title for delete button
+         * @option {String}
+         */
+        delete: 'Delete',
+    
+        /*
          * Text title for container setting
          * @option {String}
          */

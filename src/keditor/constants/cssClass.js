@@ -26,8 +26,10 @@ const CSS_CLASS = {
     STATE_NOT_MATCHED: 'not-matched',
     STATE_HAS_CHILDREN: 'has-children',
     STATE_HAS_FOOTER: 'has-footer',
-    STATE_CUTTING: 'cutting-content',
-    STATE_COPYING: 'copying-content',
+    STATE_COPYING: 'copying',
+    STATE_COPYING_COMPONENT: 'copying-component',
+    STATE_COPYING_CONTAINER: 'copying-container',
+    STATE_COPYING_SUB_CONTAINER: 'copying-sub-container',
     
     ADD_CONTENT: 'btn-add-content',
     PASTE_CONTENT: 'btn-paste-content',

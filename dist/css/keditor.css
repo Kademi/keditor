@@ -616,6 +616,7 @@ body.opened-modal {
 .keditor-component .keditor-component-content {
   position: relative;
   z-index: 2;
+  min-height: 30px !important;
 }
 .keditor-component .keditor-component-content:before,
 .keditor-component .keditor-component-content:after {

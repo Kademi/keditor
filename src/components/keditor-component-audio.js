@@ -1,59 +1,54 @@
 import KEditor from 'keditor';
 
 KEditor.components['audio'] = {
-    getContent: function (component, keditor) {
-        let componentContent = component.children('.keditor-component-content');
-        let audio = componentContent.find('audio');
-        audio.unwrap();
-        
-        return componentContent.html();
-    },
-    
     settingEnabled: true,
     
     settingTitle: 'Audio Settings',
+    
+    init: function (contentArea, container, component, keditor) {
+        let componentContent = component.find('.keditor-component-content');
+        
+        if (componentContent.find('.audio-wrapper').length === 0) {
+            componentContent.wrapInner('<div class="audio-wrapper"></div>');
+        }
+    },
     
     initSettingForm: function (form, keditor) {
         form.append(
             '<form class="form-horizontal">' +
             '     <div class="form-group">' +
-            '         <label for="audioFileInput" class="col-sm-12">Audio file</label>' +
+            '         <label class="col-sm-12">Audio file</label>' +
             '         <div class="col-sm-12">' +
             '             <div class="audio-toolbar">' +
-            '                 <a href="#" class="btn-audioFileInput btn btn-sm btn-primary"><i class="fa fa-upload"></i></a>' +
-            '                 <input id="audioFileInput" type="file" style="display: none" />' +
+            '                 <a href="#" class="btn-audio-upload btn btn-sm btn-primary"><i class="fa fa-upload"></i></a>' +
+            '                 <input class="audio-upload" type="file" style="display: none" />' +
             '             </div>' +
             '         </div>' +
             '     </div>' +
             '     <div class="form-group">' +
-            '         <label for="audio-autoplay" class="col-sm-12">Autoplay</label>' +
+            '         <label class="col-sm-12">Autoplay</label>' +
             '         <div class="col-sm-12">' +
-            '             <input type="checkbox" id="audio-autoplay" />' +
+            '             <input type="checkbox" class="audio-autoplay" />' +
             '         </div>' +
             '     </div>' +
             '     <div class="form-group">' +
-            '         <label for="audio-showcontrols" class="col-sm-12">Show Controls</label>' +
+            '         <label class="col-sm-12">Show Controls</label>' +
             '         <div class="col-sm-12">' +
-            '             <input type="checkbox" id="audio-showcontrols" checked />' +
+            '             <input type="checkbox" class="audio-controls" checked />' +
             '         </div>' +
             '     </div>' +
             '     <div class="form-group">' +
-            '         <label for="audio-width" class="col-sm-12">Width (%)</label>' +
+            '         <label class="col-sm-12">Width (%)</label>' +
             '         <div class="col-sm-12">' +
-            '             <input type="number" id="audio-width" min="20" max="100" class="form-control" value="100" />' +
+            '             <input type="number" min="20" max="100" class="form-control audio-width" value="100" />' +
             '         </div>' +
             '     </div>' +
             '</form>'
         );
-    },
-    
-    showSettingForm: function (form, component, keditor) {
-        let options = keditor.options;
         
-        let audio = component.find('audio');
-        let fileInput = form.find('#audioFileInput');
-        let btnAudioFileInput = form.find('.btn-audioFileInput');
-        btnAudioFileInput.off('click').on('click', function (e) {
+        let fileInput = form.find('.audio-upload');
+        let btnAudioUpload = form.find('.btn-audio-upload');
+        btnAudioUpload.off('click').on('click', function (e) {
             e.preventDefault();
             
             fileInput.trigger('click');
@@ -63,37 +58,45 @@ KEditor.components['audio'] = {
             if (/audio/.test(file.type)) {
                 // Todo: Upload to your server :)
                 
+                let audio = keditor.getSettingComponent().find('audio');
                 audio.attr('src', URL.createObjectURL(file));
-                
-                audio.load(function () {
-                    keditor.showSettingPanel(component, options);
-                });
             } else {
                 alert('Your selected file is not an audio file!');
             }
         });
         
-        let autoplayToggle = form.find('#audio-autoplay');
-        autoplayToggle.off('click').on('click', function (e) {
-            if (this.checked) {
-                audio.attr('autoplay', 'autoplay');
-            } else {
-                audio.removeAttr('autoplay');
-            }
+        let autoplayToggle = form.find('.audio-autoplay');
+        autoplayToggle.on('click', function () {
+            let audio = keditor.getSettingComponent().find('audio');
+            audio.prop('autoplay', this.checked);
         });
         
-        let showcontrolsToggle = form.find('#audio-showcontrols');
-        showcontrolsToggle.off('click').on('click', function (e) {
-            if (this.checked) {
-                audio.attr('controls', 'controls');
-            } else {
-                audio.removeAttr('controls');
-            }
+        let controlsToggle = form.find('.audio-controls');
+        controlsToggle.on('click', function () {
+            let audio = keditor.getSettingComponent().find('audio');
+            audio.prop('controls', this.checked);
         });
         
-        let audioWidth = form.find('#audio-width');
-        audioWidth.off('change').on('change', function () {
+        let audioWidth = form.find('.audio-width');
+        audioWidth.on('change', function () {
+            let audio = keditor.getSettingComponent().find('audio');
+            let wrapper = audio.parent();
+            
+            wrapper.attr('data-width', this.value);
             audio.css('width', this.value + '%');
         });
+    },
+    
+    showSettingForm: function (form, component, keditor) {
+        let audio = component.find('audio');
+        let wrapper = audio.parent();
+        
+        let autoplayToggle = form.find('.audio-autoplay');
+        let controlsToggle = form.find('.audio-controls');
+        let audioWidth = form.find('.audio-width');
+        
+        autoplayToggle.prop('checked', !!audio.attr('autoplay'));
+        controlsToggle.prop('checked', !!audio.attr('controls'));
+        audioWidth.val(wrapper.attr('data-width') || 100);
     }
 };

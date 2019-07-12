@@ -20,6 +20,7 @@ export default function () {
         btnPreview[isPreviewOn ? 'addClass' : 'removeClass'](CSS_CLASS.STATE_ACTIVE);
         btnPreview.attr('title', isPreviewOn ? options.locale.previewOn : options.locale.previewOff);
         self.iframeBody[isPreviewOn ? 'addClass' : 'removeClass'](CSS_CLASS.STATE_PREVIEWING);
+        self.previewArea.html('');
         
         isPreviewOn && self.previewArea.html(getContent.call(self)).find('[data-dynamic-href]').each(function () {
             let dynamicElement = $(this);

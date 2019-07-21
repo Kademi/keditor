@@ -161,6 +161,24 @@ export default {
         delete: 'Delete',
     
         /*
+         * Text for snippet category label
+         * @option {String}
+         */
+        snippetCategoryLabel: 'Category',
+    
+        /*
+         * Text for snippet category "All"
+         * @option {String}
+         */
+        snippetCategoryAll: 'All',
+    
+        /*
+         * Text for snippet search text box
+         * @option {String}
+         */
+        snippetCategorySearch: 'Type to search...',
+    
+        /*
          * Text title for container setting
          * @option {String}
          */

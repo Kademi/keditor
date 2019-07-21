@@ -7,11 +7,11 @@ export default function () {
     let [categoriesOptions, filterWrapper] = renderSnippetFilter.call(self);
     
     filterWrapper.html(`
-        <span class="${CSS_CLASS.UI} ${CSS_CLASS.SNIPPETS_FILTER_LABEL}">Category:</span>
+        <span class="${CSS_CLASS.UI} ${CSS_CLASS.SNIPPETS_FILTER_LABEL}">${options.locale.snippetCategoryLabel}:</span>
         <select class="${CSS_CLASS.UI} ${CSS_CLASS.SNIPPETS_FILTER}">
             ${categoriesOptions}
         </select>
-        <input type="text" class="${CSS_CLASS.UI} ${CSS_CLASS.SNIPPETS_SEARCH}" value="" placeholder="Type to search..." />
+        <input type="text" class="${CSS_CLASS.UI} ${CSS_CLASS.SNIPPETS_SEARCH}" value="" placeholder="${options.locale.snippetCategorySearch}" />
     `);
     
     let txtSearch = filterWrapper.find(`.${CSS_CLASS.SNIPPETS_SEARCH}`);

@@ -2,9 +2,10 @@ import CSS_CLASS from '../constants/cssClass';
 
 export default function () {
     let self = this;
+    let options = self.options;
     let modal = self.modal;
     
-    let categoriesOptions = `<option value="" selected="selected">All</option>`;
+    let categoriesOptions = `<option value="" selected="selected">${options.locale.snippetCategoryAll}</option>`;
     $.each(self.categoryComponent, function (i, category) {
         categoriesOptions += `<option value="${category}" class="${CSS_CLASS.SNIPPETS_FILTER_COMPONENT}">${category}</option>`;
     });

@@ -24,5 +24,5 @@ export default function (modalId, hasFooter = true, disableOriginEvents = false)
         });
     }
     
-    return modal.appendTo(document.body);
+    return modal.appendTo(self.wrapper);
 };

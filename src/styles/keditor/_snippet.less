@@ -47,11 +47,6 @@
         background: no-repeat 50% 50% / contain;
     }
     
-    .keditor-snippet-title,
-    .keditor-snippet-add {
-        transition: opacity @animation-duration;
-    }
-    
     .keditor-snippet-title {
         position: absolute;
         left: 0;
@@ -65,17 +60,6 @@
         text-align: center;
         padding: 0 10px;
         white-space: nowrap;
-        z-index: 1;
-        opacity: 1;
-    }
-    
-    .keditor-snippet-add {
-        position: absolute;
-        left: 50%;
-        bottom: 3px;
-        transform: translateX(-50%);
-        z-index: 2;
-        opacity: 0;
     }
     
     &.not-matched {
@@ -85,14 +69,6 @@
     &.selected {
         border-color: @snippet-border-color-selected;
         box-shadow: @snippet-box-shadow-selected;
-        
-        .keditor-snippet-title {
-            opacity: 0;
-        }
-        
-        .keditor-snippet-add {
-            opacity: 1;
-        }
     }
     
     @media (max-width: 420px) {

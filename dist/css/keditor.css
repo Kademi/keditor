@@ -372,10 +372,6 @@ body.opened-modal {
   right: 15px;
   background: no-repeat 50% 50% / contain;
 }
-.keditor-snippet .keditor-snippet-title,
-.keditor-snippet .keditor-snippet-add {
-  transition: opacity 0.3s;
-}
 .keditor-snippet .keditor-snippet-title {
   position: absolute;
   left: 0;
@@ -389,16 +385,6 @@ body.opened-modal {
   text-align: center;
   padding: 0 10px;
   white-space: nowrap;
-  z-index: 1;
-  opacity: 1;
-}
-.keditor-snippet .keditor-snippet-add {
-  position: absolute;
-  left: 50%;
-  bottom: 3px;
-  transform: translateX(-50%);
-  z-index: 2;
-  opacity: 0;
 }
 .keditor-snippet.not-matched {
   display: none !important;
@@ -406,12 +392,6 @@ body.opened-modal {
 .keditor-snippet.selected {
   border-color: #2eb2e4;
   box-shadow: 0 0 0 2px #2eb2e4;
-}
-.keditor-snippet.selected .keditor-snippet-title {
-  opacity: 0;
-}
-.keditor-snippet.selected .keditor-snippet-add {
-  opacity: 1;
 }
 @media (max-width: 420px) {
   .keditor-snippet {

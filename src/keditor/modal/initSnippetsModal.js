@@ -49,10 +49,10 @@ export default function () {
         });
     
         // Add buttons
-        modal.on('click', `.${CSS_CLASS.SNIPPET_ADD}`, function (e) {
+        modal.on('click', `.${CSS_CLASS.SNIPPET}`, function (e) {
             e.preventDefault();
             
-            let selectedSnippet = $(this).closest(`.${CSS_CLASS.SNIPPET}`);
+            let selectedSnippet = $(this);
             
             addSnippetToTarget.call(self, e, selectedSnippet, self.modalTarget, self.modalTargetAction);
             closeSnippetModal.call(self);

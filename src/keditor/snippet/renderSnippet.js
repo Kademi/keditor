@@ -17,7 +17,6 @@ export default function (type, title, previewUrl, categories, content, extraData
             <span class="${CSS_CLASS.SNIPPET_INNER}">
                 <span class="${CSS_CLASS.SNIPPET_PREVIEW}" style="background-image: url('${previewUrl}')"></span>
                 <span class="${CSS_CLASS.SNIPPET_TITLE}" title="${title}">${title}</span>
-                <span class="${CSS_CLASS.SNIPPET_ADD} ${CSS_CLASS.BTN} ${CSS_CLASS.BTN_PRIMARY}" title="${title}">${ICON.ADD} Add</span>
             </span>
         </section>
     `;

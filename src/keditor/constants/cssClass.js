@@ -59,7 +59,6 @@ const CSS_CLASS = {
     SNIPPET: 'keditor-snippet',
     SNIPPET_INNER: 'keditor-snippet-inner',
     SNIPPET_TITLE: 'keditor-snippet-title',
-    SNIPPET_ADD: 'keditor-snippet-add',
     SNIPPET_PREVIEW: 'keditor-snippet-preview',
     SNIPPET_CONTAINER: 'keditor-snippet-container',
     SNIPPET_COMPONENT: 'keditor-snippet-component',

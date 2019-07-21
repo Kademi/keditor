@@ -1,7 +1,8 @@
 import CSS_CLASS from '../constants/cssClass';
 import ACTION_TYPE from '../constants/actionType';
-import initComponent from '../component/initComponent';
-import initContainer from '../container/initContainer';
+import getDataAttributes from '../utils/getDataAttributes';
+import convertToComponent from '../component/convertToComponent';
+import convertToContainer from '../container/convertToContainer';
 
 export default function (e, selectedSnippet, target, targetAction) {
     let self = this;
@@ -45,11 +46,7 @@ export default function (e, selectedSnippet, target, targetAction) {
     self.contentAreasWrapper.find(`.${CSS_CLASS.STATE_TOOLBAR_SHOWED}`).removeClass(CSS_CLASS.STATE_TOOLBAR_SHOWED);
     
     if (isAddingContainer) {
-        newContainer = $(`
-            <section class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER} ${CSS_CLASS.STATE_TOOLBAR_SHOWED}">
-                <section class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_INNER}">${snippetContent}</section>
-            </section>
-        `);
+        newContainer = $(snippetContent);
         target[targetAction](newContainer);
         
         if (typeof options.onContainerSnippetAdded === 'function') {
@@ -60,16 +57,19 @@ export default function (e, selectedSnippet, target, targetAction) {
             options.onContentChanged.call(self, e, contentArea);
         }
         
-        initContainer.call(self, contentArea, newContainer);
+        convertToContainer.call(self, contentArea, newContainer);
+    }
+    
+    if (isAddingComponent || isAddingComponentWithContainer) {
+        let dataAttributes = getDataAttributes.call(self, snippetContentElement, null, true);
+        newComponent = $(`
+            <div data-type="${snippetType}" ${dataAttributes.join(' ')}>
+                ${snippetContent}
+            </div>
+        `);
     }
     
     if (isAddingComponent) {
-        let dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
-        newComponent = $(`
-            <section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT} ${CSS_CLASS.STATE_TOOLBAR_SHOWED}" data-type="${snippetType}" ${dataAttributes.join(' ')}>
-                <section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_CONTENT}">${snippetContent}</section>
-            </section>
-        `);
         target[targetAction](newComponent);
         
         let container = target.closest(`.${CSS_CLASS.CONTAINER}`);
@@ -82,21 +82,11 @@ export default function (e, selectedSnippet, target, targetAction) {
             options.onContentChanged.call(self, e, contentArea);
         }
         
-        initComponent.call(self, contentArea, container, newComponent);
+        convertToComponent.call(self, contentArea, container, newComponent);
     }
     
     if (isAddingComponentWithContainer) {
-        let dataAttributes = self.getDataAttributes(snippetContentElement, null, true);
-        newContainer = $(`
-            <section class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER} ${CSS_CLASS.STATE_TOOLBAR_SHOWED}">
-                <section class="${CSS_CLASS.UI} ${CSS_CLASS.CONTAINER_INNER}">${options.containerForQuickAddComponent}</section>
-            </section>
-        `);
-        newComponent = $(`
-            <section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT} ${CSS_CLASS.STATE_TOOLBAR_SHOWED}" data-type="${snippetType}" ${dataAttributes.join(' ')}>
-                <section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_CONTENT}">${snippetContent}</section>
-            </section>
-        `);
+        newContainer = $(options.containerForQuickAddComponent);
         newContainer.find('[data-type="container-content"]').eq(0).html(newComponent);
         target[targetAction](newContainer);
         
@@ -107,7 +97,7 @@ export default function (e, selectedSnippet, target, targetAction) {
         if (typeof options.onContentChanged === 'function') {
             options.onContentChanged.call(self, e, contentArea);
         }
-        
-        initContainer.call(self, contentArea, newContainer);
+    
+        convertToContainer.call(self, contentArea, newContainer);
     }
 };

@@ -1,13 +1,13 @@
 import CSS_CLASS from '../constants/cssClass';
-import getComponentType from './getComponentType';
 import getDataAttributes from '../utils/getDataAttributes';
+import getComponentType from './getComponentType';
 
 export default function (component) {
     let self = this;
     let clonedComponent = component.clone();
     let componentType = getComponentType.call(self, clonedComponent);
     let componentData = KEditor.components[componentType];
-    let dataAttributes = getDataAttributes(clonedComponent, null, true);
+    let dataAttributes = getDataAttributes(clonedComponent, null, false);
     let content;
     
     // Handle iframe-wrapper
@@ -30,9 +30,12 @@ export default function (component) {
         content = componentContent.html();
     }
     
+    // Remove all content inside dynamic element
     clonedComponent.html(content).find('[data-dynamic-href]').each(function () {
         $(this).html('');
     });
     
-    return `<section ${dataAttributes.join(' ')}>${clonedComponent.html()}</section>`;
+    clonedComponent.children().attr(dataAttributes);
+    
+    return clonedComponent.html();
 };

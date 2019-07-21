@@ -1,4 +1,5 @@
 import CSS_CLASS from '../constants/cssClass';
+import getDataAttributes from '../utils/getDataAttributes';
 import initComponent from './initComponent';
 
 export default function (contentArea, container, target, isExisting) {
@@ -7,21 +8,12 @@ export default function (contentArea, container, target, isExisting) {
     }
     
     let self = this;
-    let isSection = target.is('section');
     let component;
+    let dataAttributes = getDataAttributes.call(self, target, null, true);
     
-    if (isSection) {
-        target.addClass(`${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT}`);
-        target.find(`.${CSS_CLASS.COMPONENT_CONTENT}`).length === 0 && target.wrapInner(`<section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_CONTENT}"></section>`);
-        component = target;
-    } else {
-        target.wrap(`
-            <section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT}">
-                <section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_CONTENT}"></section>
-            </section>
-        `);
-        component = target.parent().parent();
-    }
+    target.wrap(`<section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT}" data-type="${target.attr('data-type')}" ${dataAttributes.join(' ')}></section>`);
+    target.wrap(`<section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_CONTENT}"></section>`);
+    component = target.parent().parent();
     
     if (isExisting) {
         component.addClass(`${CSS_CLASS.COMPONENT_EXISTING}`);

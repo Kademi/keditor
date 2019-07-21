@@ -33,7 +33,7 @@ export default function (contentArea, container, containerContent, isNested) {
     containerContentInner.sortable({
         handle: `.${CSS_CLASS.COMPONENT_MOVE}, .${CSS_CLASS.CONTAINER_MOVE}`,
         helper: 'clone',
-        items: '> section',
+        items: `> .${CSS_CLASS.COMPONENT}`,
         connectWith: `.${CSS_CLASS.CONTAINER_CONTENT_INNER}`,
         tolerance: 'pointer',
         receive: function (event, ui) {

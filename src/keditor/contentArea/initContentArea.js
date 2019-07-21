@@ -31,7 +31,7 @@ export default function (contentArea, dontInitToolbar) {
     
     contentAreaInner.sortable({
         handle: `.${CSS_CLASS.TOOLBAR_CONTAINER}:not(.${CSS_CLASS.TOOLBAR_SUB_CONTAINER}) .${CSS_CLASS.CONTAINER_MOVE}`,
-        items: '> section',
+        items: `> .${CSS_CLASS.CONTAINER}`,
         helper: 'clone',
         connectWith: `.${CSS_CLASS.CONTENT_AREA}`,
         axis: 'y',
@@ -64,16 +64,9 @@ export default function (contentArea, dontInitToolbar) {
         }
     });
     
-    contentAreaInner.children('section').each(function () {
+    contentAreaInner.children().each(function () {
         convertToContainer.call(self, contentArea, $(this));
     });
     
-    if (typeof options.onInitContentArea === 'function') {
-        let contentData = options.onInitContentArea.call(self, contentArea);
-        if (contentData && contentData.length > 0) {
-            $.each(contentData, function () {
-                convertToContainer.call(self, contentArea, $(this));
-            });
-        }
-    }
+    typeof options.onInitContentArea === 'function' && options.onInitContentArea.call(self, contentArea);
 };

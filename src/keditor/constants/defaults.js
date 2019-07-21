@@ -359,7 +359,7 @@ export default {
     },
     
     /*
-     * Callback will be called when initializing content area. It can return array of jQuery objects which will be initialized as container in content area. By default, all first level sections under content area will be initialized
+     * Callback will be called when initializing content area
      * @option {Function}
      * @param {jQuery} contentArea
      */

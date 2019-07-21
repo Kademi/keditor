@@ -25,5 +25,5 @@ export default function getContainerContent (container, isNested) {
         containerContent.html(content);
     });
     
-    return `<section>${containerInner.html()}</section>`;
+    return `${containerInner.html()}`;
 }

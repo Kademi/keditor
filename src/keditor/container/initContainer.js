@@ -3,6 +3,7 @@ import CSS_CLASS from '../constants/cssClass';
 import generateToolbar from '../utils/generateToolbar';
 import generateId from '../utils/generateId';
 import initContainerContent from './initContainerContent';
+import initColumnResizer from './initColumnResizer';
 
 export default function (contentArea, container) {
     let self = this;
@@ -39,6 +40,8 @@ export default function (contentArea, container) {
             
             initContainerContent.call(self, contentArea, container, containerContent, isNested);
         });
+    
+        options.bootstrap.columnResizeEnabled && initColumnResizer.call(self, container);
         
         if (typeof options.onInitContainer === 'function') {
             options.onInitContainer.call(self, container, contentArea);

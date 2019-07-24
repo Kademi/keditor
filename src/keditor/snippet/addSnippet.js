@@ -1,7 +1,7 @@
 import renderSnippet from './renderSnippet';
 import renderSnippetFilter from './renderSnippetFilter';
 import CSS_CLASS from '../constants/cssClass';
-import beautifyCategories from '../utils/beautifyCategories';
+import beautifyCategories from './beautifyCategories';
 
 export default function (type, title, previewUrl, categories, content, extraData) {
     let self = this;

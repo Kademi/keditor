@@ -1,6 +1,6 @@
 import renderSnippet from './renderSnippet';
 import CSS_CLASS from '../constants/cssClass';
-import beautifyCategories from '../utils/beautifyCategories';
+import beautifyCategories from './beautifyCategories';
 
 export default function (resp) {
     let self = this;

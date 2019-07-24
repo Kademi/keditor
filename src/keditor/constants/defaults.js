@@ -297,6 +297,17 @@ export default {
      */
     containerSettingHideFunction: null,
     
+    /**
+     * Bootstrap settings
+     */
+    bootstrap: {
+        /**
+         * Enable column resize by drag and drop or not. Require: jQuery UI Resizable
+         * @option {Boolean}
+         */
+        columnResizeEnabled: true
+    },
+    
     /*
      * Callback will be called after keditor instance is ready
      * @option {Function}

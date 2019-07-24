@@ -5,7 +5,7 @@ import DEFAULTS from './constants/defaults';
 import log from './utils/log';
 import generateId from './utils/generateId';
 import getDataAttributes from './utils/getDataAttributes';
-import initIframeCover from './utils/initIframeCover';
+import initIframeCover from './iframe/initIframeCover';
 import addSnippet from './snippet/addSnippet';
 import openSidebar from './sidebar/openSidebar';
 import closeSidebar from './sidebar/closeSidebar';

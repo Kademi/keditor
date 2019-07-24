@@ -1,22 +1,19 @@
 import CSS_CLASS from '../constants/cssClass';
 import ICON from '../constants/icon';
+import DEVICE from '../constants/device';
+import switchDevice from './switchDevice';
 
 export default function () {
     let self = this;
     let options = self.options;
     let topbarCenter = self.topbarCenter;
-    let iframeWidthSwitcher = self.iframe.parent();
     
     let btnMobile = $(`
         <a href="javascript:void(0);" title="${options.locale.viewOnMobile}" class="${CSS_CLASS.UI} ${CSS_CLASS.TOPBAR_BUTTON}">${ICON.DEVICE_MOBILE}</a>
     `);
     btnMobile.on('click', function (e) {
         e.preventDefault();
-        
-        topbarCenter.find(`.${CSS_CLASS.STATE_ACTIVE}`).removeClass(CSS_CLASS.STATE_ACTIVE);
-        iframeWidthSwitcher.css('width', options.widthMobile);
-        iframeWidthSwitcher.css('min-width', '');
-        btnMobile.addClass(CSS_CLASS.STATE_ACTIVE);
+        switchDevice.call(self, DEVICE.MOBILE, btnMobile);
     });
     
     let btnTablet = $(`
@@ -24,11 +21,7 @@ export default function () {
     `);
     btnTablet.on('click', function (e) {
         e.preventDefault();
-        
-        topbarCenter.find(`.${CSS_CLASS.STATE_ACTIVE}`).removeClass(CSS_CLASS.STATE_ACTIVE);
-        iframeWidthSwitcher.css('width', options.widthTablet);
-        iframeWidthSwitcher.css('min-width', '');
-        btnTablet.addClass(CSS_CLASS.STATE_ACTIVE);
+        switchDevice.call(self, DEVICE.TABLET, btnTablet);
     });
     
     let btnLaptop = $(`
@@ -36,11 +29,7 @@ export default function () {
     `);
     btnLaptop.on('click', function (e) {
         e.preventDefault();
-        
-        topbarCenter.find(`.${CSS_CLASS.STATE_ACTIVE}`).removeClass(CSS_CLASS.STATE_ACTIVE);
-        iframeWidthSwitcher.css('width', options.widthLaptop);
-        iframeWidthSwitcher.css('min-width', '');
-        btnLaptop.addClass(CSS_CLASS.STATE_ACTIVE);
+        switchDevice.call(self, DEVICE.LAPTOP, btnLaptop);
     });
     
     let btnDesktop = $(`
@@ -48,11 +37,7 @@ export default function () {
     `);
     btnDesktop.on('click', function (e) {
         e.preventDefault();
-        
-        topbarCenter.find(`.${CSS_CLASS.STATE_ACTIVE}`).removeClass(CSS_CLASS.STATE_ACTIVE);
-        iframeWidthSwitcher.css('width', '');
-        iframeWidthSwitcher.css('min-width', options.minWidthDesktop);
-        btnDesktop.addClass(CSS_CLASS.STATE_ACTIVE);
+        switchDevice.call(self, DEVICE.DESKTOP, btnDesktop);
     }).trigger('click');
     
     topbarCenter.append(btnMobile);

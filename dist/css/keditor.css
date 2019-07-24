@@ -705,20 +705,6 @@ body.opened-modal {
 .keditor-iframe-cover-wrapper.hidden-cover .keditor-iframe-cover {
   display: none;
 }
-.keditor-ui-hidden {
-  display: none !important;
-}
-.keditor-ui-cutting .keditor-component-content,
-.keditor-ui-cutting .keditor-container-inner {
-  opacity: 0.5 !important;
-}
-.keditor-ui-dragging {
-  display: block !important;
-  opacity: 0.2 !important;
-}
-.keditor-ui-dragging .keditor-toolbar {
-  display: none !important;
-}
 .ui-sortable-placeholder.keditor-snippet,
 .ui-sortable-placeholder.keditor-container,
 .ui-sortable-placeholder.keditor-component {
@@ -765,6 +751,48 @@ body.opened-modal {
   display: block;
 }
 .ui-sortable-helper.keditor-component .keditor-toolbar-bottom {
+  display: none !important;
+}
+.ui-resizable-resizer {
+  position: absolute;
+  width: 6px;
+  top: 0;
+  bottom: 0;
+  right: -3px;
+  background: #ddd;
+  cursor: col-resize;
+}
+.ui-resizable-resizer:before {
+  display: block;
+  content: '';
+  height: 30px;
+  width: 2px;
+  background: #aaa;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.ui-resizable-resizing .ui-resizable-resizer,
+.ui-resizable-resizer:hover {
+  background: #ccc;
+}
+.ui-resizable-resizing .ui-resizable-resizer:before,
+.ui-resizable-resizer:hover:before {
+  background: #333;
+}
+.keditor-ui-hidden {
+  display: none !important;
+}
+.keditor-ui-cutting .keditor-component-content,
+.keditor-ui-cutting .keditor-container-inner {
+  opacity: 0.5 !important;
+}
+.keditor-ui-dragging {
+  display: block !important;
+  opacity: 0.2 !important;
+}
+.keditor-ui-dragging .keditor-toolbar {
   display: none !important;
 }
 

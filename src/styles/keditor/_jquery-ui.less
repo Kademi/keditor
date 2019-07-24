@@ -1,0 +1,101 @@
+// Import
+// -------------------------------------------------
+@import "../_mixins";
+@import "../_variables";
+
+
+// jQuery UI
+// -------------------------------------------------
+.ui-sortable-placeholder {
+    &.keditor-snippet,
+    &.keditor-container,
+    &.keditor-component {
+        background: @blueLight !important;
+        visibility: visible !important;
+        height: 20px !important;
+        margin: 5px 0 !important;
+        float: none !important;
+        outline: none !important;
+        padding: 0 !important;
+        opacity: 1 !important;
+        border: 2px solid @blue;
+        
+        &:before,
+        &:after {
+            display: none !important;
+        }
+    }
+}
+
+.ui-sortable-helper {
+    &.keditor-section {
+        background: @snippet-bg !important;
+    }
+    
+    &.keditor-container {
+        .keditor-toolbar.keditor-toolbar-container {
+            display: block !important;
+            
+            > a {
+                display: none;
+                
+                &.btn-container-move {
+                    display: block;
+                }
+            }
+        }
+        
+        .keditor-toolbar-bottom {
+            display: none !important;
+        }
+    }
+    
+    &.keditor-component {
+        .keditor-toolbar {
+            display: block !important;
+            
+            > a {
+                display: none;
+                
+                &.btn-component-move {
+                    display: block;
+                }
+            }
+        }
+        
+        .keditor-toolbar-bottom {
+            display: none !important;
+        }
+    }
+}
+
+.ui-resizable-resizer {
+    position: absolute;
+    width: 6px;
+    top: 0;
+    bottom: 0;
+    right: -3px;
+    background: #ddd;
+    cursor: col-resize;
+    
+    &:before {
+        display: block;
+        content: '';
+        height: 30px;
+        width: 2px;
+        background: #aaa;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .ui-resizable-resizing &,
+    &:hover {
+        background: #ccc;
+        
+        &:before {
+            background: #333;
+        }
+    }
+}

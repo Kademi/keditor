@@ -8,7 +8,7 @@ export default function (dynamicElement) {
     let component = dynamicElement.closest('[data-type^=component]');
     let contentArea = dynamicElement.closest(`.${CSS_CLASS.CONTENT_AREA}`);
     
-    dynamicElement.attr('id', generateId());
+    !dynamicElement.attr('id') && dynamicElement.attr('id', generateId());
     
     if (typeof options.onBeforeDynamicContentLoad === 'function') {
         options.onBeforeDynamicContentLoad.call(self, dynamicElement, component, contentArea);

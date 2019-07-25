@@ -16,6 +16,7 @@ import setContent from './setContent';
 import initModal from './modal/initModal';
 import openModal from './modal/openModal';
 import closeModal from './modal/closeModal';
+import initDynamicContent from './component/initDynamicContent';
 
 // Check dependencies
 if (!$.fn.sortable) {
@@ -61,6 +62,17 @@ class KEditor {
     
     static init(target, config) {
         return new KEditor(target, config);
+    }
+    
+    static loadDynamicContent(dynamicElement, options = {}) {
+        dynamicElement.each(function () {
+            initDynamicContent.call({
+                options: {
+                    onDynamicContentLoaded: options.onSuccess,
+                    onDynamicContentError: options.onError
+                }
+            }, $(this));
+        });
     }
     
     // Setting stuffs

@@ -26,7 +26,7 @@ export default function (container) {
     
     if (cols.length > 0) {
         cols.resizable({
-            handles: 'resizer',
+            handles: 'resizer, none',
             create: function () {
                 $(this).find(`.${CSS_CLASS.UI_RESIZER}`).attr('title', options.locale.columnResizeTitle);
             },
@@ -34,7 +34,7 @@ export default function (container) {
                 let col = $(this);
                 let deviceMode = self.deviceMode;
                 let bsClass = `col-${deviceMode}-1 col-${deviceMode}-2 col-${deviceMode}-3 col-${deviceMode}-4 col-${deviceMode}-5 col-${deviceMode}-6 col-${deviceMode}-7 col-${deviceMode}-8 col-${deviceMode}-9 col-${deviceMode}-10 col-${deviceMode}-11 col-${deviceMode}-12`;
-            
+    
                 let row = col.parent();
                 let colNum = getColByWidth(options.bootstrap.gridSystem,100 * col.outerWidth() / row.innerWidth());
                 col.removeClass(bsClass).addClass(`col-${deviceMode}-${colNum}`);

@@ -6,6 +6,7 @@ const CSS_CLASS = {
     UI_RESIZER: 'ui-resizable-resizer',
     
     SORTABLE: 'ui-sortable',
+    RESIZABLE: 'ui-sortable',
     
     WRAPPER: 'keditor-wrapper',
     

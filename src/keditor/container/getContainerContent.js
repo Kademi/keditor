@@ -7,7 +7,7 @@ export default function getContainerContent (container, isNested) {
     
     containerInner.find('[data-type=container-content]').not(isNested ? '' : `.${CSS_CLASS.SUB_CONTAINER_CONTENT}`).each(function () {
         let containerContent = $(this);
-        containerContent.removeClass(`${CSS_CLASS.CONTAINER_CONTENT} ${CSS_CLASS.SUB_CONTAINER_CONTENT} ${CSS_CLASS.SORTABLE}`).removeAttr('id');
+        containerContent.removeClass(`${CSS_CLASS.CONTAINER_CONTENT} ${CSS_CLASS.SUB_CONTAINER_CONTENT} ${CSS_CLASS.SORTABLE} ${CSS_CLASS.RESIZABLE}`).removeAttr('id');
         
         let containerContentInner = containerContent.children();
         let content = '';

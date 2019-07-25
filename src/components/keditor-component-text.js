@@ -46,10 +46,6 @@ KEditor.components['text'] = {
             };
             keditor.iframeHead.append(ckeditorScript);
             ckeditorScript.src = ckeditorSrc;
-            
-            // setTimeout(() => {
-            //     ckeditorScript.src = ckeditorSrc;
-            // }, 500);
         }
     },
     

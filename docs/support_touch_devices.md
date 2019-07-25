@@ -1,5 +1,5 @@
 # Support Touch Devices
-As default, jQuery UI does not support mobile events. To be enable to run KEditor in touch devices, please use [jQuery UI Touch Punch](http://touchpunch.furf.com/).
+As default, jQuery UI does not support any events for touch devices. To be enable to run KEditor in touch devices, please use [jQuery UI Touch Punch](http://touchpunch.furf.com/).
 
 **Note**: Please place this plugin right after jQuery UI. Example:
 ```html

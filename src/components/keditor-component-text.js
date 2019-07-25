@@ -36,7 +36,6 @@ KEditor.components['text'] = {
             let ckeditorSrc = $(document.body).find('[data-type="ckeditor-script"]').attr('src');
             let ckeditorScript = keditor.iframeDoc[0].createElement('script');
             ckeditorScript.type = 'text/javascript';
-            ckeditorScript.src = ckeditorSrc;
             ckeditorScript.onreadystatechange = function () {
                 keditor.iframeWindow.CKEDITOR.disableAutoInline = true;
                 callback(keditor.iframeWindow.CKEDITOR);
@@ -46,10 +45,11 @@ KEditor.components['text'] = {
                 callback(keditor.iframeWindow.CKEDITOR);
             };
             keditor.iframeHead.append(ckeditorScript);
+            ckeditorScript.src = ckeditorSrc;
             
-            setTimeout(() => {
-                ckeditorScript.src = ckeditorSrc;
-            }, 500);
+            // setTimeout(() => {
+            //     ckeditorScript.src = ckeditorSrc;
+            // }, 500);
         }
     },
     

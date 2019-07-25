@@ -225,7 +225,7 @@ export default {
      * Min width of desktop device
      * @option {Number}
      */
-    minWidthDesktop: 1200,
+    minWidthDesktop: 1250,
     
     /*
      * Default component type of component. If type of component does not exist in KEditor.components, will be used "defaultComponentType" as type of this component. If is function, argument is component

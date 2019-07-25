@@ -761,7 +761,7 @@ body.opened-modal {
   right: -3px;
   background: #ddd;
   cursor: col-resize;
-  display: none;
+  display: none !important;
 }
 .ui-resizable-resizer:before {
   display: block;
@@ -783,8 +783,9 @@ body.opened-modal {
   background: #333;
 }
 .ui-resizable-resizing .ui-resizable-resizer,
+.ui-resizable:focus .ui-resizable-resizer,
 .ui-resizable:hover .ui-resizable-resizer {
-  display: block;
+  display: block !important;
 }
 .keditor-ui-hidden {
   display: none !important;

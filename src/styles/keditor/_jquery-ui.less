@@ -77,6 +77,7 @@
     right: -3px;
     background: #ddd;
     cursor: col-resize;
+    display: none;
     
     &:before {
         display: block;
@@ -90,6 +91,7 @@
         transform: translate(-50%, -50%);
     }
     
+    
     .ui-resizable-resizing &,
     &:hover {
         background: #ccc;
@@ -97,5 +99,10 @@
         &:before {
             background: #333;
         }
+    }
+    
+    .ui-resizable-resizing &,
+    .ui-resizable:hover & {
+        display: block;
     }
 }

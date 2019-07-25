@@ -7,7 +7,7 @@ If you want a component which has dynamic content, you can do as the following:
 </div>
 ```
 
-Explain:
+Details:
  * Element with `data-dynamic-href` will load content from `/path/to/dynamic/content` url with params are all `data-*` attributes. In above example, the final url for loading content is `/path/to/dynamic/content?data-attribute-one=1&data-attribute-two=2`
  * All `data-*` attributes must be placed in component element
  

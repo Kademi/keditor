@@ -1,7 +1,6 @@
 # Documentation
 
 1. [Getting started](./getting_started.md)
-1. [Basic Usage](./basic_usage.md)
 1. [Configuration](./configuration.md)
 1. [Methods](./methods.md)
 1. [Custom container](./custom_container.md)

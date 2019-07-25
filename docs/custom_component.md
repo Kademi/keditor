@@ -99,4 +99,4 @@ Details:
  __**Note**__: `KEditor.getSettingComponent()` is method for getting which component is setting
  
  ---
-[⬅ Back to documentation list](./index.md)
+[⬅ Back to documentation list](../README.md#documentation)

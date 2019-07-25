@@ -177,4 +177,4 @@ $('.selector').keditor('destroy');
 ```
 
  ---
-[⬅ Back to documentation list](./index.md)
+[⬅ Back to documentation list](../README.md#documentation)

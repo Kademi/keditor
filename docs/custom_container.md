@@ -21,4 +21,4 @@ Details:
  * You need at least one element which has `data-type="container-content"` to add components inside your container
  
  ---
-[⬅ Back to documentation list](./index.md)
+[⬅ Back to documentation list](../README.md#documentation)

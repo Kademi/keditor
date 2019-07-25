@@ -7,4 +7,4 @@ To contribute your own component:
  1. Done!
 
  ---
-[⬅ Back to documentation list](./index.md)
+[⬅ Back to documentation list](../README.md#documentation)

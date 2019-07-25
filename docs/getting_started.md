@@ -99,4 +99,4 @@ There are 2 ways to specify stylesheet for iframe:
     ``` 
 
  ---
-[⬅ Back to documentation list](./index.md)
+[⬅ Back to documentation list](../README.md#documentation)

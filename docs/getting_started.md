@@ -9,7 +9,7 @@ Get started with KEditor, the jQuery plugin which provides a content editor with
  * [Bootstrap](http://getbootstrap.com/) for content styles (optional)
  
 ## Usage
-There are 2 ways to initializing KEditor:
+There are 2 ways to initialize KEditor:
  1. Via jQuery plugin. Examples:
     ```javascript
     $('.selector').keditor({

@@ -142,23 +142,6 @@ KEditor.prototype.showModal(modal);
 KEditor.prototype.hideModal(modal);
 ```
 
-### showSettingPanel
-```javascript
-/**
- * Show settings form of an element. Can be
- * @param {jQuery} modal Element you want to show its settings in sidebar
- */
-KEditor.prototype.showSettingPanel(target);
-```
-
-### hideSettingPanel
-```javascript
-/**
- * @param 
- */
-KEditor.prototype.hideSettingPanel();
-```
-
 ### getContent
 ```javascript
 /**

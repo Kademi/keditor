@@ -87,7 +87,7 @@ KEditor.components['photo'] = {
                         height: ''
                     });
                     img.load(function () {
-                        keditor.showSettingPanel(keditor.getSettingComponent(), options);
+                        self.showSettingForm.call(self, form, keditor.getSettingComponent(), keditor);
                     });
                 });
                 

@@ -115,16 +115,6 @@ class KEditor {
         return hideModal.call(this, modal);
     }
     
-    // Legacy methods. DEPRECATED
-    //---------------------------------
-    showSettingPanel(target) {
-        openSidebar.call(this, target);
-    }
-    
-    hideSettingPanel() {
-        closeSidebar.call(this);
-    }
-    
     // Get content
     //---------------------------------
     getContent(inArray) {

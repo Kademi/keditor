@@ -33,8 +33,8 @@ export default {
      * }
      * @settingName.option {String} title
      * @settingName.option {jQuery|Function} trigger If pass as function, argument will be current extra setting. This function must return a jQuery object
-     * @settingName.option {Function} settingInitFunction Same arguments with "containerSettingInitFunction"
-     * @settingName.option {Function} settingShowFunction Same arguments with "containerSettingShowFunction"
+     * @settingName.option {Function} settingInitFunction Same arguments with `containerSettingInitFunction`
+     * @settingName.option {Function} settingShowFunction Same arguments with `containerSettingShowFunction`
      * @example:
      * {
      *     settingName1: {
@@ -167,7 +167,7 @@ export default {
         snippetCategoryLabel: 'Category',
     
         /*
-         * Text for snippet category "All"
+         * Text for snippet category `All`
          * @option {String}
          */
         snippetCategoryAll: 'All',
@@ -228,7 +228,7 @@ export default {
     minWidthDesktop: 1250,
     
     /*
-     * Default component type of component. If type of component does not exist in KEditor.components, will be used "defaultComponentType" as type of this component. If is function, argument is component
+     * Default component type of component. If type of component does not exist in KEditor.components, will be used `defaultComponentType` as type of this component. If is function, argument is component
      * @option {String|Function}
      * @param {jQuery} component
      */
@@ -314,7 +314,7 @@ export default {
         columnResizeEnabled: true,
     
         /**
-         * Grid system of bootstrap with "width" in percentage and "col" number
+         * Grid system of bootstrap with `width` in percentage and `col` number
          * @option {Array<Object>}
          */
         gridSystem: [{
@@ -367,7 +367,7 @@ export default {
     },
     
     /*
-     * Callback will be called after clicking on "Save" button in topbar
+     * Callback will be called after clicking on `Save` button in topbar
      * @option {Function}
      * @param {String} content
      */
@@ -438,7 +438,7 @@ export default {
     },
     
     /*
-     * Callback will be called when initializing container. It can return array of jQuery objects which will be initialized as editable components in container content (NOTE: these objects MUST be under elements which have attribute data-type=`container-content"). By default, all first level sections under container content will be initialized
+     * Callback will be called when initializing container. It can return array of jQuery objects which will be initialized as editable components in container content (NOTE: these objects MUST be under elements which have attribute `data-type="container-content"`). By default, all first level sections under container content will be initialized
      * @option {Function}
      * @param {jQuery} container
      * @param {jQuery} contentArea

@@ -6,7 +6,7 @@ You need to add a custom snippet in `examples/snippets/snippets.html` as followi
     <div class="row">
         <div class="col-sm-12">
             <div data-type="container-content">
-                <!-- Components will be dropped inside element which has attribute data-type="container-content" -->
+                <!-- Components will be dropped inside element which has attribute `data-type="container-content"` -->
             </div>
         </div>
     </div>

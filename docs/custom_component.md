@@ -42,7 +42,7 @@ Explain:
      },
  
      /**
-      * Function will be called for getting content of component from method of KEditor "target.keditor('getContent')"
+      * Function will be called for getting content of component from method of KEditor `target.keditor('getContent')`
       * @param {jQuery} component This component is cloned from original component. So you can do anything with it, event deleted
       * @param {KEditor} keditor KEditor instance which is calling this function
       * @return {String}
@@ -68,7 +68,7 @@ Explain:
  
      /**
       * Initialize setting form of this type
-      * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
+      * @param {jQuery} form Form contains all setting of this type and is child of `div[id="keditor-setting-forms"]`
       * @param {KEditor} keditor KEditor instance which is calling this function
       */
      initSettingForm: function (form, keditor) {
@@ -77,7 +77,7 @@ Explain:
  
      /**
       * Show setting form for this type. This function will be called when user clicks on setting button of component when setting panel is hidden. You can fulfill form controls in this function.
-      * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
+      * @param {jQuery} form Form contains all setting of this type and is child of `div[id="keditor-setting-forms"]`
       * @param {jQuery} component Component will be applied setting
       * @param {KEditor} keditor KEditor instance which is calling this function
       */
@@ -87,7 +87,7 @@ Explain:
  
      /**
       * Hide setting form for this type. This function will be called when user clicks again on setting button of component when setting panel is showed. You can clear setting form in this function
-      * @param {jQuery} form Form contains all setting of this type and is child of div[id="keditor-setting-forms"]
+      * @param {jQuery} form Form contains all setting of this type and is child of `div[id="keditor-setting-forms"]`
       * @param {KEditor} keditor KEditor instance which is calling this function
       */
      hideSettingForm: function (form, keditor) {

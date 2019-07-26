@@ -13,7 +13,7 @@ You need to add a custom snippet in `examples/snippets/snippets.html` as followi
 </div>
 ```
 
-Explain:
+Details:
  * `data-type` must be `container`
  * `data-preview` is url of preview image for container
  * `data-keditor-title` is text title for container. Will be showed under preview image in snippet modal
@@ -21,4 +21,4 @@ Explain:
  * You need at least one element which has `data-type="container-content"` to add components inside your container
  
  ---
-[⬅ Back to documentation list](./index.md)
+[⬅ Back to documentation list](../README.md#documentation)

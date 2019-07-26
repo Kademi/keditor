@@ -8,4 +8,4 @@ As default, jQuery UI does not support any events for touch devices. To be enabl
 ```
 
  ---
-[⬅ Back to documentation list](./index.md)
+[⬅ Back to documentation list](../README.md#documentation)

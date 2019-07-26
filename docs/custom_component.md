@@ -14,7 +14,7 @@ The following snippet is for component with type is `x`.
 </div>
 ```
 
-Explain:
+Details:
  * `data-type` should be `component-${name}`. Example: `component-x` for `x` component
  * `data-preview` is url of preview image for component
  * `data-keditor-title` is text title for component. Will be showed under preview image in snippet modal
@@ -99,4 +99,4 @@ Explain:
  __**Note**__: `KEditor.getSettingComponent()` is method for getting which component is setting
  
  ---
-[⬅ Back to documentation list](./index.md)
+[⬅ Back to documentation list](../README.md#documentation)

@@ -25,21 +25,19 @@ keditor.methodName(param1, param2, ...);
 ### log
 ```javascript
 /**
- * Log utility of KEditor with `[ KEditor ] ` as prefix
- * @param {Any} Values you want to log
+ * Log utility of KEditor with `[ KEditor ] ` as prefix. You can see the log when `window.KEDITOR_DEBUG = true`
+ * @param {*} args Values you want to log
  */
-KEditor.log(value1, value2, ...);
+KEditor.log(...args);
 ```
-
-**Note**: You can see the log when `window.KEDITOR_DEBUG = true`
 
 ### error
 ```javascript
 /**
  * Throw error with `[ KEditor ] ` as prefix for message
- * @param {String} msg Error message
+ * @param {String} message Error message
  */
-KEditor.error(msg);
+KEditor.error(message);
 ```
 
 ### init
@@ -47,9 +45,9 @@ KEditor.error(msg);
 /**
  * Initialize KEditor instance
  * @param {jQuery} target Element which you want to initialize as KEditor
- * @param {Object} options Configuration of KEditor instance. See https://github.com/Kademi/keditor/blob/master/docs/configuration.md for more details
+ * @param {Object} config Configuration of KEditor instance. See https://github.com/Kademi/keditor/blob/master/docs/configuration.md for more details
  */
-KEditor.init(target, options);
+KEditor.init(target, config);
 ```
 
 ### loadDynamicContent
@@ -67,7 +65,7 @@ KEditor.loadDynamicContent(dynamicElement, options);
 ### getSettingContainer
 ```javascript
 /**
- * Get container which are setting-up
+ * Get container which is setting-up
  * @return {jQuery} 
  */
 KEditor.prototype.getSettingContainer();
@@ -76,7 +74,7 @@ KEditor.prototype.getSettingContainer();
 ### getSettingComponent
 ```javascript
 /**
- * Get component which are setting-up
+ * Get component which is setting-up
  * @return {jQuery} 
  */
 KEditor.prototype.getSettingComponent();

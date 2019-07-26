@@ -50,20 +50,36 @@ class KEditor {
         return init.apply(this, [target, config]);
     }
     
-    // Static methods
-    //---------------------------------
+    /**
+     * Log utility of KEditor with `[ KEditor ] ` as prefix. You can see the log when `window.KEDITOR_DEBUG = true`
+     * @param {*} args Values you want to log
+     */
     static log(...args) {
         log(...args);
     }
     
+    /**
+     * Throw error with `[ KEditor ] ` as prefix for message
+     * @param {String} message Error message
+     */
     static error(message) {
         throw new Error(`[ KEditor ] ${message}`);
     }
     
+    /**
+     * Initialize KEditor instance
+     * @param {jQuery} target Element which you want to initialize as KEditor
+     * @param {Object} config Configuration of KEditor instance. See https://github.com/Kademi/keditor/blob/master/docs/configuration.md for more details
+     */
     static init(target, config) {
         return new KEditor(target, config);
     }
     
+    /**
+     * Load dynamic content for elements which have `data-dynamic-href` attribute
+     * @param {jQuery} dynamicElement jQuery object of element(s) which you want to load dynamic content. Element(s) must have `data-dynamic-href` attribute
+     * @param {Object} options Callbacks include `onSuccess` and `onError` with arguments are `dynamicElement` and `jqXHR`
+     */
     static loadDynamicContent(dynamicElement, options = {}) {
         dynamicElement.each(function () {
             initDynamicContent.call({
@@ -75,66 +91,108 @@ class KEditor {
         });
     }
     
-    // Setting stuffs
-    //---------------------------------
+    /**
+     * Get container which is setting-up
+     * @return {jQuery}
+     */
     getSettingContainer() {
         return this.settingContainer;
     }
     
+    /**
+     * Get component which is setting-up
+     * @return {jQuery}
+     */
     getSettingComponent() {
         return this.settingComponent;
     }
     
-    // Utilities
-    //---------------------------------
+    /**
+     * Generate a random Id
+     * @return {String}
+     */
     generateId() {
         return generateId();
     }
     
+    /**
+     * Get list of `data-*` attributes
+     * @param {jQuery} target jQuery of elements which you want to get list of `data-*` attributes
+     * @param {Array<String>} ignoreAttributes Array of attributes you want to ignore
+     * @param {Boolean} isArray Return list as Array or Object
+     * @return {Array|Object}
+     */
     getDataAttributes(target, ignoreAttributes, isArray) {
         return getDataAttributes.apply(this, [target, ignoreAttributes, isArray]);
     }
     
-    // Iframe
-    //---------------------------------
+    /**
+     * Init iframe cover which avoid iframe's z-index issue in IE browsers
+     * @param {jQuery} iframe Iframe which you want to add cover for
+     * @param {jQuery} wrapper Wrapper of iframe
+     */
     initIframeCover(iframe, wrapper) {
         return initIframeCover.apply(this, [iframe, wrapper]);
     }
     
-    // Modal
-    //---------------------------------
+    /**
+     * Init KEditor modal
+     * @param {String} modalId Id of modal
+     * @param {Boolean} hasFooter Modal has footer or not
+     * @param {Boolean} disableOriginEvents If you want to handle close button by yourself, just set it as `false`
+     */
     initModal(modalId, hasFooter, disableOriginEvents) {
         return initModal.call(this, modalId, hasFooter, disableOriginEvents);
     }
     
+    /**
+     * Show a KEditor modal
+     * @param {jQuery} modal Modal you want to show
+     */
     showModal(modal) {
         return showModal.call(this, modal);
     }
     
+    /**
+     * Hide a KEditor modal
+     * @param {jQuery} modal Modal you want to show
+     */
     hideModal(modal) {
         return hideModal.call(this, modal);
     }
     
-    // Get content
-    //---------------------------------
+    /**
+     * @param {Boolean} inArray Return your content in array format or just plain string
+     * @return {String|Array<String>}
+     */
     getContent(inArray) {
         return getContent.apply(this, [inArray]);
     }
     
-    // Set content
-    //---------------------------------
+    /**
+     * @param {String} content HTML content
+     * @param {String|jQuery} contentArea Can be selector or jQuery object of content area which you want to set new content. If you have only a content area, you can leave it blank
+     */
     setContent(content, contentArea) {
         return setContent.apply(this, [content, contentArea]);
     }
     
-    // Destroy
-    //---------------------------------
+    /**
+     * Removes the KEditor functionality completely. This will return the element back to its pre-init state with latest content
+     */
     destroy() {
         return destroy.apply(this);
     }
     
-    // Snippet
-    //---------------------------------
+    /**
+     * Add snippet programmatically
+     * @param {String} type Type of snippet. Can be `container` or `component-*`
+     * @param {String} title Text title of snippet
+     * @param {String} previewUrl Url to preview image of snippet
+     * @param {String} categories Categories list of snippet, separated by `snippetsCategoriesSeparator` option
+     * @param {String} content HTML content of snippet
+     * @param {Array<String>} extraAttrs If you component contains dynamic content, you will need this parameter to add `data-*` attribute to your component
+     */
     addSnippet(type, title, previewUrl, categories, content, extraAttrs) {
         return addSnippet.apply(this, [type, title, previewUrl, categories, content, extraAttrs]);
     }

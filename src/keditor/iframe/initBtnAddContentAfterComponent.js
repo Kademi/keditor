@@ -1,6 +1,6 @@
 import CSS_CLASS from '../constants/cssClass';
 import ACTION_TYPE from '../constants/actionType';
-import openSnippetModal from '../modal/openSnippetModal';
+import showSnippetModal from '../modal/showSnippetModal';
 
 export default function () {
     let self = this;
@@ -12,6 +12,6 @@ export default function () {
         let btn = $(this);
         let component = btn.closest(`.${CSS_CLASS.COMPONENT}`);
         let container = btn.closest(`.${CSS_CLASS.CONTAINER}`);
-        openSnippetModal.call(self, component, ACTION_TYPE.AFTER, true, !container.hasClass(CSS_CLASS.SUB_CONTAINER));
+        showSnippetModal.call(self, component, ACTION_TYPE.AFTER, true, !container.hasClass(CSS_CLASS.SUB_CONTAINER));
     });
 };

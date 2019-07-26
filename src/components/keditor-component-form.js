@@ -93,7 +93,7 @@ KEditor.components['form'] = {
             let component = keditor.getSettingComponent();
             component.find('.form-data').html(formBuilder.actions.getData('json'));
             self.renderForm(component);
-            keditor.closeModal(modal);
+            keditor.hideModal(modal);
         });
     
         setTimeout(() => {
@@ -196,7 +196,7 @@ KEditor.components['form'] = {
             
             let component = keditor.getSettingComponent();
             formBuilder.actions.setData(component.find('.form-data').html());
-            keditor.openModal(modal);
+            keditor.showModal(modal);
         });
         
         form.find('.txt-form-action').on('change', function () {

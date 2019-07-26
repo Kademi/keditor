@@ -3,12 +3,12 @@ import renderSnippetFilter from './renderSnippetFilter';
 import CSS_CLASS from '../constants/cssClass';
 import beautifyCategories from './beautifyCategories';
 
-export default function (type, title, previewUrl, categories, content, extraData) {
+export default function (type, title, previewUrl, categories, content, extraAttrs) {
     let self = this;
     let [
         snippetPreviewHtml,
         snippetContentHtml
-    ] = renderSnippet.call(self, type, title, previewUrl, categories, content, extraData);
+    ] = renderSnippet.call(self, type, title, previewUrl, categories, content, extraAttrs);
     
     self.categoryContainer = beautifyCategories(self.categoryContainer);
     self.categoryComponent = beautifyCategories(self.categoryComponent);

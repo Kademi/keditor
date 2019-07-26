@@ -2,7 +2,7 @@ import CSS_CLASS from '../constants/cssClass';
 import generateId from '../utils/generateId';
 import renderSnippets from '../snippet/renderSnippets';
 import initSnippetsFilter from '../snippet/initSnippetsFilter';
-import closeSnippetModal from './closeSnippetModal';
+import hideSnippetModal from './hideSnippetModal';
 import initSnippetAction from './initSnippetAction';
 import addSnippetToTarget from './addSnippetToTarget';
 import initModal from './initModal';
@@ -45,7 +45,7 @@ export default function () {
         modal.find(`.${CSS_CLASS.MODAL_CLOSE}`).on('click', function (e) {
             e.preventDefault();
             
-            closeSnippetModal.call(self);
+            hideSnippetModal.call(self);
         });
     
         // Add buttons
@@ -55,7 +55,7 @@ export default function () {
             let selectedSnippet = $(this);
             
             addSnippetToTarget.call(self, e, selectedSnippet, self.modalTarget, self.modalTargetAction);
-            closeSnippetModal.call(self);
+            hideSnippetModal.call(self);
         });
     } else {
         self.error('"snippetsUrl" must be not null!');

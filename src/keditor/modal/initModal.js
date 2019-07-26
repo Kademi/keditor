@@ -1,5 +1,5 @@
 import CSS_CLASS from '../constants/cssClass';
-import closeModal from './closeModal';
+import hideModal from './hideModal';
 
 export default function (modalId, hasFooter = true, disableOriginEvents = false) {
     let self = this;
@@ -20,7 +20,7 @@ export default function (modalId, hasFooter = true, disableOriginEvents = false)
         modal.on('click', `.${CSS_CLASS.MODAL_CLOSE}`, function (e) {
             e.preventDefault();
             
-            closeModal.call(self, modal);
+            hideModal.call(self, modal);
         });
     }
     

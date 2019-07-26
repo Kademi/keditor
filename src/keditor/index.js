@@ -14,8 +14,8 @@ import destroy from './destroy';
 import getContent from './getContent';
 import setContent from './setContent';
 import initModal from './modal/initModal';
-import openModal from './modal/openModal';
-import closeModal from './modal/closeModal';
+import showModal from './modal/showModal';
+import hideModal from './modal/hideModal';
 import initDynamicContent from './component/initDynamicContent';
 
 // Check dependencies
@@ -107,12 +107,12 @@ class KEditor {
         return initModal.call(this, modalId, hasFooter, disableOriginEvents);
     }
     
-    openModal(modal) {
-        return openModal.call(this, modal);
+    showModal(modal) {
+        return showModal.call(this, modal);
     }
     
-    closeModal(modal) {
-        return closeModal.call(this, modal);
+    hideModal(modal) {
+        return hideModal.call(this, modal);
     }
     
     // Legacy methods. DEPRECATED
@@ -145,8 +145,8 @@ class KEditor {
     
     // Snippet
     //---------------------------------
-    addSnippet(type, title, previewUrl, categories, content, dataAttributes) {
-        return addSnippet.apply(this, [type, title, previewUrl, categories, content, dataAttributes]);
+    addSnippet(type, title, previewUrl, categories, content, extraAttrs) {
+        return addSnippet.apply(this, [type, title, previewUrl, categories, content, extraAttrs]);
     }
 }
 

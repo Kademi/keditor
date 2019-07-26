@@ -1,7 +1,7 @@
 import TOOLBAR_TYPE from '../constants/toolbarType';
 import CSS_CLASS from '../constants/cssClass';
 import ACTION_TYPE from '../constants/actionType';
-import openSnippetModal from '../modal/openSnippetModal';
+import showSnippetModal from '../modal/showSnippetModal';
 import generateId from '../utils/generateId';
 import generateToolbar from '../utils/generateToolbar';
 import convertToContainer from './convertToContainer';
@@ -27,7 +27,7 @@ export default function (contentArea, container, containerContent, isNested) {
     containerContentToolbar.children(`.${CSS_CLASS.ADD_CONTENT}`).on('click', function (e) {
         e.preventDefault();
         
-        openSnippetModal.call(self, containerContentInner, ACTION_TYPE.APPEND, true, !isNested);
+        showSnippetModal.call(self, containerContentInner, ACTION_TYPE.APPEND, true, !isNested);
     });
     
     containerContentInner.sortable({

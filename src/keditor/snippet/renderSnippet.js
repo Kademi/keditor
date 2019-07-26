@@ -1,8 +1,7 @@
 import CSS_CLASS from '../constants/cssClass';
-import ICON from '../constants/icon';
 import generateId from '../utils/generateId';
 
-export default function (type, title, previewUrl, categories, content, extraData) {
+export default function (type, title, previewUrl, categories, content, extraAttrs) {
     let self = this;
     let options = self.options;
     let snippetId = generateId();
@@ -20,7 +19,7 @@ export default function (type, title, previewUrl, categories, content, extraData
             </span>
         </section>
     `;
-    let snippetContentHtml = `<script id="${snippetId}" type="text/html" ${extraData.join(' ')}>${content}</script>`;
+    let snippetContentHtml = `<script id="${snippetId}" type="text/html" ${extraAttrs.join(' ')}>${content}</script>`;
     
     categories = categories.split(options.snippetsCategoriesSeparator);
     

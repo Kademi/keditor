@@ -1,7 +1,7 @@
 import TOOLBAR_TYPE from '../constants/toolbarType';
 import CSS_CLASS from '../constants/cssClass';
 import ACTION_TYPE from '../constants/actionType';
-import openSnippetModal from '../modal/openSnippetModal';
+import showSnippetModal from '../modal/showSnippetModal';
 import generateToolbar from '../utils/generateToolbar';
 import closeSidebar from '../sidebar/closeSidebar';
 import convertToContainer from '../container/convertToContainer';
@@ -25,7 +25,7 @@ export default function (contentArea, dontInitToolbar) {
         contentAreaToolbar.children(`.${CSS_CLASS.ADD_CONTENT}`).on('click', function (e) {
             e.preventDefault();
     
-            openSnippetModal.call(self, contentAreaInner, ACTION_TYPE.APPEND, true, true);
+            showSnippetModal.call(self, contentAreaInner, ACTION_TYPE.APPEND, true, true);
         });
     }
     

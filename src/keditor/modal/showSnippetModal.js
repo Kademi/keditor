@@ -1,5 +1,5 @@
 import CSS_CLASS from '../constants/cssClass';
-import openModal from './openModal';
+import showModal from './showModal';
 
 export default function (target, actionType, showComponent, showContainer) {
     let self = this;
@@ -11,5 +11,5 @@ export default function (target, actionType, showComponent, showContainer) {
     showContainer && modal.addClass(CSS_CLASS.MODAL_CONTAINER);
     modal.css('display', 'block');
     
-    openModal.call(self, modal);
+    showModal.call(self, modal);
 };

@@ -1,5 +1,5 @@
 import CSS_CLASS from '../constants/cssClass';
-import closeModal from './closeModal';
+import hideModal from './hideModal';
 
 export default function () {
     let self = this;
@@ -13,5 +13,5 @@ export default function () {
     modal.removeClass(CSS_CLASS.MODAL_COMPONENT);
     modal.removeClass(CSS_CLASS.MODAL_CONTAINER);
     
-    closeModal.call(self, modal);
+    hideModal.call(self, modal);
 };

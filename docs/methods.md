@@ -67,73 +67,88 @@ KEditor.loadDynamicContent(dynamicElement, options);
 ### getSettingContainer
 ```javascript
 /**
- * @param 
+ * Get container which are setting-up
+ * @return {jQuery} 
  */
-KEditor.getContent();
+KEditor.prototype.getSettingContainer();
 ```
 
 ### getSettingComponent
 ```javascript
 /**
- * @param 
+ * Get component which are setting-up
+ * @return {jQuery} 
  */
-KEditor.getContent();
+KEditor.prototype.getSettingComponent();
 ```
 
 ### generateId
 ```javascript
 /**
- * @param 
+ * Generate a random Id
+ * @return {String} 
  */
-KEditor.getContent();
+KEditor.prototype.generateId();
 ```
 
 ### getDataAttributes
 ```javascript
 /**
- * @param 
+ * Get list of `data-*` attributes
+ * @param {jQuery} target jQuery of elements which you want to get list of `data-*` attributes
+ * @param {Array<String>} ignoreAttributes Array of attributes you want to ignore
+ * @param {Boolean} isArray Return list as Array or Object
+ * @return {Array|Object}
  */
-KEditor.getContent();
+KEditor.prototype.getDataAttributes(target, ignoreAttributes, isArray);
 ```
 
 ### initIframeCover
 ```javascript
 /**
- * @param 
+ * Init iframe cover which avoid iframe's z-index issue in IE browsers
+ * @param {jQuery} iframe Iframe which you want to add cover for
+ * @param {jQuery} wrapper Wrapper of iframe
  */
-KEditor.getContent();
+KEditor.prototype.initIframeCover(iframe, wrapper);
 ```
 
 ### initModal
 ```javascript
 /**
- * @param 
+ * Init KEditor modal
+ * @param {String} modalId Id of modal
+ * @param {Boolean} hasFooter Modal has footer or not
+ * @param {Boolean} disableOriginEvents If you want to handle close button by yourself, just set it as `false`
  */
-KEditor.getContent();
+KEditor.prototype.initModal(modalId, hasFooter, disableOriginEvents);
 ```
 
-### openModal
+### showModal
 ```javascript
 /**
- * @param 
+ * Show a KEditor modal
+ * @param {jQuery} modal Modal you want to show
  */
-KEditor.getContent();
+KEditor.prototype.showModal(modal);
 ```
 
-### closeModal
+### hideModal
 ```javascript
 /**
- * @param 
+ * Hide a KEditor modal
+ * @param {jQuery} modal Modal you want to show
  */
-KEditor.getContent();
+KEditor.prototype.hideModal(modal);
 ```
 
 ### showSettingPanel
 ```javascript
 /**
- * @param 
+ * Show settings form of an element. Can be
+ * @param {jQuery} modal Element you want to show its settings in sidebar
  */
-KEditor.getContent();
+KEditor.prototype.showSettingPanel(target);
 ```
 
 ### hideSettingPanel
@@ -141,15 +156,16 @@ KEditor.getContent();
 /**
  * @param 
  */
-KEditor.getContent();
+KEditor.prototype.hideSettingPanel();
 ```
 
 ### getContent
 ```javascript
 /**
  * @param {Boolean} inArray Return your content in array format or just plain string
+ * @return {String|Array<String>}
  */
-KEditor.getContent(inArray);
+KEditor.prototype.getContent(inArray);
 ```
 
 Example:
@@ -164,29 +180,40 @@ $('#target2').keditor('getContent', true); // For more than 1 content-area and y
  * @param {String} content HTML content
  * @param {String|jQuery} contentArea Can be selector or jQuery object of content area which you want to set new content. If you have only a content area, you can leave it blank
  */
-KEditor.setContent(content, contentArea);
+KEditor.prototype.setContent(content, contentArea);
 ```
 
 Example:
 ```javascript
-$('#id').keditor('setContent', '<section><div class="row"><div class="col-md-6" data-type="container-content"><section data-type="component-text">New content</section></div></div></section>');
+$('#id').keditor('setContent', `
+    <div class="row">
+        <div class="col-md-6" data-type="container-content">
+            <div data-type="component-text">New content</div>
+        </div>
+    </div>
+`);
 ```
 
 ### destroy
-Removes the KEditor functionality completely. This will return the element back to its pre-init state with latest content
-
 ```javascript
-$('.selector').keditor('destroy');
+/**
+ * Removes the KEditor functionality completely. This will return the element back to its pre-init state with latest content
+ */
+KEditor.prototype.destroy();
 ```
  
 ### addSnippet
-Add snippet programmatically
-
 ```javascript
 /**
- * @param 
+ * Add snippet programmatically 
+ * @param {String} type Type of snippet. Can be `container` or `component-*`
+ * @param {String} title Text title of snippet
+ * @param {String} previewUrl Url to preview image of snippet
+ * @param {String} categories Categories list of snippet, separated by `snippetsCategoriesSeparator` option
+ * @param {String} content HTML content of snippet
+ * @param {Array<String>} extraAttrs If you component contains dynamic content, you will need this parameter to add `data-*` attribute to your component
  */
-$('.selector').keditor('destroy');
+KEditor.prototype.addSnippet(type, title, previewUrl, categories, content, dataAttributes);
 ```
 
  ---

@@ -15,7 +15,7 @@ export default function () {
         let contentArea = container.parent();
         let newContainer = $(getContainerContent.call(self, container, btn.parent().hasClass(CSS_CLASS.TOOLBAR_SUB_CONTAINER)));
         container.after(newContainer);
-        convertToContainer.call(self, contentArea, newContainer);
+        convertToContainer.call(self, newContainer);
         
         if (typeof options.onContainerDuplicated === 'function') {
             options.onContainerDuplicated.call(self, container, newContainer, contentArea);

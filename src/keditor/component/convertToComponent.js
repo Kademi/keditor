@@ -2,7 +2,7 @@ import CSS_CLASS from '../constants/cssClass';
 import getDataAttributes from '../utils/getDataAttributes';
 import initComponent from './initComponent';
 
-export default function (contentArea, container, target, isExisting) {
+export default function (target, isExisting) {
     if (target.is(`.${CSS_CLASS.TOOLBAR_CONTAINER_CONTENT}`)) {
         return;
     }
@@ -19,5 +19,5 @@ export default function (contentArea, container, target, isExisting) {
         component.addClass(`${CSS_CLASS.COMPONENT_EXISTING}`);
     }
     
-    initComponent.call(self, contentArea, container, component);
+    initComponent.call(self, component);
 };

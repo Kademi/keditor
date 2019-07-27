@@ -65,7 +65,7 @@ export default function (contentArea, dontInitToolbar) {
     });
     
     contentAreaInner.children().each(function () {
-        convertToContainer.call(self, contentArea, $(this));
+        convertToContainer.call(self, $(this));
     });
     
     typeof options.onInitContentArea === 'function' && options.onInitContentArea.call(self, contentArea);

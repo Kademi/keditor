@@ -57,7 +57,7 @@ export default function (e, selectedSnippet, target, targetAction) {
             options.onContentChanged.call(self, e, contentArea);
         }
         
-        convertToContainer.call(self, contentArea, newContainer);
+        convertToContainer.call(self, newContainer);
     }
     
     if (isAddingComponent || isAddingComponentWithContainer) {
@@ -82,7 +82,7 @@ export default function (e, selectedSnippet, target, targetAction) {
             options.onContentChanged.call(self, e, contentArea);
         }
         
-        convertToComponent.call(self, contentArea, container, newComponent);
+        convertToComponent.call(self,newComponent);
     }
     
     if (isAddingComponentWithContainer) {
@@ -98,6 +98,6 @@ export default function (e, selectedSnippet, target, targetAction) {
             options.onContentChanged.call(self, e, contentArea);
         }
     
-        convertToContainer.call(self, contentArea, newContainer);
+        convertToContainer.call(self, newContainer);
     }
 };

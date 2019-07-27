@@ -1,13 +1,15 @@
 import TOOLBAR_TYPE from '../constants/toolbarType';
 import CSS_CLASS from '../constants/cssClass';
 import generateId from '../utils/generateId';
-import getComponentType from './getComponentType';
 import generateToolbar from '../utils/generateToolbar';
+import getComponentType from './getComponentType';
 import initDynamicContent from './initDynamicContent';
 
-export default function (contentArea, container, component) {
+export default function (component) {
     let self = this;
     let options = self.options;
+    let container = component.closest(`.${CSS_CLASS.CONTAINER}`);
+    let contentArea = container.closest(`.${CSS_CLASS.CONTENT_AREA}`);
     
     if (!component.hasClass(CSS_CLASS.STATE_INITIALIZED) || !component.hasClass(CSS_CLASS.STATE_INITIALIZING)) {
         component.addClass(CSS_CLASS.STATE_INITIALIZING);

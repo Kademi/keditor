@@ -17,7 +17,7 @@ export default function () {
         let newComponent = $(getComponentContent.call(self, component));
         
         component.after(newComponent);
-        convertToComponent.call(self, contentArea, container, newComponent);
+        convertToComponent.call(self, newComponent);
         
         if (typeof options.onComponentDuplicated === 'function') {
             options.onComponentDuplicated.call(self, component, newComponent, contentArea);

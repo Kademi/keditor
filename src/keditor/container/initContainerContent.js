@@ -77,9 +77,9 @@ export default function (contentArea, container, containerContent, isNested) {
         let child = $(this);
         
         if (child.find('[data-type="container-content"]').length > 0) {
-            convertToContainer.call(self, contentArea, child);
+            convertToContainer.call(self, child);
         } else {
-            convertToComponent.call(self, contentArea, container, child, true);
+            convertToComponent.call(self, child, true);
         }
     });
 };

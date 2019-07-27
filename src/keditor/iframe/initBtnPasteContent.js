@@ -2,6 +2,10 @@ import CSS_CLASS from '../constants/cssClass';
 import ACTION_TYPE from '../constants/actionType';
 import setCopyContent from '../utils/setCopyContent';
 import log from '../utils/log';
+import getContainerContent from '../container/getContainerContent';
+import convertToContainer from '../container/convertToContainer';
+import getComponentContent from '../component/getComponentContent';
+import convertToComponent from '../component/convertToComponent';
 
 export default function () {
     let self = this;
@@ -11,11 +15,21 @@ export default function () {
         e.preventDefault();
         
         log(`Click on ".${CSS_CLASS.PASTE_CONTENT}"`);
-    
+        
         let btn = $(this);
+        let isCopy = !!self.copyContent;
         
         // Check source
-        let source = self.copyContent ? self.copyContent.clone() : self.cutContent;
+        let source = isCopy ? self.copyContent : self.cutContent;
+        let isComponent = source.hasClass(CSS_CLASS.COMPONENT);
+        let isContainer = source.hasClass(CSS_CLASS.CONTAINER);
+        let isSubContainer = source.hasClass(CSS_CLASS.SUB_CONTAINER);
+        let pasteContent;
+        if (isCopy) {
+            pasteContent = $(isComponent ? getComponentContent.call(self, source) : getComponentContent.call(self, source, isSubContainer));
+        } else {
+            pasteContent = source;
+        }
         
         // Check target
         let target = null;
@@ -39,7 +53,7 @@ export default function () {
             target = toolbarContainerContent.siblings(`.${CSS_CLASS.CONTAINER_CONTENT_INNER}`);
         }
         
-        let toolbarContentArea =  btn.closest(`.${CSS_CLASS.TOOLBAR_CONTENT_AREA}`);
+        let toolbarContentArea = btn.closest(`.${CSS_CLASS.TOOLBAR_CONTENT_AREA}`);
         if (toolbarContentArea.length > 0) {
             target = toolbarContentArea.siblings(`.${CSS_CLASS.CONTENT_AREA_INNER}`);
         }
@@ -52,7 +66,17 @@ export default function () {
             action = ACTION_TYPE.APPEND;
         }
         
-        target[action](source);
+        target[action](pasteContent);
         setCopyContent.call(self, null);
+        
+        if (isCopy) {
+            if (isComponent) {
+                convertToComponent.call(self, pasteContent);
+            }
+            
+            if (isContainer) {
+                convertToContainer.call(self, pasteContent);
+            }
+        }
     });
 };

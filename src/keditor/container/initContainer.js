@@ -5,10 +5,11 @@ import generateId from '../utils/generateId';
 import initContainerContent from './initContainerContent';
 import initColumnResizer from './initColumnResizer';
 
-export default function (contentArea, container) {
+export default function (container) {
     let self = this;
     let options = self.options;
     let isNested = container.closest('[data-type="container-content"]').length > 0;
+    let contentArea = container.closest(`.${CSS_CLASS.CONTENT_AREA}`);
     
     if (!container.hasClass(CSS_CLASS.STATE_INITIALIZED) || !container.hasClass(CSS_CLASS.STATE_INITIALIZING)) {
         container.addClass(CSS_CLASS.STATE_INITIALIZING);

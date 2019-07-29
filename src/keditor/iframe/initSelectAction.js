@@ -1,5 +1,7 @@
 import CSS_CLASS from '../constants/cssClass';
 import getClickedElement from '../utils/getClickedElement';
+import openSidebar from '../sidebar/openSidebar';
+import closeSidebar from '../sidebar/closeSidebar';
 
 export default function () {
     let self = this;
@@ -37,6 +39,14 @@ export default function () {
                 if (typeof options.onComponentSelected === 'function') {
                     options.onComponentSelected.call(self, e, component, contentArea);
                 }
+            }
+            
+            let btnSetting = component.find(`.${CSS_CLASS.COMPONENT_SETTING}`);
+            if (btnSetting.length > 0) {
+                self.settingComponent = null;
+                openSidebar.call(self, component);
+            } else {
+                closeSidebar.call(self);
             }
         } else {
             if (!sidebar) {

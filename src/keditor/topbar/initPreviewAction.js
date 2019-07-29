@@ -1,7 +1,8 @@
 import CSS_CLASS from '../constants/cssClass';
-import initDynamicContent from '../component/initDynamicContent';
-import getContent from '../getContent';
 import ICON from '../constants/icon';
+import initDynamicContent from '../component/initDynamicContent';
+import closeSidebar from '../sidebar/closeSidebar';
+import getContent from '../getContent';
 
 export default function () {
     let self = this;
@@ -21,6 +22,9 @@ export default function () {
         btnPreview.attr('title', isPreviewOn ? options.locale.previewOn : options.locale.previewOff);
         self.iframeBody[isPreviewOn ? 'addClass' : 'removeClass'](CSS_CLASS.STATE_PREVIEWING);
         self.previewArea.html('');
+        
+        // Close sidebar when previewing
+        closeSidebar.call(self);
         
         isPreviewOn && self.previewArea.html(getContent.call(self)).find('[data-dynamic-href]').each(function () {
             let dynamicElement = $(this);

@@ -2,8 +2,11 @@ import CSS_CLASS from '../constants/cssClass';
 import getComponentType from '../component/getComponentType';
 import SETTING_CATEGORY from '../constants/settingCategory';
 import showSettingForm from './showSettingForm';
+import log from '../utils/log';
 
 export default function (target) {
+    log('openSidebar', target);
+    
     let self = this;
     let options = self.options;
     

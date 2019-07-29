@@ -15,7 +15,6 @@ export default function () {
         if (confirm(options.locale.confirmDeleteComponentText)) {
             let component = btn.closest(`.${CSS_CLASS.COMPONENT}`);
             let container = component.closest(`.${CSS_CLASS.CONTAINER}`);
-            let containerContentInner = component.closest(`.${CSS_CLASS.CONTAINER_CONTENT_INNER}`);
             let contentArea = component.closest(`.${CSS_CLASS.CONTENT_AREA}`);
             
             if (typeof options.onBeforeComponentDeleted === 'function') {

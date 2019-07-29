@@ -2,7 +2,6 @@ import CSS_CLASS from '../constants/cssClass';
 import ACTION_TYPE from '../constants/actionType';
 import setCopyContent from '../utils/setCopyContent';
 import log from '../utils/log';
-import getContainerContent from '../container/getContainerContent';
 import convertToContainer from '../container/convertToContainer';
 import getComponentContent from '../component/getComponentContent';
 import convertToComponent from '../component/convertToComponent';

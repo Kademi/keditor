@@ -1,7 +1,10 @@
 import CSS_CLASS from '../constants/cssClass';
 import SETTING_CATEGORY from '../constants/settingCategory';
+import log from '../utils/log';
 
 export default function () {
+    log('closeSidebar');
+    
     let self = this;
     let options = self.options;
     let sidebar = self.sidebar;

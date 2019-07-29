@@ -41,6 +41,11 @@ export default function () {
                 }
             }
             
+            let toolbar = getClickedElement(e, `.${CSS_CLASS.TOOLBAR_COMPONENT}`);
+            if (toolbar) {
+                return;
+            }
+            
             let btnSetting = component.find(`.${CSS_CLASS.COMPONENT_SETTING}`);
             if (btnSetting.length > 0) {
                 self.settingComponent = null;

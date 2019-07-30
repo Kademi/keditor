@@ -4,7 +4,7 @@ import renderSnippets from '../snippet/renderSnippets';
 import initSnippetsFilter from '../snippet/initSnippetsFilter';
 import hideSnippetModal from './hideSnippetModal';
 import initSnippetAction from './initSnippetAction';
-import addSnippetToTarget from './addSnippetToTarget';
+import addSnippetToTarget from '../snippet/addSnippetToTarget';
 import initModal from './initModal';
 
 export default function () {

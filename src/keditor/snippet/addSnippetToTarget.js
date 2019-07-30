@@ -58,6 +58,7 @@ export default function (e, selectedSnippet, target, targetAction) {
         }
         
         convertToContainer.call(self, newContainer);
+        newContainer.trigger('click');
     }
     
     if (isAddingComponent || isAddingComponentWithContainer) {
@@ -83,6 +84,7 @@ export default function (e, selectedSnippet, target, targetAction) {
         }
         
         convertToComponent.call(self,newComponent);
+        newComponent.trigger('click');
     }
     
     if (isAddingComponentWithContainer) {
@@ -99,5 +101,6 @@ export default function (e, selectedSnippet, target, targetAction) {
         }
     
         convertToContainer.call(self, newContainer);
+        newComponent.trigger('click');
     }
 };

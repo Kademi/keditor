@@ -134,32 +134,38 @@ body.opened-modal {
 }
 .keditor-sidebar-body {
   height: calc(100% - 41px);
+  overflow: hidden;
+  position: relative;
+}
+.keditor-sidebar-body .keditor-setting-form {
   overflow-x: hidden;
   overflow-y: auto;
   padding: 10px 15px;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: -100%;
+  opacity: 0;
+  transition: all 0.3s;
 }
-.keditor-sidebar-body::-webkit-scrollbar {
+.keditor-sidebar-body .keditor-setting-form::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
-.keditor-sidebar-body::-webkit-scrollbar-track {
+.keditor-sidebar-body .keditor-setting-form::-webkit-scrollbar-track {
   background: #eee;
   -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
 }
-.keditor-sidebar-body::-webkit-scrollbar-thumb {
+.keditor-sidebar-body .keditor-setting-form::-webkit-scrollbar-thumb {
   background: #ddd;
   -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
 }
-.keditor-sidebar-body::-webkit-scrollbar-thumb:hover {
+.keditor-sidebar-body .keditor-setting-form::-webkit-scrollbar-thumb:hover {
   background: #cdcdcd;
 }
-.keditor-sidebar-body::-webkit-scrollbar-thumb:active {
+.keditor-sidebar-body .keditor-setting-form::-webkit-scrollbar-thumb:active {
   background: #cdcdcd;
-}
-.keditor-sidebar-body .keditor-setting-form {
-  overflow: hidden;
-  display: none;
-  min-height: 100%;
 }
 .keditor-sidebar-body .keditor-setting-form:before,
 .keditor-sidebar-body .keditor-setting-form:after {
@@ -170,7 +176,8 @@ body.opened-modal {
   clear: both;
 }
 .keditor-sidebar-body .keditor-setting-form.active {
-  display: block;
+  right: 0;
+  opacity: 1;
 }
 .keditor-preview-area {
   display: none;

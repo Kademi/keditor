@@ -61,20 +61,27 @@
 }
 
 .keditor-sidebar-body {
-    .keditor-scrollbar();
     height: ~"calc(100% - 41px)";
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: @sidebar-body-padding;
+    overflow: hidden;
+    position: relative;
     
     .keditor-setting-form {
+        .keditor-scrollbar();
         .clearfix();
-        overflow: hidden;
-        display: none;
-        min-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: @sidebar-body-padding;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: -100%;
+        opacity: 0;
+        transition: all @animation-duration;
         
         &.active {
-            display: block;
+            right: 0;
+            opacity: 1;
         }
     }
 }

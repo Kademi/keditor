@@ -15,6 +15,8 @@ export default function (target, isExisting) {
     target.wrap(`<section class="${CSS_CLASS.UI} ${CSS_CLASS.COMPONENT_CONTENT}"></section>`);
     component = target.parent().parent();
     
+    target.removeAttr('data-type');
+    
     if (isExisting) {
         component.addClass(`${CSS_CLASS.COMPONENT_EXISTING}`);
     }

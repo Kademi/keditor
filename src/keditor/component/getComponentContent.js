@@ -35,7 +35,7 @@ export default function (component) {
         $(this).html('');
     });
     
-    clonedComponent.children().attr(dataAttributes);
+    clonedComponent.children().attr(dataAttributes).attr('data-type', `component-${componentType}`);
     
     return clonedComponent.html();
 };

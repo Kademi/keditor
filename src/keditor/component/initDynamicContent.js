@@ -5,7 +5,7 @@ import generateId from '../utils/generateId';
 export default function (dynamicElement) {
     let self = this;
     let options = self.options;
-    let component = dynamicElement.closest('[data-type^=component]');
+    let component = dynamicElement.closest(`[data-type^="component"]`);
     let contentArea = dynamicElement.closest(`.${CSS_CLASS.CONTENT_AREA}`);
     
     !dynamicElement.attr('id') && dynamicElement.attr('id', generateId());

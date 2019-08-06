@@ -7,8 +7,6 @@ import generateId from './utils/generateId';
 import getDataAttributes from './utils/getDataAttributes';
 import initIframeCover from './iframe/initIframeCover';
 import addSnippet from './snippet/addSnippet';
-import openSidebar from './sidebar/openSidebar';
-import closeSidebar from './sidebar/closeSidebar';
 import init from './init';
 import destroy from './destroy';
 import getContent from './getContent';
@@ -47,7 +45,7 @@ class KEditor {
     categoryContainer = [];
     
     constructor(target, config) {
-        return init.apply(this, [target, config]);
+        init.apply(this, [target, config]);
     }
     
     /**
@@ -70,6 +68,7 @@ class KEditor {
      * Initialize KEditor instance
      * @param {jQuery} target Element which you want to initialize as KEditor
      * @param {Object} config Configuration of KEditor instance. See https://github.com/Kademi/keditor/blob/master/docs/configuration.md for more details
+     * @return {KEditor}
      */
     static init(target, config) {
         return new KEditor(target, config);
@@ -132,7 +131,7 @@ class KEditor {
      * @param {jQuery} wrapper Wrapper of iframe
      */
     initIframeCover(iframe, wrapper) {
-        return initIframeCover.apply(this, [iframe, wrapper]);
+        initIframeCover.apply(this, [iframe, wrapper]);
     }
     
     /**
@@ -140,6 +139,7 @@ class KEditor {
      * @param {String} modalId Id of modal
      * @param {Boolean} hasFooter Modal has footer or not
      * @param {Boolean} disableOriginEvents If you want to handle close button by yourself, just set it as `false`
+     * @return {jQuery}
      */
     initModal(modalId, hasFooter, disableOriginEvents) {
         return initModal.call(this, modalId, hasFooter, disableOriginEvents);
@@ -150,7 +150,7 @@ class KEditor {
      * @param {jQuery} modal Modal you want to show
      */
     showModal(modal) {
-        return showModal.call(this, modal);
+        showModal.call(this, modal);
     }
     
     /**
@@ -158,7 +158,7 @@ class KEditor {
      * @param {jQuery} modal Modal you want to show
      */
     hideModal(modal) {
-        return hideModal.call(this, modal);
+        hideModal.call(this, modal);
     }
     
     /**
@@ -174,14 +174,14 @@ class KEditor {
      * @param {String|jQuery} contentArea Can be selector or jQuery object of content area which you want to set new content. If you have only a content area, you can leave it blank
      */
     setContent(content, contentArea) {
-        return setContent.apply(this, [content, contentArea]);
+        setContent.apply(this, [content, contentArea]);
     }
     
     /**
      * Removes the KEditor functionality completely. This will return the element back to its pre-init state with latest content
      */
     destroy() {
-        return destroy.apply(this);
+        destroy.apply(this);
     }
     
     /**
@@ -194,7 +194,16 @@ class KEditor {
      * @param {Array<String>} extraAttrs If you component contains dynamic content, you will need this parameter to add `data-*` attribute to your component
      */
     addSnippet(type, title, previewUrl, categories, content, extraAttrs) {
-        return addSnippet.apply(this, [type, title, previewUrl, categories, content, extraAttrs]);
+        addSnippet.apply(this, [type, title, previewUrl, categories, content, extraAttrs]);
+    }
+    
+    /**
+     * Load dynamic content for elements which have `data-dynamic-href` attribute
+     * @param {jQuery} dynamicElement jQuery object of element(s) which you want to load dynamic content. Element(s) must have `data-dynamic-href` attribute
+     * @return {jqXHR}
+     */
+    initDynamicContent(dynamicElement) {
+        return initDynamicContent.apply(this, [dynamicElement]);
     }
 }
 

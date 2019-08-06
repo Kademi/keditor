@@ -197,5 +197,15 @@ KEditor.prototype.destroy();
 KEditor.prototype.addSnippet(type, title, previewUrl, categories, content, dataAttributes);
 ```
 
+### initDynamicContent
+```javascript
+/**
+ * Load dynamic content for elements which have `data-dynamic-href` attribute
+ * @param {jQuery} dynamicElement jQuery object of element(s) which you want to load dynamic content. Element(s) must have `data-dynamic-href` attribute
+ * @return {jqXHR}
+ */
+KEditor.prototype.initDynamicContent(dynamicElement);
+```
+
  ---
 [⬅ Back to documentation list](../README.md#documentation)

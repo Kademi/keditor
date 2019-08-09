@@ -314,6 +314,17 @@ export default {
         columnResizeEnabled: true,
     
         /**
+         * List of device class for responsive grid system
+         * @option {Object}
+         */
+        deviceClass: {
+            MOBILE: 'xs',
+            TABLET: 'sm',
+            LAPTOP: 'md',
+            DESKTOP: 'lg'
+        },
+    
+        /**
          * Grid system of bootstrap with `width` in percentage and `col` number
          * @option {Array<Object>}
          */

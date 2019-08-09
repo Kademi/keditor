@@ -32,12 +32,12 @@ export default function (container) {
             },
             resize: function (e, ui) {
                 let col = $(this);
-                let deviceMode = self.deviceMode;
-                let bsClass = `col-${deviceMode}-1 col-${deviceMode}-2 col-${deviceMode}-3 col-${deviceMode}-4 col-${deviceMode}-5 col-${deviceMode}-6 col-${deviceMode}-7 col-${deviceMode}-8 col-${deviceMode}-9 col-${deviceMode}-10 col-${deviceMode}-11 col-${deviceMode}-12`;
+                let deviceClass = options.bootstrap.deviceClass[self.deviceMode];
+                let bsClass = `col-${deviceClass}-1 col-${deviceClass}-2 col-${deviceClass}-3 col-${deviceClass}-4 col-${deviceClass}-5 col-${deviceClass}-6 col-${deviceClass}-7 col-${deviceClass}-8 col-${deviceClass}-9 col-${deviceClass}-10 col-${deviceClass}-11 col-${deviceClass}-12`;
     
                 let row = col.parent();
                 let colNum = getColByWidth(options.bootstrap.gridSystem,100 * ui.size.width / row.innerWidth());
-                col.removeClass(bsClass).addClass(`col-${deviceMode}-${colNum}`);
+                col.removeClass(bsClass).addClass(`col-${deviceClass}-${colNum}`);
                 col.css('width', '');
                 col.css('height', '');
             }

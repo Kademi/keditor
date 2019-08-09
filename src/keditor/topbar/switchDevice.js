@@ -1,6 +1,5 @@
 import CSS_CLASS from '../constants/cssClass';
-import ICON from '../constants/icon';
-import DEVICE from '../constants/device';
+import DEVICE_MODE from '../constants/deviceMode';
 
 export default function (deviceMode, trigger) {
     let self = this;
@@ -14,19 +13,19 @@ export default function (deviceMode, trigger) {
     trigger.addClass(CSS_CLASS.STATE_ACTIVE);
     
     switch (deviceMode) {
-        case DEVICE.MOBILE:
+        case DEVICE_MODE.MOBILE:
             width = options.widthMobile;
             break;
             
-        case DEVICE.TABLET:
+        case DEVICE_MODE.TABLET:
             width = options.widthTablet;
             break;
             
-        case DEVICE.LAPTOP:
+        case DEVICE_MODE.LAPTOP:
             width = options.widthLaptop;
             break;
             
-        case DEVICE.DESKTOP:
+        case DEVICE_MODE.DESKTOP:
             minWidth = options.minWidthDesktop;
             break;
         

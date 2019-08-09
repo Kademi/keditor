@@ -70,8 +70,8 @@ KEditor.components['text'] = {
             }
         });
         
-        self.initCKEditor(keditor, function (ckeditor) {
-            let editor = ckeditor.inline(componentContent[0], self.options);
+        self.initCKEditor(keditor, function (CKEDITOR) {
+            let editor = CKEDITOR.inline(componentContent[0], self.options);
             instances[componentContent.attr('id')] = editor;
             editor.on('instanceReady', function () {
                 if (typeof options.onComponentReady === 'function') {

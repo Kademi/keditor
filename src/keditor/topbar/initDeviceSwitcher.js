@@ -1,6 +1,6 @@
 import CSS_CLASS from '../constants/cssClass';
 import ICON from '../constants/icon';
-import DEVICE from '../constants/device';
+import DEVICE_MODE from '../constants/deviceMode';
 import switchDevice from './switchDevice';
 
 export default function () {
@@ -13,7 +13,7 @@ export default function () {
     `);
     btnMobile.on('click', function (e) {
         e.preventDefault();
-        switchDevice.call(self, DEVICE.MOBILE, btnMobile);
+        switchDevice.call(self, DEVICE_MODE.MOBILE, btnMobile);
     });
     
     let btnTablet = $(`
@@ -21,7 +21,7 @@ export default function () {
     `);
     btnTablet.on('click', function (e) {
         e.preventDefault();
-        switchDevice.call(self, DEVICE.TABLET, btnTablet);
+        switchDevice.call(self, DEVICE_MODE.TABLET, btnTablet);
     });
     
     let btnLaptop = $(`
@@ -29,7 +29,7 @@ export default function () {
     `);
     btnLaptop.on('click', function (e) {
         e.preventDefault();
-        switchDevice.call(self, DEVICE.LAPTOP, btnLaptop);
+        switchDevice.call(self, DEVICE_MODE.LAPTOP, btnLaptop);
     });
     
     let btnDesktop = $(`
@@ -37,7 +37,7 @@ export default function () {
     `);
     btnDesktop.on('click', function (e) {
         e.preventDefault();
-        switchDevice.call(self, DEVICE.DESKTOP, btnDesktop);
+        switchDevice.call(self, DEVICE_MODE.DESKTOP, btnDesktop);
     }).trigger('click');
     
     topbarCenter.append(btnMobile);

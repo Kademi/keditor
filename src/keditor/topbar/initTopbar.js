@@ -2,6 +2,7 @@ import CSS_CLASS from '../constants/cssClass';
 import generateId from '../utils/generateId';
 import initDeviceSwitcher from './initDeviceSwitcher';
 import initTopbarRightActions from './initTopbarRightActions';
+import initTopbarExtraItems from './initTopbarExtraItems';
 
 export default function () {
     let self = this;
@@ -27,4 +28,5 @@ export default function () {
     
     initDeviceSwitcher.call(self);
     initTopbarRightActions.call(self);
+    initTopbarExtraItems.call(self);
 };

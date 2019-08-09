@@ -32,7 +32,7 @@ export default {
      *     }
      * }
      * @settingName.option {String} title
-     * @settingName.option {jQuery|Function} trigger If pass as function, argument will be current extra setting. This function must return a jQuery object
+     * @settingName.option {jQuery|Function|String} trigger If pass as function, argument will be current extra setting. This function must return a jQuery object
      * @settingName.option {Function} settingInitFunction Same arguments with `containerSettingInitFunction`
      * @settingName.option {Function} settingShowFunction Same arguments with `containerSettingShowFunction`
      * @example:
@@ -59,10 +59,35 @@ export default {
      *         settingShowFunction: function (form, trigger, keditor) {
      *             // Do something
      *         }
+     *     },
+     *     settingName3: {
+     *         title: 'Page Settings 3',
+     *         trigger: '.btn-page-settings',
+     *         settingInitFunction: function (form, keditor) {
+     *             form.append('<div>This is content of page settings 3</div>');
+     *         },
+     *         settingShowFunction: function (form, trigger, keditor) {
+     *             // Do something
+     *         }
      *     }
      * }
      */
     extraSettings: null,
+    
+    /*
+     * Extra items in topbar
+     * @option {Array<Object>}
+     * @format:
+     * {
+     *     itemName: {
+     *         html,
+     *         click
+     *     }
+     * }
+     * @itemName.option {String} html HTML string for extra item
+     * @itemName.option {Function} click Handler for click event of extra item
+     */
+    extraTopbarItems: null,
     
     locale: {
         /*

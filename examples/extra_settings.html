@@ -62,15 +62,15 @@
         <script type="text/javascript" data-keditor="script">
             $(function () {
                 $('#content-area').keditor({
+                    extraTopbarItems: {
+                        pageSetting: {
+                            html: '<a href="javascript:void(0);" class="btn-page-setting" data-extra-setting="pageSetting"><i class="fa fa-fw fa-cog"></i></a>'
+                        }
+                    },
                     extraSettings: {
                         pageSetting: {
                             title: 'Page Settings',
-                            trigger: function (extraSetting) {
-                                var btnPageSetting = $('<a href="javascript:void(0);" class="keditor-ui keditor-topbar-btn btn-page-setting" data-extra-setting="pageSetting"><i class="fa fa-fw fa-cog"></i></a>');
-                                this.topbarRight.append(btnPageSetting);
-                                
-                                return btnPageSetting;
-                            },
+                            trigger: '.btn-page-setting',
                             settingInitFunction: function (form, keditor) {
                                 form.append('<div>This is content of page settings.</div><hr />');
                             },

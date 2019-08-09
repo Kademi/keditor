@@ -33,7 +33,7 @@ export default function (target, settingType, settingCategory, settingTitle, ini
             });
         }
     } else {
-        if (settingForm.hasClass(CSS_CLASS.STATE_ACTIVE) && (target.is(self.settingContainer) || target.is(self.settingComponent))) {
+        if (settingForm.hasClass(CSS_CLASS.STATE_ACTIVE) && (target.is(self.settingContainer) || target.is(self.settingComponent) || target.is('[data-extra-setting]'))) {
             closeSidebar.call(self);
             return;
         } else {

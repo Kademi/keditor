@@ -4,8 +4,9 @@ import initSaveAction from './initSaveAction';
 
 export default function () {
     let self = this;
+    let options = self.options;
     
     initPreviewAction.apply(self);
     initFullscreenAction.apply(self);
-    initSaveAction.apply(self);
+    typeof options.onSave === 'function' && initSaveAction.apply(self);
 };

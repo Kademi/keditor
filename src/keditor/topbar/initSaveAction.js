@@ -11,7 +11,7 @@ export default function () {
         
         let content = getContent.call(self);
         
-        typeof options.onSave === 'function' && options.onSave.call(self, content);
+        options.onSave.call(self, content);
     });
     
     self.topbarRight.append(btnSave);

@@ -41,6 +41,7 @@ export default {
      *     settingName1: {
      *         title: 'Page Settings',
      *         trigger: $('.btn-page-setting'),
+     *         autoInit: true,
      *         settingInitFunction: function (form, keditor) {
      *             form.append('<div>This is content of page settings</div>');
      *         },

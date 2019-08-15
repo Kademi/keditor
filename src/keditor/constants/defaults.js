@@ -33,6 +33,7 @@ export default {
      * }
      * @settingName.option {String} title
      * @settingName.option {jQuery|Function|String} trigger If pass as function, argument will be current extra setting. This function must return a jQuery object
+     * @settingName.option {Boolean} autoInit By default, all settings form of KEditor will be initialized in first time you show it. If you want it to initialize intermediately, just set `autoIni=true`
      * @settingName.option {Function} settingInitFunction Same arguments with `containerSettingInitFunction`
      * @settingName.option {Function} settingShowFunction Same arguments with `containerSettingShowFunction`
      * @example:

@@ -19,7 +19,7 @@ export default function (target) {
         showSettingForm.call(self, target, null, SETTING_CATEGORY.CONTAINER, options.locale.containerSetting, options.containerSettingInitFunction, options.containerSettingShowFunction, self);
     } else {
         let extraKey = target.attr('data-extra-setting');
-        let extraTabData = options.extraSettings[extraKey];
-        showSettingForm.call(self, target, extraKey, SETTING_CATEGORY.EXTRA, extraTabData.title, extraTabData.settingInitFunction, extraTabData.settingShowFunction, extraTabData);
+        let extraSetting = options.extraSettings[extraKey];
+        showSettingForm.call(self, target, extraKey, SETTING_CATEGORY.EXTRA, extraSetting.title, extraSetting.settingInitFunction, extraSetting.settingShowFunction, extraSetting);
     }
 };

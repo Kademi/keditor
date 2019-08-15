@@ -1,4 +1,6 @@
 import openSidebar from './openSidebar';
+import initSettingForm from './initSettingForm';
+import SETTING_CATEGORY from '../constants/settingCategory';
 
 export default function () {
     let self = this;
@@ -24,6 +26,10 @@ export default function () {
             e.preventDefault();
         
             openSidebar.call(self, trigger);
-        })
+        });
+        
+        if (extraSetting.autoInit) {
+            initSettingForm.call(self, trigger, name, SETTING_CATEGORY.EXTRA, extraSetting.settingInitFunction, extraSetting);
+        }
     });
 };

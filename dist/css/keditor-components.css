@@ -82,6 +82,9 @@ div.cke_float[id*="cke_keditor-ui-"] .cke_toolbar {
 div.cke_float[id*="cke_keditor-ui-"] .cke_toolbar_break {
   display: none !important;
 }
+body.showed-keditor-sidebar div.cke_float[id*="cke_keditor-ui-"] {
+  margin-right: 300px;
+}
 .cke_screen_reader_only {
   top: 0;
   left: 0;

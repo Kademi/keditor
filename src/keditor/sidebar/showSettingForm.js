@@ -43,8 +43,9 @@ export default function (target, settingType, settingCategory, settingTitle, ini
         }
     }
     
-    sidebarBody.children(`.${CSS_CLASS.STATE_ACTIVE}`).removeClass(CSS_CLASS.STATE_ACTIVE);
     sidebarTitle.html(settingTitle);
+    sidebarBody.children(`.${CSS_CLASS.STATE_ACTIVE}`).removeClass(CSS_CLASS.STATE_ACTIVE);
     settingForm.addClass(CSS_CLASS.STATE_ACTIVE);
     sidebar.addClass(CSS_CLASS.STATE_OPENED);
+    self.iframeBody.addClass(CSS_CLASS.STATE_SIDEBAR_SHOWED);
 }

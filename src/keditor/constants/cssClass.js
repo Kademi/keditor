@@ -24,6 +24,7 @@ const CSS_CLASS = {
     STATE_INITIALIZING: 'initializing',
     STATE_PREVIEWING: 'previewing',
     STATE_TOOLBAR_SHOWED: 'showed-keditor-toolbar',
+    STATE_SIDEBAR_SHOWED: 'showed-keditor-sidebar',
     STATE_MODAL_OPENED: 'opened-modal',
     STATE_NOT_MATCHED: 'not-matched',
     STATE_HAS_FOOTER: 'has-footer',

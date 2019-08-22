@@ -459,11 +459,13 @@ export default {
     },
     
     /*
-     * Callback will be called when initializing content area
+     * Callback will be called when initializing content area. Need to return jQuery objects which will be initialized as container
      * @option {Function}
      * @param {jQuery} contentArea
+     * @return {jQuery}
      */
     onInitContentArea: function (contentArea) {
+        return contentArea.children().children();
     },
     
     /*
@@ -664,4 +666,3 @@ export default {
     onDynamicContentError: function (dynamicElement, jqXHR, contentArea) {
     }
 };
-

@@ -6,19 +6,27 @@
 // CKEditor
 // -------------------------------------------------
 div.cke_float[id*="cke_keditor-ui-"] {
-    padding: 0;
-    margin-top: -@component-outline-with;
+    padding: 0 6px;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    background: #fff;
+    height: @topbar-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid @border-color;
     
-    @media screen and (min-width: 1024px) {
-        margin-left: -@component-outline-with;
+    .cke_inner {
+        padding: 0 !important;
     }
     
     .cke_top {
-        padding: 3px;
-    
-        @media screen and (min-width: 1024px) {
-            padding: 5px 1px 0 6px;
-        }
+        padding: 0;
+        border: 0;
+        background: none !important;
     }
     
     .cke_toolbox {
@@ -36,10 +44,6 @@ div.cke_float[id*="cke_keditor-ui-"] {
     
     .cke_toolbar_break {
         display: none !important;
-    }
-    
-    body.showed-keditor-sidebar & {
-        margin-right: @sidebar-width;
     }
 }
 

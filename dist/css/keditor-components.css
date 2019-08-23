@@ -35,21 +35,26 @@
 }
 
 div.cke_float[id*="cke_keditor-ui-"] {
-  padding: 0;
-  margin-top: -1px;
+  padding: 0 6px;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  background: #fff;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
 }
-@media screen and (min-width: 1024px) {
-  div.cke_float[id*="cke_keditor-ui-"] {
-    margin-left: -1px;
-  }
+div.cke_float[id*="cke_keditor-ui-"] .cke_inner {
+  padding: 0 !important;
 }
 div.cke_float[id*="cke_keditor-ui-"] .cke_top {
-  padding: 3px;
-}
-@media screen and (min-width: 1024px) {
-  div.cke_float[id*="cke_keditor-ui-"] .cke_top {
-    padding: 5px 1px 0 6px;
-  }
+  padding: 0;
+  border: 0;
+  background: none !important;
 }
 div.cke_float[id*="cke_keditor-ui-"] .cke_toolbox {
   display: block !important;
@@ -81,9 +86,6 @@ div.cke_float[id*="cke_keditor-ui-"] .cke_toolbar {
 }
 div.cke_float[id*="cke_keditor-ui-"] .cke_toolbar_break {
   display: none !important;
-}
-body.showed-keditor-sidebar div.cke_float[id*="cke_keditor-ui-"] {
-  margin-right: 300px;
 }
 .cke_screen_reader_only {
   top: 0;

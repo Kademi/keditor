@@ -1,6 +1,9 @@
 import '../styles/keditor-component-text.less';
+
 import KEditor from 'keditor';
-const instances = {};
+import CKEDITOR from 'ckeditor';
+
+CKEDITOR.disableAutoInline = true;
 
 // Text component
 // ---------------------------------------------------------------------
@@ -9,10 +12,12 @@ KEditor.components['text'] = {
         toolbarGroups: [
             {name: 'document', groups: ['mode', 'document', 'doctools']},
             {name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing']},
+            {name: 'forms', groups: ['forms']},
             {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
             {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
             {name: 'links', groups: ['links']},
             {name: 'insert', groups: ['insert']},
+            '/',
             {name: 'clipboard', groups: ['clipboard', 'undo']},
             {name: 'styles', groups: ['styles']},
             {name: 'colors', groups: ['colors']},
@@ -24,29 +29,9 @@ KEditor.components['text'] = {
         enterMode: 'P',
         forceEnterMode: true,
         format_tags: 'p;h1;h2;h3;h4;h5;h6',
-        removePlugins: 'table,magicline,tableselection,tabletools,div',
+        removePlugins: 'table,magicline,tableselection,tabletools',
         removeButtons: 'Save,NewPage,Preview,Print,Templates,PasteText,PasteFromWord,Find,Replace,SelectAll,Scayt,Form,HiddenField,ImageButton,Button,Select,Textarea,TextField,Radio,Checkbox,Outdent,Indent,Blockquote,CreateDiv,Language,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Styles,BGColor,Maximize,About,ShowBlocks,BidiLtr,BidiRtl,Flash,Image,Subscript,Superscript,Anchor',
         minimumChangeMilliseconds: 100
-    },
-    
-    initCKEditor: function (keditor, callback) {
-        if (keditor.iframeWindow.CKEDITOR) {
-            callback(keditor.iframeWindow.CKEDITOR);
-        } else {
-            let ckeditorSrc = $(document.body).find('[data-type="ckeditor-script"]').attr('src');
-            let ckeditorScript = keditor.iframeDoc[0].createElement('script');
-            ckeditorScript.type = 'text/javascript';
-            ckeditorScript.onreadystatechange = function () {
-                keditor.iframeWindow.CKEDITOR.disableAutoInline = true;
-                callback(keditor.iframeWindow.CKEDITOR);
-            };
-            ckeditorScript.onload = function () {
-                keditor.iframeWindow.CKEDITOR.disableAutoInline = true;
-                callback(keditor.iframeWindow.CKEDITOR);
-            };
-            keditor.iframeHead.append(ckeditorScript);
-            ckeditorScript.src = ckeditorSrc;
-        }
     },
     
     init: function (contentArea, container, component, keditor) {
@@ -58,11 +43,11 @@ KEditor.components['text'] = {
         
         componentContent.on('input', function (e) {
             if (typeof options.onComponentChanged === 'function') {
-                options.onComponentChanged.call(contentArea, e, component);
+                options.onComponentChanged.call(keditor, e, component);
             }
             
             if (typeof options.onContainerChanged === 'function') {
-                options.onContainerChanged.call(contentArea, e, container);
+                options.onContainerChanged.call(keditor, e, container, contentArea);
             }
             
             if (typeof options.onContentChanged === 'function') {
@@ -70,21 +55,20 @@ KEditor.components['text'] = {
             }
         });
         
-        self.initCKEditor(keditor, function (CKEDITOR) {
-            let editor = CKEDITOR.inline(componentContent[0], self.options);
-            instances[componentContent.attr('id')] = editor;
-            editor.on('instanceReady', function () {
-                if (typeof options.onComponentReady === 'function') {
-                    options.onComponentReady.call(contentArea, component, editor);
-                }
-            });
+        let editor = CKEDITOR.inline(componentContent[0], self.options);
+        editor.on('instanceReady', function () {
+            $('#cke_' + componentContent.attr('id')).appendTo(keditor.wrapper);
+            
+            if (typeof options.onComponentReady === 'function') {
+                options.onComponentReady.call(contentArea, component, editor);
+            }
         });
     },
     
     getContent: function (component, keditor) {
         let componentContent = component.find('.keditor-component-content');
         let id = componentContent.attr('id');
-        let editor = instances[id];
+        let editor = CKEDITOR.instances[id];
         if (editor) {
             return editor.getData();
         } else {
@@ -94,6 +78,6 @@ KEditor.components['text'] = {
     
     destroy: function (component, keditor) {
         let id = component.find('.keditor-component-content').attr('id');
-        instances[id] && instances[id].destroy();
+        CKEDITOR.instances[id] && CKEDITOR.instances[id].destroy();
     }
 };

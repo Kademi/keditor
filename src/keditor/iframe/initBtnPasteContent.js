@@ -4,6 +4,7 @@ import setCopyContent from '../utils/setCopyContent';
 import log from '../utils/log';
 import convertToContainer from '../container/convertToContainer';
 import getComponentContent from '../component/getComponentContent';
+import getContainerContent from '../container/getContainerContent';
 import convertToComponent from '../component/convertToComponent';
 
 export default function () {
@@ -25,7 +26,7 @@ export default function () {
         let isSubContainer = source.hasClass(CSS_CLASS.SUB_CONTAINER);
         let pasteContent;
         if (isCopy) {
-            pasteContent = $(isComponent ? getComponentContent.call(self, source) : getComponentContent.call(self, source, isSubContainer));
+            pasteContent = $(isComponent ? getComponentContent.call(self, source) : getContainerContent.call(self, source, isSubContainer));
         } else {
             pasteContent = source;
         }
@@ -54,6 +55,7 @@ export default function () {
         
         let toolbarContentArea = btn.closest(`.${CSS_CLASS.TOOLBAR_CONTENT_AREA}`);
         if (toolbarContentArea.length > 0) {
+            log('Target is content-area');
             target = toolbarContentArea.siblings(`.${CSS_CLASS.CONTENT_AREA_INNER}`);
         }
         
@@ -64,6 +66,9 @@ export default function () {
         } else {
             action = ACTION_TYPE.APPEND;
         }
+        
+        log(`isCopy: ${isCopy} | isComponent: ${isComponent} | isContainer: ${isContainer} | isSubContainer: ${isSubContainer} | action: ${action}`);
+        log('target: ', target);
         
         target[action](pasteContent);
         setCopyContent.call(self, null);

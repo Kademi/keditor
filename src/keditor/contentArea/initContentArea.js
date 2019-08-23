@@ -64,9 +64,14 @@ export default function (contentArea, dontInitToolbar) {
         }
     });
     
-    contentAreaInner.children().each(function () {
+    let containers;
+    if (typeof options.onInitContentArea === 'function') {
+        containers = options.onInitContentArea.call(self, contentArea);
+    } else {
+        containers = contentAreaInner.children();
+    }
+    
+    containers.each(function () {
         convertToContainer.call(self, $(this));
     });
-    
-    typeof options.onInitContentArea === 'function' && options.onInitContentArea.call(self, contentArea);
 };

@@ -100,105 +100,105 @@ export default {
         viewOnTablet: 'View on tablet',
         viewOnLaptop: 'View on laptop',
         viewOnDesktop: 'View on desktop',
-    
+        
         /*
          * Text title for preview mode
          * @option {String}
          */
         previewOn: 'Preview ON',
         previewOff: 'Preview OFF',
-    
+        
         /*
          * Text title for fullscreen mode
          * @option {String}
          */
         fullscreenOn: 'Fullscreen ON',
         fullscreenOff: 'Fullscreen Off',
-    
+        
         /*
          * Text title for save button
          * @option {String}
          */
         save: 'Save',
-    
+        
         /*
          * Text title for add content button
          * @option {String}
          */
         addContent: 'Add content',
-    
+        
         /*
          * Text title for add content button below sub-container and component
          * @option {String}
          */
         addContentBelow: 'Add content below',
-    
+        
         /*
          * Text title for paste content button
          * @option {String}
          */
         pasteContent: 'Paste content',
-    
+        
         /*
          * Text title for paste content button below sub-container and component
          * @option {String}
          */
         pasteContentBelow: 'Paste content below',
-    
+        
         /*
          * Text title for move button
          * @option {String}
          */
         move: 'Drag',
-    
+        
         /*
          * Text title for move up button
          * @option {String}
          */
         moveUp: 'Move up',
-    
+        
         /*
          * Text title for move down button
          * @option {String}
          */
         moveDown: 'Move down',
-    
+        
         /*
          * Text title for setting button
          * @option {String}
          */
         setting: 'Setting',
-    
+        
         /*
          * Text title for copy button
          * @option {String}
          */
         copy: 'Copy',
-    
+        
         /*
          * Text title for cut button
          * @option {String}
          */
         cut: 'Cut',
-    
+        
         /*
          * Text title for delete button
          * @option {String}
          */
         delete: 'Delete',
-    
+        
         /*
          * Text for snippet category label
          * @option {String}
          */
         snippetCategoryLabel: 'Category',
-    
+        
         /*
          * Text for snippet category `All`
          * @option {String}
          */
         snippetCategoryAll: 'All',
-    
+        
         /*
          * Text for snippet search text box
          * @option {String}
@@ -210,7 +210,7 @@ export default {
          * @option {String}
          */
         columnResizeTitle: 'Drag to resize',
-    
+        
         /*
          * Text title for container setting
          * @option {String}
@@ -222,7 +222,7 @@ export default {
          * @option {String}
          */
         confirmDeleteContainerText: 'Are you sure that you want to delete this container? This action can not be undone!',
-    
+        
         /*
          * Text content for confirm dialog when deleting container
          * @option {String}
@@ -339,7 +339,7 @@ export default {
          * @option {Boolean}
          */
         columnResizeEnabled: true,
-    
+        
         /**
          * List of device class for responsive grid system
          * @option {Object}
@@ -350,7 +350,7 @@ export default {
             LAPTOP: 'md',
             DESKTOP: 'lg'
         },
-    
+        
         /**
          * Grid system of bootstrap with `width` in percentage and `col` number
          * @option {Array<Object>}
@@ -396,6 +396,8 @@ export default {
             col: 10000
         }]
     },
+    
+    clickComponentToShowSetting: false,
     
     /*
      * Callback will be called after keditor instance is ready
@@ -459,11 +461,13 @@ export default {
     },
     
     /*
-     * Callback will be called when initializing content area
+     * Callback will be called when initializing content area. Need to return jQuery objects which will be initialized as container
      * @option {Function}
      * @param {jQuery} contentArea
+     * @return {jQuery}
      */
     onInitContentArea: function (contentArea) {
+        return contentArea.children().children();
     },
     
     /*
@@ -664,4 +668,3 @@ export default {
     onDynamicContentError: function (dynamicElement, jqXHR, contentArea) {
     }
 };
-

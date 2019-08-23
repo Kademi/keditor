@@ -46,12 +46,14 @@ export default function () {
                 return;
             }
             
-            let btnSetting = component.find(`.${CSS_CLASS.COMPONENT_SETTING}`);
-            if (btnSetting.length > 0) {
-                self.settingComponent = null;
-                openSidebar.call(self, component);
-            } else {
-                closeSidebar.call(self);
+            if (options.clickComponentToShowSetting) {
+                let btnSetting = component.find(`.${CSS_CLASS.COMPONENT_SETTING}`);
+                if (btnSetting.length > 0) {
+                    self.settingComponent = null;
+                    openSidebar.call(self, component);
+                } else {
+                    closeSidebar.call(self);
+                }
             }
         } else {
             if (!sidebar) {

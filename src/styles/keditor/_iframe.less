@@ -47,11 +47,11 @@
     }
     
     iframe {
-        z-index: -1;
+        z-index: 1;
     }
     
     .keditor-iframe-cover {
-        z-index: 1;
+        z-index: 3;
         background: rgba(0, 0, 0, .15);
         
         &:before {
@@ -72,7 +72,7 @@
     
     &.hidden-cover {
         iframe {
-            z-index: 0;
+            z-index: 2;
         }
         
         .keditor-iframe-cover {

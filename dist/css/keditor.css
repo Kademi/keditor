@@ -253,9 +253,13 @@ body.opened-modal {
 .keditor-modal-header {
   background: #fff;
   border-bottom: 1px solid #ddd;
-  position: relative;
-  padding: 15px;
+  padding: 0 15px;
   z-index: 2;
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+  height: 56px;
+  align-items: center;
 }
 .keditor-modal-header:before,
 .keditor-modal-header:after {
@@ -271,28 +275,26 @@ body.opened-modal {
   margin: 0;
   color: #333;
   font-weight: 500;
+  flex: 1;
 }
 .keditor-modal-header .keditor-modal-close {
   border: 0;
   background: 0;
-  position: absolute;
   font-size: 20px;
   color: #ccc;
   cursor: pointer;
-  right: 10px;
-  top: 50%;
   width: 32px;
   height: 32px;
   line-height: 32px;
-  margin-top: -16px;
   padding: 0;
   font-weight: bold;
 }
 .keditor-modal-header .keditor-modal-close:hover {
   color: #aaa;
 }
-.keditor-modal-header .keditor-snippets-filter {
-  margin-right: 15px;
+.keditor-modal-header .keditor-snippets-filter-wrapper {
+  flex: 1;
+  display: flex;
 }
 .keditor-modal-header .keditor-snippets-filter-component,
 .keditor-modal-header .keditor-snippets-filter-container {
@@ -304,9 +306,18 @@ body.opened-modal {
   font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
   height: 25px;
   background: none;
-  display: inline-block;
+  margin-right: 15px;
   font-weight: normal;
   line-height: 25px;
+  border: 0;
+}
+.keditor-modal-header .keditor-snippets-filter,
+.keditor-modal-header .keditor-snippets-search {
+  background: #eee;
+  padding: 0 5px;
+}
+.keditor-modal-header .keditor-snippets-search {
+  width: 40%;
 }
 .keditor-modal-body {
   height: calc(100% - 56px);
@@ -320,7 +331,11 @@ body.opened-modal {
   background: #fff;
   border-top: 1px solid #ddd;
   text-align: center;
-  padding: 15px;
+  padding: 0 15px;
+  height: 54px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .keditor-modal-footer .keditor-btn {
   margin: 0 5px;

@@ -60,9 +60,13 @@
     .clearfix();
     background: @modal-bg;
     border-bottom: 1px solid @border-color;
-    position: relative;
     padding: @modal-header-padding;
     z-index: 2;
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+    height: @modal-header-height;
+    align-items: center;
     
     .keditor-modal-title {
         font-size: @modal-header-title-font-size;
@@ -70,21 +74,18 @@
         margin: 0;
         color: @modal-header-title-color;
         font-weight: 500;
+        flex: 1;
     }
     
     .keditor-modal-close {
         border: 0;
         background: 0;
-        position: absolute;
         font-size: @modal-closer-font-size;
         color: @closer-color;
         cursor: pointer;
-        right: 10px;
-        top: 50%;
         width: @modal-closer-size;
         height: @modal-closer-size;
         line-height: @modal-closer-size;
-        margin-top: unit(-@modal-closer-size/2, px);
         padding: 0;
         font-weight: bold;
         
@@ -93,8 +94,9 @@
         }
     }
     
-    .keditor-snippets-filter {
-        margin-right: 15px;
+    .keditor-snippets-filter-wrapper {
+        flex: 1;
+        display: flex;
     }
     
     .keditor-snippets-filter-component,
@@ -108,10 +110,22 @@
         .keditor-text();
         height: 25px;
         background: none;
-        display: inline-block;
+        margin-right: 15px;
         font-weight: normal;
         line-height: 25px;
+        border: 0;
     }
+    
+    .keditor-snippets-filter,
+    .keditor-snippets-search {
+        background: @modal-input-bg;
+        padding: 0 5px;
+    }
+    
+    .keditor-snippets-search {
+        width: 40%;
+    }
+    
 }
 
 .keditor-modal-body {
@@ -129,6 +143,10 @@
     border-top: 1px solid @border-color;
     text-align: center;
     padding: @modal-footer-padding;
+    height: @modal-footer-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
     .keditor-btn {
         margin: 0 5px;

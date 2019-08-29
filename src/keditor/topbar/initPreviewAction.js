@@ -7,7 +7,7 @@ import getContent from '../getContent';
 export default function () {
     let self = this;
     let options = self.options;
-    let btnPreview = $(`<a href="javascript:void(0);" title="${options.locale.previewOff}" class="${CSS_CLASS.UI} ${CSS_CLASS.TOPBAR_BUTTON}">${ICON.PREVIEW_OFF}</a>`);
+    let btnPreview = self.btnPreview = $(`<a href="javascript:void(0);" title="${options.locale.previewOff}" class="${CSS_CLASS.UI} ${CSS_CLASS.TOPBAR_BUTTON}">${ICON.PREVIEW_OFF}</a>`);
     
     self.previewArea = $(`<div class="${CSS_CLASS.PREVIEW_AREA}"></div>`);
     self.contentAreasWrapper.after(self.previewArea);

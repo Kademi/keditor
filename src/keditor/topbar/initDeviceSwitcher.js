@@ -8,7 +8,7 @@ export default function () {
     let options = self.options;
     let topbarCenter = self.topbarCenter;
     
-    let btnMobile = $(`
+    let btnMobile = self.btnMobile = $(`
         <a href="javascript:void(0);" title="${options.locale.viewOnMobile}" class="${CSS_CLASS.UI} ${CSS_CLASS.TOPBAR_BUTTON}">${ICON.DEVICE_MOBILE}</a>
     `);
     btnMobile.on('click', function (e) {
@@ -16,7 +16,7 @@ export default function () {
         switchDevice.call(self, DEVICE_MODE.MOBILE, btnMobile);
     });
     
-    let btnTablet = $(`
+    let btnTablet = self.btnTablet = $(`
         <a href="javascript:void(0);" title="${options.locale.viewOnTablet}" class="${CSS_CLASS.UI} ${CSS_CLASS.TOPBAR_BUTTON}">${ICON.DEVICE_TABLET}</a>
     `);
     btnTablet.on('click', function (e) {
@@ -24,7 +24,7 @@ export default function () {
         switchDevice.call(self, DEVICE_MODE.TABLET, btnTablet);
     });
     
-    let btnLaptop = $(`
+    let btnLaptop = self.btnLaptop = $(`
         <a href="javascript:void(0);" title="${options.locale.viewOnLaptop}" class="${CSS_CLASS.UI} ${CSS_CLASS.TOPBAR_BUTTON}">${ICON.DEVICE_LAPTOP}</a>
     `);
     btnLaptop.on('click', function (e) {
@@ -32,7 +32,7 @@ export default function () {
         switchDevice.call(self, DEVICE_MODE.LAPTOP, btnLaptop);
     });
     
-    let btnDesktop = $(`
+    let btnDesktop = self.btnDesktop = $(`
         <a href="javascript:void(0);" title="${options.locale.viewOnDesktop}" class="${CSS_CLASS.UI} ${CSS_CLASS.TOPBAR_BUTTON}">${ICON.DEVICE_DESKTOP}</a>
     `);
     btnDesktop.on('click', function (e) {

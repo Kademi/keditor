@@ -467,7 +467,7 @@ export default {
      * @return {jQuery}
      */
     onInitContentArea: function (contentArea) {
-        return contentArea.children().children();
+        return contentArea.children(`.${CSS_CLASS.CONTENT_AREA_INNER}`).children();
     },
     
     /*

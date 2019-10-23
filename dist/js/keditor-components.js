@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("CKEDITOR"), require("jQuery"), require("KEditor"));
+		module.exports = factory(require("CKEDITOR"), require("KEditor"), require("jQuery"));
 	else if(typeof define === 'function' && define.amd)
-		define(["CKEDITOR", "jQuery", "KEditor"], factory);
+		define(["CKEDITOR", "KEditor", "jQuery"], factory);
 	else {
-		var a = typeof exports === 'object' ? factory(require("CKEDITOR"), require("jQuery"), require("KEditor")) : factory(root["CKEDITOR"], root["jQuery"], root["KEditor"]);
+		var a = typeof exports === 'object' ? factory(require("CKEDITOR"), require("KEditor"), require("jQuery")) : factory(root["CKEDITOR"], root["KEditor"], root["jQuery"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_ckeditor__, __WEBPACK_EXTERNAL_MODULE_jquery__, __WEBPACK_EXTERNAL_MODULE_keditor__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_ckeditor__, __WEBPACK_EXTERNAL_MODULE_keditor__, __WEBPACK_EXTERNAL_MODULE_jquery__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};

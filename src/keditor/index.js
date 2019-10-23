@@ -3,6 +3,7 @@ import '../styles/keditor.less';
 import $ from 'jquery';
 import DEFAULTS from './constants/defaults';
 import log from './utils/log';
+import error from './utils/error';
 import generateId from './utils/generateId';
 import getDataAttributes from './utils/getDataAttributes';
 import initIframeCover from './iframe/initIframeCover';
@@ -61,7 +62,7 @@ class KEditor {
      * @param {String} message Error message
      */
     static error(message) {
-        throw new Error(`[ KEditor ] ${message}`);
+        error(message);
     }
     
     /**

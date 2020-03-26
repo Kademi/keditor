@@ -1,5 +1,5 @@
 {
-    "name": "keditor",
+    "name": "@kademi/keditor",
     "title": "KEditor",
     "libraryName": "KEditor",
     "version": "2.0.0",

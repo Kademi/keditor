@@ -19,6 +19,9 @@ const exec = util.promisify(require('child_process').exec);
         packageJson.version = newVersion;
         fs.writeFileSync('./package.json', JSON.stringify(packageJson, ' ', 4), 'utf-8');
 
+        console.log(`-> Build source-code`);
+        await exec(`npm run build`);
+
         console.log(`-> Push to github with message "v${newVersion}"`);
         await exec(`git add .`);
         await exec(`git commit -m "v${newVersion}"`);

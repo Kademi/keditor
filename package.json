@@ -2,7 +2,7 @@
     "name": "@kademi/keditor",
     "title": "KEditor",
     "libraryName": "KEditor",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "KEditor is a jQuery plugin which provides a content editor with drag n drop, configurable contents",
     "scripts": {
         "build": "webpack --prod",

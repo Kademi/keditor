@@ -2,7 +2,7 @@
 HBEditor is a jQuery plugin which provides a content editor with drag n drop, configurable contents
 
 # DISCLAIMER
-HBEditor is forked and built on top of the KEditor plugin to enhance it's features. 
+HBEditor is forked and built on top of the KEditor plugin to enhance it's features. The core of this project remains as KEditor, with extra features implemented by Hello Blossom
   
 ## Documentation
 1. [Getting started](./docs/getting_started.md)

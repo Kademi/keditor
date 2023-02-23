@@ -12,9 +12,9 @@ Details:
  * All `data-*` attributes must be placed in component element
  
  ## Rendering dynamic content
- There are 2 ways to render dynamic content in `VIEW MODE` (not in KEditor aka `EDIT MODE`):
+ There are 2 ways to render dynamic content in `VIEW MODE` (not in HBEditor aka `EDIT MODE`):
   1. Server-side: You can add code in your server-side for detecting dynamic component with `data-dynamic-href` attribute and generate content for it
-  1. Client-side: KEditor provides a static method to load dynamic content is `KEditor.loadDynamicElement()`. Please read at [here](./methods.md) for more details of this method
+  1. Client-side: HBEditor provides a static method to load dynamic content is `KEditor.loadDynamicElement()`. Please read at [here](./methods.md) for more details of this method
   
 
  ---

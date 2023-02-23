@@ -27,7 +27,8 @@ module.exports = {
         libraryTarget: 'umd',
         umdNamedDefine: true,
         filename: `js/[name].js`,
-        globalObject: `typeof self !== 'undefined' ? self : this`
+        globalObject: `typeof self !== 'undefined' ? self : this`,
+        hashFunction: 'sha512'
     },
     
     optimization: {

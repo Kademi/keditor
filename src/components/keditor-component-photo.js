@@ -1,6 +1,14 @@
 import $ from 'jquery';
 import KEditor from 'keditor';
 
+/**
+ * @TODO
+ *
+ * Change the photo edit button to be a dropzone instead.
+ *
+ * This way, we can implement the image pasting feature in a more intuitive and seamless way.
+ */
+
 KEditor.components['photo'] = {
     init: function (contentArea, container, component, keditor) {
         let componentContent = component.children('.keditor-component-content');
@@ -16,10 +24,32 @@ KEditor.components['photo'] = {
     initSettingForm: function (form, keditor) {
         let self = this;
         let options = keditor.options;
+
+        function setImage(file){
+            if (/image/.test(file.type)) {
+                let reader = new FileReader();
+
+                reader.addEventListener('load', function (e) {
+                    let img = keditor.getSettingComponent().find('img');
+                    img.attr('src', e.target.result);
+                    img.css({
+                        width: '',
+                        height: ''
+                    });
+                    img.load(function () {
+                        self.showSettingForm.call(self, form, keditor.getSettingComponent(), keditor);
+                    });
+                });
+
+                reader.readAsDataURL(file);
+            } else {
+                alert('Your selected file is not photo!');
+            }
+        }
         
         form.append(
             '<form class="form-horizontal">' +
-            '   <div class="form-group">' +
+            '   <div class="form-group pasteable">' +
             '       <div class="col-sm-12">' +
             '           <button type="button" class="btn btn-block btn-primary" id="photo-edit">Change Photo</button>' +
             '           <input type="file" style="display: none" />' +
@@ -69,6 +99,20 @@ KEditor.components['photo'] = {
         
         let photoEdit = form.find('#photo-edit');
         let fileInput = photoEdit.next();
+
+
+
+        $(window).on('paste', function (e) {
+            let files = e.originalEvent.clipboardData.files;
+
+            alert('File pasted!');
+            if (files.length > 0) {
+                fileInput.files = files;
+                let file = files[0];
+                setImage(file);
+            }
+        });
+
         photoEdit.on('click', function (e) {
             e.preventDefault();
             
@@ -76,25 +120,7 @@ KEditor.components['photo'] = {
         });
         fileInput.on('change', function () {
             let file = this.files[0];
-            if (/image/.test(file.type)) {
-                let reader = new FileReader();
-                
-                reader.addEventListener('load', function (e) {
-                    let img = keditor.getSettingComponent().find('img');
-                    img.attr('src', e.target.result);
-                    img.css({
-                        width: '',
-                        height: ''
-                    });
-                    img.load(function () {
-                        self.showSettingForm.call(self, form, keditor.getSettingComponent(), keditor);
-                    });
-                });
-                
-                reader.readAsDataURL(this.files[0]);
-            } else {
-                alert('Your selected file is not photo!');
-            }
+            setImage(file);
         });
         
         let inputAlign = form.find('#photo-align');

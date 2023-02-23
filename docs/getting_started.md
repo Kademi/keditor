@@ -26,9 +26,9 @@ There are 2 ways to initialize KEditor:
  
 **Note**: For options, please view at [here](./configuration.md) for all configuration options
  
-## Content structure in KEditor
+## Content structure in HBEditor
 ```
-keditor
+hbeditor
 ├───content-area
 │    ├───container
 │    │    ├───container-content

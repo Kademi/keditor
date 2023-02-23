@@ -1,5 +1,5 @@
 # Getting Started
-Get started with KEditor, the jQuery plugin which provides a content editor with drag n drop, configurable contents.
+Get started with HBEditor, the jQuery plugin which provides a content editor with drag n drop, configurable contents.
 
 ## Dependencies
  * [jQuery](http://jquery.com/) for DOM stuffs such as traversing, manipulation, utilities, etc... 

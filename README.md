@@ -1,9 +1,6 @@
 # HBEditor
 HBEditor is a jQuery plugin which provides a content editor with drag n drop, configurable contents
   
-## Live examples
-Available at [http://kademi.github.io/keditor/](http://kademi.github.io/keditor/)
-  
 ## Documentation
 1. [Getting started](./docs/getting_started.md)
 1. [Configuration](./docs/configuration.md)

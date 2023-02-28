@@ -105,7 +105,6 @@ KEditor.components['photo'] = {
         $(window).on('paste', function (e) {
             let files = e.originalEvent.clipboardData.files;
 
-            alert('File pasted!');
             if (files.length > 0) {
                 fileInput.files = files;
                 let file = files[0];

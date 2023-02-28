@@ -1,28 +1,30 @@
 {
-    "name": "@kademi/keditor",
-    "title": "KEditor",
-    "libraryName": "KEditor",
-    "version": "2.0.1",
-    "description": "KEditor is a jQuery plugin which provides a content editor with drag n drop, configurable contents",
+    "name": "@nunomoura/hbeditor",
+    "title": "HBEditor",
+    "libraryName": "HBEditor",
+    "version": "0.0.1",
+    "description": "HBEditor is a jQuery plugin which provides a content editor with drag n drop, configurable contents",
     "scripts": {
         "build": "webpack --prod",
         "dev": "webpack --progress --color --watch"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Kademi/keditor.git"
+        "url": "git+https://github.com/HelloBlossom/hbeditor.git"
     },
     "keywords": [
         "editor",
-        "keditor",
+        "hbeditor",
         "content editor"
     ],
-    "author": "Kademi (http://kademi.co)",
-    "license": "MIT",
+    "author": "Hello Blossom (http://helloblossom.com)",
     "bugs": {
-        "url": "https://github.com/Kademi/keditor/issues"
+        "url": "https://github.com/HelloBlossom/hbeditor/issues"
     },
-    "homepage": "https://github.com/Kademi/keditor#readme",
+    "homepage": "https://github.com/HelloBlossom/hbeditor#readme",
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/@HelloBlossom"
+    },
     "devDependencies": {
         "@babel/core": "^7.10.3",
         "@babel/plugin-proposal-class-properties": "^7.10.1",
